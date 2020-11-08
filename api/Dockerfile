@@ -5,55 +5,81 @@
 
 # https://docs.docker.com/engine/reference/builder/#understand-how-arg-and-from-interact
 ARG PHP_VERSION=7.4
+ARG APCU_VERSION=5.1.16
 ARG OPENRESTY_VERSION=1.17.8.2
 ARG VARNISH_VERSION=6.5
 
-# "php" stage
-FROM php:${PHP_VERSION}-fpm-alpine AS api_platform_php
+# build for production
+#ARG APP_ENV=prod
 
-# persistent / runtime deps
-RUN apk add --no-cache \
-		acl \
-		fcgi \
-		file \
-		gettext \
+FROM php:${PHP_VERSION}-fpm-buster AS api_platform_php
+
+RUN useradd -m -o -u 1000 docker;
+
+ENV TZ=Europe/Madrid
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+RUN set -eux;
+RUN mkdir -p /usr/share/man/man1
+
+RUN apt update \
+	&& apt install -y --fix-missing --no-install-recommends \
+		$PHPIZE_DEPS \
+		software-properties-common \
+		libicu-dev \
+		libfcgi-bin \
+		libzip-dev  \
+		zlib1g-dev  \
+		apt-utils \
+		pdftk \
 		git \
+		libssl-dev \
+		wget \
+		gnupg2 \
+		unzip \
+		libmagickwand-dev \
+		rclone \
+		cron \
+	&& docker-php-ext-install -j$(nproc) \
+       		intl \
+       		mysqli \
+       		pdo \
+       		pdo_mysql \
+       		zip \
+       		bcmath \
+	&& apt clean \
 	;
 
-ARG APCU_VERSION=5.1.19
-RUN set -eux; \
-	apk add --no-cache --virtual .build-deps \
-		$PHPIZE_DEPS \
-		icu-dev \
-		libzip-dev \
-		postgresql-dev \
-		zlib-dev \
-	; \
-	\
-	docker-php-ext-configure zip; \
-	docker-php-ext-install -j$(nproc) \
-		intl \
-		pdo_pgsql \
-		zip \
-	; \
-	pecl install \
-		apcu-${APCU_VERSION} \
-	; \
-	pecl clear-cache; \
-	docker-php-ext-enable \
-		apcu \
-		opcache \
-	; \
-	\
-	runDeps="$( \
-		scanelf --needed --nobanner --format '%n#p' --recursive /usr/local/lib/php/extensions \
-			| tr ',' '\n' \
-			| sort -u \
-			| awk 'system("[ -e /usr/local/lib/" $1 " ]") == 0 { next } { print "so:" $1 }' \
-	)"; \
-	apk add --no-cache --virtual .api-phpexts-rundeps $runDeps; \
-	\
-	apk del .build-deps
+RUN wget https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.5/wkhtmltox_0.12.5-1.buster_amd64.deb \
+	&& apt install -y ./wkhtmltox_0.12.5-1.buster_amd64.deb \
+	&& rm ./wkhtmltox_0.12.5-1.buster_amd64.deb
+
+RUN pecl install \
+#	apcu-5.1.16 \
+	imagick \
+	raphf \
+	propro \
+	xdebug \
+	&& printf "\n" | \
+	docker-php-ext-enable imagick \
+	raphf \
+	propro \
+	xdebug \
+	&& pecl clear-cache \
+    ;
+
+
+
+# Install Blackfire CLI tool and PHP Probe
+RUN wget -q -O - https://packages.blackfire.io/gpg.key | apt-key add -
+RUN echo "deb http://packages.blackfire.io/debian any main" | tee /etc/apt/sources.list.d/blackfire.list
+RUN apt-get update && apt-get install -y blackfire-agent blackfire-php
+
+
+RUN mkdir -p /usr/local/etc/php/conf.d/disabled
+RUN rm /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+COPY docker/php/conf.d/docker-php-ext-xdebug.ini /usr/local/etc/php/conf.d/disabled/docker-php-ext-xdebug.ini
+
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
@@ -76,6 +102,19 @@ ENV PATH="${PATH}:/root/.composer/vendor/bin"
 
 WORKDIR /srv/api
 
+COPY docker/php/docker-healthcheck.sh /usr/local/bin/docker-healthcheck
+RUN chmod +x /usr/local/bin/docker-healthcheck
+
+HEALTHCHECK --interval=10s --timeout=3s --retries=3 CMD ["docker-healthcheck"]
+
+COPY docker/php/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
+RUN chmod +x /usr/local/bin/docker-entrypoint
+
+ENTRYPOINT ["docker-entrypoint"]
+CMD ["php-fpm"]
+
+
+FROM api_platform_php as api_platform_php_prod
 # build for production
 ARG APP_ENV=prod
 
@@ -104,16 +143,6 @@ RUN set -eux; \
 	chmod +x bin/console; sync
 VOLUME /srv/api/var
 
-COPY docker/php/docker-healthcheck.sh /usr/local/bin/docker-healthcheck
-RUN chmod +x /usr/local/bin/docker-healthcheck
-
-HEALTHCHECK --interval=10s --timeout=3s --retries=3 CMD ["docker-healthcheck"]
-
-COPY docker/php/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
-RUN chmod +x /usr/local/bin/docker-entrypoint
-
-ENTRYPOINT ["docker-entrypoint"]
-CMD ["php-fpm"]
 
 
 # "nginx" stage
@@ -126,7 +155,7 @@ COPY docker/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf
 
 WORKDIR /srv/api/public
 
-COPY --from=api_platform_php /srv/api/public ./
+COPY public /srv/api/public/
 
 
 # "varnish" stage
