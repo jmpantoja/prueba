@@ -1,62 +1,61 @@
 <template>
-  <div>
-    <Nuxt />
+  <div id="appRoot">
+    <template>
+      <v-app id="inspire" class="app">
+        <app-drawer class="app--drawer" />
+        <app-toolbar class="app--toolbar" />
+        <v-main class="main">
+          <!-- Page Header -->
+          <page-header />
+          <div class="page-wrapper">
+            <transition name="fade">
+              <nuxt />
+            </transition>
+          </div>
+        </v-main>
+      </v-app>
+    </template>
   </div>
 </template>
 
-<style>
-html {
-  font-family:
-    'Source Sans Pro',
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    'Helvetica Neue',
-    Arial,
-    sans-serif;
-  font-size: 16px;
-  word-spacing: 1px;
-  -ms-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  box-sizing: border-box;
-}
+<script>
+import AppDrawer from '~/components/ui/AppDrawer'
+import AppToolbar from '~/components/ui/AppToolbar'
+import PageHeader from '~/components/ui/PageHeader'
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-}
+export default {
+  components: {
+    AppDrawer,
+    AppToolbar,
+    PageHeader
+  },
+  mounted () {
+    const { locale } = this.$i18n
+    const isRtl = locale === 'fa'
+    if (this.$route.path === '/') {
+      this.$router.replace('/' + locale)
+    }
 
-.button--green {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #3b8070;
-  color: #3b8070;
-  text-decoration: none;
-  padding: 10px 30px;
+    this.$vuetify.lang.current = locale
+    this.$vuetify.rtl = isRtl
+  }
 }
+</script>
 
-.button--green:hover {
-  color: #fff;
-  background-color: #3b8070;
+<style lang="scss" scoped>
+.main {
+  background-color: #fafafa;
 }
-
-.button--grey {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #35495e;
-  color: #35495e;
-  text-decoration: none;
-  padding: 10px 30px;
-  margin-left: 15px;
+.page-wrapper {
+  min-height: calc(100vh - 64px - 50px - 81px);
 }
+.fade {
+  &-enter-active, &-leave-active {
+    transition: opacity 200ms ease-in-out;
+  }
 
-.button--grey:hover {
-  color: #fff;
-  background-color: #35495e;
+  &-enter, &-leave-to {
+    opacity: 0;
+  }
 }
 </style>

@@ -1,43 +1,95 @@
+import config from 'config'
+import colors from 'vuetify/es5/util/colors'
+
 export default {
-  // Disable server-side rendering (https://go.nuxtjs.dev/ssr-mode)
-  ssr: false,
+    ssr: false,
 
-  // Target (https://go.nuxtjs.dev/config-target)
-  target: 'static',
+    head: {
+        title: 'Nuxt Vuetify 2',
+        meta: [
+            {charset: 'utf-8'},
+            {name: 'viewport', content: 'width=device-width, initial-scale=1'},
+            {hid: 'description', name: 'description', content: process.env.npm_package_description || ''}
+        ],
+        link: [
+            {rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'}
+        ]
+    },
 
-  // Global page headers (https://go.nuxtjs.dev/config-head)
-  head: {
-    title: 'admin',
-    meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' }
+    loading: {color: '#fff'},
+
+    css: [
+        '~/assets/styles/app.scss'
     ],
-    link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-    ]
-  },
 
-  // Global CSS (https://go.nuxtjs.dev/config-css)
-  css: [
-  ],
+    plugins: [
+        '~plugins/filters.js',
+        '~plugins/admin.js',
+    ],
 
-  // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
-  plugins: [
-  ],
+    modules: [
+        '@nuxtjs/axios',
+        'nuxt-i18n',
+        '@nuxtjs/vuetify',
+        'vue-chimera/nuxt'
+    ],
 
-  // Auto import components (https://go.nuxtjs.dev/config-components)
-  components: true,
+    axios: {
+        baseURL: config.get('baseURL')
+    },
 
-  // Modules for dev and build (recommended) (https://go.nuxtjs.dev/config-modules)
-  buildModules: [
-  ],
+    build: {
+        extend(config, ctx) {
 
-  // Modules (https://go.nuxtjs.dev/config-modules)
-  modules: [
-  ],
+        }
+    },
 
-  // Build Configuration (https://go.nuxtjs.dev/config-build)
-  build: {
-  }
+    i18n: {
+        locales: [
+            {code: 'en', file: 'en.js', flag: 'gb', rtl: false},
+            {code: 'es', file: 'es.js', flag: 'es', rtl: false},
+            {code: 'fa', file: 'fa.js', flag: 'th', rtl: true},
+        ],
+        defaultLocale: 'en',
+        vueI18nLoader: true,
+        lazy: true,
+        langDir: 'lang/',
+        parsePages: false,
+        detectBrowserLanguage: {
+            useCookie: true,
+            cookieKey: 'i18n_redirected',
+            alwaysRedirect: true,
+            fallbackLocale: null
+        },
+        strategy: 'prefix'
+    },
+
+    chimera: {},
+
+    vuetify: {
+        customVariables: ['~/assets/styles/variables.scss'],
+        treeShake: true,
+        rtl: false,
+        lang: {
+            locales: {en: {}, fa: {}},
+            t(key, ...params) {
+                return window.$nuxt.$i18n.t(key, params)
+            },
+            current: 'en'
+        },
+        theme: {
+            light: true,
+            themes: {
+                light: {
+                    primary: colors.blue.darken2,
+                    accent: colors.grey.darken3,
+                    secondary: colors.amber.darken3,
+                    info: colors.teal.lighten1,
+                    warning: colors.amber.base,
+                    error: colors.deepOrange.accent4,
+                    success: colors.green.accent3,
+                }
+            }
+        }
+    }
 }

@@ -75,8 +75,9 @@ services:
     image: ${ADMIN_IMAGE:?ADMIN_IMAGE is not set or empty}
     restart: always
     volumes:
-      - ./admin:/usr/app:rw    
-#    environment:
+      - ./admin:/usr/app:rw
+    environment:
+      - API_ENDPOINT=https://${API_HOST}
 #      - VIRTUAL_HOST=${ADMIN_HOST:?ADMIN_HOST is not set or empty}
 
 
