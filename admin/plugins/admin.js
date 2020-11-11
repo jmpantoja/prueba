@@ -3,19 +3,20 @@ import Vue from 'vue'
 import _ from 'lodash'
 import admin from '~/admin/admin'
 
-function install (Vue, options) {
+function install(Vue, options) {
+
   Vue.mixin({
     computed: {
-      entity () {
+      entity() {
         return this.$route.params.entity
       },
-      admin () {
+      admin() {
         const l = this.localePath.bind(this)
         return {
           entity: this.entity,
           dataList: admin[this.entity].dataList,
           form: admin[this.entity].form,
-          url (params) {
+          url(params) {
             params = _.merge(params, {
               entity: this.entity
             })
@@ -33,8 +34,9 @@ function install (Vue, options) {
         }
       }
     },
+
     methods: {
-      isEmpty (value) {
+      isEmpty(value) {
         value = value || {}
         if (typeof value === 'number' && value !== 0) {
           return false
@@ -42,11 +44,11 @@ function install (Vue, options) {
 
         return Object.keys(value).length <= 0
       },
-      filter (value) {
+      filter(value) {
         return _.filter(value)
       }
     }
   })
 }
 
-Vue.use({ install })
+Vue.use({install})

@@ -31,6 +31,7 @@ RUN apt update \
 		libzip-dev  \
 		zlib1g-dev  \
 		apt-utils \
+		acl \
 		pdftk \
 		git \
 		libssl-dev \

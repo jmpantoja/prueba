@@ -2,7 +2,7 @@
   <v-container>
       <v-row>
         <v-col cols="6">
-          <tag-list style="height: 200px" />
+          <borrame/>
         </v-col>
         <v-col cols="6">
           <tag-list />
@@ -13,7 +13,8 @@
 
 <script>
 import TagList from '~/components/admin/Tag/TagList'
+import Borrame from "../components/grid/Borrame";
 export default {
-  components: { TagList }
+  components: {Borrame, TagList }
 }
 </script>

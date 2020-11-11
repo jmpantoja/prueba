@@ -1,0 +1,25 @@
+App\Application\Greeting\Dto\GreetingDto:
+    shortName: 'Greeting'
+    description: 'An entity for example purpouses'
+    properties:
+        id:
+            identifier: true
+    attributes:
+        normalization_context:
+            groups: [ 'read' ]
+        denormalization_context:
+            groups: [ 'write' ]
+
+
+App\Domain\User\User:
+    collectionOperations:
+        get:
+            filters:
+                - 'user.order_filter'
+    attributes:
+        input: App\Application\User\Dto\UserDto
+        output: App\Application\User\Dto\UserDto
+        normalization_context:
+            groups: [ 'read' ]
+        denormalization_context:
+            groups: [ 'write' ]

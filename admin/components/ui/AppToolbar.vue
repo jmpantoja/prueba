@@ -134,7 +134,8 @@ export default {
     },
 
     logout() {
-      this.$router.push(this.localePath('login'))
+        this.$auth.logout();
+      //this.$router.push(this.localePath('login'))
     }
   }
 }

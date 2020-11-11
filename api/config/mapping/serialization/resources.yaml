@@ -1,0 +1,16 @@
+App\Application\Greeting\Dto\GreetingDto:
+    attributes:
+        id:
+            groups: ['read']        
+        name:
+            groups: ['read', 'write']
+
+App\Application\User\Dto\UserDto:
+    attributes:
+        id:
+            groups: ['read']
+        email:
+            groups: ['write', 'read']            
+        roles:
+            groups: ['write', 'read']
+    

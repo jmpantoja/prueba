@@ -14,18 +14,29 @@ services:
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
     App\:
-        resource: '../src/'
+        resource: '../src/App/'
         exclude:
-            - '../src/DependencyInjection/'
-            - '../src/Entity/'
-            - '../src/Kernel.php'
-            - '../src/Tests/'
+            #            - '../src/DependencyInjection/'
+            - '../src/App/Infrastructure/UI/Kernel.php'
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
-    App\Controller\:
-        resource: '../src/Controller/'
-        tags: ['controller.service_arguments']
+    App\Infrastructure\UI\Controller\:
+        resource: '../src/App/Infrastructure/UI/Controller'
+        tags: [ 'controller.service_arguments' ]
 
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
+    App\Infrastructure\UI\Swagger\SwaggerDecorator:
+        decorates: 'api_platform.swagger.normalizer.documentation'
+        arguments: [ '@App\Infrastructure\UI\Swagger\SwaggerDecorator.inner' ]
+        autoconfigure: false
+
+
+    user.order_filter:
+        parent: 'api_platform.doctrine.orm.order_filter'
+        arguments: { $properties: { email: "desc" } }
+        tags: [ 'api_platform.filter' ]
+        ###        # The following are mandatory only if a _defaults section is defined
+        ###        # You may want to isolate filters in a dedicated file to avoid adding them
+        autowire: false
+        autoconfigure: false
+        public: false
