@@ -7,15 +7,19 @@ services:
     depends_on:
       - db
     environment:
-      - APP_DEBUG=${APP_DEBUG}
-      - APP_ENV=${APP_ENV}
-      - APP_SECRET=${APP_SECRET:?APP_SECRET is not set or empty}
-      - CORS_ALLOW_ORIGIN=${CORS_ALLOW_ORIGIN:?CORS_ALLOW_ORIGIN is not set or empty}
-      - DATABASE_URL=${DATABASE_URL:?DATABASE_URL is not set or empty}
-      - MERCURE_JWT_TOKEN=${MERCURE_JWT_TOKEN:?MERCURE_JWT_TOKEN is not set or empty}
-      - MERCURE_SUBSCRIBE_URL=${MERCURE_SUBSCRIBE_URL:?MERCURE_SUBSCRIBE_URL is not set or empty}
-      - TRUSTED_HOSTS=${TRUSTED_HOSTS:?TRUSTED_HOSTS is not set or empty}
-      - TRUSTED_PROXIES=${TRUSTED_PROXIES:-10.0.0.0/8,172.16.0.0/12,192.168.0.0/16}
+      APP_DEBUG: ${APP_DEBUG}
+      APP_ENV: ${APP_ENV}
+      APP_SECRET: ${APP_SECRET:?APP_SECRET is not set or empty}
+      CORS_ALLOW_ORIGIN: ${CORS_ALLOW_ORIGIN:?CORS_ALLOW_ORIGIN is not set or empty}
+      DATABASE_URL: ${DATABASE_URL:?DATABASE_URL is not set or empty}
+      MERCURE_JWT_TOKEN: ${MERCURE_JWT_TOKEN:?MERCURE_JWT_TOKEN is not set or empty}
+      MERCURE_SUBSCRIBE_URL: ${MERCURE_SUBSCRIBE_URL:?MERCURE_SUBSCRIBE_URL is not set or empty}
+      TRUSTED_HOSTS: ${TRUSTED_HOSTS:?TRUSTED_HOSTS is not set or empty}
+      TRUSTED_PROXIES: ${TRUSTED_PROXIES:-10.0.0.0/8,172.16.0.0/12,192.168.0.0/16}
+
+      #https://brunopaz.dev/blog/docker-phpstorm-and-xdebug-the-definitive-guide
+      PHP_IDE_CONFIG: serverName=symfony-demo
+      XDEBUG_CONFIG: remote_host=172.17.0.1 #ifconfig -- docker0        
     volumes:
       - ./api:/srv/api
 
