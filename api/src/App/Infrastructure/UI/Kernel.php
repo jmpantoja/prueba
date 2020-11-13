@@ -6,14 +6,26 @@ use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+use Tangram\Bundle\TangramBundle;
 
 class Kernel extends BaseKernel
 {
     use MicroKernelTrait;
 
+    public function registerBundles(): iterable
+    {
+        $contents = require $this->getProjectDir() . '/config/bundles.php';
+        $contents[TangramBundle::class] = ['all' => true];
+        foreach ($contents as $class => $envs) {
+            if ($envs[$this->environment] ?? $envs['all'] ?? false) {
+                yield new $class();
+            }
+        }
+    }
+
     public function getProjectDir(): string
     {
-        return realpath(__DIR__ .'/../../../../');
+        return realpath(__DIR__ . '/../../../../');
     }
 
     public function getCacheDir()

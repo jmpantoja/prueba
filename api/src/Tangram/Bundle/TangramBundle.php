@@ -11,12 +11,12 @@
 
 declare(strict_types=1);
 
-namespace App\Application\User\Dto;
+namespace Tangram\Bundle;
 
 
-final class UserDto
+use Symfony\Component\HttpKernel\Bundle\Bundle;
+
+final class TangramBundle extends Bundle
 {
-    public ?int $id = null;
-    public string $email;
-    public array $roles = [];
+
 }

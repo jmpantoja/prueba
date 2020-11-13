@@ -25,15 +25,13 @@ services:
         resource: '../src/App/Infrastructure/UI/Controller'
         tags: [ 'controller.service_arguments' ]
 
-    App\Infrastructure\UI\Swagger\SwaggerDecorator:
-        decorates: 'api_platform.swagger.normalizer.documentation'
-        arguments: [ '@App\Infrastructure\UI\Swagger\SwaggerDecorator.inner' ]
-        autoconfigure: false
+
+
 
 
     user.order_filter:
         parent: 'api_platform.doctrine.orm.order_filter'
-        arguments: { $properties: { email: "desc" } }
+        arguments: { $properties: { email: "asc" } }
         tags: [ 'api_platform.filter' ]
         ###        # The following are mandatory only if a _defaults section is defined
         ###        # You may want to isolate filters in a dedicated file to avoid adding them
