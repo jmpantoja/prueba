@@ -53,7 +53,7 @@ export default {
     redirect: {
       login: '/en/login',
       logout: '/en/login',
-      callback: '/en',
+      callback: '/login',
       //home: '/en'
     },
     cookie: {
