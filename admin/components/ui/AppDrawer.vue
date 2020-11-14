@@ -10,7 +10,7 @@
     width="260"
   >
     <v-toolbar color="primary" dark>
-      <img src="/static/logo.svg" height="36" width="36" alt="Vue Material Admin Template">
+      <img src="/logo.svg" height="36" width="36" alt="Vue Material Admin Template">
       <v-toolbar-title class="ms-0 ps-3 font-weight-medium">
         <span>{{ $t('app.title') }}</span>
       </v-toolbar-title>

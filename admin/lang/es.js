@@ -4,22 +4,29 @@ export default {
 
   $vuetify,
   app: {
-    title: 'Vocabulary',
-    list: 'List',
-    data: 'Data',
-    filter: 'Filter'
+    title: 'App',
+    list: 'Listado'
   },
   toolbar: {
-    search: 'Search',
-    login: 'Login',
-    logout: 'Logout',
-    profile: 'Profile'
+    search: "Buscar",
+    login: "Login",
+    logout: "Logout",
+    profile: "Perfil"
   },
-  menu: {
-    vocabulary: 'Vocabulary',
-    tags: 'Tags',
-    entries: 'Entries'
+  admin: {
+    example: {
+      menu: 'Ejemplo',
+      contact: {
+        menu: 'Agenda',
+        grid: {
+          title: 'Agenda',
+          headers: {
+            fullName: 'Nombre Completo',
+            birthDate: 'Fec. Nacimiento',
+            age: 'Edad',
+          }
+        }
+      }
+    },
   },
-  tag: 'Tag'
-
 }

@@ -1,4 +1,3 @@
-import config from 'config'
 import colors from 'vuetify/es5/util/colors'
 
 export default {
@@ -32,7 +31,8 @@ export default {
     'nuxt-i18n',
     '@nuxtjs/vuetify',
     'vue-chimera/nuxt',
-    '@nuxtjs/auth-next'
+    '@nuxtjs/auth-next',
+    '@nuxtjs/moment'
   ],
   build: {
     extend(config, ctx) {
@@ -45,7 +45,12 @@ export default {
   },
 
   axios: {
-    baseURL: config.get('baseURL')
+    baseURL: process.env.API_ENDPOINT,
+    headers: {
+      common: {
+        'Accept': 'application/json'
+      },
+    }
   },
   auth: {
     localStorage: false,
@@ -81,12 +86,14 @@ export default {
       }
     }
   },
-
+  moment: {
+    defaultLocale: 'en-gb',
+    locales: ['en-gb', 'es']
+  },
   i18n: {
     locales: [
       {code: 'en', file: 'en.js', flag: 'gb', rtl: false},
       {code: 'es', file: 'es.js', flag: 'es', rtl: false},
-      {code: 'fa', file: 'fa.js', flag: 'th', rtl: true},
     ],
     defaultLocale: 'en',
     vueI18nLoader: true,

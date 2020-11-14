@@ -2,6 +2,7 @@
 
 namespace App\Infrastructure\UI;
 
+use Doctrine\Common\Annotations\AnnotationReader;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
@@ -36,6 +37,7 @@ class Kernel extends BaseKernel
 
     protected function configureContainer(ContainerConfigurator $container): void
     {
+        AnnotationReader::addGlobalIgnoredName('alias');
         $confDir = $this->getProjectDir() . '/config';
 
         $container->import($confDir . '/{packages}/*.yaml');

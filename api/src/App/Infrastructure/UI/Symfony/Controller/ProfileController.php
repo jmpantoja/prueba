@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Infrastructure\UI\Controller;
+namespace App\Infrastructure\UI\Symfony\Controller;
 
 use App\Domain\User\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

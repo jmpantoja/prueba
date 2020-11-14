@@ -44,7 +44,7 @@ function install(Vue, options) {
 
         return Object.keys(value).length <= 0
       },
-      filter(value) {
+      removeNulls(value) {
         return _.filter(value)
       }
     }

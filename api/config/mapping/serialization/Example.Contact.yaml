@@ -1,0 +1,10 @@
+App\Application\Example\Dto\ContactDto:
+    attributes:
+        id:
+            groups: [ 'read' ]
+        fullName:
+            groups: [ 'write', 'read' ]
+        birthDate:
+            groups: [ 'write', 'read' ]
+        age:
+            groups: [ 'read' ]

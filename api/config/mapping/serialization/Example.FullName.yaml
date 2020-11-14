@@ -1,0 +1,7 @@
+App\Application\Example\Dto\FullNameDto:
+    attributes:
+        firstName:
+            groups: [ 'write', 'read' ]
+        lastName:
+            groups: [ 'write', 'read' ]
+ 

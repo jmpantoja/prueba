@@ -1,6 +1,8 @@
 <template>
-  <component v-if="isForm" :is="admin.form" :id="id"/>
-  <component v-else :is="admin.dataList"/>
+    <div>
+        <component v-if="isForm" :is="admin.form" :id="id"/>
+        <component v-else :is="admin.dataList"/>
+    </div>
 </template>
 
 <script>

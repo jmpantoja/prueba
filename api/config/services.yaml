@@ -21,13 +21,9 @@ services:
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
-    App\Infrastructure\UI\Controller\:
-        resource: '../src/App/Infrastructure/UI/Controller'
+    App\Infrastructure\UI\Symfony\Controller\:
+        resource: '../src/App/Infrastructure/UI/Symfony/Controller'
         tags: [ 'controller.service_arguments' ]
-
-
-
-
 
     user.order_filter:
         parent: 'api_platform.doctrine.orm.order_filter'
