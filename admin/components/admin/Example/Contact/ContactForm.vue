@@ -24,16 +24,10 @@
                 </v-row>
                 <v-row>
                     <v-col cols="6">
-
-                        <h1 class="red">hacer un componente con esto / datepicker</h1>
-                        <v-text-field
-                            type="date"
+                        <input-date
                             :label="$t('admin.example.contact.form.labels.birthDate')"
-                            required
-                            :value="$moment(item.birthDate).format('Y-MM-DD')"
-                            @input="item.birthDate = $event"
+                            v-model="item.birthDate"
                         />
-
                     </v-col>
                 </v-row>
             </v-container>
@@ -46,12 +40,14 @@
 <script>
 
 import FormDialog from "../../../crud/FormDialog";
+import InputDate from "../../../form/input-date";
 
 export default {
     name: "ContactForm",
-    components: {FormDialog},
+    components: {InputDate, FormDialog},
     data() {
         return {
+            borrame: 'hola',
             rules: {
                 form: [],
                 firstName: [
