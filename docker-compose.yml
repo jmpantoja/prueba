@@ -82,7 +82,8 @@ services:
       - ./admin:/usr/app:rw
     environment:
       - API_ENDPOINT=https://${API_HOST}
-      - LOGIN_URL=https://${API_HOST}/token
+      - TOKEN_URL=https://${API_HOST}/token
+      - REFRESH_TOKEN_URL=https://${API_HOST}/token/refresh
       - PROFILE_URL=https://${API_HOST}/profile
 #      - VIRTUAL_HOST=${ADMIN_HOST:?ADMIN_HOST is not set or empty}
 

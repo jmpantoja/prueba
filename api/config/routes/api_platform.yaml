@@ -1,7 +1,11 @@
 api_platform:
     resource: .
     type: api_platform
-#
+
+gesdinet_jwt_refresh_token:
+    path:       /token/refresh
+    controller: gesdinet.jwtrefreshtoken::refresh
+
 authentication_token:
     path: /token
     methods: ['POST']

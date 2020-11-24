@@ -28,6 +28,14 @@ final class Contact
         $this->birthDate = $birthDate;
     }
 
+    public function update(FullName $fullName, CarbonImmutable $birthDate): self
+    {
+        $this->fullName = $fullName;
+        $this->birthDate = $birthDate;
+
+        return $this;
+    }
+
     /**
      * @return int
      */

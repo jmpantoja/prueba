@@ -1,10 +1,8 @@
 <template>
     <v-container>
         <v-row>
-            <v-col cols="6">
+            <v-col cols="12">
 
-            </v-col>
-            <v-col cols="6">
             </v-col>
         </v-row>
     </v-container>
@@ -12,8 +10,4 @@
 
 <script>
 
-
-export default {
-    components: {}
-}
 </script>

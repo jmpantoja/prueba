@@ -16,3 +16,20 @@ services:
         autowire: false
         autoconfigure: false
         public: false
+                
+    gesdinet.jwtrefreshtoken.refresh_token_manager:
+        class: Tangram\Gesdinet\JWTRefreshTokenBundle\Doctrine\RefreshTokenManager
+        public: true
+        arguments: [ '@doctrine.orm.default_entity_manager', 'Gesdinet\JWTRefreshTokenBundle\Entity\RefreshToken']
+
+    Tangram\Doctrine\:
+        resource: '../../../Doctrine'
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Tangram\Symfony\:
+        resource: '../../../Symfony'
+        autowire: true
+        autoconfigure: true
+        public: false

@@ -38,6 +38,7 @@ class Kernel extends BaseKernel
     protected function configureContainer(ContainerConfigurator $container): void
     {
         AnnotationReader::addGlobalIgnoredName('alias');
+
         $confDir = $this->getProjectDir() . '/config';
 
         $container->import($confDir . '/{packages}/*.yaml');

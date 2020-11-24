@@ -25,6 +25,17 @@ services:
         resource: '../src/App/Infrastructure/UI/Symfony/Controller'
         tags: [ 'controller.service_arguments' ]
 
+    contact.order_filter:
+        parent: 'api_platform.doctrine.orm.order_filter'
+        arguments: { $properties: { fullName.lastName: "asc", birthDate: "asc" } }
+        tags: [ 'api_platform.filter' ]
+        ###        # The following are mandatory only if a _defaults section is defined
+        ###        # You may want to isolate filters in a dedicated file to avoid adding them
+        autowire: false
+        autoconfigure: false
+        public: false
+
+
     user.order_filter:
         parent: 'api_platform.doctrine.orm.order_filter'
         arguments: { $properties: { email: "asc" } }

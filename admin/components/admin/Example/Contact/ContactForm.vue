@@ -1,71 +1,57 @@
 <template>
+    <form-dialog :width="800">
+        <template v-slot:form="{item}">
+            <v-container>
+                <v-row>
+                    <v-col cols="6">
+                        <v-text-field
+                            :label="$t('admin.example.contact.form.labels.firstName')"
+                            required
+                            v-model="item.fullName.firstName"
+                            :rules="rules.firstName"
 
+                        />
+                    </v-col>
 
-    <v-row>
-        <v-col
-            cols="12"
-            sm="6"
-            md="6"
-        >
-            <v-text-field
-                :label="$t('admin.example.contact.form.labels.firstName')"
-                required
-                v-model="data.fullName.firstName"
-                :rules="rules.firstName"
-            ></v-text-field>
-        </v-col>
-        <v-col
-            cols="12"
-            sm="6"
-            md="6"
-        >
-            <v-text-field
-                :label="$t('admin.example.contact.form.labels.lastName')"
-                hint="example of helper text only on focus"
-                v-model="data.fullName.lastName"
-                :rules="rules.lastName"
-            ></v-text-field>
-        </v-col>
+                    <v-col cols="6">
+                        <v-text-field
+                            :label="$t('admin.example.contact.form.labels.lastName')"
+                            required
+                            v-model="item.fullName.lastName"
+                            :rules="rules.lastName"
+                        />
+                    </v-col>
+                </v-row>
+                <v-row>
+                    <v-col cols="6">
 
-        <v-col
-            cols="12"
-            sm="6"
-        >
-            <v-text-field
-                :label="$t('admin.example.contact.form.labels.birthDate')"
-                type="date"
-                v-model="$moment(data.birthDate).format('Y-MM-DD')"
-                required
-            ></v-text-field>
+                        <h1 class="red">hacer un componente con esto / datepicker</h1>
+                        <v-text-field
+                            type="date"
+                            :label="$t('admin.example.contact.form.labels.birthDate')"
+                            required
+                            :value="$moment(item.birthDate).format('Y-MM-DD')"
+                            @input="item.birthDate = $event"
+                        />
 
-        </v-col>
-    </v-row>
+                    </v-col>
+                </v-row>
+            </v-container>
+        </template>
 
+    </form-dialog>
 
 </template>
 
 <script>
-import DialogForm from "../../../grid/DialogForm";
+
+import FormDialog from "../../../crud/FormDialog";
 
 export default {
     name: "ContactForm",
-    components: {DialogForm},
-    props: {
-        active: {
-            type: Boolean,
-            default: () => false
-        },
-        item: {
-            type: Object,
-            default: () => ({})
-        }
-    },
+    components: {FormDialog},
     data() {
         return {
-            default: {
-                fullName: {},
-                birthDate: null
-            },
             rules: {
                 form: [],
                 firstName: [
@@ -74,12 +60,7 @@ export default {
                 lastName: [
                     v => !!v || this.$t('required'),
                 ],
-            }
-        }
-    },
-    computed: {
-        data() {
-            return _.merge(this.default, this.item)
+            },
         }
     }
 }

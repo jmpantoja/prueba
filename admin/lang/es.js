@@ -13,6 +13,23 @@ export default {
     logout: "Logout",
     profile: "Perfil"
   },
+  form: {
+    save: 'Guardar',
+    cancel: 'Cancelar',
+  },
+  notifier: {
+    close: 'Cerrar',
+    failed: 'Ha ocurrido un error:',
+    deleted: 'Registro eliminado correctamente',
+    updated: 'Registro actualizado correctamente',
+  },
+  modal: {
+    delete: {
+      title: '¿Confirma eliminar este registro?'
+    },
+    yes: 'Si, borrar',
+    no: 'No',
+  },
   admin: {
     example: {
       menu: 'Ejemplo',
@@ -24,6 +41,17 @@ export default {
             fullName: 'Nombre Completo',
             birthDate: 'Fec. Nacimiento',
             age: 'Edad',
+          }
+        },
+        form: {
+          title: {
+            create: 'Crear Contacto',
+            edit: 'Editar Contacto',
+          },
+          labels: {
+            firstName: 'Nombre',
+            lastName: 'Apellido',
+            birthDate: 'Fec. Nacimiento',
           }
         }
       }

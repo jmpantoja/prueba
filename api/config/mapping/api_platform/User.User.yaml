@@ -3,15 +3,7 @@ App\Domain\User\User:
         get:
             filters:
                 - 'user.order_filter'
-    graphql:
-        item_query: ~
-        collection_query:
-            filters:
-                - 'user.order_filter' 
-        delete: ~
-        update: ~
-        create: ~
-
+                
     attributes:
         input: App\Application\User\Dto\UserDto
         output: App\Application\User\Dto\UserDto

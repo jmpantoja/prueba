@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace App\Infrastructure\Api\Example;
+namespace App\Infrastructure\Api\Example\Persister;
 
 
 use ApiPlatform\Core\DataPersister\ContextAwareDataPersisterInterface;

@@ -15,13 +15,14 @@ namespace App\Application\Example\Dto;
 
 
 use App\Domain\Example\Contact;
+use App\Domain\Example\FullName;
 use Carbon\CarbonImmutable;
 
 final class ContactDto
 {
     public ?int $id = null;
 
-    public FullNameDto $fullName;
+    public FullName $fullName;
 
     public CarbonImmutable $birthDate;
 
@@ -29,7 +30,7 @@ final class ContactDto
     {
         $dto = new ContactDto();
         $dto->id = $contact->id();
-        $dto->fullName = FullNameDto::fromFullName($contact->fullName());
+        $dto->fullName = $contact->fullName();
         $dto->birthDate = $contact->birthDate();
 
         return $dto;

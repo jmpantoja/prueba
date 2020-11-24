@@ -11,17 +11,15 @@
 
 declare(strict_types=1);
 
-namespace App\Infrastructure\Api\Example;
+namespace App\Infrastructure\Api\Example\Transformer;
 
 
 use ApiPlatform\Core\DataTransformer\DataTransformerInterface;
 use App\Application\Example\Dto\ContactDto;
 use App\Domain\Example\Contact;
-use App\Domain\Example\FullName;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
-final class ContactInputTransformer implements DataTransformerInterface
+final class ContactOutputTransformer implements DataTransformerInterface
 {
 
     private ObjectNormalizer $itemNormalizer;
@@ -32,20 +30,18 @@ final class ContactInputTransformer implements DataTransformerInterface
     }
 
     /**
-     * @param ContactDto $object
+     * @param Contact $object
      * @param string $to
      * @param array $context
      * @return object|void
      */
     public function transform($object, string $to, array $context = [])
     {
-        $fullName = $this->itemNormalizer->denormalize($object->fullName, FullName::class);
-
-        return new Contact($fullName, $object->birthDate);
+        return ContactDto::fromContact($object);
     }
 
     public function supportsTransformation($data, string $to, array $context = []): bool
     {
-        return $to === Contact::class;
+        return $to === ContactDto::class;
     }
 }

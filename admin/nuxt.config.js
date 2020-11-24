@@ -22,7 +22,9 @@ export default {
   ],
 
   plugins: [
+    '~plugins/notifier.js',
     '~plugins/common.js',
+    '~plugins/axios.js',
     '~plugins/admin.js',
   ],
 
@@ -48,7 +50,7 @@ export default {
     baseURL: process.env.API_ENDPOINT,
     headers: {
       common: {
-        'Accept': 'application/json'
+        'Accept': 'application/ld+json'
       },
     }
   },
@@ -56,8 +58,8 @@ export default {
     localStorage: false,
     scopeKey: 'roles',
     redirect: {
-      login: '/en/login',
-      logout: '/en/login',
+      login: '/es/login',
+      logout: '/es/login',
       callback: '/login',
       //home: '/en'
     },
@@ -68,18 +70,26 @@ export default {
     },
     strategies: {
       local: {
+        scheme: 'refresh',
         token: {
           property: 'token',
+          maxAge: 1800,
           // required: true,
           // type: 'Bearer'
+        },
+        refreshToken: {
+          property: 'refresh_token',
+          data: 'refresh_token',
+          maxAge: 60 * 60 * 24 * 30
         },
         user: {
           property: 'user',
           // autoFetch: true
         },
         endpoints: {
-          login: {url: process.env.LOGIN_URL, method: 'post'},
+          login: {url: process.env.TOKEN_URL, method: 'post'},
           // logout: {url: '/api/auth/logout', method: 'post'},
+          refresh: {url: process.env.REFRESH_TOKEN_URL, method: 'post'},
           user: {url: process.env.PROFILE_URL, method: 'get'},
           logout: false,
         }
@@ -87,7 +97,7 @@ export default {
     }
   },
   moment: {
-    defaultLocale: 'en-gb',
+    defaultLocale: 'es',
     locales: ['en-gb', 'es']
   },
   i18n: {
@@ -95,7 +105,7 @@ export default {
       {code: 'en', file: 'en.js', flag: 'gb', rtl: false},
       {code: 'es', file: 'es.js', flag: 'es', rtl: false},
     ],
-    defaultLocale: 'en',
+    defaultLocale: 'es',
     vueI18nLoader: true,
     lazy: true,
     langDir: 'lang/',
@@ -116,11 +126,11 @@ export default {
     treeShake: true,
     rtl: false,
     lang: {
-      locales: {en: {}, fa: {}},
+      locales: {en: {}, es: {}},
       t(key, ...params) {
         return window.$nuxt.$i18n.t(key, params)
       },
-      current: 'en'
+      current: 'es'
     },
     theme: {
       light: true,
@@ -132,7 +142,8 @@ export default {
           info: colors.teal.lighten1,
           warning: colors.amber.base,
           error: colors.deepOrange.accent4,
-          success: colors.green.accent3,
+          danger: colors.deepOrange.darken2,
+          success: colors.green.darken3,
         }
       }
     }

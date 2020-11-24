@@ -20,11 +20,11 @@ export default function () {
           title: t('admin.example.contact.menu'),
           name: t('admin.example.contact.menu'),
           href: l({
-            name: 'data-action-entity',
-            params: {
-              action: 'list',
-              entity: 'contacts'
-            }
+            name: 'api-contacts',
+            // params: {
+            //   action: 'list',
+            //   entity: 'contacts'
+            // }
           })
         }
       ]

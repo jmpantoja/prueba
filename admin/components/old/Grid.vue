@@ -1,10 +1,5 @@
 <template>
     <v-container>
-
-        <dialog-form v-model="dialog" :width="_form.width" :actions="_form.actions">
-            <slot name="form" :item="editItem"/>
-        </dialog-form>
-
         <v-toolbar class="ma-3 toolbar" flat>
             <v-toolbar-title v-if="_toolbar.title" class="text-h3 font-weight-thin" style="height: 1.5em;">
                 {{ _toolbar.title }}
@@ -12,7 +7,7 @@
 
             <v-spacer/>
             <template v-for="(action, key) in _toolbar.actions" v-key="key">
-                <v-menu v-if="!isEmpty(action.items)" :key="key" offset-y>
+                <v-menu v-if="!$utils.isEmpty(action.items)" :key="key" offset-y>
                     <template v-slot:activator="{ on, attrs }">
                         <v-btn icon color="primary" v-bind="attrs" v-on="on">
                             <v-icon>{{ action.icon }}</v-icon>
@@ -20,7 +15,7 @@
                     </template>
                     <v-list>
                         <v-list-item
-                            v-for="(item, index) in removeNulls(action.items)"
+                            v-for="(item, index) in $utils.filter(action.items)"
                             :key="index"
                             @click="exec(action.callback, item, action)"
                         >
@@ -99,12 +94,13 @@
                 />
             </div>
         </v-card>
+
     </v-container>
 </template>
 
 <script>
 import _ from 'lodash'
-import DialogForm from "./DialogForm";
+import DialogForm from "./FormCard";
 
 export default {
     name: 'Grid',
@@ -137,6 +133,7 @@ export default {
     },
     data() {
         return {
+            name: 'pepe',
             items: [],
             editItem: {},
             dialog: false,
@@ -148,10 +145,9 @@ export default {
     },
     computed: {
         _headers() {
-            if (this.isEmpty(this._actions)) {
+            if (this.$utils.isEmpty(this._actions)) {
                 return this.headers
             }
-
             return [].concat(this.headers, [{
                 value: '__actions',
                 align: 'right',
@@ -251,6 +247,9 @@ export default {
         this.items = await this.$axios.$get(this.endpoint);
         this.loading = false
 
+        this.$root.$on('close-dialog', function () {
+            this.dialog = false
+        }.bind(this))
     }
 }
 </script>
