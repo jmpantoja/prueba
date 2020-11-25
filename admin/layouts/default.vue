@@ -12,7 +12,7 @@
                             <nuxt/>
                         </transition>
                     </div>
-                    <app-snackbar />
+                    <app-toast />
                 </v-main>
             </v-app>
         </template>
@@ -23,11 +23,11 @@
 import AppDrawer from '~/components/ui/AppDrawer'
 import AppToolbar from '~/components/ui/AppToolbar'
 import PageHeader from '~/components/ui/PageHeader'
-import AppSnackbar from "~/components/ui/AppSnackBar";
+import AppToast from "~/components/ui/AppToast";
 
 export default {
     components: {
-        AppSnackbar,
+        AppToast,
         AppDrawer,
         AppToolbar,
         PageHeader

@@ -1,11 +1,12 @@
 <template>
     <v-dialog v-model="form.opened" :width="width">
         <v-card :loading="loading">
-            <v-card-title>
-                {{ form.mode === 'edit' ? $t('admin.example.contact.form.title.edit') : 'NO' }}
+            <v-card-title v-if="title">
+                {{ title }} - {{ mode }}
             </v-card-title>
             <v-card-text>
-                <v-form lazy-validation onSubmit="return false;" @keyup.enter.native="onEnter">
+                <v-form ref="form" v-model="valid" lazy-validation onSubmit="return false;"
+                        @keyup.enter.native="onEnter">
                     <slot name="form" :item="item"/>
                 </v-form>
             </v-card-text>
@@ -18,7 +19,7 @@
                         </v-btn>
                     </slot>
                     <slot name="save" :item="item">
-                        <v-btn color="primary" text @click="onSave(item)">
+                        <v-btn :disabled="!valid" color="primary" text @click="onSave(item)">
                             {{ $t('form.save') }}
                         </v-btn>
                     </slot>
@@ -31,9 +32,13 @@
 
 <script>
 export default {
-    name: "FormDialog",
+    name: "CrudFormModal",
     inject: ['grid', 'form'],
     props: {
+        title: {
+            type: String,
+            required: false
+        },
         width: {
             type: Number,
             default: () => 700
@@ -42,11 +47,20 @@ export default {
     data() {
         return {
             loading: false,
+            valid: true,
+            mode: 'create'
         }
     },
     computed: {
         item() {
+            this.mode = this.form.mode
             return this.form.item
+        },
+    },
+    watch: {
+        mode(value) {
+            if (value !== 'create') return
+            this.$refs.form.resetValidation()
         }
     },
     methods: {
@@ -57,11 +71,28 @@ export default {
             this.onSave(this.item)
         },
         onSave(item) {
+            if (!this.$refs.form.validate()) {
+                return
+            }
+            if (item.id) {
+                this.update(item)
+                return;
+            }
+            this.create(item)
+        },
+        update(item) {
             this.loading = true
             this.form.update(item).then((updated) => {
                 this.loading = false
                 this.form.close()
                 this.grid.replace(item, updated)
+            })
+        },
+        create(item) {
+            this.loading = true
+            this.form.create(item).then((updated) => {
+                this.loading = false
+                this.form.close()
             })
         }
     }

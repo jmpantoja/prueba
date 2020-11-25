@@ -1,5 +1,5 @@
 <template>
-    <form-dialog :width="800">
+    <crud-form-modal :title="title" :width="800">
         <template v-slot:form="{item}">
             <v-container>
                 <v-row>
@@ -33,30 +33,39 @@
             </v-container>
         </template>
 
-    </form-dialog>
+    </crud-form-modal>
 
 </template>
 
 <script>
 
-import FormDialog from "../../../crud/FormDialog";
-import InputDate from "../../../form/input-date";
+
+import CrudFormModal from "~/components/crud/CrudFormModal";
+import InputDate from "~/components/form/InputDate";
 
 export default {
-    name: "ContactForm",
-    components: {InputDate, FormDialog},
+    name: "CrudForm",
+    inject: ['form'],
+    components: {CrudFormModal, InputDate},
     data() {
         return {
-            borrame: 'hola',
             rules: {
                 form: [],
                 firstName: [
-                    v => !!v || this.$t('required'),
+                    v => !!v || this.$t('rules.required'),
                 ],
                 lastName: [
-                    v => !!v || this.$t('required'),
+                    v => !!v || this.$t('rules.required'),
                 ],
             },
+        }
+    },
+    computed: {
+        title() {
+            if (this.form.mode === 'edit') {
+                return this.$t('admin.example.contact.form.title.edit')
+            }
+            return this.$t('admin.example.contact.form.title.create')
         }
     }
 }

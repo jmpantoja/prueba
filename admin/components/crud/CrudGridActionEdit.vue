@@ -1,16 +1,9 @@
-<template>
-
-    <v-btn icon @click="onClick(item)">
-        <v-icon v-if="icon" small>{{ icon }}</v-icon>
-    </v-btn>
-</template>
-
 <script>
-import DataTableAction from "./DataTableAction";
+import CrudGridAction from "./CrudGridAction";
 
 export default {
-    name: "DataTableEdit",
-    extends: DataTableAction,
+    name: "CrudGridActionEdit",
+    extends: CrudGridAction,
     props: {
         icon: {
             type: String,

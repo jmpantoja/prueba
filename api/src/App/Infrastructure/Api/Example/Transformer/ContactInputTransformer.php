@@ -22,13 +22,6 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 final class ContactInputTransformer implements DataTransformerInterface
 {
 
-    private ObjectNormalizer $itemNormalizer;
-
-    public function __construct(ObjectNormalizer $itemNormalizer)
-    {
-        $this->itemNormalizer = $itemNormalizer;
-    }
-
     /**
      * @param ContactDto $object
      * @param string $to

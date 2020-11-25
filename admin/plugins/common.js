@@ -7,10 +7,13 @@ Vue.filter('uppercase', val => val.toUpperCase())
 
 const utils = {
   isEmpty(value) {
-    value = value || {}
-    if (typeof value === 'number' && value !== 0) {
-      return false
+
+    if (typeof value === 'number') {
+      return value === 0
     }
+
+    value = value || {}
+
     return Object.keys(value).length <= 0
   },
   filter(value) {

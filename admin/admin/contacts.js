@@ -5,6 +5,10 @@ export default {
         path: '/contacts',
         method: 'GET'
       },
+      create: {
+        path: '/contacts',
+        method: 'POST'
+      },
       update: {
         path: '/contacts/{id}',
         method: 'PUT'
@@ -17,7 +21,8 @@ export default {
   },
   form: {
     default: {
-      fullName: {}
+      fullName: {},
+      birthDate: null
     }
   }
 }

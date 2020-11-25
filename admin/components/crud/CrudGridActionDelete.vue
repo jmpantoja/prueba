@@ -25,11 +25,11 @@
 </template>
 
 <script>
-import DataTableAction from "./DataTableAction";
+import CrudGridAction from "./CrudGridAction";
 
 export default {
-    name: "DataTableDelete",
-    extends: DataTableAction,
+    name: "CrudGridActionDelete",
+    extends: CrudGridAction,
     props: {
         icon: {
             type: String,

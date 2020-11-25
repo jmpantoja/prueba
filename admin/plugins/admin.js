@@ -61,16 +61,17 @@ class Form {
   }
 
   config(config) {
-    this._default = config.default
+    this._default = config.default || {}
+    this._item = config.default || {}
   }
 
   show(item) {
-    this._item = item
+    this._item = item || this._default || {}
     this._visible = true
   }
 
   close() {
-    this._item = {}
+    this._item = this._default
     this._visible = false
   }
 
@@ -89,12 +90,25 @@ class Form {
     return response.item;
   }
 
+  async create(item) {
+    const response = await this._api.execute('create', {
+      data: item
+    })
+
+    if (response.success !== true) {
+      return item
+    }
+
+    this._notifier.success('notifier.created')
+    return response.item;
+  }
+
   get mode() {
-    return _.isEmpty(this._item) ? 'create' : 'edit'
+    return this._item.id ? 'edit' : 'create'
   }
 
   get item() {
-    return _.merge(this._default, this._item)
+    return this._item;
   }
 
   get opened() {
@@ -173,6 +187,10 @@ class Grid {
 
   edit(item) {
     this._form.show(item)
+  }
+
+  create() {
+    this._form.show()
   }
 
   replace(item, replacement) {

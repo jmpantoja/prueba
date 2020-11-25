@@ -15,7 +15,7 @@
 
 <script>
 export default {
-    name: 'AppSnackbar',
+    name: 'AppToast',
     data() {
         return {
             show: false,

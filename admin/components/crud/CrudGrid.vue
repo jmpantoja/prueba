@@ -49,7 +49,7 @@
 <script>
 
 export default {
-    name: "DataTable",
+    name: "CrudGrid",
     inject: ['grid'],
     props: {
         headers: {

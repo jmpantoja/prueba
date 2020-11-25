@@ -30,6 +30,10 @@ export default {
     yes: 'Si, borrar',
     no: 'No',
   },
+  rules: {
+    required: 'Este campo es requerido',
+    date: 'La fecha no es correcta'
+  },
   admin: {
     example: {
       menu: 'Ejemplo',

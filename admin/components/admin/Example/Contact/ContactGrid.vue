@@ -1,6 +1,6 @@
 <template>
     <div>
-        <data-table :headers="headers">
+        <crud-grid :headers="headers">
             <template v-slot:item.fullName.lastName="{item}">
                 {{ item.fullName.lastName }}, {{ item.fullName.firstName }}
             </template>
@@ -10,24 +10,22 @@
             </template>
 
             <template v-slot:item.actions="{item}">
-                <data-table-edit :item="item"/>
-                <data-table-delete :item="item"/>
-<!--                <data-table-action icon="mdi-pencil" :item="item" @click="onEdit"/>-->
+                <crud-grid-action-edit :item="item"/>
+                <crud-grid-action-delete :item="item"/>
             </template>
-        </data-table>
+        </crud-grid>
     </div>
 </template>
 
 <script>
-import DataTable from "~/components/crud/DataTable";
-import DataTableDelete from "~/components/crud/DataTableDelete";
-import DataTableAction from "~/components/crud/DataTableAction";
-import DataTableEdit from "~/components/crud/DataTableEdit";
+import CrudGrid from "~/components/crud/CrudGrid";
+import CrudGridActionDelete from "~/components/crud/CrudGridActionDelete";
+import CrudGridActionEdit from "~/components/crud/CrudGridActionEdit";
 
 
 export default {
     name: "ContactGrid",
-    components: {DataTableEdit, DataTableDelete, DataTableAction, DataTable},
+    components: {CrudGrid, CrudGridActionDelete, CrudGridActionEdit},
     inject: ['grid'],
     data() {
         return {
