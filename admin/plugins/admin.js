@@ -120,12 +120,97 @@ class Form {
   }
 }
 
+class Query {
+  constructor(router) {
+    this._router = router
+    this._options = {}
+    this._filters = {}
+  }
+
+  set options(options) {
+    this._options = options
+  }
+
+  set filters(filters) {
+    this._filters = filters
+  }
+
+  fromUrl(){
+    console.log(this._router.currentRoute.query, 'xxx')
+  }
+
+  _parseOrder() {
+    const sortBy = this._options.sortBy || {}
+    const sortDesc = this._options.sortDesc || {}
+    const order = {}
+
+    sortBy.forEach(function (name, value) {
+      const key = `order[${name}]`
+      order[key] = sortDesc[value] ? 'desc' : 'asc'
+    })
+
+    return order
+  }
+
+  _parseFilters() {
+    let filters = {}
+    for (var property in this._filters) {
+      filters = _.merge(filters, this._resolveFilter(property, this._filters[property]))
+    }
+
+    return filters
+  }
+
+  _resolveFilter(name, filter) {
+    const resolved = {};
+
+    if (_.has(filter, 'key') && _.has(filter, 'value')) {
+      const key = `${name}[${filter.key}]`
+      return this.ignoreEmpty(key, filter.value)
+    }
+
+    resolved[name] = filter.value || filter
+    return resolved
+  }
+
+  ignoreEmpty(key, value) {
+    const filter = {}
+    if (!_.isEmpty(value)) {
+      filter[key] = value
+    }
+    return filter
+  }
+
+  resolve() {
+    const query = {
+      ...this._parseOrder(),
+      ...this._parseFilters(),
+    }
+
+    const name = this._router.currentRoute.name
+
+    this._router.push({
+      name: name,
+      query: query
+    })
+
+
+    return query
+  }
+}
+
 class Grid {
-  constructor(notifier, api, form) {
+  constructor(notifier, query, api, form) {
+
     this._notifier = notifier
     this._api = api
     this._loading = false
-    this._options = {}
+    this._filtersPanel = false
+    this._query = query;
+
+    console.log(this._query.fromUrl())
+
+    this._query.filters = this.defaultFilters
     this._form = form
     this._items = []
     this._total = 0
@@ -139,7 +224,7 @@ class Grid {
     this._loading = true
 
     const response = await this._api.execute('list', {
-      query: this.query
+      query: this._query.resolve()
     })
 
     this._items = response.items
@@ -160,29 +245,40 @@ class Grid {
     return this._loading
   }
 
-  get query() {
-    const options = this.options;
-
-    const order = {}
-    options.sortBy.forEach(function (name, value) {
-      const key = `order[${name}]`
-      order[key] = options.sortDesc[value] ? 'desc' : 'asc'
-    })
-
-    return {
-      page: options.page,
-      page_size: options.itemsPerPage,
-      ...order
-    }
-  }
 
   get options() {
-    return this._options
+    return this._query.options
   }
 
   set options(options) {
-    this._options = options
-    this.load(options)
+    this._query.options = options;
+    this.load()
+  }
+
+  filterBy(filters) {
+    this._query.filters = filters;
+    this.load()
+  }
+
+  get filtersPanel() {
+    return this._filtersPanel
+  }
+
+  set filtersPanel(value) {
+    this._filtersPanel = value
+  }
+
+  toggleFilters() {
+    this._filtersPanel = !this._filtersPanel
+  }
+
+  get defaultFilters() {
+    return {
+      'fullName.lastName': {
+        'key': 'contains',
+        'value': null
+      }
+    }
   }
 
   edit(item) {
@@ -225,7 +321,8 @@ class Admin {
   constructor(ctx) {
     const api = this._api = new Api(ctx.$axios)
     const form = this._form = new Form(ctx.$notifier, api)
-    this._grid = new Grid(ctx.$notifier, api, form)
+    const query = this._query = new Query(ctx.$router)
+    this._grid = new Grid(ctx.$notifier, query, api, form)
   }
 
   config(config) {

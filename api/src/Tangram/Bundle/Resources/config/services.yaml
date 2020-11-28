@@ -5,17 +5,6 @@ services:
         decorates: 'api_platform.swagger.normalizer.documentation'
         arguments: [ '@Tangram\ApiPlatform\Core\Swagger\Serializer\SwaggerDecorator.inner' ]
         autoconfigure: false    
-    
-    api_platform.doctrine.orm.query_extension.filter:
-        class: Tangram\ApiPlatform\Core\Bridge\Doctrine\Orm\Extension\FilterExtension
-        arguments:
-            - '@api_platform.metadata.resource.metadata_factory'
-            - '@api_platform.filter_locator'
-        tags:
-            - {name: 'api_platform.doctrine.orm.query_extension.collection', priority: -16}
-        autowire: false
-        autoconfigure: false
-        public: false
                 
     gesdinet.jwtrefreshtoken.refresh_token_manager:
         class: Tangram\Gesdinet\JWTRefreshTokenBundle\Doctrine\RefreshTokenManager
@@ -33,3 +22,16 @@ services:
         autowire: true
         autoconfigure: true
         public: false
+
+    Tangram\ApiPlatform\Core\Bridge\:        
+        resource: '../../../ApiPlatform/Core/Bridge'
+        autowire: true
+        autoconfigure: true
+        public: false        
+        
+    tangram.api_platform.doctrine.orm.text_filter:
+        class: Tangram\ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\TextFilter
+        arguments: [ '@doctrine', ~, '@?logger' ]
+        autowire: true
+        autoconfigure: true
+        public: false      

@@ -16,12 +16,20 @@ export default {
   form: {
     save: 'Guardar',
     cancel: 'Cancelar',
+    filter: 'Filtrar',
+    reset: 'Reset'
   },
   notifier: {
     close: 'Cerrar',
     failed: 'Ha ocurrido un error:',
     deleted: 'Registro eliminado correctamente',
     updated: 'Registro actualizado correctamente',
+  },
+  filter: {
+    equals: 'igual a',
+    contains: 'contiene',
+    begins: 'empieza por',
+    ends: 'termina en',
   },
   modal: {
     delete: {

@@ -3,6 +3,8 @@ App\Domain\Example\Contact:
         get:
             filters:
                 - 'contact.order_filter'
+                - 'contact.text_filter'
+                - 'contact.date_filter'
         post: ~
 
     attributes:

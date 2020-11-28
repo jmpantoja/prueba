@@ -2,7 +2,7 @@
     <v-dialog v-model="form.opened" :width="width">
         <v-card :loading="loading">
             <v-card-title v-if="title">
-                {{ title }} - {{ mode }}
+                {{ title }}
             </v-card-title>
             <v-card-text>
                 <v-form ref="form" v-model="valid" lazy-validation onSubmit="return false;"
@@ -13,12 +13,12 @@
             <v-card-actions>
                 <v-spacer/>
                 <slot name="actions" :item="item">
-                    <slot name="cancel" :item="item">
+                    <slot name="action_cancel" :item="item">
                         <v-btn color="primary" text @click="onCancel(item)">
                             {{ $t('form.cancel') }}
                         </v-btn>
                     </slot>
-                    <slot name="save" :item="item">
+                    <slot name="action_save" :item="item">
                         <v-btn :disabled="!valid" color="primary" text @click="onSave(item)">
                             {{ $t('form.save') }}
                         </v-btn>
