@@ -11,6 +11,8 @@ build:
 push:
 	docker-compose -f docker/docker-compose.build.yml push
 
+admin-restart:
+	docker-compose restart admin
 
 xdebug-disabled:
 	docker-compose exec php mv /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini /usr/local/etc/php/conf.d/disabled/docker-php-ext-xdebug.ini

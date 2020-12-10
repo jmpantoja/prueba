@@ -1,13 +1,16 @@
 <template>
-    <v-container>
-        <v-row>
-            <v-col cols="12">
-
-            </v-col>
-        </v-row>
-    </v-container>
 </template>
 
-<script>
+<script lang="ts">
 
+import {defineComponent} from "@nuxtjs/composition-api";
+
+export default defineComponent({
+  middleware({app, redirect}) {
+    if (app.$auth.$storage.state.loggedIn) {
+      const dashboard = app.localePath('dashboard')
+      redirect(dashboard)
+    }
+  }
+})
 </script>
