@@ -11,6 +11,16 @@ export default {
     logout: "Logout",
     profile: "Perfil"
   },
+  filter: {
+    equals: 'igual a',
+    contains: 'contiene',
+    begins: 'empieza por',
+    ends: 'termina en'
+  },
+  panel: {
+    reset: 'Reset',
+    filter: 'Filtrar'
+  },
   menu: {
     dashboard: 'Escritorio',
     example: 'Ejemplo',

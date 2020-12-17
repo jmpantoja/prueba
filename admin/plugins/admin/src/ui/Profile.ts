@@ -1,4 +1,4 @@
-import {NuxtApp} from "../types";
+import {AdminContext} from "../../types";
 
 declare module '@nuxt/types' {
   interface Context {
@@ -7,14 +7,14 @@ declare module '@nuxt/types' {
 }
 
 class Profile {
-  private app: NuxtApp;
+  private context: AdminContext;
 
-  public constructor(app: NuxtApp) {
-    this.app = app
+  public constructor(context: AdminContext) {
+    this.context = context
   }
 
   logout() {
-    this.app.$auth.logout()
+    this.context.$auth.logout()
   }
 
   profile() {

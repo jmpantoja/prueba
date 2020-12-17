@@ -1,14 +1,11 @@
 import Vue from 'vue'
 import components from "./components";
 import {reactive} from '@nuxtjs/composition-api'
+import _ from 'lodash';
+import {Drawer, FullScreen, Locale, Menu, Profile, Route} from './src/ui'
+import {AdminStack} from "./types";
 
-import FullScreen from "./src/ui/FullScreen";
-import Drawer from "./src/ui/Drawer";
-import Menu from "./src/ui/Menu";
-import Locale from "./src/ui/Locale";
-import Profile from "./src/ui/Profile";
-import Route from "./src/ui/Route";
-import AdminStack from "~/plugins/admin/src/AdminStack";
+Object.defineProperty(Vue.prototype, '$_', { value: _ });
 
 Object.entries(components).forEach(function ([name, component]) {
   Vue.component(name, component)
@@ -37,8 +34,7 @@ export default ({app}, inject) => {
 
 
   const adminStack = new AdminStack()
-  options.defineStack(adminStack)
+  options.defineStack(adminStack, app)
 
   inject('adminStack', adminStack)
-
 }

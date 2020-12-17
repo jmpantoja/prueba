@@ -1,4 +1,4 @@
-import {NuxtApp} from "../types";
+import {AdminContext} from "../../types";
 import {NuxtVueI18n} from "nuxt-i18n";
 import LocaleObject = NuxtVueI18n.Options.LocaleObject;
 import {RouteConfig} from "@nuxt/types/config/router";
@@ -10,33 +10,33 @@ declare module '@nuxt/types' {
 }
 
 class Locale {
-  private app: NuxtApp;
+  private context: AdminContext;
 
-  public constructor(app: NuxtApp) {
-    this.app = app
+  public constructor(context: AdminContext) {
+    this.context = context
   }
 
   get avaiables(): (string | LocaleObject)[] {
-    return this.app.i18n.locales || []
+    return this.context.i18n.locales || []
   }
 
   get current(): string {
-    return this.app.i18n.locale
+    return this.context.i18n.locale
   }
 
   public change(locale: string){
-    this.app.i18n.setLocale(locale)
+    this.context.i18n.setLocale(locale)
 
     let momentLocale = locale === 'en' ? 'en-gb' : locale;
-    this.app.$moment.locale(momentLocale)
+    this.context.$moment.locale(momentLocale)
   }
 
   translate(text: string): string {
-    return this.app.i18n.t(text).toString()
+    return this.context.i18n.t(text).toString()
   }
 
   url(path: RouteConfig): string {
-    return this.app.localePath(path)
+    return this.context.localePath(path)
   }
 
 }

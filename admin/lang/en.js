@@ -11,6 +11,16 @@ export default {
     logout: "Logout",
     profile: "Profile"
   },
+  filter: {
+    equals: 'equals to',
+    contains: 'contains',
+    begins: 'begins by',
+    ends: 'ends by'
+  },
+  panel: {
+    reset: 'Reset',
+    filter: 'Filter'
+  },
   menu: {
     dashboard: 'Dashboard',
     example: 'Sample',

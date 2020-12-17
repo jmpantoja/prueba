@@ -1,4 +1,4 @@
-import {MenuGroup} from "../../src/types/Config";
+import {MenuGroup} from "../app/Config";
 import {RouteConfig} from "@nuxt/types/config/router";
 import Locale from "./Locale";
 

@@ -1,9 +1,8 @@
-import AdminStack from "~/plugins/admin/src/AdminStack";
+import {AdminContext} from "~/plugins/admin/types";
+import AdminStack from "~/plugins/admin/src/admin/AdminStack";
+import ContactAdmin from "~/src/admin/ContactAdmin";
 
-import ContactGrid from "~/components/contact/ContactGrid.vue"
 
-export default function (stack: AdminStack){
-  stack.add('contact', {
-    grid: ContactGrid
-  })
+export default function (stack: AdminStack, app: AdminContext){
+  stack.add('contact', new ContactAdmin(app))
 }

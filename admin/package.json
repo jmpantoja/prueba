@@ -17,6 +17,7 @@
     "@nuxtjs/composition-api": "^0.16.4",
     "@nuxtjs/moment": "^1.6.1",
     "core-js": "^3.6.5",
+    "lodash": "^4.17.20",
     "nuxt": "^2.14.6",
     "nuxt-i18n": "^6.15.4",
     "vue-country-flag": "^2.0.2",

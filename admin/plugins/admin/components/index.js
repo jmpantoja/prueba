@@ -1,10 +1,14 @@
-import AdminToolbar from "~/plugins/admin/components/admin/AdminToolbar";
-import AdminDrawer from "~/plugins/admin/components/admin/AdminDrawer";
-import AdminPageHeader from "~/plugins/admin/components/admin/AdminPageHeader";
+import AdminToolbar from "./admin/AdminToolbar";
+import AdminDrawer from "./admin/AdminDrawer";
+import AdminPageHeader from "./admin/AdminPageHeader";
+import CrudGrid from "./crud/CrudGrid";
+import FilterText from "./form/FilterText";
 
 
 export default {
   AdminToolbar,
   AdminDrawer,
-  AdminPageHeader
+  AdminPageHeader,
+  CrudGrid,
+  FilterText
 }

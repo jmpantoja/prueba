@@ -1,4 +1,4 @@
-import {NuxtApp} from "../types";
+import {AdminContext} from "../../types";
 import Locale from "../ui/Locale";
 import {RouteConfig} from "@nuxt/types/config/router";
 import {NuxtVueI18n} from "nuxt-i18n";
@@ -12,11 +12,11 @@ declare module '@nuxt/types' {
 }
 
 class Route {
-  private app: NuxtApp;
+  private context: AdminContext;
   private locale: Locale;
 
-  public constructor(locale: Locale,  app: NuxtApp) {
-    this.app = app
+  public constructor(locale: Locale,  context: AdminContext) {
+    this.context = context
     this.locale = locale
 
     this.addRoute({
@@ -36,7 +36,7 @@ class Route {
         code = locale.code
       }
 
-      this.app.router.addRoutes([{
+      this.context.router.addRoutes([{
         path: `/${code}${route.path}`,
         name: `${route.name}___${code}`,
         component: route.component

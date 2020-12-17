@@ -4,13 +4,15 @@ import {NuxtVueI18n} from "nuxt-i18n";
 import VueRouter from 'vue-router'
 import moment from 'moment'
 import NuxtI18nInterface = NuxtVueI18n.Options.NuxtI18nInterface;
+import {NuxtAxiosInstance} from '@nuxtjs/axios'
 
-interface NuxtApp {
+interface AdminContext {
   i18n: VueI18n & IVueI18n & NuxtI18nInterface
   $auth: Auth
   router: VueRouter
   $moment: typeof moment
-  localePath: Function
+  localePath: Function,
+  $axios: NuxtAxiosInstance
 }
 
-export default NuxtApp;
+export default AdminContext;
