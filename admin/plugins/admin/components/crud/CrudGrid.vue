@@ -4,15 +4,13 @@
       <template v-slot:filters="{filters}">
         <slot name="filters" :filters="filters"/>
       </template>
-
-
     </crud-panel>
 
     <v-data-table
       fixed-header
       height="calc(100vh - 340px)"
       hide-default-footer
-      :headers="grid.headers"
+      :headers="grid.__headers"
       :items="grid.items"
       :loading="grid.loading"
       :options.sync="grid.options"
@@ -21,7 +19,7 @@
       @page-count="pageCount = $event"
     >
       <template
-        v-for="header in grid.headers "
+        v-for="header in grid.__headers "
         :slot="'header.' + header.value"
         v-key="header.value"
       >
@@ -31,15 +29,29 @@
       </template>
 
       <template
-        v-for="header in grid.headers"
+        v-for="header in grid.__headers"
         :slot="'item.' + header.value"
         v-key="header.value"
-        slot-scope="{item}"
-      >
+        slot-scope="{item}">
         <slot :name="'item.' + header.value" :item="item" :header="header" :value="$_.get(item, header.value)">
           {{ $_.get(item, header.value) }}
         </slot>
       </template>
+
+      <template
+        :slot="'item.__actions'"
+        slot-scope="{item}">
+        <slot :name="'item.__actions' " :item="item">
+          <template
+            v-for="action in grid.__actions">
+            <v-btn icon @click="execute(action.action, item)">
+              <v-icon small>{{ action.icon }}</v-icon>
+            </v-btn>
+          </template>
+        </slot>
+      </template>
+
+
     </v-data-table>
 
     <div class="pa-2 text-center">
@@ -57,6 +69,7 @@
 <script lang="ts">
 import {Grid} from '~/plugins/admin/types'
 import CrudPanel from "~/plugins/admin/components/crud/CrudPanel.vue";
+const _ = require('lodash')
 
 export default {
   name: 'CrudGrid',
@@ -67,9 +80,12 @@ export default {
       required: true,
     }
   },
-  setup() {
+  setup(props: { grid: Grid }) {
     return {
       pageCount: null,
+      execute(method: string, item: object) {
+        _.invoke(props.grid, method, item)
+      }
     }
   }
 }
