@@ -3,8 +3,8 @@ import VueI18n, {IVueI18n} from "vue-i18n";
 import {NuxtVueI18n} from "nuxt-i18n";
 import VueRouter from 'vue-router'
 import moment from 'moment'
-import NuxtI18nInterface = NuxtVueI18n.Options.NuxtI18nInterface;
 import {NuxtAxiosInstance} from '@nuxtjs/axios'
+import NuxtI18nInterface = NuxtVueI18n.Options.NuxtI18nInterface;
 
 interface AdminContext {
   i18n: VueI18n & IVueI18n & NuxtI18nInterface

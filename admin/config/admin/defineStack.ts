@@ -1,8 +1,8 @@
 import {AdminContext} from "~/plugins/admin/types";
 import AdminStack from "~/plugins/admin/src/admin/AdminStack";
-import ContactAdmin from "~/src/admin/ContactAdmin";
+import ContactCrud from "~/src/admin/ContactCrud";
 
 
 export default function (stack: AdminStack, app: AdminContext){
-  stack.add('contact', new ContactAdmin(app))
+  stack.add('contact', new ContactCrud(app))
 }

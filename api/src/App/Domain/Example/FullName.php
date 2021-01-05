@@ -20,8 +20,8 @@ final class FullName
 
     public function __construct(string $firstName, string $lastName)
     {
-        $this->firstName = $firstName;
-        $this->lastName = $lastName;
+        $this->firstName = ucwords($firstName);
+        $this->lastName = ucwords($lastName);
     }
 
     /**

@@ -1,16 +1,10 @@
 <template>
-  <v-card class="crud-grid elevation-3 ma-3 overflow-hidden">
-    <crud-panel :grid="grid">
-      <template v-slot:filters="{filters}">
-        <slot name="filters" :filters="filters"/>
-      </template>
-    </crud-panel>
-
+  <div>
     <v-data-table
       fixed-header
       height="calc(100vh - 340px)"
       hide-default-footer
-      :headers="grid.__headers"
+      :headers="grid.headers"
       :items="grid.items"
       :loading="grid.loading"
       :options.sync="grid.options"
@@ -19,7 +13,7 @@
       @page-count="pageCount = $event"
     >
       <template
-        v-for="header in grid.__headers "
+        v-for="header in grid.headers "
         :slot="'header.' + header.value"
         v-key="header.value"
       >
@@ -29,7 +23,7 @@
       </template>
 
       <template
-        v-for="header in grid.__headers"
+        v-for="header in grid.headers"
         :slot="'item.' + header.value"
         v-key="header.value"
         slot-scope="{item}">
@@ -43,7 +37,7 @@
         slot-scope="{item}">
         <slot :name="'item.__actions' " :item="item">
           <template
-            v-for="action in grid.__actions">
+            v-for="action in grid.actions">
             <v-btn icon @click="execute(action.action, item)">
               <v-icon small>{{ action.icon }}</v-icon>
             </v-btn>
@@ -62,29 +56,41 @@
         total-visible="6"
       />
     </div>
-
-  </v-card>
+  </div>
 </template>
 
 <script lang="ts">
-import {Grid} from '~/plugins/admin/types'
-import CrudPanel from "~/plugins/admin/components/crud/CrudPanel.vue";
+import {Crud} from '~/plugins/admin/types'
+
 const _ = require('lodash')
 
 export default {
   name: 'CrudGrid',
-  components: {CrudPanel},
   props: {
-    grid: {
-      type: Grid,
-      required: true,
+    crud: {
+      type: Crud,
+      required: true
+    },
+    headers: {
+      type: Array,
+      required: true
+    },
+    actions: {
+      type: Object,
+      default() {
+        return {}
+      }
     }
   },
-  setup(props: { grid: Grid }) {
+  setup(props: { crud: Crud, headers: object[], actions: object }) {
+    var grid = props.crud.grid;
+    grid.initialize(props.headers, props.actions)
+
     return {
       pageCount: null,
+      grid: grid,
       execute(method: string, item: object) {
-        _.invoke(props.grid, method, item)
+        _.invoke(grid, method, item)
       }
     }
   }

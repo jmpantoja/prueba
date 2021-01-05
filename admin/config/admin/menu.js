@@ -13,10 +13,7 @@ export default [
       {
         text: 'menu.contact',
         href: {
-          name: 'crud',
-          params: {
-            admin: 'contact'
-          }
+          name: 'data-contact'
         }
       }
     ]

@@ -1,9 +1,5 @@
 <template>
-  <crud-grid :grid="grid">
-    <template v-slot:filters="{filters}">
-      <filter-text label="Last Name" v-model="filters['fullName.lastName']"/>
-    </template>
-
+  <crud-grid :crud="crud" :headers="headers" :actions="actions">
     <template v-slot:item.fullName.lastName="{item}">
       {{ item.fullName.lastName }}, {{ item.fullName.firstName }}
     </template>
@@ -16,13 +12,25 @@
 </template>
 
 <script lang="ts">
-import {Grid} from "~/plugins/admin/types";
+import {Crud} from "~/plugins/admin/types";
 
 export default {
   name: 'ContactGrid',
   props: {
-    grid: {
-      type: Grid
+    crud: {
+      type: Crud,
+      required: true
+    }
+  },
+  setup() {
+    return {
+      headers: [
+        {text: 'idx', value: 'id', sortable: false},
+        {text: 'name', value: 'fullName.lastName', width: 'max-content'},
+        {text: 'birthDate', value: 'birthDate', width: 'min-content'},
+        {text: 'age', value: 'age', sortable: false}
+      ],
+      actions: {}
     }
   }
 }

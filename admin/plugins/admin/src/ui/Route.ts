@@ -3,7 +3,6 @@ import Locale from "../ui/Locale";
 import {RouteConfig} from "@nuxt/types/config/router";
 import {NuxtVueI18n} from "nuxt-i18n";
 import LocaleObject = NuxtVueI18n.Options.LocaleObject;
-import crud from "~/plugins/admin/pages/crud.vue";
 
 declare module '@nuxt/types' {
   interface Context {
@@ -15,15 +14,15 @@ class Route {
   private context: AdminContext;
   private locale: Locale;
 
-  public constructor(locale: Locale,  context: AdminContext) {
+  public constructor(locale: Locale, context: AdminContext) {
     this.context = context
     this.locale = locale
 
-    this.addRoute({
-      path: '/crud/:admin',
-      name: 'crud',
-      component: crud
-    })
+    // this.addRoute({
+    //   path: '/crud/:admin',
+    //   name: 'crud',
+    //   component: crud
+    // })
 
   }
 

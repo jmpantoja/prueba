@@ -12,7 +12,7 @@ export default defineComponent({
 
   setup: function () {
     const {$adminStack, route, error} = useContext()
-    const name = route.value.params.admin
+    const name = route.value.params.crud
 
     if (!$adminStack.hasAdmin(name)) {
       error({statusCode: 404, message: "Esta página no está disponible"})
@@ -20,7 +20,7 @@ export default defineComponent({
 
     const admin = $adminStack.byName(name)
     return {
-      admin
+      admin: crud
     }
   }
 })

@@ -47,19 +47,19 @@ class FullScreen {
       || this._element.msRequestFullscreen
   }
 
-  private isFullScreen() {
-    return !this._document.fullscreenElement
-      && !this._document.mozFullScreenElement
-      && !this._document.webkitFullscreenElement
-      && !this._document.msFullscreenElement;
-  }
-
   public toggle() {
     if (this.isFullScreen()) {
       this._request.call(this._element)
     } else {
       this._cancel.call(this._document)
     }
+  }
+
+  private isFullScreen() {
+    return !this._document.fullscreenElement
+      && !this._document.mozFullScreenElement
+      && !this._document.webkitFullscreenElement
+      && !this._document.msFullscreenElement;
   }
 }
 

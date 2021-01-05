@@ -10,18 +10,18 @@
       <v-btn @click="onReset" icon>
         <v-icon>mdi-refresh</v-icon>
       </v-btn>
-      <v-btn @click="grid.togglePanel()" icon>
+      <v-btn @click="panel.toggle()" icon>
         <v-icon>mdi-magnify</v-icon>
       </v-btn>
 
     </v-navigation-drawer>
-    <v-navigation-drawer class="crud-grid-panel" v-model="grid.showPanel" width="500px" absolute temporary>
+    <v-navigation-drawer class="crud-grid-panel" v-model="panel.opened" width="500px" absolute temporary>
       <v-form ref="form" style="height: 100%" lazy-validation onSubmit="return false;"
               @keyup.enter.native="onFilter">
         <v-card height="100%" class="d-flex flex-column">
 
           <v-card-text>
-            <slot name="filters" :filters="filters"/>
+            <slot :filters="filters"/>
           </v-card-text>
 
           <v-spacer></v-spacer>
@@ -45,7 +45,7 @@
   </div>
 </template>
 <script lang="ts">
-import {Grid} from "~/plugins/admin/types";
+import {Crud, Grid, Panel} from "~/plugins/admin/types";
 import {ref} from '@vue/composition-api';
 
 const _ = require('lodash')
@@ -53,21 +53,20 @@ const _ = require('lodash')
 export default {
   name: 'CrudPanel',
   props: {
-    grid: {
-      type: Grid,
+    crud: {
+      type: Crud,
       required: true
     }
   },
-  setup({grid}) {
-
+  setup(props: { crud: Crud }) {
     const form = ref({
       inputs: []
     })
 
     return {
-      form,
+      panel: props.crud.panel,
+      form: form,
       filters: ref({}),
-
       onReset() {
         const inputs = form.value.inputs || []
         inputs.forEach((input) => {
@@ -77,7 +76,7 @@ export default {
         this.onFilter()
       },
       onFilter() {
-        grid.filterBy(this.filters)
+        props.crud.grid.filterBy(this.filters)
       },
     }
   }

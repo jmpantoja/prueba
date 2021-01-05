@@ -1,7 +1,7 @@
 import {AdminContext} from "../../types";
 import {NuxtVueI18n} from "nuxt-i18n";
-import LocaleObject = NuxtVueI18n.Options.LocaleObject;
 import {RouteConfig} from "@nuxt/types/config/router";
+import LocaleObject = NuxtVueI18n.Options.LocaleObject;
 
 declare module '@nuxt/types' {
   interface Context {
@@ -24,7 +24,7 @@ class Locale {
     return this.context.i18n.locale
   }
 
-  public change(locale: string){
+  public change(locale: string) {
     this.context.i18n.setLocale(locale)
 
     let momentLocale = locale === 'en' ? 'en-gb' : locale;
