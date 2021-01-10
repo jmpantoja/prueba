@@ -8,17 +8,20 @@ class Form {
   private _context: AdminContext;
   private _opened: boolean;
   private _loading: boolean;
+  private _valid: boolean;
   private _item: object | null;
-  private _original: object | null;
   private _crud: Crud;
+  private _resolve: Function;
 
   public constructor(context: AdminContext, crud: Crud) {
     this._context = context;
-    this._crud = crud
     this._opened = false
     this._loading = false
+    this._valid = false
     this._item = null
-    this._original = null
+    this._crud = crud
+
+    this._resolve = _.identity
   }
 
   public get context(): AdminContext {
@@ -41,15 +44,28 @@ class Form {
     this._loading = value;
   }
 
+
+  public get valid(): boolean {
+    return this._valid;
+  }
+
+  public set valid(valid: boolean) {
+    this._valid = valid;
+  }
+
   public close() {
     this._opened = false
     this._item = this.default
   }
 
-  public show(item: object) {
+  public show(item: object | null) {
+    this._valid = true
     this._opened = true
-    this._original = item
     this._item = _.cloneDeep(item)
+
+    return new Promise((resolve) => {
+      this._resolve = resolve
+    })
   }
 
   public get title() {
@@ -60,7 +76,6 @@ class Form {
     return this._item || this.default;
   }
 
-
   public get default(): object {
     return this._crud.default
   }
@@ -68,14 +83,18 @@ class Form {
   public update(item: object): Promise<void | object> {
     return this._crud.update(item)
       .then((response) => {
-        _.merge(this._original, response)
+        this._resolve(response)
         this.close()
       })
 
   }
 
-  public create(item: object): Promise<object> {
+  public create(item: object): Promise<void | object> {
     return this._crud.create(item)
+      .then((response) => {
+        this._resolve(response)
+        this.close()
+      })
   }
 
 }

@@ -4,6 +4,9 @@
     <slot name="dialog">
       <crud-dialog :crud="crud"/>
     </slot>
+    <slot name="toolbar">
+      <crud-toolbar :crud="crud"/>
+    </slot>
     <v-card class="crud-grid elevation-3 ma-3 overflow-hidden">
       <slot name="panel"/>
       <slot name="grid"/>
@@ -15,12 +18,13 @@
 
 import {Crud} from "~/plugins/admin/types";
 import CrudDialog from "~/plugins/admin/components/crud/CrudDialog.vue";
+import CrudToolbar from "~/plugins/admin/components/crud/CrudToolbar.vue";
 
 const _ = require('lodash')
 
 export default {
   name: 'Crud',
-  components: {CrudDialog},
+  components: {CrudDialog, CrudToolbar},
   props: {
     crud: {
       type: Crud,

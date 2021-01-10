@@ -2,6 +2,8 @@ import Form from "./Form";
 import Grid from "./Grid";
 import Panel from "./Panel";
 import Dialog from "./Dialog";
+import Toolbar from "./Toolbar";
+
 
 import {AdminContext} from "../../types";
 import {reactive, UnwrapRef} from "@nuxtjs/composition-api";
@@ -13,6 +15,7 @@ abstract class Crud {
   private _panel: UnwrapRef<Panel>;
   private _form: UnwrapRef<Form>;
   private _dialog: UnwrapRef<Dialog>;
+  private _toolbar: UnwrapRef<Toolbar>;
 
   public constructor(context: AdminContext) {
     this._context = context
@@ -21,11 +24,13 @@ abstract class Crud {
     const panel = this.buildPanel(context);
     const form = this.buildForm(context);
     const dialog = this.buildDialog(context);
+    const toolbar = this.buildToolbar(context);
 
     this._grid = reactive(grid)
     this._panel = reactive(panel)
     this._form = reactive(form)
     this._dialog = reactive(dialog)
+    this._toolbar = reactive(toolbar)
   }
 
   public get context(): AdminContext {
@@ -58,6 +63,10 @@ abstract class Crud {
     return new Dialog(context, this);
   }
 
+  protected buildToolbar(context: AdminContext): Toolbar {
+    return new Toolbar(context, this);
+  }
+
   get grid(): UnwrapRef<Grid> {
     return this._grid;
   }
@@ -73,6 +82,11 @@ abstract class Crud {
   get dialog(): UnwrapRef<Dialog> {
     return this._dialog;
   }
+
+  get toolbar(): UnwrapRef<Toolbar> {
+    return this._toolbar;
+  }
+
 
 
 }

@@ -1,5 +1,6 @@
 <template>
   <crud :crud="crud">
+    <contact-toolbar slot="toolbar" :crud="crud"/>
     <contact-form slot="form" :crud="crud"/>
     <contact-panel slot="panel" :crud="crud"/>
     <contact-grid slot="grid" :crud="crud"/>
@@ -15,7 +16,6 @@ export default defineComponent({
   setup() {
     const {$adminStack} = useContext()
     const crud = $adminStack.byName('contact')
-
     return {
       crud: crud,
     }

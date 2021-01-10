@@ -4,6 +4,7 @@ export default {
   ...$predef,
   admin: {
     contact: {
+      title: 'Contactos',
       edit: 'Editar Contactos'
     }
   }

@@ -10,6 +10,13 @@
         </v-col>
       </v-row>
 
+      <v-row>
+        <v-col cols="6">
+          <input-date v-model="item.birthDate"/>
+        </v-col>
+
+      </v-row>
+
     </template>
   </crud-form>
 </template>
@@ -18,10 +25,11 @@
 import {Crud} from "~/plugins/admin/types";
 import CrudForm from "~/plugins/admin/components/crud/CrudForm.vue";
 import {computed} from "@nuxtjs/composition-api";
+import InputDate from "~/plugins/admin/components/form/InputDate.vue";
 
 export default {
   name: 'ContactForm',
-  components: {CrudForm},
+  components: {InputDate, CrudForm},
   props: {
     crud: {
       type: Crud,

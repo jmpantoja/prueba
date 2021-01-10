@@ -11,9 +11,20 @@ export default {
     logout: "Logout",
     profile: "Profile"
   },
+  rules: {
+    date: 'The date is wrong'
+  },
   form: {
     save: 'Save',
     cancel: 'Cancel',
+  },
+  dialog:{
+    delete: {
+      title: 'Delete Record',
+      text: 'Do you really want to delete this record?'
+    },
+    yes: 'Yes',
+    no: 'No',
   },
   filter: {
     equals: 'equals to',

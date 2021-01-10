@@ -174,6 +174,7 @@ class Grid {
   private _context: AdminContext;
   private _headers: object[];
   private _actions: object[];
+  private _toolbar: object[];
   private _items: object[];
   private _loading: boolean;
   private _total: number;
@@ -189,6 +190,7 @@ class Grid {
 
     this._headers = []
     this._actions = []
+    this._toolbar = []
     this._items = []
     this._loading = false
     this._total = 0
@@ -204,6 +206,25 @@ class Grid {
   public initialize(headers: object[], actions: object) {
     this.initActions(actions)
     this.initHeaders(headers)
+    this.initToolbar(actions)
+  }
+
+  private initHeaders(headers: object[]) {
+    let extraHeader = {}
+    const length = Object.keys(this._actions).length
+
+
+    if (length > 0) {
+      extraHeader = {value: '__actions', sortable: false, width: 200, align: 'right'}
+    }
+
+    this._headers = _.chain(headers)
+      .keyBy('value')
+      .merge({
+        __actions: extraHeader
+      })
+      .values()
+      .value()
   }
 
   private initActions(actions: object) {
@@ -226,22 +247,37 @@ class Grid {
       .value();
   }
 
-  private initHeaders(headers: object[]) {
-    let extraHeader = {}
-    const length = Object.keys(this._actions).length
+  private initToolbar(toolbar: object) {
+    const defaultToolbar = {
 
-    if (length > 0) {
-      extraHeader = {value: '__actions', sortable: false, width: 200, align: 'right'}
+      export: {
+        icon: 'mdi-download',
+        action: 'export',
+        items: [
+          {
+            title: 'xls',
+            icon: 'mdi-file-excel-outline'
+          },
+          {
+            title: 'json',
+            icon: 'mdi-code-json'
+          }
+        ]
+      },
+      create: {
+        icon: 'mdi-plus',
+        action: 'create'
+      }
     }
 
-    this._headers = _.chain(headers)
-      .keyBy('value')
-      .merge({
-        __actions: extraHeader
-      })
+    this._toolbar = _.chain(defaultToolbar)
+      .merge(toolbar)
       .values()
-      .value()
+      .compact()
+      .pickBy(_.identity)
+      .value();
   }
+
 
   public get headers(): object[] {
     return this._headers
@@ -250,6 +286,11 @@ class Grid {
   public get actions(): object[] {
     return this._actions
   }
+
+  public get toolbar(): object[] {
+    return this._toolbar
+  }
+
 
   public get items(): object[] {
     return this._items
@@ -311,12 +352,29 @@ class Grid {
     this.reload()
   }
 
+  export(format: { title: string }) {
+    alert('export: ' + format.title)
+
+    //this._crud.form.show()
+  }
+
+  create() {
+    const item = this._crud.default;
+    this._crud.form.show(_.cloneDeep(item))
+      .then((response) => {
+        this._items.push(response)
+      })
+  }
+
   edit(item: object) {
     this._crud.form.show(item)
+      .then((response) => {
+        _.merge(item, response)
+      })
   }
 
   delete(item: object) {
-    this._crud.dialog.confirm('hola', '¿que pasa?')
+    this._crud.dialog.confirm('dialog.delete.title', 'dialog.delete.text')
       .then(() => {
         this._crud.dialog.loading = true
         this._crud.delete(item)
