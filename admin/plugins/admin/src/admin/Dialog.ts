@@ -1,17 +1,16 @@
 import AdminContext from "~/plugins/admin/src/app/AdminContext";
 import Crud from "~/plugins/admin/src/admin/Crud";
+import Item from "~/plugins/admin/src/admin/Item";
 
 const _ = require('lodash')
 const url = require('url')
 
-class Dialog {
-  private _context: AdminContext;
-  private _opened: boolean;
-  private _crud: Crud;
-  private _loading: boolean;
-  private _title: string;
-  private _text: string;
+abstract class Dialog {
+  protected _context: AdminContext;
+  protected _crud: Crud;
 
+  private _opened: boolean;
+  private _loading: boolean;
   private _resolve: Function;
 
   public constructor(context: AdminContext, crud: Crud) {
@@ -20,9 +19,9 @@ class Dialog {
     this._opened = false
     this._loading = false
     this._resolve = _.identity
-    this._title = '';
-    this._text = '';
   }
+
+  public abstract get actionName(): string
 
   public get context(): AdminContext {
     return this._context
@@ -44,33 +43,30 @@ class Dialog {
     this._loading = value;
   }
 
-  public get title(): string {
-    return this._title;
-  }
-
-  public get text(): string {
-    return this._text;
-  }
-
   public close() {
     this._opened = false
+    this.loading = false
+    this._context.url.removeAction(this.actionName)
   }
 
-  public ok() {
-    this._resolve()
+  public ok(item: object | null) {
+    this._resolve(item)
   }
 
-
-  public confirm(title: string, text: string) {
+  public show(item: Item | null): Promise<any> {
     this._opened = true
-    this._title = title
-    this._text = text
+    this._context.url.addAction(this.actionName, item)
 
-    return new Promise((resolve) => {
+    const promise = new Promise((resolve) => {
       this._resolve = resolve
     })
-  }
+      .then((response) => {
+        this._loading = true
+        return response
+      })
 
+    return promise
+  }
 }
 
 export default Dialog;

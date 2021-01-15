@@ -6,7 +6,7 @@ import Crud from "./crud/Crud";
 import CrudGrid from "./crud/CrudGrid";
 import CrudPanel from "./crud/CrudPanel";
 import CrudForm from "./crud/CrudForm";
-import CrudDialog from "./crud/CrudDialog";
+import CrudDeleteDialog from "./crud/CrudDeleteDialog";
 
 import FilterText from "./filter/FilterText";
 
@@ -20,7 +20,7 @@ export default {
   CrudGrid,
   CrudPanel,
   CrudForm,
-  CrudDialog,
+  CrudDeleteDialog,
 
   FilterText
 }

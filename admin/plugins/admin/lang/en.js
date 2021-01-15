@@ -14,17 +14,21 @@ export default {
   rules: {
     date: 'The date is wrong'
   },
-  form: {
-    save: 'Save',
-    cancel: 'Cancel',
-  },
-  dialog:{
+  dialog: {
     delete: {
       title: 'Delete Record',
-      text: 'Do you really want to delete this record?'
+      text: '¿Do you really want to delete this record?'
+    },
+    edit: {
+      title: 'Edit Record',
+    },
+    create: {
+      title: 'New Record',
     },
     yes: 'Yes',
     no: 'No',
+    save: 'Save',
+    cancel: 'Cancel',
   },
   filter: {
     equals: 'equals to',

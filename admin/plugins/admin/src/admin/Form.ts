@@ -1,49 +1,28 @@
 import AdminContext from "~/plugins/admin/src/app/AdminContext";
 import Crud from "~/plugins/admin/src/admin/Crud";
+import Dialog from "~/plugins/admin/src/admin/Dialog";
+import Item from "~/plugins/admin/src/admin/Item";
 
 const _ = require('lodash')
-const url = require('url')
 
-class Form {
-  private _context: AdminContext;
-  private _opened: boolean;
-  private _loading: boolean;
+class Form extends Dialog {
   private _valid: boolean;
-  private _item: object | null;
-  private _crud: Crud;
-  private _resolve: Function;
+  private _item: Item | null;
 
   public constructor(context: AdminContext, crud: Crud) {
-    this._context = context;
-    this._opened = false
-    this._loading = false
+    super(context, crud)
+
     this._valid = false
     this._item = null
-    this._crud = crud
-
-    this._resolve = _.identity
   }
 
-  public get context(): AdminContext {
-    return this._context
-  }
+  get actionName(): string {
+    if (this._item) {
+      return this._item.id ? 'edit' : 'create'
+    }
 
-  public get opened(): boolean {
-    return this._opened;
+    return 'create'
   }
-
-  public set opened(value: boolean) {
-    this._opened = value;
-  }
-
-  public get loading(): boolean {
-    return this._loading;
-  }
-
-  public set loading(value: boolean) {
-    this._loading = value;
-  }
-
 
   public get valid(): boolean {
     return this._valid;
@@ -53,23 +32,13 @@ class Form {
     this._valid = valid;
   }
 
-  public close() {
-    this._opened = false
-    this._item = this.default
-  }
-
-  public show(item: object | null) {
-    this._valid = true
-    this._opened = true
+  public show(item: Item | null) {
     this._item = _.cloneDeep(item)
-
-    return new Promise((resolve) => {
-      this._resolve = resolve
-    })
+    return super.show(item)
   }
 
   public get title() {
-    return this._context.i18n.t('hola')
+    return `dialog.${this.actionName}.title`
   }
 
   public get item(): object {
@@ -78,23 +47,6 @@ class Form {
 
   public get default(): object {
     return this._crud.default
-  }
-
-  public update(item: object): Promise<void | object> {
-    return this._crud.update(item)
-      .then((response) => {
-        this._resolve(response)
-        this.close()
-      })
-
-  }
-
-  public create(item: object): Promise<void | object> {
-    return this._crud.create(item)
-      .then((response) => {
-        this._resolve(response)
-        this.close()
-      })
   }
 
 }

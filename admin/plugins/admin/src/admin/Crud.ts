@@ -1,12 +1,13 @@
 import Form from "./Form";
 import Grid from "./Grid";
 import Panel from "./Panel";
-import Dialog from "./Dialog";
+import DeleteDialog from "./DeleteDialog";
 import Toolbar from "./Toolbar";
 
 
 import {AdminContext} from "../../types";
 import {reactive, UnwrapRef} from "@nuxtjs/composition-api";
+import Item from "~/plugins/admin/src/admin/Item";
 
 
 abstract class Crud {
@@ -14,7 +15,7 @@ abstract class Crud {
   private _grid: UnwrapRef<Grid>;
   private _panel: UnwrapRef<Panel>;
   private _form: UnwrapRef<Form>;
-  private _dialog: UnwrapRef<Dialog>;
+  private _deleteDialog: UnwrapRef<DeleteDialog>;
   private _toolbar: UnwrapRef<Toolbar>;
 
   public constructor(context: AdminContext) {
@@ -23,13 +24,13 @@ abstract class Crud {
     const grid = this.buildGrid(context);
     const panel = this.buildPanel(context);
     const form = this.buildForm(context);
-    const dialog = this.buildDialog(context);
+    const dialog = this.buildDeleteDialog(context);
     const toolbar = this.buildToolbar(context);
 
     this._grid = reactive(grid)
     this._panel = reactive(panel)
     this._form = reactive(form)
-    this._dialog = reactive(dialog)
+    this._deleteDialog = reactive(dialog)
     this._toolbar = reactive(toolbar)
   }
 
@@ -37,15 +38,17 @@ abstract class Crud {
     return this._context
   }
 
-  public abstract get default(): object;
+  public abstract get default(): Item;
 
-  public abstract create(item: object): Promise<object>
+  public abstract create(item: Item): Promise<object>
 
-  public abstract read(params: object): Promise<object[]>;
+  public abstract read(params: object): Promise<Item[]>;
 
-  public abstract update(item: object): Promise<object>
+  public abstract findById(id: string): Promise<Item>;
 
-  public abstract delete(item: object): Promise<object>
+  public abstract update(item: Item): Promise<Item>
+
+  public abstract delete(item: Item): Promise<Item>
 
   protected buildGrid(context: AdminContext): Grid {
     return new Grid(context, this);
@@ -59,8 +62,8 @@ abstract class Crud {
     return new Form(context, this);
   }
 
-  protected buildDialog(context: AdminContext): Dialog {
-    return new Dialog(context, this);
+  protected buildDeleteDialog(context: AdminContext): DeleteDialog {
+    return new DeleteDialog(context, this);
   }
 
   protected buildToolbar(context: AdminContext): Toolbar {
@@ -79,8 +82,8 @@ abstract class Crud {
     return this._form;
   }
 
-  get dialog(): UnwrapRef<Dialog> {
-    return this._dialog;
+  get deleteDialog(): UnwrapRef<DeleteDialog> {
+    return this._deleteDialog;
   }
 
   get toolbar(): UnwrapRef<Toolbar> {

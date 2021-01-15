@@ -14,17 +14,21 @@ export default {
   rules: {
     date: 'No es una fecha correcta'
   },
-  form: {
-    save: 'Guardar',
-    cancel: 'Cancelar',
-  },
-  dialog:{
+  dialog: {
     delete: {
       title: 'Borrar Registro',
       text: '¿Realmente desea borrar este registro?'
     },
+    edit: {
+      title: 'Editar Registro',
+    },
+    create: {
+      title: 'Nuevo Registro',
+    },
     yes: 'Si',
     no: 'No',
+    save: 'Guardar',
+    cancel: 'Cancelar',
   },
   filter: {
     equals: 'igual a',

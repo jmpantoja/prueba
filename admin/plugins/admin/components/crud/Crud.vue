@@ -17,7 +17,7 @@
 <script lang="ts">
 
 import {Crud} from "~/plugins/admin/types";
-import CrudDialog from "~/plugins/admin/components/crud/CrudDialog.vue";
+import CrudDialog from "~/plugins/admin/components/crud/CrudDeleteDialog.vue";
 import CrudToolbar from "~/plugins/admin/components/crud/CrudToolbar.vue";
 
 const _ = require('lodash')

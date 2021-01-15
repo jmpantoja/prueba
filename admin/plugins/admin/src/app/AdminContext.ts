@@ -5,6 +5,7 @@ import VueRouter from 'vue-router'
 import moment from 'moment'
 import {NuxtAxiosInstance} from '@nuxtjs/axios'
 import NuxtI18nInterface = NuxtVueI18n.Options.NuxtI18nInterface;
+import AdminUrl from "../admin/AdminUrl"
 
 interface AdminContext {
   i18n: VueI18n & IVueI18n & NuxtI18nInterface
@@ -12,7 +13,8 @@ interface AdminContext {
   router: VueRouter
   $moment: typeof moment
   localePath: Function,
-  $axios: NuxtAxiosInstance
+  $axios: NuxtAxiosInstance,
+  url: AdminUrl
 }
 
 export default AdminContext;

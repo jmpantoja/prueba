@@ -1,177 +1,16 @@
 import Crud from "~/plugins/admin/src/admin/Crud";
-import {AdminContext} from "../../types";
+import {AdminContext, AdminUrl} from "../../types";
 import {DataOptions} from 'vuetify/types'
+import Item from "~/plugins/admin/src/admin/Item";
 
 const _ = require('lodash')
-const url = require('url')
 
-type Filter = {
-  type: string,
-  value: string,
-}
-
-class AdminQueryNormalizer {
-
-  private _options: object
-  private _filters: object
-
-  constructor(query: object) {
-    this._options = {}
-    this._filters = {}
-
-    _.forOwn(query, (value: string, key: string) => {
-      const isOption =
-        this.setPageIfApplies(key, value) ||
-        this.setPageSizeIfApplies(key, value) ||
-        this.setOrderIfApplies(key, value)
-
-      !isOption && this.setFilterIfApplies(key, value)
-    })
-  }
-
-  options(): DataOptions {
-    const options = _.pickBy(this._options, _.identity)
-    return options
-  }
-
-  filters(): object {
-    return this._filters
-  }
-
-  private setPageIfApplies(key: string, value: string): boolean {
-    if (key !== 'page') {
-      return false
-    }
-    _.set(this._options, key, parseInt(value))
-    return true
-  }
-
-  private setPageSizeIfApplies(key: string, value: string): boolean {
-    if (key !== 'page_size') {
-      return false
-    }
-    _.set(this._options, 'itemsPerPage', parseInt(value))
-    return true
-  }
-
-  private setOrderIfApplies(key: string, value: string): boolean {
-    const matches = key.match(/^order\[(.*)\]/i);
-
-    if (!matches) {
-      return false
-    }
-
-    var dir = 'desc' === value.toLowerCase();
-    _.set(this._options, 'sortBy', [matches[1]])
-    _.set(this._options, 'sortDesc', [dir])
-
-    return true
-  }
-
-  private setFilterIfApplies(key: string, value: string) {
-    const matches = key.match(/(.*)\[(.*)\]/)
-
-    if (!matches) {
-      _.merge(this._filters, {
-        [key]: value
-      })
-      return
-    }
-
-    _.merge(this._filters, {
-      [matches[1]]: {
-        type: matches[2],
-        value: value
-      }
-    })
-  }
-}
-
-class AdminQuery {
-
-  private static defaultOptions = {
-    page: 1,
-    itemsPerPage: 10,
-    sortBy: [],
-    sortDesc: [],
-    groupBy: [],
-    groupDesc: [],
-    multiSort: false,
-    mustSort: false
-  }
-  private _filters: object;
-
-  private constructor(options: DataOptions, filters: object) {
-    this._options = options;
-    this._filters = filters;
-  }
-
-  private _options: DataOptions;
-
-  public static get options(): DataOptions {
-    return _.clone(AdminQuery.defaultOptions)
-  }
-
-  private get pageQuery(): object {
-    const defaultOptions = AdminQuery.options
-    const page = {}
-    if (this._options.page !== defaultOptions.page) {
-      _.set(page, 'page', this._options.page)
-    }
-
-    if (this._options.itemsPerPage !== defaultOptions.itemsPerPage) {
-      _.set(page, 'page_size', this._options.itemsPerPage)
-    }
-
-    return page
-  }
-
-  private get orderQuery(): object {
-    if (this._options.sortBy.length < 1) {
-      return {}
-    }
-
-    const orderBy: string = this._options.sortBy[0]
-    const key: string = `order[${orderBy}]`
-    const dir: string = this._options.sortDesc[0] === false ? 'asc' : 'desc'
-
-    let order = {[key]: dir}
-    return order
-  }
-
-  private get filterQuery(): object {
-    let normalized = {};
-
-    _.forOwn(this._filters, (filter: Filter, name: string) => {
-      const type = filter.type
-      const value = filter.value
-      const key = type ? `${name}[${type}]` : name
-      const item = value ? {[key]: value} : {}
-      _.merge(normalized, item)
-    });
-
-    return normalized
-  }
-
-  static make(options: DataOptions, filters: object): AdminQuery {
-    return new AdminQuery(options, filters)
-  }
-
-  parse(): object {
-    return {
-      ...this.pageQuery,
-      ...this.orderQuery,
-      ...this.filterQuery
-    }
-  }
-
-}
 
 class Grid {
-//  private _panel: boolean;
-  private _filters: object;
   private _crud: Crud;
   private _context: AdminContext;
+  private _url: AdminUrl;
+
   private _headers: object[];
   private _actions: object[];
   private _toolbar: object[];
@@ -179,23 +18,20 @@ class Grid {
   private _loading: boolean;
   private _total: number;
   private _options: DataOptions;
-
+  private _filters: object;
 
   public constructor(context: AdminContext, crud: Crud) {
-    const query = context.router.currentRoute.query;
-    const normalizer = new AdminQueryNormalizer(query)
-
     this._context = context
     this._crud = crud
-
     this._headers = []
     this._actions = []
     this._toolbar = []
     this._items = []
     this._loading = false
     this._total = 0
-    this._options = normalizer.options()
-    this._filters = normalizer.filters()
+    this._url = context.url
+    this._options = context.url.options()
+    this._filters = context.url.filters()
   }
 
 
@@ -207,6 +43,38 @@ class Grid {
     this.initActions(actions)
     this.initHeaders(headers)
     this.initToolbar(actions)
+    this.initDialog()
+  }
+
+
+  private initDialog() {
+    const actionId = this._context.url.getActionId()
+    if (!actionId) {
+      return
+    }
+
+    this.showDialog(actionId.action, actionId.id)
+  }
+
+  public showDialog(action: string, id: string) {
+    switch (action) {
+      case 'edit': {
+        this._crud.findById(id)
+          .then((item) => {
+            this.save(item)
+          })
+        break
+      }
+      case 'create': {
+        this.save()
+        break
+      }
+
+      case 'delete': {
+        this.confirmDelete({id})
+        break
+      }
+    }
   }
 
   private initHeaders(headers: object[]) {
@@ -231,11 +99,11 @@ class Grid {
     const defaultActions = {
       edit: {
         icon: 'mdi-pencil',
-        action: 'edit'
+        action: 'save'
       },
       delete: {
         icon: 'mdi-delete',
-        action: 'delete'
+        action: 'confirmDelete'
       }
     }
 
@@ -266,7 +134,7 @@ class Grid {
       },
       create: {
         icon: 'mdi-plus',
-        action: 'create'
+        action: 'save'
       }
     }
 
@@ -313,7 +181,6 @@ class Grid {
     this.reload()
   }
 
-
   public get page(): number {
     return this._options.page
   }
@@ -331,66 +198,79 @@ class Grid {
     }
 
     this._loading = true
-    const query = AdminQuery.make(this._options, this._filters).parse()
+    const query = this._url.parse(this._options, this._filters)
 
     this._crud.read(query)
       .then((response) => {
         this._items = _.get(response, 'hydra:member')
         this._total = _.get(response, 'hydra:totalItems')
         this._loading = false
-        const path = url.format({
-          query: query
-        })
-        this.context.router.push(path)
+        this._url.goTo(query)
       })
   }
 
 
   public filterBy(filters: object) {
     this._filters = filters
-    this._options = AdminQuery.options
+    this._options = this._url.defaultOptions
     this.reload()
   }
 
-  export(format: { title: string }) {
+  public export(format: { title: string }) {
     alert('export: ' + format.title)
-
-    //this._crud.form.show()
   }
 
-  create() {
-    const item = this._crud.default;
-    this._crud.form.show(_.cloneDeep(item))
-      .then((response) => {
-        this._items.push(response)
-      })
-  }
+  public save(item?: Item) {
+    if (!item) {
+      item = this._crud.default
+    }
 
-  edit(item: object) {
     this._crud.form.show(item)
-      .then((response) => {
-        _.merge(item, response)
-      })
-  }
+      .then(async (data) => {
 
-  delete(item: object) {
-    this._crud.dialog.confirm('dialog.delete.title', 'dialog.delete.text')
+        const id = _.get(data, 'id');
+        if (id) {
+          // @ts-ignore
+          return await this.edit(item, data);
+        }
+        return await this.create(data);
+
+      })
       .then(() => {
-        this._crud.dialog.loading = true
-        this._crud.delete(item)
-          .then(() => {
-            this._crud.dialog.loading = false
-            this._crud.dialog.close()
-            const index = _.findIndex(this._items, (element: object) => {
-              // @ts-ignore
-              return element.id === item.id
-            })
-
-            this._items.splice(index, 1)
-          })
+        this._crud.form.close()
       })
   }
 
+  private async create(data: Item) {
+    return await this._crud.create(data)
+      .then((response) => {
+        this.reload()
+      })
+  }
+
+  private async edit(item: Item, data: Item) {
+    return await this._crud.update(data)
+      .then((response) => {
+        this.reload()
+      })
+  }
+
+  public confirmDelete(item: Item) {
+    this._crud.deleteDialog.show(item)
+      .then(async () => {
+        await this.delete(item);
+      })
+      .then(() => {
+        this._crud.deleteDialog.close()
+      })
+  }
+
+  private async delete(item: Item) {
+    await this._crud.delete(item)
+      .then(() => {
+        this.reload()
+      })
+  }
 }
 
 export default Grid;
