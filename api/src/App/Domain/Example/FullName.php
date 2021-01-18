@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace App\Domain\Example;
 
+use Error;
+
 final class FullName
 {
     private string $firstName;

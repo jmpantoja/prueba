@@ -4,6 +4,7 @@ import Menu from "./Menu";
 import Locale from "./Locale";
 import Profile from "./Profile";
 import Route from "./Route";
+import Toast from "../admin/Toast";
 
 
 export {
@@ -12,6 +13,7 @@ export {
   Menu,
   Locale,
   Profile,
-  Route
+  Route,
+  Toast
 }
 

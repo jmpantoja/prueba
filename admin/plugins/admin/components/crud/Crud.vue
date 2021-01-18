@@ -1,5 +1,7 @@
 <template>
   <div>
+    <crud-toast :crud="crud"/>
+
     <slot name="form"/>
     <slot name="dialog">
       <crud-dialog :crud="crud"/>
@@ -19,12 +21,13 @@
 import {Crud} from "~/plugins/admin/types";
 import CrudDialog from "~/plugins/admin/components/crud/CrudDeleteDialog.vue";
 import CrudToolbar from "~/plugins/admin/components/crud/CrudToolbar.vue";
+import CrudToast from "~/plugins/admin/components/crud/CrudToast.vue";
 
 const _ = require('lodash')
 
 export default {
   name: 'Crud',
-  components: {CrudDialog, CrudToolbar},
+  components: {CrudDialog, CrudToolbar, CrudToast},
   props: {
     crud: {
       type: Crud,

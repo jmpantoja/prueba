@@ -1,5 +1,4 @@
 <template>
-
   <crud-dialog :dialog="form">
     <template slot="content">
       <v-form ref="vform" v-model="form.valid" lazy-validation onSubmit="return false;"
@@ -19,10 +18,8 @@
           {{ $t('dialog.save') }}
         </v-btn>
       </slot>
-
     </template>
   </crud-dialog>
-
 </template>
 <script lang="ts">
 import {Crud} from "~/plugins/admin/types";

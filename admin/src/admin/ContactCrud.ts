@@ -2,7 +2,7 @@ import {Crud} from "~/plugins/admin/types";
 import Item from "~/plugins/admin/src/admin/Item";
 
 class ContactCrud extends Crud {
-  public get default(): Item  {
+  public get default(): Item {
     const item = {
       id: null,
       fullName: {}

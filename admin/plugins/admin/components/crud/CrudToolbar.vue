@@ -1,8 +1,6 @@
 <template>
   <div>
-
-
-    <v-toolbar class="mx-2 toolbar" flat>
+    <v-toolbar  class="mx-2 toolbar crud-toolbar" flat>
       <v-toolbar-title v-if="title" class="text-h3 font-weight-thin">
         {{ title }}
       </v-toolbar-title>
@@ -36,7 +34,7 @@
         </v-menu>
 
         <v-btn v-else color="primary" icon @click="execute(action.action)">
-          <v-icon large >{{ action.icon }}</v-icon>
+          <v-icon large>{{ action.icon }}</v-icon>
         </v-btn>
       </template>
 
@@ -73,5 +71,7 @@ export default {
 
 
 <style lang="scss">
-
+.theme--light.v-toolbar.v-sheet.crud-toolbar {
+  background-color: transparent;
+}
 </style>

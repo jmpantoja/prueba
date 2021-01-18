@@ -36,11 +36,15 @@ final class ContactPersister implements ContextAwareDataPersisterInterface
         return $data instanceof Contact;
     }
 
+    /**
+     * @param Contact $data
+     * @param array $context
+     * @return object|void
+     */
     public function persist($data, array $context = [])
     {
         $this->entityManager->persist($data);
         $this->entityManager->flush();
-
         return $data;
     }
 

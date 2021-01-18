@@ -2,12 +2,11 @@
   <v-app class="app">
     <admin-drawer/>
     <admin-toolbar/>
-    <v-main>
+    <v-main class="main">
       <admin-page-header/>
       <transition name="fade">
         <nuxt/>
       </transition>
-      <!--      <app-toast/>-->
     </v-main>
   </v-app>
 
@@ -17,12 +16,12 @@
 import {useContext} from '@nuxtjs/composition-api'
 
 export default {
-  head(){
+  head() {
     return {
       title: this.title
     }
   },
-  setup(){
+  setup() {
     let {$locale} = useContext()
     return {
       title: $locale.translate('app.title')
@@ -32,7 +31,7 @@ export default {
 </script>
 
 <style lang="scss">
-.container {
-  padding: 0;
+.main {
+  background-color: #fafafa;
 }
 </style>

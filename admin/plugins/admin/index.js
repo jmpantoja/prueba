@@ -34,6 +34,7 @@ export default ({app}, inject) => {
   const route = new Route(locale, app)
   inject('route', route)
 
+
   app.url = new AdminUrl(app.router)
 
   const adminStack = new AdminStack()

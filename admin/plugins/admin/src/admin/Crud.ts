@@ -3,12 +3,11 @@ import Grid from "./Grid";
 import Panel from "./Panel";
 import DeleteDialog from "./DeleteDialog";
 import Toolbar from "./Toolbar";
-
+import Toast from "./Toast";
 
 import {AdminContext} from "../../types";
 import {reactive, UnwrapRef} from "@nuxtjs/composition-api";
 import Item from "~/plugins/admin/src/admin/Item";
-
 
 abstract class Crud {
   private _context: AdminContext;
@@ -17,6 +16,7 @@ abstract class Crud {
   private _form: UnwrapRef<Form>;
   private _deleteDialog: UnwrapRef<DeleteDialog>;
   private _toolbar: UnwrapRef<Toolbar>;
+  private _toast: UnwrapRef<Toast>;
 
   public constructor(context: AdminContext) {
     this._context = context
@@ -26,12 +26,14 @@ abstract class Crud {
     const form = this.buildForm(context);
     const dialog = this.buildDeleteDialog(context);
     const toolbar = this.buildToolbar(context);
+    const toast = this.buildToast(context);
 
     this._grid = reactive(grid)
     this._panel = reactive(panel)
     this._form = reactive(form)
     this._deleteDialog = reactive(dialog)
     this._toolbar = reactive(toolbar)
+    this._toast = reactive(toast)
   }
 
   public get context(): AdminContext {
@@ -70,27 +72,33 @@ abstract class Crud {
     return new Toolbar(context, this);
   }
 
-  get grid(): UnwrapRef<Grid> {
+  protected buildToast(context: AdminContext): Toast {
+    return new Toast(context, this);
+  }
+
+  public get grid(): UnwrapRef<Grid> {
     return this._grid;
   }
 
-  get panel(): UnwrapRef<Panel> {
+  public get panel(): UnwrapRef<Panel> {
     return this._panel;
   }
 
-  get form(): UnwrapRef<Form> {
+  public get form(): UnwrapRef<Form> {
     return this._form;
   }
 
-  get deleteDialog(): UnwrapRef<DeleteDialog> {
+  public get deleteDialog(): UnwrapRef<DeleteDialog> {
     return this._deleteDialog;
   }
 
-  get toolbar(): UnwrapRef<Toolbar> {
+  public get toolbar(): UnwrapRef<Toolbar> {
     return this._toolbar;
   }
 
-
+  public get toast(): UnwrapRef<Toast> {
+    return this._toast;
+  }
 
 }
 

@@ -34,7 +34,6 @@ class Grid {
     this._filters = context.url.filters()
   }
 
-
   public get context(): AdminContext {
     return this._context
   }
@@ -63,6 +62,9 @@ class Grid {
           .then((item) => {
             this.save(item)
           })
+          .catch((reason) => {
+            this.showError(reason)
+          })
         break
       }
       case 'create': {
@@ -77,10 +79,11 @@ class Grid {
     }
   }
 
+
+
   private initHeaders(headers: object[]) {
     let extraHeader = {}
     const length = Object.keys(this._actions).length
-
 
     if (length > 0) {
       extraHeader = {value: '__actions', sortable: false, width: 200, align: 'right'}
@@ -146,6 +149,12 @@ class Grid {
       .value();
   }
 
+  private showError(reason: any){
+    const response = reason.response
+    var message = _.get(response, "data['hydra:description']", response.statusText)
+    this._crud.toast.error(message)
+  }
+
 
   public get headers(): object[] {
     return this._headers
@@ -207,6 +216,9 @@ class Grid {
         this._loading = false
         this._url.goTo(query)
       })
+      .catch((reason) => {
+        this.showError(reason)
+      })
   }
 
 
@@ -221,6 +233,7 @@ class Grid {
   }
 
   public save(item?: Item) {
+
     if (!item) {
       item = this._crud.default
     }
@@ -244,18 +257,27 @@ class Grid {
   private async create(data: Item) {
     return await this._crud.create(data)
       .then((response) => {
+        this._crud.toast.success('dialog.create.success')
         this.reload()
+      })
+      .catch((reason) => {
+        this.showError(reason)
       })
   }
 
   private async edit(item: Item, data: Item) {
     return await this._crud.update(data)
       .then((response) => {
+        this._crud.toast.success('dialog.edit.success')
         this.reload()
+      })
+      .catch((reason) => {
+        this.showError(reason)
       })
   }
 
   public confirmDelete(item: Item) {
+
     this._crud.deleteDialog.show(item)
       .then(async () => {
         await this.delete(item);
@@ -268,7 +290,11 @@ class Grid {
   private async delete(item: Item) {
     await this._crud.delete(item)
       .then(() => {
+        this._crud.toast.success('dialog.delete.success')
         this.reload()
+      })
+      .catch((reason) => {
+        this.showError(reason)
       })
   }
 }

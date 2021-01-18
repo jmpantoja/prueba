@@ -2,7 +2,7 @@
   <div>
     <v-data-table
       fixed-header
-      height="calc(100vh - 340px)"
+      height="calc(100vh - 300px)"
       hide-default-footer
       :headers="grid.headers"
       :items="grid.items"
