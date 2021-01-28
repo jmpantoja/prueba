@@ -14,7 +14,9 @@ Object.entries(components).forEach(function ([name, component]) {
 });
 
 export default ({app}, inject) => {
+
   const options = require('~/config/admin')
+  options.declareComponents()
 
   const drawer = new Drawer()
   inject('drawer', reactive(drawer))

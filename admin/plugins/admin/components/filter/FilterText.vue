@@ -8,13 +8,15 @@
                   :label="null"
                   item-value="value"
                   item-text="text"
-                  v-model="type"
+                  @input="$emit('input', data)"
+                  v-model="data.type"
         />
       </v-col>
       <v-col cols="8" class="pt-0">
         <v-text-field v-bind="$props"
                       :label="null"
-                      v-model="text"
+                      @input="$emit('input', data)"
+                      v-model="data.value"
         />
       </v-col>
 
@@ -28,10 +30,21 @@ import VInput from 'vuetify/lib/components/VInput/VInput.js';
 export default {
   name: "FilterText",
   extends: VInput,
+  props: {
+    value: {
+      type: Object,
+      default() {
+        return {
+          type: 'contains'
+        }
+      }
+    }
+  },
   data() {
     return {
       type: 'contains',
       text: null,
+      data: this.value,
       types: [
         {value: 'equals', text: this.$t('filter.equals')},
         {value: 'contains', text: this.$t('filter.contains')},
@@ -40,26 +53,14 @@ export default {
       ]
     };
   },
-  watch: {
-    type(value) {
-      this.change()
-    },
-    text(value) {
-      this.change()
-    }
-  },
   methods: {
-    default(){
-      this.type = 'contains'
-      this.text = null
-      this.change()
+    default() {
+      this.data = {
+        type: 'contains',
+        text: null
+      }
+      this.$emit('input', this.data)
     },
-    change() {
-      this.$emit('input', {
-        type: this.type,
-        value: this.text
-      })
-    }
   }
 }
 </script>

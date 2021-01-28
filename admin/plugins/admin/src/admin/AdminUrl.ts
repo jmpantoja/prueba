@@ -174,9 +174,9 @@ class AdminQuery {
       const value = filter.value
       const key = type ? `${name}[${type}]` : name
       const item = value ? {[key]: value} : {}
+
       _.merge(normalized, item)
     });
-
     return normalized
   }
 

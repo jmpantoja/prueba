@@ -40,7 +40,6 @@
           </v-card-actions>
         </v-card>
       </v-form>
-
     </v-navigation-drawer>
   </div>
 </template>
