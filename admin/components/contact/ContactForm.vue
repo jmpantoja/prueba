@@ -1,23 +1,24 @@
 <template>
-  <crud-form :crud="crud" :width="700" :title="title">
-    <template v-slot:fields="{item}">
-      <v-row>
-        <v-col cols="6">
-          <v-text-field v-model="item.fullName.firstName" :rules="nameRules"/>
-        </v-col>
-        <v-col cols="6">
-          <v-text-field v-model="item.fullName.lastName"/>
-        </v-col>
-      </v-row>
+  <crud-form :crud="crud" :schema="schema" :width="700" :title="title">
 
-      <v-row>
-        <v-col cols="6">
-          <input-date v-model="item.birthDate"/>
-        </v-col>
+<!--    <template v-slot:fields="{item}">-->
 
-      </v-row>
+<!--      &lt;!&ndash;      <v-row>&ndash;&gt;-->
+<!--      &lt;!&ndash;        <v-col cols="6">&ndash;&gt;-->
+<!--      &lt;!&ndash;          <v-text-field v-model="item.fullName.firstName" :rules="nameRules"/>&ndash;&gt;-->
+<!--      &lt;!&ndash;        </v-col>&ndash;&gt;-->
+<!--      &lt;!&ndash;        <v-col cols="6">&ndash;&gt;-->
+<!--      &lt;!&ndash;          <v-text-field v-model="item.fullName.lastName"/>&ndash;&gt;-->
+<!--      &lt;!&ndash;        </v-col>&ndash;&gt;-->
+<!--      &lt;!&ndash;      </v-row>&ndash;&gt;-->
 
-    </template>
+<!--      &lt;!&ndash;      <v-row>&ndash;&gt;-->
+<!--      &lt;!&ndash;        <v-col cols="6">&ndash;&gt;-->
+
+<!--      &lt;!&ndash;        </v-col>&ndash;&gt;-->
+<!--      &lt;!&ndash;      </v-row>&ndash;&gt;-->
+<!--    </template>-->
+
   </crud-form>
 </template>
 
@@ -26,6 +27,7 @@ import {Crud} from "~/plugins/admin/types";
 import CrudForm from "~/plugins/admin/components/crud/CrudForm.vue";
 import {computed} from "@nuxtjs/composition-api";
 import InputDate from "~/plugins/admin/components/form/InputDate.vue";
+import VFullname from "~/components/types/VFullname.vue";
 
 export default {
   name: 'ContactForm',
@@ -46,7 +48,17 @@ export default {
       ],
       title: computed(() => {
         return context.i18n.t('admin.contact.edit')
-      })
+      }),
+      schema: {
+        fields: {
+          fullName: {
+            type: VFullname
+          },
+          birthDate: {
+            type: InputDate
+          }
+        }
+      }
     }
   }
 }

@@ -16,7 +16,7 @@ export default {
     },
     direction: {
       type: String,
-      default: 'column',
+      default: 'row',
       validator: (value) => {
         return ['row', 'column'].indexOf(value) > -1
       }
@@ -39,9 +39,12 @@ export default {
   },
   methods: {
     validate() {
+
       if (this.$children[0]) {
-        this.$children[0].validate()
+        this.valid = this.$children[0].validate()
       }
+      return this.valid
+
     },
     resetValidation() {
       if (this.$children[0]) {

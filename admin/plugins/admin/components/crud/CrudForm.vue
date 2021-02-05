@@ -3,7 +3,12 @@
     <template slot="content">
       <v-form ref="vform" v-model="form.valid" lazy-validation onSubmit="return false;"
               @keyup.enter.native="onEnter">
-        <slot name="fields" :item="item"/>
+
+        <template v-for="(field, name) in schema.fields">
+          <component :is="field.type" v-model="item[name]" />
+        </template>
+
+        <!--        <slot name="fields" :item="item"/>-->
       </v-form>
     </template>
 
@@ -37,6 +42,10 @@ export default {
       type: Crud,
       required: true
     },
+    schema: {
+      type: Object,
+      required: true
+    },
     width: {
       type: Number,
       default() {
@@ -47,11 +56,14 @@ export default {
       type: String
     }
   },
-  setup(props: { crud: Crud }, context) {
+  setup(props: { crud: Crud, schema: object }, context) {
     const vform = ref({})
     watch(() => props.crud.form.opened, () => {
       _.invoke(vform.value, 'resetValidation')
     })
+
+    const form = props.crud.form
+    form.schema = props.schema
 
     return {
       vform: vform,
@@ -60,6 +72,8 @@ export default {
         return props.crud.form.item
       }),
       onSave(item: object) {
+        console.log(this.vform.validate())
+        console.log(this.vform.errorBag)
         if (!this.vform.validate()) {
           return;
         }
@@ -72,6 +86,7 @@ export default {
         return;
       },
       onEnter(item: object) {
+
         this.onSave(this.item)
         return;
       },

@@ -38,7 +38,7 @@ export default {
     },
     direction: {
       type: String,
-      default: 'column',
+      default: 'row',
       validator: (value) => {
         return ['row', 'column'].indexOf(value) > -1
       }
