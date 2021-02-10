@@ -5,7 +5,7 @@
               @keyup.enter.native="onEnter">
 
         <template v-for="(field, name) in schema.fields">
-          <component :is="field.type" v-model="item[name]" />
+          <component :is="field.type" v-model="item[name]"/>
         </template>
 
         <!--        <slot name="fields" :item="item"/>-->
@@ -72,8 +72,6 @@ export default {
         return props.crud.form.item
       }),
       onSave(item: object) {
-        console.log(this.vform.validate())
-        console.log(this.vform.errorBag)
         if (!this.vform.validate()) {
           return;
         }
@@ -86,17 +84,14 @@ export default {
         return;
       },
       onEnter(item: object) {
-
         this.onSave(this.item)
         return;
       },
-
 
     }
   }
 }
 </script>
-
 
 <style lang="scss">
 

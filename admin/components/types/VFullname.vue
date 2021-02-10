@@ -1,20 +1,24 @@
 <template>
 
-  <v-field-wrapper v-bind="props" :label="label" :data="data">
+  <v-field v-slot:default="{data}" v-bind="$props">
+
     <v-text-field label="Nombre" v-model="data.firstName" :rules="nameRules"/>
     <v-text-field label="Apellidos" v-model="data.lastName" :rules="nameRules"/>
-  </v-field-wrapper>
+  </v-field>
 
 </template>
 
 <script>
-import VFieldWrapper from './VFieldWrapper'
-import VField from './VField'
+import {VInput} from 'vuetify/lib'
+import VField from "./VField";
+
 
 export default {
   name: 'VFullname',
-  components: {VFieldWrapper},
-  extends: VField,
+  components: {VField},
+  extends: VInput,
+  props: ['labelPos', 'direction'],
+
   data() {
     return {
       nameRules: [
@@ -23,9 +27,10 @@ export default {
         }
       ]
     }
-  },
+  }
 };
 </script>
 
 <style lang="scss">
+
 </style>

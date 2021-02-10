@@ -1,23 +1,34 @@
 <template>
   <v-card elevation="3" class="ma-10">
     <v-card-text>
+      <v-form ref="form" v-model="valid">
+        VALID: {{ valid }}
 
-      <v-form ref="form">
-        <v-row>
-          <v-col cols="3">
-            <v-fullname :label-on-left="true" direction="row" v-model="model.fullName" label="FullName"/>
+        <v-row v-if="true">
+          <v-col cols="12">
+            <v-hola :label-width="6" v-model="model.name" label="Hola"/>
+            {{ model.name }}
           </v-col>
-          <v-col cols="3">
-            <v-fullname :label-on-left="true" direction="column" v-model="model.fullName" label="FullName"/>
-          </v-col>
-          <v-col cols="3">
-            <v-fullname :label-on-left="false" direction="row" v-model="model.fullName" label="FullName"/>
-          </v-col>
-          <v-col cols="3">
-            <v-fullname :label-on-left="false" direction="column" v-model="model.fullName" label="FullName"/>
-          </v-col>
-
         </v-row>
+
+        <v-row v-if="false">
+          <v-col cols="3">
+            <v-fullname label-pos="top" direction="row" v-model="model.fullName" label="FullName"/>
+          </v-col>
+          <v-col cols="3">
+            <v-fullname label-pos="top" direction="column" v-model="model.fullName" label="FullName"/>
+          </v-col>
+          <v-col cols="3">
+            <v-fullname label-pos="left" direction="row" v-model="model.fullName" label="FullName"/>
+          </v-col>
+          <v-col cols="3">
+            <v-fullname label-pos="left" direction="column" v-model="model.fullName" label="FullName"/>
+          </v-col>
+        </v-row>
+
+
+        {{ model.fullName }}
+
       </v-form>
 
     </v-card-text>
@@ -36,7 +47,9 @@ export default {
 
   data() {
     return {
+      valid: true,
       model: {
+        name: 'juan',
         fullName: {
           firstName: 'pepe',
           lastName: 'gonzalez'
@@ -46,8 +59,7 @@ export default {
   },
   methods: {
     submit() {
-      this.$refs.form.validate()
-
+      const valid = this.$refs.form.validate()
     },
     reset() {
       this.$refs.form.resetValidation()

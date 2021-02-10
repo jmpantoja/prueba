@@ -1,23 +1,20 @@
 <template>
   <crud-form :crud="crud" :schema="schema" :width="700" :title="title">
 
-<!--    <template v-slot:fields="{item}">-->
-
-<!--      &lt;!&ndash;      <v-row>&ndash;&gt;-->
-<!--      &lt;!&ndash;        <v-col cols="6">&ndash;&gt;-->
-<!--      &lt;!&ndash;          <v-text-field v-model="item.fullName.firstName" :rules="nameRules"/>&ndash;&gt;-->
-<!--      &lt;!&ndash;        </v-col>&ndash;&gt;-->
-<!--      &lt;!&ndash;        <v-col cols="6">&ndash;&gt;-->
-<!--      &lt;!&ndash;          <v-text-field v-model="item.fullName.lastName"/>&ndash;&gt;-->
-<!--      &lt;!&ndash;        </v-col>&ndash;&gt;-->
-<!--      &lt;!&ndash;      </v-row>&ndash;&gt;-->
-
-<!--      &lt;!&ndash;      <v-row>&ndash;&gt;-->
-<!--      &lt;!&ndash;        <v-col cols="6">&ndash;&gt;-->
-
-<!--      &lt;!&ndash;        </v-col>&ndash;&gt;-->
-<!--      &lt;!&ndash;      </v-row>&ndash;&gt;-->
-<!--    </template>-->
+    <template v-slot:fields="{item}">
+      <v-row>
+        <v-col cols="6">
+          <v-text-field v-model="item.fullName.firstName" :rules="nameRules"/>
+        </v-col>
+        <v-col cols="6">
+          <v-text-field v-model="item.fullName.lastName"/>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col cols="6">
+        </v-col>
+      </v-row>
+    </template>
 
   </crud-form>
 </template>
