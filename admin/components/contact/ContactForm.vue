@@ -1,34 +1,18 @@
 <template>
-  <crud-form :crud="crud" :schema="schema" :width="700" :title="title">
-
-    <template v-slot:fields="{item}">
-      <v-row>
-        <v-col cols="6">
-          <v-text-field v-model="item.fullName.firstName" :rules="nameRules"/>
-        </v-col>
-        <v-col cols="6">
-          <v-text-field v-model="item.fullName.lastName"/>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col cols="6">
-        </v-col>
-      </v-row>
-    </template>
-
-  </crud-form>
+  <crud-form :crud="crud" :schema="schema" :width="1000" :title="title"/>
 </template>
 
 <script lang="ts">
 import {Crud} from "~/plugins/admin/types";
 import CrudForm from "~/plugins/admin/components/crud/CrudForm.vue";
 import {computed} from "@nuxtjs/composition-api";
-import InputDate from "~/plugins/admin/components/form/InputDate.vue";
+import VDate from "~/plugins/admin/components/form/VDate.vue";
 import VFullname from "~/components/types/VFullname.vue";
+
 
 export default {
   name: 'ContactForm',
-  components: {InputDate, CrudForm},
+  components: {CrudForm},
   props: {
     crud: {
       type: Crud,
@@ -39,23 +23,50 @@ export default {
     const context = props.crud.context
 
     return {
-      nameRules: [
-        value => !!value || 'Name is required',
-        value => (value && value.length <= 10) || 'Name must be less than 10 characters',
-      ],
       title: computed(() => {
         return context.i18n.t('admin.contact.edit')
       }),
-      schema: {
-        fields: {
-          fullName: {
-            type: VFullname
-          },
-          birthDate: {
-            type: InputDate
+      schema_XX: {
+        tabs: [
+          {
+            label: 'tab1',
+            rows: [
+              {
+                cols: 6,
+                offset: 0,
+                fields: {
+                  fullName: {label: 'Nombre Completo', type: VFullname},
+                  birthDate: {label: 'Fec. Nacimiento', type: VDate},
+                }
+              }, {
+                cols: 3,
+                break: true,
+                fields: {
+                  birthDate: {label: 'Fec. Nacimiento', type: VDate},
+                }
+              }
+            ]
           }
-        }
-      }
+        ]
+      },
+      schema: {
+        rows: [
+          {
+            cols: 6,
+            offset: 0,
+            fields: {
+              fullName: {label: 'Nombre Completo', type: VFullname},
+            }
+          }, {
+            cols: 3,
+            offset: 3,
+            break: true,
+            fields: {
+              birthDate: {label: 'Fec. Nacimiento', type: VDate},
+            }
+          }
+        ]
+      },
     }
   }
 }

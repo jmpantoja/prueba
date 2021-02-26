@@ -1,33 +1,33 @@
 <template>
 
-  <v-field v-slot:default="{data}" v-bind="$props">
-
+  <v-field v-bind="$props">
     <v-text-field label="Nombre" v-model="data.firstName" :rules="nameRules"/>
     <v-text-field label="Apellidos" v-model="data.lastName" :rules="nameRules"/>
   </v-field>
-
 </template>
 
 <script>
-import {VInput} from 'vuetify/lib'
-import VField from "./VField";
+import VField from "~/plugins/admin/components/form/VField";
 
 
 export default {
-  name: 'VFullname',
+  name: 'VPepe',
   components: {VField},
-  extends: VInput,
-  props: ['labelPos', 'direction'],
+  mixins: [VField],
 
   data() {
     return {
       nameRules: [
         (v) => {
           return !!v || 'el campo es requerido'
+        },
+        (v) => {
+          v = v || ''
+          return !(v.length < 10) || 'demasiado corto (borrame)'
         }
       ]
     }
-  }
+  },
 };
 </script>
 

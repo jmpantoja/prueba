@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-toolbar  class="mx-2 toolbar crud-toolbar" flat>
+    <v-toolbar class="mx-2 toolbar crud-toolbar" flat>
       <v-toolbar-title v-if="title" class="text-h3 font-weight-thin">
         {{ title }}
       </v-toolbar-title>
@@ -61,8 +61,14 @@ export default {
     const grid = props.crud.grid
     return {
       grid,
-      execute(method: string, item: object) {
-        _.invoke(grid, method, item)
+      execute(method: string | Function, item: object) {
+        if (_.isFunction(method)) {
+          method(item)
+        }
+        else{
+          _.invoke(grid, method, item)
+        }
+
       }
     }
   }

@@ -80,7 +80,6 @@ class Grid {
   }
 
 
-
   private initHeaders(headers: object[]) {
     let extraHeader = {}
     const length = Object.keys(this._actions).length
@@ -120,7 +119,10 @@ class Grid {
 
   private initToolbar(toolbar: object) {
     const defaultToolbar = {
-
+      create: {
+        icon: 'mdi-plus',
+        action: 'save'
+      },
       export: {
         icon: 'mdi-download',
         action: 'export',
@@ -134,22 +136,19 @@ class Grid {
             icon: 'mdi-code-json'
           }
         ]
-      },
-      create: {
-        icon: 'mdi-plus',
-        action: 'save'
       }
     }
 
     this._toolbar = _.chain(defaultToolbar)
       .merge(toolbar)
       .values()
+      .reverse()
       .compact()
       .pickBy(_.identity)
       .value();
   }
 
-  private showError(reason: any){
+  private showError(reason: any) {
     const response = reason.response
     var message = _.get(response, "data['hydra:description']", response.statusText)
     this._crud.toast.error(message)

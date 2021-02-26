@@ -3,21 +3,19 @@ import Crud from "~/plugins/admin/src/admin/Crud";
 import Dialog from "~/plugins/admin/src/admin/Dialog";
 import Item from "~/plugins/admin/src/admin/Item";
 
-const Validator = require('jsonschema').Validator;
+
 const _ = require('lodash')
 
 class Form extends Dialog {
   private _valid: boolean;
   private _item: Item | null;
   private _schema: object = {}
-  private _validator: typeof Validator;
 
   public constructor(context: AdminContext, crud: Crud) {
     super(context, crud)
 
     this._valid = false
     this._item = null
-    this._validator =  new Validator()
   }
 
   get actionName(): string {

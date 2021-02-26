@@ -30,7 +30,14 @@ export default {
         {text: 'birthDate', value: 'birthDate', width: 'min-content'},
         {text: 'age', value: 'age', sortable: false}
       ],
-      actions: {}
+      actions: {
+        'xxx' : {
+          icon: 'mdi-delta',
+          action: ()=>{
+            alert('hola')
+          }
+        }
+      }
     }
   }
 }

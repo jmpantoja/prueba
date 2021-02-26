@@ -1,7 +1,5 @@
 <template>
-  <crud-toolbar :crud="crud" :title="title">
-    sss
-  </crud-toolbar>
+  <crud-toolbar :crud="crud" :title="title"/>
 </template>
 
 <script lang="ts">

@@ -1,15 +1,21 @@
 <template>
-  <v-dialog v-model="dialog.opened" :width="width" @click:outside="onClickOutside">
+  <v-dialog
+    eager
+    v-model="dialog.opened"
+    :width="width"
+    @click:outside="onClose"
+    @keydown.esc="onClose"
+  >
     <v-card :loading="dialog.loading">
       <v-card-title v-if="dialog.title">
         {{ $t(dialog.title) }}
       </v-card-title>
       <v-card-text>
-        <slot name="content" />
+        <slot name="content"/>
       </v-card-text>
       <v-card-actions>
         <v-spacer/>
-        <slot name="actions" />
+        <slot name="actions"/>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -29,20 +35,21 @@ export default {
     width: {
       type: Number,
       default() {
-        return 500
+        return 520
       }
     },
     title: {
       type: String
     }
   },
-  setup() {
-    return {
-      onClickOutside() {
-        this.dialog.close()
-        return;
-      }
-    }
+  methods: {
+    onClose() {
+      this.dialog.close()
+      return;
+    },
+    onInput(value) {
+      return;
+    },
   }
 }
 </script>
