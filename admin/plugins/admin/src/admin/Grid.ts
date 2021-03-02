@@ -1,301 +1,120 @@
-import Crud from "~/plugins/admin/src/admin/Crud";
-import {AdminContext, AdminUrl} from "../../types";
-import {DataOptions} from 'vuetify/types'
-import Item from "~/plugins/admin/src/admin/Item";
+import {DataOptions, DataTableHeader} from "vuetify/types";
+import {ActionList, ApiClient, ApiRequest, Dataset, EventDispatcher, FilterList, GridMapper, Record} from ".";
+
 
 const _ = require('lodash')
 
+type GridContext = {
+  mapper: GridMapper,
+  client: ApiClient,
+  dispatcher: EventDispatcher
+}
 
 class Grid {
-  private _crud: Crud;
-  private _context: AdminContext;
-  private _url: AdminUrl;
+  private _dispatcher: EventDispatcher;
+  private _client: ApiClient;
+  private _filters: FilterList
 
-  private _headers: object[];
-  private _actions: object[];
-  private _toolbar: object[];
-  private _items: object[];
+  private readonly _headers: Array<DataTableHeader>
+  private _items: Array<Record>
+
   private _loading: boolean;
-  private _total: number;
   private _options: DataOptions;
-  private _filters: object;
+  private _page: number;
+  private _pageCount: number;
+  private _total: number;
+  private _actions: ActionList;
 
-  public constructor(context: AdminContext, crud: Crud) {
-    this._context = context
-    this._crud = crud
-    this._headers = []
-    this._actions = []
-    this._toolbar = []
+
+  public constructor(options: GridContext) {
+    const mapper = options.mapper;
+
+    this._client = options.client;
+    this._dispatcher = options.dispatcher
+    this._filters = {}
+
+    this._headers = mapper.headers
+    this._actions = mapper.actions
     this._items = []
-    this._loading = false
-    this._total = 0
-    this._url = context.url
-    this._options = context.url.options()
-    this._filters = context.url.filters()
+
+    this._loading = false;
+    this._options = mapper.options;
+    this._page = mapper.options.page;
+    this._pageCount = 0;
+    this._total = 0;
+
+    this._dispatcher.subscribe(this._actions)
+
+    this._dispatcher.on('reload', () => {
+      this.reload()
+    })
   }
 
-  public get context(): AdminContext {
-    return this._context
-  }
-
-  public initialize(headers: object[], actions: object) {
-    this.initActions(actions)
-    this.initHeaders(headers)
-    this.initToolbar(actions)
-    this.initDialog()
-  }
-
-
-  private initDialog() {
-    const actionId = this._context.url.getActionId()
-    if (!actionId) {
-      return
-    }
-
-    this.showDialog(actionId.action, actionId.id)
-  }
-
-  public showDialog(action: string, id: string) {
-    switch (action) {
-      case 'edit': {
-        this._crud.findById(id)
-          .then((item) => {
-            this.save(item)
-          })
-          .catch((reason) => {
-            this.showError(reason)
-          })
-        break
-      }
-      case 'create': {
-        this.save()
-        break
-      }
-
-      case 'delete': {
-        this.confirmDelete({id})
-        break
-      }
-    }
-  }
-
-
-  private initHeaders(headers: object[]) {
-    let extraHeader = {}
-    const length = Object.keys(this._actions).length
-
-    if (length > 0) {
-      extraHeader = {value: '__actions', sortable: false, width: 200, align: 'right'}
-    }
-
-    this._headers = _.chain(headers)
-      .keyBy('value')
-      .merge({
-        __actions: extraHeader
-      })
-      .values()
-      .value()
-  }
-
-  private initActions(actions: object) {
-    const defaultActions = {
-      edit: {
-        icon: 'mdi-pencil',
-        action: 'save'
+  public reload(): void {
+    const params = ApiRequest.normalize(this._options, this._filters);
+    this._client.read({
+      params: params,
+      loading: (loading: boolean) => {
+        this._loading = loading
       },
-      delete: {
-        icon: 'mdi-delete',
-        action: 'confirmDelete'
+      then: (response: Dataset) => {
+        this._total = response.total;
+        this._items = response.items;
       }
-    }
-
-    this._actions = _.chain(defaultActions)
-      .merge(actions)
-      .values()
-      .compact()
-      .pickBy(_.identity)
-      .value();
+    })
   }
 
-  private initToolbar(toolbar: object) {
-    const defaultToolbar = {
-      create: {
-        icon: 'mdi-plus',
-        action: 'save'
-      },
-      export: {
-        icon: 'mdi-download',
-        action: 'export',
-        items: [
-          {
-            title: 'xls',
-            icon: 'mdi-file-excel-outline'
-          },
-          {
-            title: 'json',
-            icon: 'mdi-code-json'
-          }
-        ]
-      }
-    }
-
-    this._toolbar = _.chain(defaultToolbar)
-      .merge(toolbar)
-      .values()
-      .reverse()
-      .compact()
-      .pickBy(_.identity)
-      .value();
+  public set filters(filters: FilterList) {
+    this._filters = filters
+    this.reload()
   }
 
-  private showError(reason: any) {
-    const response = reason.response
-    var message = _.get(response, "data['hydra:description']", response.statusText)
-    this._crud.toast.error(message)
-  }
-
-
-  public get headers(): object[] {
+  public get headers() {
     return this._headers
   }
 
-  public get actions(): object[] {
-    return this._actions
+  public get actions(): ActionList {
+    return this._actions;
   }
 
-  public get toolbar(): object[] {
-    return this._toolbar
-  }
-
-
-  public get items(): object[] {
+  public get items(): Array<Record> {
     return this._items
   }
 
-  public get loading() {
-    return this._loading
-  }
-
-  public get total(): number {
-    return this._total
+  public get loading(): boolean {
+    return this._loading;
   }
 
   public get options(): DataOptions {
-    return this._options
+    return this._options;
   }
 
-  public set options(options) {
-    this._options = options
+  public set options(options: DataOptions) {
+    this._options = options;
     this.reload()
+  }
+
+  public get total(): number {
+    return this._total;
   }
 
   public get page(): number {
-    return this._options.page
+    return this._page;
   }
 
-  public set page(page) {
-    if (this._options.page !== page) {
-      this._options.page = page
-      this.reload()
-    }
+  public set page(page: number) {
+    this._page = page;
   }
 
-  public reload() {
-    if (this._loading) {
-      return
-    }
-
-    this._loading = true
-    const query = this._url.parse(this._options, this._filters)
-
-    this._crud.read(query)
-      .then((response) => {
-        this._items = _.get(response, 'hydra:member')
-        this._total = _.get(response, 'hydra:totalItems')
-        this._loading = false
-        this._url.goTo(query)
-      })
-      .catch((reason) => {
-        this.showError(reason)
-      })
+  public get pageCount(): number {
+    return this._pageCount;
   }
 
-
-  public filterBy(filters: object) {
-    this._filters = filters
-    this._options = this._url.defaultOptions
-    this.reload()
+  public set pageCount(pageCount: number) {
+    this._pageCount = pageCount;
   }
 
-  public export(format: { title: string }) {
-    alert('export: ' + format.title)
-  }
-
-  public save(item?: Item) {
-
-    if (!item) {
-      item = this._crud.default
-    }
-
-    this._crud.form.show(item)
-      .then(async (data) => {
-
-        const id = _.get(data, 'id');
-        if (id) {
-          // @ts-ignore
-          return await this.edit(item, data);
-        }
-        return await this.create(data);
-
-      })
-      .then(() => {
-        this._crud.form.close()
-      })
-  }
-
-  private async create(data: Item) {
-    return await this._crud.create(data)
-      .then((response) => {
-        this._crud.toast.success('dialog.create.success')
-        this.reload()
-      })
-      .catch((reason) => {
-        this.showError(reason)
-      })
-  }
-
-  private async edit(item: Item, data: Item) {
-    return await this._crud.update(data)
-      .then((response) => {
-        this._crud.toast.success('dialog.edit.success')
-        this.reload()
-      })
-      .catch((reason) => {
-        this.showError(reason)
-      })
-  }
-
-  public confirmDelete(item: Item) {
-
-    this._crud.deleteDialog.show(item)
-      .then(async () => {
-        await this.delete(item);
-      })
-      .then(() => {
-        this._crud.deleteDialog.close()
-      })
-  }
-
-  private async delete(item: Item) {
-    await this._crud.delete(item)
-      .then(() => {
-        this._crud.toast.success('dialog.delete.success')
-        this.reload()
-      })
-      .catch((reason) => {
-        this.showError(reason)
-      })
-  }
 }
 
-export default Grid;
+
+export default Grid

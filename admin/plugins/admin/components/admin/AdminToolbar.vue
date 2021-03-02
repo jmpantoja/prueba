@@ -1,93 +1,36 @@
 <template>
-  <v-app-bar
-    color="primary"
-    fixed
-    dark
-    app
-  >
-    <v-app-bar-nav-icon class="ms-2" @click="$drawer.toggle()"/>
-    <v-text-field
-      flat
-      solo-inverted
-      prepend-icon="mdi-magnify"
-      :label="$t('toolbar.search')"
-      class="hidden-sm-and-down mx-5"
-      hide-details
-    />
+  <v-toolbar class="mx-2 toolbar crud-toolbar" flat>
+    <v-toolbar-title class="text-h3 font-weight-thin">
+      {{ $t(toolbar.title) }}
+    </v-toolbar-title>
     <v-spacer/>
-    <v-btn class="mx-2" icon text @click="$fullScreen.toggle()">
-      <v-icon>mdi-fullscreen</v-icon>
+
+    <v-btn color="primary" icon>
+      <v-icon large>mdi-download</v-icon>
     </v-btn>
-
-    <v-menu :left="true" offset-y :nudge-bottom="5"
-            transition="slide-y-transition">
-      <template v-slot:activator="{ on }">
-        <v-btn class="mx-2" icon large text v-on="on">
-          <v-avatar size="30px">
-            <v-icon>mdi-account</v-icon>
-          </v-avatar>
-        </v-btn>
-      </template>
-      <v-list class="pa-0">
-        <v-list-item @click="$profile.profile()">
-          <v-list-item-action>
-            <v-icon>mdi-account</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>{{ $t('toolbar.profile') }}</v-list-item-content>
-        </v-list-item>
-
-        <v-list-item @click="$profile.logout()">
-          <v-list-item-action>
-            <v-icon>mdi-logout</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>{{ $t('toolbar.logout') }}</v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </v-menu>
-
-    <v-menu :left="true" offset-y :nudge-bottom="5"
-            transition="slide-y-transition">
-
-      <template v-slot:activator="{ on }">
-        <v-btn class="mx-2" icon large text v-on="on">
-          <v-avatar size="30px">
-            <v-icon>mdi-translate</v-icon>
-          </v-avatar>
-        </v-btn>
-      </template>
-
-      <v-list class="pa-0">
-        <v-list-item rel="noopener"
-                     v-for="lang in $locale.avaiables"
-                     :key="lang.code"
-                     :value="lang.code"
-                     :input-value="(lang.code === $locale.current)"
-                     @click="$locale.change(lang.code)"
-        >
-          <v-list-item-action>
-            <country-flag :country='lang.flag'/>
-          </v-list-item-action>
-          <v-list-item-content>
-            <span>{{ lang.code }}</span>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </v-menu>
-  </v-app-bar>
+  </v-toolbar>
 </template>
 
 <script>
+import {Toolbar} from "../../src/admin";
 
-import CountryFlag from 'vue-country-flag'
-import {defineComponent} from '@nuxtjs/composition-api'
-
-const url = require('url');
-
-export default defineComponent({
+export default {
   name: 'AdminToolbar',
-  components: {
-    CountryFlag
+  props: {
+    toolbar: {
+      type: Toolbar,
+      required: true
+    }
   }
-})
-
+}
 </script>
+
+<style lang="scss" scoped>
+.v-toolbar.v-sheet.crud-toolbar {
+  background-color: transparent;
+
+  ::v-deep .v-toolbar__title {
+    line-height: 3.75rem;
+  }
+}
+</style>

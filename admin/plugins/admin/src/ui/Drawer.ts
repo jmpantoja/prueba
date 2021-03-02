@@ -1,22 +1,17 @@
-declare module '@nuxt/types' {
-  interface Context {
-    $drawer: Drawer
-  }
-}
-
 class Drawer {
-  private _drawer: boolean = true;
+  private _open: boolean = true;
 
-  get drawer(): boolean {
-    return this._drawer;
+  get open(): boolean {
+    return this._open;
   }
 
-  set drawer(value: boolean) {
-    this._drawer = value;
+  set open(value: boolean) {
+
+    this._open = value;
   }
 
   toggle() {
-    this._drawer = !this._drawer
+    this._open = !this._open
   }
 }
 

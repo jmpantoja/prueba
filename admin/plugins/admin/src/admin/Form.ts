@@ -1,64 +1,128 @@
-import AdminContext from "~/plugins/admin/src/app/AdminContext";
-import Crud from "~/plugins/admin/src/admin/Crud";
-import Dialog from "~/plugins/admin/src/admin/Dialog";
-import Item from "~/plugins/admin/src/admin/Item";
+import {ActionList, ApiClient, EventDispatcher, FormLayout, FormMapper, Record} from ".";
 
+type Context = {
+  mapper: FormMapper,
+  client: ApiClient,
+  dispatcher: EventDispatcher,
+  item: Record
+}
 
-const _ = require('lodash')
+class Form {
+  private _dispatcher: EventDispatcher;
+  private readonly _client: ApiClient;
 
-class Form extends Dialog {
-  private _valid: boolean;
-  private _item: Item | null;
-  private _schema: object = {}
+  private readonly _width: number;
+  private readonly _layout: FormLayout;
+  private readonly _actions: ActionList;
 
-  public constructor(context: AdminContext, crud: Crud) {
-    super(context, crud)
+  private _editTitle: string;
+  private _createTitle: string;
+  private _loading: boolean = false;
+  private _visible: boolean = false;
+  private _valid: boolean = false;
+  private _item: Record;
 
+  constructor(options: Context) {
+    const mapper = options.mapper;
+    this._dispatcher = options.dispatcher
+    this._client = options.client
+
+    this._editTitle = mapper.editTitle
+    this._createTitle = mapper.createTitle
+    this._width = mapper.width
+    this._layout = mapper.layout
+    this._actions = mapper.actions
     this._valid = false
-    this._item = null
+
+    this._item = options.item
+
+    this._dispatcher.subscribe(this._actions)
+
   }
 
-  get actionName(): string {
-    if (this._item) {
-      return this._item.id ? 'edit' : 'create'
+  public get title(): string {
+    if (this.item.id) {
+      return this._editTitle
     }
 
-    return 'create'
+    return this._createTitle
+  }
+
+  public get loading(): boolean {
+    return this._loading
+  }
+
+  public get visible(): boolean {
+    return this._visible;
+  }
+
+  public set visible(value: boolean) {
+    this._visible = value;
   }
 
   public get valid(): boolean {
     return this._valid;
   }
 
-  public set valid(valid: boolean) {
-    this._valid = valid;
+  public set valid(value: boolean) {
+    this._valid = value;
   }
 
-  public set schema(schema: object) {
-    this._schema = schema;
+  public get width(): number {
+    return this._width
   }
 
-  public get schema(): object {
-    return this._schema;
+  public get layout(): FormLayout {
+    return this._layout;
   }
 
-  public show(item: Item | null) {
-    this._item = _.cloneDeep(item)
-    return super.show(item)
+  public get actions(): ActionList {
+    return this._actions;
   }
 
-  public get title() {
-    return `dialog.${this.actionName}.title`
+  public load(item: Record) {
+    return this._client.findOne(`${item.id}`, {
+      loading: (loading: boolean) => {
+        this._loading = loading
+      },
+      then: (response: Record) => {
+        this._item = response
+        this.visible = true
+      }
+    })
   }
 
-  public get item(): object {
-    return this._item || this.default;
+  public save(item: Record): Promise<Record> {
+    return this._client.update(item, {
+      loading: (loading: boolean) => {
+        this._loading = loading
+      },
+      then: (item: Record) => {
+        this._item = item
+        this._visible = false
+        this._dispatcher.emit('reload', this._item)
+        return this._item
+      }
+    })
   }
 
-  public get default(): object {
-    return this._crud.default
+  public delete(item: Record): Promise<Record> {
+    return this._client.remove(item, {
+      loading: (loading: boolean) => {
+        this._loading = loading
+      },
+      then: (item: Record) => {
+        this._visible = false
+        this._dispatcher.emit('reload')
+        return null
+      }
+    })
   }
 
+
+  public get item() {
+    return this._item
+  }
 }
 
 export default Form;

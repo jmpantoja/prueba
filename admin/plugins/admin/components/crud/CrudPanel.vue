@@ -18,8 +18,8 @@
     <v-navigation-drawer class="crud-grid-panel" v-model="panel.opened" width="500px" absolute temporary>
       <v-form ref="form" style="height: 100%" lazy-validation onSubmit="return false;"
               @keyup.enter.native="onFilter">
-        <v-card height="100%" class="d-flex flex-column">
 
+        <v-card height="100%" class="d-flex flex-column">
           <v-card-text>
             <slot :filters="filters"/>
           </v-card-text>

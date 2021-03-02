@@ -15,6 +15,12 @@ export default [
         href: {
           name: 'data-contact'
         }
+      },
+      {
+        text: 'menu.friends',
+        href: {
+          name: 'data-friends'
+        }
       }
     ]
   }

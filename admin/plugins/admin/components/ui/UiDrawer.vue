@@ -1,6 +1,6 @@
 <template>
   <v-navigation-drawer
-    v-model="$drawer.drawer"
+    v-model="drawer.open"
     fixed
     app
     width="260"
@@ -17,7 +17,7 @@
         dense
       >
         <template
-          v-for="(group, key) in $menu.groups">
+          v-for="(group, key) in menu.groups">
           <v-list-group
             :key="key"
             v-if="group.items"
@@ -61,10 +61,10 @@
 </template>
 <script>
 import VuePerfectScrollbar from 'vue-perfect-scrollbar'
-import {defineComponent} from '@nuxtjs/composition-api'
 
-export default defineComponent({
-  name: 'AdminDrawer',
+export default {
+  name: 'UiDrawer',
+  inject: ['drawer', 'menu'],
   components: {
     VuePerfectScrollbar
   },
@@ -75,7 +75,7 @@ export default defineComponent({
       }
     }
   }
-})
+}
 
 </script>
 

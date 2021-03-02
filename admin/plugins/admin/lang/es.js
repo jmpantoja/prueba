@@ -3,7 +3,7 @@ import $vuetify from 'vuetify/es5/locale/es'
 export default {
   $vuetify,
   app: {
-    title: 'Prueba'
+    title: 'Prueba',
   },
   toolbar: {
     search: "Buscar",
@@ -11,27 +11,29 @@ export default {
     logout: "Logout",
     profile: "Perfil"
   },
-  rules: {
-    date: 'No es una fecha correcta'
+  action: {
+    save: 'Guardar',
+    delete: 'Borrar',
+    reset: 'Reset',
+    filter: 'Filtrar',
   },
   dialog: {
-    delete: {
-      title: 'Borrar Registro',
-      text: '¿Realmente desea borrar este registro?',
-      success: 'Registro borrado correctamente'
-    },
-    edit: {
-      title: 'Editar Registro',
-      success: 'Registro editado correctamente'
-    },
-    create: {
-      title: 'Nuevo Registro',
-      success: 'Registro creado correctamente'
-    },
     yes: 'Si',
     no: 'No',
-    save: 'Guardar',
-    cancel: 'Cancelar',
+    delete: {
+      title: 'Confirmación de borrado',
+      message: '¿Realmente desea borrar este registro? <br/>Esta acción no podrá ser desecha'
+    }
+  },
+  flash: {
+    save: {
+      success: 'Registro guardado correctamente',
+      failure: 'No se pudo guardar el registro'
+    },
+    delete: {
+      success: 'Registro borrado correctamente',
+      failure: 'No se pudo borrar el registro'
+    }
   },
   filter: {
     equals: 'igual a',
@@ -39,13 +41,7 @@ export default {
     begins: 'empieza por',
     ends: 'termina en'
   },
-  panel: {
-    reset: 'Reset',
-    filter: 'Filtrar'
+  rules: {
+    date: 'No es una fecha correcta'
   },
-  menu: {
-    dashboard: 'Escritorio',
-    example: 'Ejemplo',
-    contact: 'Contactos'
-  }
 }

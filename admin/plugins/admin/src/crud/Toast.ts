@@ -1,5 +1,5 @@
-import AdminContext from "~/plugins/admin/src/app/AdminContext";
-import Crud from "~/plugins/admin/src/admin/Crud";
+import App from "~/plugins/admin/src/app/App";
+import Crud from "~/plugins/admin/src/crud/Crud";
 
 declare module '@nuxt/types' {
   interface Context {
@@ -8,7 +8,7 @@ declare module '@nuxt/types' {
 }
 
 class Toast {
-  private _context: AdminContext;
+  private _context: App;
   private _crud: Crud;
   private _opened: boolean
   private _title: string;
@@ -16,7 +16,7 @@ class Toast {
   private _color: string;
 
 
-  public constructor(context: AdminContext, crud: Crud) {
+  public constructor(context: App, crud: Crud) {
     this._context = context;
     this._crud = crud
     this._opened = false
@@ -25,7 +25,7 @@ class Toast {
     this._color = '#F00';
   }
 
-  public get context(): AdminContext {
+  public get context(): App {
     return this._context
   }
 

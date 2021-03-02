@@ -1,4 +1,4 @@
-import AdminContext from "~/plugins/admin/src/app/AdminContext";
+import App from "~/plugins/admin/src/app/App";
 
 const _ = require('lodash')
 const url = require('url')
@@ -6,7 +6,7 @@ const url = require('url')
 class Panel {
   private _opened: boolean;
 
-  public constructor(context: AdminContext) {
+  public constructor(context: App) {
     this._opened = false
   }
 

@@ -1,15 +1,11 @@
-import {AdminContext} from "../../types";
+import Auth from "@nuxtjs/auth-next/dist/core/auth";
 
-declare module '@nuxt/types' {
-  interface Context {
-    $profile: Profile
-  }
-}
+type Context = { $auth: Auth };
 
 class Profile {
-  private context: AdminContext;
+  private context: Context;
 
-  public constructor(context: AdminContext) {
+  public constructor(context: Context) {
     this.context = context
   }
 

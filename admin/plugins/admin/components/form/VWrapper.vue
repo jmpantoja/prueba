@@ -1,7 +1,7 @@
 <template>
   <v-col v-bind="field.col">
     <dl :class="{'v-fieldset': true, 'error--text': inValid}">
-      <dd>{{ field.label }}</dd>
+      <dd class="label">{{ field.label }}</dd>
       <dt>
         <component
           @update:error="onInput"
@@ -15,21 +15,19 @@
 </template>
 
 <script>
-
 export default {
   name: "VWrapper",
   props: ['field', 'value'],
   computed: {
     data: {
-      get(){
+      get() {
         return this.value
       },
-      set(value){
+      set(value) {
         this.$emit('input', value)
       }
     }
   },
-
   data() {
     return {
       inValid: false
@@ -38,11 +36,19 @@ export default {
   methods: {
     onInput(error) {
       this.inValid = error
+      this.$emit('update:error', error)
     }
   }
 }
 </script>
 
-<style>
+<style scoped lang="scss">
+
+::v-deep dd.label {
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.7);
+  font-size: 1.1em;
+}
+
 
 </style>

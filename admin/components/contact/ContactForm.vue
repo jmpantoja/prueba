@@ -7,7 +7,7 @@ import {Crud} from "~/plugins/admin/types";
 import CrudForm from "~/plugins/admin/components/crud/CrudForm.vue";
 import {computed} from "@nuxtjs/composition-api";
 import VDate from "~/plugins/admin/components/form/VDate.vue";
-import VFullname from "~/components/types/VFullname.vue";
+import VFullname from "~/components/VFullname.vue";
 
 
 export default {

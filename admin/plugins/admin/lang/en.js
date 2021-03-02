@@ -3,7 +3,7 @@ import $vuetify from 'vuetify/es5/locale/en'
 export default {
   $vuetify,
   app: {
-    title: 'Reharsal'
+    title: 'Try It!',
   },
   toolbar: {
     search: "Search",
@@ -11,27 +11,19 @@ export default {
     logout: "Logout",
     profile: "Profile"
   },
-  rules: {
-    date: 'The date is wrong'
+  action: {
+    save: 'Save',
+    delete: 'Delete',
+    reset: 'Reset',
+    filter: 'Filter',
   },
   dialog: {
-    delete: {
-      title: 'Delete Record',
-      text: '¿Do you really want to delete this record?',
-      success: 'Record deleted successfully'
-    },
-    edit: {
-      title: 'Edit Record',
-      success: 'Record edited successfully'
-    },
-    create: {
-      title: 'New Record',
-      success: 'Record created successfully'
-    },
-    yes: 'Yes',
+    yes: 'Yi',
     no: 'No',
-    save: 'Save',
-    cancel: 'Cancel',
+    delete: {
+      title: 'Delete confirmation',
+      message: 'Do you really want to delete this record? <br/>This action cannot be undone'
+    }
   },
   filter: {
     equals: 'equals to',
@@ -39,13 +31,7 @@ export default {
     begins: 'begins by',
     ends: 'ends by'
   },
-  panel: {
-    reset: 'Reset',
-    filter: 'Filter'
+  rules: {
+    date: 'The date is wrong'
   },
-  menu: {
-    dashboard: 'Dashboard',
-    example: 'Sample',
-    contact: 'Contacts'
-  }
 }

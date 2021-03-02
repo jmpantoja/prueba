@@ -1,23 +1,20 @@
-import AdminContext from "~/plugins/admin/src/app/AdminContext";
-import Crud from "~/plugins/admin/src/admin/Crud";
+import ToolbarMapper from "~/plugins/admin/src/admin/ToolbarMapper";
 
-const _ = require('lodash')
-const url = require('url')
-
-class Toolbar {
-  private _context: AdminContext;
-  private _crud: Crud;
-
-
-  public constructor(context: AdminContext, crud: Crud) {
-    this._context = context;
-    this._crud = crud
-  }
-
-  public get context(): AdminContext {
-    return this._context
-  }
-
+type Context = {
+  mapper: ToolbarMapper
 }
 
-export default Toolbar;
+class Toolbar {
+  private _title: string;
+
+  public constructor(options: Context) {
+    const mapper = options.mapper
+    this._title = mapper.getTitle();
+  }
+
+  public get title(): string {
+    return this._title;
+  }
+}
+
+export default Toolbar
