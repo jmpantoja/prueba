@@ -1,64 +1,91 @@
-import AdminContext from "~/plugins/admin/src/app/AdminContext";
-import Crud from "~/plugins/admin/src/admin/Crud";
-import Dialog from "~/plugins/admin/src/admin/Dialog";
-import Item from "~/plugins/admin/src/admin/Item";
+import {ApiClient, FormActionList, FormLayout, FormMapper, Record, eventBus} from ".";
+
+class Form {
+  private readonly _client: ApiClient;
+  private readonly _width: number;
+  private readonly _layout: FormLayout;
+  private readonly _actions: FormActionList;
+
+  private _loading: boolean = false;
+  private _visible: boolean = false;
+  private _item: Record;
 
 
-const _ = require('lodash')
+  constructor(client: ApiClient, mapper: FormMapper) {
+    this._client = client
+    this._width = mapper.width
+    this._layout = mapper.layout
+    this._actions = mapper.actions
 
-class Form extends Dialog {
-  private _valid: boolean;
-  private _item: Item | null;
-  private _schema: object = {}
-
-  public constructor(context: AdminContext, crud: Crud) {
-    super(context, crud)
-
-    this._valid = false
-    this._item = null
-  }
-
-  get actionName(): string {
-    if (this._item) {
-      return this._item.id ? 'edit' : 'create'
+    this._item = {
+      id: 'sss',
+      fullName: {
+        firstName: 'jose antonio',
+        lastName: 'gonzales garcia'
+      },
+      birthDate: new Date()
     }
 
-    return 'create'
   }
 
-  public get valid(): boolean {
-    return this._valid;
+  public get title(): string {
+    return 'Editar'
   }
 
-  public set valid(valid: boolean) {
-    this._valid = valid;
+  public get loading(): boolean {
+    return this._loading
   }
 
-  public set schema(schema: object) {
-    this._schema = schema;
+  public get visible(): boolean {
+    return this._visible;
   }
 
-  public get schema(): object {
-    return this._schema;
+  public set visible(value: boolean) {
+    this._visible = value;
   }
 
-  public show(item: Item | null) {
-    this._item = _.cloneDeep(item)
-    return super.show(item)
+  public get width(): number {
+    return this._width
   }
 
-  public get title() {
-    return `dialog.${this.actionName}.title`
+  public get layout(): FormLayout {
+    return this._layout;
   }
 
-  public get item(): object {
-    return this._item || this.default;
+  public get actions(): FormActionList {
+    return this._actions;
   }
 
-  public get default(): object {
-    return this._crud.default
+  public load(item: Record) {
+    this._client.get({
+      id: item.id,
+      loading: (loading: boolean) => {
+        this._loading = loading
+      },
+      then: (item: Record) => {
+        this._item = item
+        this._visible = true
+      }
+    });
   }
 
+  public save(item: Record) {
+    this._client.update({
+      item: item,
+      loading: (loading: boolean) => {
+        this._loading = loading
+      },
+      then: (item: Record) => {
+        this._item = item
+        this._visible = false
+        eventBus.$emit('onChangeDataSet')
+      }
+    });
+  }
+
+  public get item() {
+    return this._item
+  }
 }
 
 export default Form;

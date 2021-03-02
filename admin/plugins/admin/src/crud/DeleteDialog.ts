@@ -1,4 +1,4 @@
-import Dialog from "~/plugins/admin/src/admin/Dialog";
+import Dialog from "~/plugins/admin/src/crud/Dialog";
 
 class DeleteDialog extends Dialog {
   public get title(): string {

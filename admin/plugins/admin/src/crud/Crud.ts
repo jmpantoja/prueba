@@ -7,7 +7,7 @@ import Toast from "./Toast";
 
 import {AdminContext} from "../../types";
 import {reactive, UnwrapRef} from "@nuxtjs/composition-api";
-import Item from "~/plugins/admin/src/admin/Item";
+import Item from "~/plugins/admin/src/crud/Item";
 
 abstract class Crud {
   private _context: AdminContext;

@@ -1,6 +1,5 @@
 <template>
-
-  <v-field v-bind="$props">
+  <v-field v-bind="$props" v-on="$listeners">
     <v-text-field label="Nombre" v-model="data.firstName" :rules="nameRules"/>
     <v-text-field label="Apellidos" v-model="data.lastName" :rules="nameRules"/>
   </v-field>
@@ -9,9 +8,8 @@
 <script>
 import VField from "~/plugins/admin/components/form/VField";
 
-
 export default {
-  name: 'VPepe',
+  name: 'VFullname',
   components: {VField},
   mixins: [VField],
 
@@ -27,7 +25,7 @@ export default {
         }
       ]
     }
-  },
+  }
 };
 </script>
 

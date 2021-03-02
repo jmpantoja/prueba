@@ -21,7 +21,7 @@
   </v-dialog>
 </template>
 <script lang="ts">
-import Dialog from "~/plugins/admin/src/admin/Dialog";
+import Dialog from "~/plugins/admin/src/crud/Dialog";
 
 const _ = require('lodash')
 

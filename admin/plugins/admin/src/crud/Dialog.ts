@@ -1,19 +1,19 @@
-import AdminContext from "~/plugins/admin/src/app/AdminContext";
-import Crud from "~/plugins/admin/src/admin/Crud";
-import Item from "~/plugins/admin/src/admin/Item";
+import App from "~/plugins/admin/src/app/App";
+import Crud from "~/plugins/admin/src/crud/Crud";
+import Item from "~/plugins/admin/src/crud/Item";
 
 const _ = require('lodash')
 const url = require('url')
 
 abstract class Dialog {
-  protected _context: AdminContext;
+  protected _context: App;
   protected _crud: Crud;
 
   private _opened: boolean;
   private _loading: boolean;
   private _resolve: Function;
 
-  public constructor(context: AdminContext, crud: Crud) {
+  public constructor(context: App, crud: Crud) {
     this._context = context;
     this._crud = crud
     this._opened = false
@@ -23,7 +23,7 @@ abstract class Dialog {
 
   public abstract get actionName(): string
 
-  public get context(): AdminContext {
+  public get context(): App {
     return this._context
   }
 

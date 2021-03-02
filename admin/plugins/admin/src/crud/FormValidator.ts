@@ -60,7 +60,7 @@ const schema = {
   required: ['tabs', 'rows']
 }
 
-class FormLayout {
+class FormValidator {
   private _validator: ValidatorResult;
   private _instance: { rows: Array<object>, tabs: Array<object> };
 
@@ -162,4 +162,4 @@ class FormLayout {
   }
 }
 
-export default FormLayout;
+export default FormValidator;

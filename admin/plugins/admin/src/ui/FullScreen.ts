@@ -1,9 +1,3 @@
-declare module '@nuxt/types' {
-  interface Context {
-    $fullScreen: FullScreen
-  }
-}
-
 interface FullScreenDocument {
   exitFullscreen: Function
   mozCancelFullScreen: Function

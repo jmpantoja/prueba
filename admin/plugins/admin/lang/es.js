@@ -14,24 +14,9 @@ export default {
   rules: {
     date: 'No es una fecha correcta'
   },
-  dialog: {
-    delete: {
-      title: 'Borrar Registro',
-      text: '¿Realmente desea borrar este registro?',
-      success: 'Registro borrado correctamente'
-    },
-    edit: {
-      title: 'Editar Registro',
-      success: 'Registro editado correctamente'
-    },
-    create: {
-      title: 'Nuevo Registro',
-      success: 'Registro creado correctamente'
-    },
-    yes: 'Si',
-    no: 'No',
+  form: {
     save: 'Guardar',
-    cancel: 'Cancelar',
+    delete: 'Borrar'
   },
   filter: {
     equals: 'igual a',

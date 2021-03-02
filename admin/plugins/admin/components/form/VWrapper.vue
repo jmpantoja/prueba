@@ -15,21 +15,19 @@
 </template>
 
 <script>
-
 export default {
   name: "VWrapper",
   props: ['field', 'value'],
   computed: {
     data: {
-      get(){
+      get() {
         return this.value
       },
-      set(value){
+      set(value) {
         this.$emit('input', value)
       }
     }
   },
-
   data() {
     return {
       inValid: false
@@ -38,6 +36,7 @@ export default {
   methods: {
     onInput(error) {
       this.inValid = error
+      this.$emit('update:error', error)
     }
   }
 }

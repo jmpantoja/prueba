@@ -5,9 +5,9 @@ import VueRouter from 'vue-router'
 import moment from 'moment'
 import {NuxtAxiosInstance} from '@nuxtjs/axios'
 import NuxtI18nInterface = NuxtVueI18n.Options.NuxtI18nInterface;
-import AdminUrl from "../admin/AdminUrl"
+import AdminUrl from "../crud/AdminUrl"
 
-interface AdminContext {
+interface App {
   i18n: VueI18n & IVueI18n & NuxtI18nInterface
   $auth: Auth
   router: VueRouter
@@ -17,4 +17,4 @@ interface AdminContext {
   url: AdminUrl
 }
 
-export default AdminContext;
+export default App;

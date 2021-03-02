@@ -1,9 +1,9 @@
 <template>
   <v-app class="app">
-    <admin-drawer/>
-    <admin-toolbar/>
+    <ui-drawer/>
+    <ui-toolbar/>
     <v-main class="main">
-      <admin-page-header/>
+      <ui-page-header/>
       <transition name="fade">
         <nuxt/>
       </transition>
@@ -13,19 +13,31 @@
 </template>
 
 <script>
-import {useContext} from '@nuxtjs/composition-api'
+
+import {Drawer, FullScreen, Locale, Menu, Profile} from "../plugins/admin/src/ui";
+import {reactive} from "@nuxtjs/composition-api";
+
 
 export default {
-  head() {
+  provide() {
+    const options = require('~/config/admin')
+
+    const drawer = reactive(new Drawer())
+    const fullScreen = new FullScreen(window.document)
+    const locale = new Locale(this)
+    const profile = new Profile(this)
+    const menu = new Menu(locale, options.menu)
+
     return {
-      title: this.title
+      drawer,
+      fullScreen,
+      locale,
+      profile,
+      menu
     }
   },
-  setup() {
-    let {$locale} = useContext()
-    return {
-      title: $locale.translate('app.title')
-    }
+  data() {
+    return {}
   }
 }
 </script>

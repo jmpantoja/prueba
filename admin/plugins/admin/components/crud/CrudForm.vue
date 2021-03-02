@@ -63,7 +63,7 @@ import {Crud} from "~/plugins/admin/types";
 import CrudDialog from "~/plugins/admin/components/crud/CrudDialog.vue";
 import VField from "~/plugins/admin/components/form/VField";
 import VWrapper from "~/plugins/admin/components/form/VWrapper";
-import FormLayout from "~/plugins/admin/src/admin/FormLayout";
+import FormValidator from "~/plugins/admin/src/crud/FormValidator";
 
 
 const _ = require('lodash')
@@ -105,7 +105,7 @@ export default {
       return this.crud.form
     },
     layout() {
-      const formLayout = new FormLayout(this.schema)
+      const formLayout = new FormValidator(this.schema)
       return formLayout.instance
     }
   },

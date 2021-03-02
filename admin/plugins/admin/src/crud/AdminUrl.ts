@@ -1,6 +1,6 @@
 import {DataOptions} from 'vuetify/types'
 import VueRouter from "vue-router";
-import Item from "~/plugins/admin/src/admin/Item";
+import Item from "~/plugins/admin/src/crud/Item";
 
 const _ = require('lodash')
 const url = require('url')

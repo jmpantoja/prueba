@@ -14,25 +14,11 @@ export default {
   rules: {
     date: 'The date is wrong'
   },
-  dialog: {
-    delete: {
-      title: 'Delete Record',
-      text: '¿Do you really want to delete this record?',
-      success: 'Record deleted successfully'
-    },
-    edit: {
-      title: 'Edit Record',
-      success: 'Record edited successfully'
-    },
-    create: {
-      title: 'New Record',
-      success: 'Record created successfully'
-    },
-    yes: 'Yes',
-    no: 'No',
+  form: {
     save: 'Save',
-    cancel: 'Cancel',
+    delete: 'Delete'
   },
+
   filter: {
     equals: 'equals to',
     contains: 'contains',

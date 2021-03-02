@@ -27,16 +27,15 @@
 <script>
 import VInput from 'vuetify/lib/components/VInput/VInput.js';
 
+const _ = require('lodash')
+
 export default {
   name: "FilterText",
   extends: VInput,
   props: {
     value: {
-      type: Object,
       default() {
-        return {
-          type: 'contains'
-        }
+        return {}
       }
     }
   },
@@ -44,7 +43,6 @@ export default {
     return {
       type: 'contains',
       text: null,
-      data: this.value,
       types: [
         {value: 'equals', text: this.$t('filter.equals')},
         {value: 'contains', text: this.$t('filter.contains')},
@@ -53,14 +51,17 @@ export default {
       ]
     };
   },
-  methods: {
-    default() {
-      this.data = {
-        type: 'contains',
-        text: null
+  computed: {
+    data: {
+      get() {
+        const type = this.value.type || 'contains'
+        const value = typeof this.value === 'object' ? this.value.value : this.value
+        return {
+          type,
+          value: value || ''
+        }
       }
-      this.$emit('input', this.data)
-    },
+    }
   }
 }
 </script>
