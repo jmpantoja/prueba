@@ -18,14 +18,13 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\AbstractContextAwareFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Util\QueryNameGeneratorInterface;
 use Doctrine\ORM\QueryBuilder;
 
-final class TextFilter extends AbstractContextAwareFilter
+class TextFilter extends AbstractContextAwareFilter
 {
 
-    public const PARAMETER_EXACT = 'exact';
+    public const PARAMETER_EQUALS = 'equals';
     public const PARAMETER_CONTAINS = 'contains';
     public const PARAMETER_BEGINS = 'begins';
     public const PARAMETER_ENDS = 'ends';
-
 
     protected function filterProperty(string $property, $value, QueryBuilder $queryBuilder, QueryNameGeneratorInterface $queryNameGenerator, string $resourceClass, string $operationName = null)
     {
@@ -39,18 +38,17 @@ final class TextFilter extends AbstractContextAwareFilter
 
         $alias = $queryBuilder->getRootAliases()[0];
 
-
         foreach ($value as $strategy => $token) {
             $paramName = $queryNameGenerator->generateParameterName('value');
-            $queryBuilder->andWhere(sprintf('%s.fullName.lastName like :%s', $alias, $paramName))
+            $queryBuilder->andWhere(sprintf('%s.%s like :%s', $alias, $property, $paramName))
                 ->setParameter($paramName, $this->paramValue($strategy, $token));
         }
     }
 
-    private function paramValue(string $strategy, string $token)
+    protected function paramValue(string $strategy, string $token)
     {
         switch ($strategy) {
-            case self::PARAMETER_EXACT:
+            case self::PARAMETER_EQUALS:
                 return $token;
             case self::PARAMETER_CONTAINS:
                 return "%$token%";
@@ -72,7 +70,7 @@ final class TextFilter extends AbstractContextAwareFilter
             if (!$this->isPropertyMapped($property, $resourceClass)) {
                 continue;
             }
-            $description += $this->getFilterDescription($property, self::PARAMETER_EXACT);
+            $description += $this->getFilterDescription($property, self::PARAMETER_EQUALS);
             $description += $this->getFilterDescription($property, self::PARAMETER_CONTAINS);
             $description += $this->getFilterDescription($property, self::PARAMETER_BEGINS);
             $description += $this->getFilterDescription($property, self::PARAMETER_ENDS);

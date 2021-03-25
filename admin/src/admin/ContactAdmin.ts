@@ -1,6 +1,4 @@
-import {Admin, ApiClient, FilterMapper, FormMapper, GridMapper, Record, ToolbarMapper} from "~/plugins/admin/src/admin";
-import VDate from "~/plugins/admin/components/form/VDate.vue";
-import VFullname from "~/components/VFullname.vue";
+import {Admin, ApiClient, FilterMapper, FormMapper, GridMapper, Record, ToolbarMapper} from "~/plugins/XXX/src/admin";
 
 
 class ContactAdmin extends Admin {
@@ -19,20 +17,21 @@ class ContactAdmin extends Admin {
 
   protected setUpGrid(mapper: GridMapper): void {
     mapper
-      .addHeader('id', {
-        width: '100'
+      .addColumn('id', {
+        width: '100',
       })
-      .addHeader('fullName.lastName', {
+      .addColumn('fullName.lastName', {
         text: 'Nombre',
         sortable: true,
-
+        type: 'v-col-fullName'
       })
-      .addHeader('birthDate', {
+      .addColumn('birthDate', {
         text: 'Fec. Nac',
         sortable: true,
-        width: '10%'
+        width: '10%',
+        type: 'v-col-date'
       })
-      .addHeader('age', {
+      .addColumn('age', {
         text: 'Edad',
         divider: true,
         align: "right",
@@ -44,20 +43,21 @@ class ContactAdmin extends Admin {
     mapper
       .setWidth(750)
       .setTitle('admin.friends.form.edit', 'admin.friends.form.create')
+
       .rows((panel) => {
         panel
           .col(8, {
-            fullName: {label: 'Nombre Completo', type: VFullname},
+            fullName: {label: 'Nombre Completo', type: 'v-fullname'},
           })
           .col(4, {
-            birthDate: {label: 'Fec. Nac', type: VDate},
+            birthDate: {label: 'Fec. Nac', type: 'v-date'},
           })
       })
   }
 
   protected setUpFilters(mapper: FilterMapper): void {
-    mapper.addFilter('fullName.lastName', {
-      label: 'Last Name',
+    mapper.addFilter('fullName', {
+      label: 'Name',
     })
   }
 

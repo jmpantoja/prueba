@@ -1,6 +1,6 @@
-import {Crud} from "~/plugins/admin/types";
-import Item from "~/plugins/admin/src/crud/Item";
-import Grid from "~/plugins/admin/src/crud/Grid";
+import {Crud} from "~/plugins/XXX/types";
+import Item from "~/plugins/XXX/src/crud/Item";
+import Grid from "~/plugins/XXX/src/crud/Grid";
 
 class ContactCrud extends Crud {
   public get default(): Item {

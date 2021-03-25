@@ -3,6 +3,11 @@ version: '3.4'
 services:
   php:
     image: ${PHP_IMAGE:?PHP_IMAGE is not set or empty}
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+        
     restart: always
     depends_on:
       - db
@@ -25,6 +30,10 @@ services:
 
   api:
     image: ${NGINX_IMAGE:?NGINX_IMAGE is not set or empty}
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"    
     restart: always
     depends_on:
       - php
@@ -33,6 +42,10 @@ services:
 
   cache-proxy:
     image: ${VARNISH_IMAGE:?VARNISH_IMAGE is not set or empty}
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"    
     restart: always
     depends_on:
       - api
@@ -43,6 +56,10 @@ services:
 
   db:
     image: mysql:5.7
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"    
     #   command: --max_allowed_packet=32505856
     environment:
       MYSQL_USER: ${MYSQL_USER}
@@ -56,6 +73,10 @@ services:
     # in production, we may want to use the managed version of Mercure
     # https://mercure.rocks/pricing
     image: dunglas/mercure
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"    
     restart: always
     environment:
       - ALLOW_ANONYMOUS=${MERCURE_ALLOW_ANONYMOUS:?MERCURE_ALLOW_ANONYMOUS is not set or empty}
@@ -67,6 +88,10 @@ services:
     # in production, we may want to use a static website hosting service
     # https://facebook.github.io/create-react-app/docs/deployment
     image: ${CLIENT_IMAGE:?CLIENT_IMAGE is not set or empty}
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"    
     restart: always
     volumes:
       - ./client:/usr/app:rw 
@@ -77,6 +102,10 @@ services:
     # in production, we may want to use a static website hosting service
     # https://facebook.github.io/create-react-app/docs/deployment
     image: ${ADMIN_IMAGE:?ADMIN_IMAGE is not set or empty}
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"    
     restart: always
     volumes:
       - ./admin:/usr/app:rw
@@ -90,6 +119,10 @@ services:
 
   proxy:
     image: steveltn/https-portal:1
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"    
     depends_on:
       - cache-proxy
       - admin

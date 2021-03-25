@@ -25,9 +25,16 @@ services:
         resource: '../src/App/Infrastructure/UI/Symfony/Controller'
         tags: [ 'controller.service_arguments' ]
 
-    contact.order_filter:
-        parent: 'api_platform.doctrine.orm.order_filter'
-        arguments: { $properties: { fullName.lastName: "asc", birthDate: "asc" } }
+    app.infrastructure.api.example.filter.fullName:
+        class: App\Infrastructure\Api\Example\Filter\FullnameFilter
+        arguments: [ '@doctrine', ~, '@?logger' ]
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    fullname_filter:
+        parent: 'app.infrastructure.api.example.filter.fullName'
+        arguments: { $properties: { fullName: null } }
         tags: [ 'api_platform.filter' ]
         ###        # The following are mandatory only if a _defaults section is defined
         ###        # You may want to isolate filters in a dedicated file to avoid adding them
@@ -35,9 +42,19 @@ services:
         autoconfigure: false
         public: false
 
-    contact.text_filter:
-        parent: 'tangram.api_platform.doctrine.orm.text_filter'
-        arguments: { $properties: { fullName.lastName: null } }
+#    contact.text_filter:
+#        parent: 'tangram.api_platform.doctrine.orm.text_filter'
+#        arguments: { $properties: { fullName.lastName: null } }
+#        tags: [ 'api_platform.filter' ]
+#        ###        # The following are mandatory only if a _defaults section is defined
+#        ###        # You may want to isolate filters in a dedicated file to avoid adding them
+#        autowire: false
+#        autoconfigure: false
+#        public: false
+
+    contact.order_filter:
+        parent: 'api_platform.doctrine.orm.order_filter'
+        arguments: { $properties: { id: "asc", fullName.lastName: "asc", birthDate: "asc" } }
         tags: [ 'api_platform.filter' ]
         ###        # The following are mandatory only if a _defaults section is defined
         ###        # You may want to isolate filters in a dedicated file to avoid adding them

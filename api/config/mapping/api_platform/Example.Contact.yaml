@@ -2,8 +2,9 @@ App\Domain\Example\Contact:
     collectionOperations:
         get:
             filters:
+#                - 'contact.text_filter'
                 - 'contact.order_filter'
-                - 'contact.text_filter'
+                - 'fullname_filter'
                 - 'contact.date_filter'
         post: ~
 
