@@ -1,0 +1,60 @@
+parameters:
+
+services:
+    Tangram\Infrastructure\ApiPlatform\Core\Swagger\Serializer\SwaggerDecorator:
+        decorates: 'api_platform.swagger.normalizer.documentation'
+        arguments: [ '@Tangram\Infrastructure\ApiPlatform\Core\Swagger\Serializer\SwaggerDecorator.inner' ]
+        autoconfigure: false
+
+    gesdinet.jwtrefreshtoken.refresh_token_manager:
+        class: Tangram\Infrastructure\Gesdinet\JWTRefreshTokenBundle\Doctrine\RefreshTokenManager
+        public: true
+        arguments: [ '@doctrine.orm.default_entity_manager', 'Gesdinet\JWTRefreshTokenBundle\Entity\RefreshToken' ]
+
+
+    Tangram\Infrastructure\Tactician\:
+        resource: '../../../Tactician'
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Tangram\Infrastructure\Doctrine\:
+        resource: '../../../Doctrine'
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Tangram\Infrastructure\Symfony\:
+        resource: '../../../Symfony'
+        autowire: true
+        autoconfigure: true
+        public: false
+        exclude: ['../../../Symfony/Boilerplate/ModelCreator.php']
+
+    Tangram\Infrastructure\ApiPlatform\Core\Bridge\:
+        resource: '../../../ApiPlatform/Core/Bridge'
+        autowire: true
+        autoconfigure: true
+        public: false
+        
+    Tangram\Infrastructure\Api\:
+        resource: '../../../Api'
+        autowire: true
+        autoconfigure: true
+        public: false
+        
+
+    Tangram\Domain\Event\EventStore:
+        alias: Tangram\Infrastructure\Doctrine\Repository\DoctrineEventStore
+
+    tangram.api_platform.doctrine.orm.text_filter:
+        class: Tangram\Infrastructure\ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\TextFilter
+        arguments: [ '@doctrine', ~, '@?logger' ]
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Symfony\Bundle\MakerBundle\FileManager:
+        alias: maker.file_manager
+
+

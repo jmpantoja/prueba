@@ -1,0 +1,23 @@
+doctrine:
+    dbal:
+        types:
+            date: Tangram\Infrastructure\Doctrine\DBAL\Type\CarbonDateType
+            date_immutable: Tangram\Infrastructure\Doctrine\DBAL\Type\CarbonDateImmutableType
+            datetime: Tangram\Infrastructure\Doctrine\DBAL\Type\CarbonDateTimeType
+            datetime_immutable: Tangram\Infrastructure\Doctrine\DBAL\Type\CarbonDateTimeImmutableType
+
+            time: Tangram\Infrastructure\Doctrine\DBAL\Type\CarbonTimeType
+            time_immutable: Tangram\Infrastructure\Doctrine\DBAL\Type\CarbonTimeImmutableType
+
+            EventId: Tangram\Infrastructure\Doctrine\DBAL\Type\EventIdType
+    orm:
+        auto_generate_proxy_classes: true
+        naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
+        auto_mapping: true
+        mappings:
+            TangramBundle:
+                is_bundle: true
+                type: xml
+                prefix: Tangram\Domain
+                dir: 'Resources/mapping/doctrine'
+                alias: Tangram\Domain

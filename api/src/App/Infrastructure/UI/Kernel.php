@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
-use Tangram\Bundle\TangramBundle;
+use Tangram\Infrastructure\Bundle\TangramBundle;
 
 class Kernel extends BaseKernel
 {

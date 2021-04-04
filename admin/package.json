@@ -17,10 +17,14 @@
     "@nuxtjs/composition-api": "^0.16.4",
     "@nuxtjs/moment": "^1.6.1",
     "core-js": "^3.6.5",
+    "jsonschema": "^1.4.0",
+    "lodash": "^4.17.20",
     "nuxt": "^2.14.6",
     "nuxt-i18n": "^6.15.4",
+    "url": "^0.11.0",
     "vue-country-flag": "^2.0.2",
-    "vue-perfect-scrollbar": "^0.2.1"
+    "vue-perfect-scrollbar": "^0.2.1",
+    "vuejs-datepicker": "^1.6.2"
   },
   "devDependencies": {
     "@nuxt/types": "^2.14.6",

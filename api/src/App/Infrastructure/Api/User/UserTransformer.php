@@ -44,8 +44,4 @@ final class UserTransformer implements DataTransformerInterface
         return UserDto::class === $to && $data instanceof User;
 
     }
-
-
-
-
 }

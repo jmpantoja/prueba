@@ -3,6 +3,10 @@
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+
+imports:
+    - { resource: filters.yaml }
+
 parameters:
 
 services:
@@ -24,44 +28,3 @@ services:
     App\Infrastructure\UI\Symfony\Controller\:
         resource: '../src/App/Infrastructure/UI/Symfony/Controller'
         tags: [ 'controller.service_arguments' ]
-
-    contact.order_filter:
-        parent: 'api_platform.doctrine.orm.order_filter'
-        arguments: { $properties: { fullName.lastName: "asc", birthDate: "asc" } }
-        tags: [ 'api_platform.filter' ]
-        ###        # The following are mandatory only if a _defaults section is defined
-        ###        # You may want to isolate filters in a dedicated file to avoid adding them
-        autowire: false
-        autoconfigure: false
-        public: false
-
-    contact.text_filter:
-        parent: 'tangram.api_platform.doctrine.orm.text_filter'
-        arguments: { $properties: { fullName.lastName: null } }
-        tags: [ 'api_platform.filter' ]
-        ###        # The following are mandatory only if a _defaults section is defined
-        ###        # You may want to isolate filters in a dedicated file to avoid adding them
-        autowire: false
-        autoconfigure: false
-        public: false
-
-    contact.date_filter:
-        parent: 'api_platform.doctrine.orm.date_filter'
-        arguments: { $properties: { birthDate: null } }
-        tags: [ 'api_platform.filter' ]
-        ###        # The following are mandatory only if a _defaults section is defined
-        ###        # You may want to isolate filters in a dedicated file to avoid adding them
-        autowire: false
-        autoconfigure: false
-        public: false
-
-
-    user.order_filter:
-        parent: 'api_platform.doctrine.orm.order_filter'
-        arguments: { $properties: { email: "asc" } }
-        tags: [ 'api_platform.filter' ]
-        ###        # The following are mandatory only if a _defaults section is defined
-        ###        # You may want to isolate filters in a dedicated file to avoid adding them
-        autowire: false
-        autoconfigure: false
-        public: false

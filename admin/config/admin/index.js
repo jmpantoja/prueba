@@ -1,9 +1,9 @@
 import menu from "./menu";
-import defineStack from "./defineStack";
-
-
+import roles from "./roles";
+import admins from "./managers";
 
 export {
   menu,
-  defineStack
+  roles,
+  admins
 }

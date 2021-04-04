@@ -1,19 +1,16 @@
-import $vuetify from 'vuetify/es5/locale/en'
+import $predef from '~/plugins/atn/lang/en'
+import genre from '~/lang/en/genre'
+import movie from '~/lang/en/movie'
 
 export default {
-  $vuetify,
-  app:{
-    title: 'Reharsal'
-  },
-  toolbar: {
-    search: "Search",
-    login: "Login",
-    logout: "Logout",
-    profile: "Profile"
-  },
+  ...$predef,
   menu: {
     dashboard: 'Dashboard',
-    example: 'Sample',
-    contact: 'Contacts'
+    movies: 'Movies',
+    genre: 'Genres',
+  },
+  admin: {
+    genre,
+    movie
   }
 }

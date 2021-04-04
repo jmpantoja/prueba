@@ -4,7 +4,7 @@
 
 
 # https://docs.docker.com/engine/reference/builder/#understand-how-arg-and-from-interact
-ARG PHP_VERSION=7.4
+ARG PHP_VERSION=8.0.3
 ARG APCU_VERSION=5.1.16
 ARG OPENRESTY_VERSION=1.17.8.2
 ARG VARNISH_VERSION=6.5
@@ -57,14 +57,16 @@ RUN wget https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.5/wkh
 
 RUN pecl install \
 #	apcu-5.1.16 \
-	imagick \
-	raphf \
-	propro \
+#	imagick \
+#	raphf \
+#	propro \
 	xdebug \
-	&& printf "\n" | \
-	docker-php-ext-enable imagick \
-	raphf \
-	propro \
+	;
+
+RUN docker-php-ext-enable \
+#    imagick \
+#	raphf \
+#	propro \
 	xdebug \
 	&& pecl clear-cache \
     ;

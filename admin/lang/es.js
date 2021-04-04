@@ -1,19 +1,16 @@
-import $vuetify from 'vuetify/es5/locale/es'
+import $predef from '~/plugins/atn/lang/es'
+import genre from '~/lang/es/genre'
+import movies from '~/lang/es/movies'
 
 export default {
-  $vuetify,
-  app: {
-    title: 'Prueba'
-  },
-  toolbar: {
-    search: "Buscar",
-    login: "Login",
-    logout: "Logout",
-    profile: "Perfil"
-  },
+  ...$predef,
   menu: {
     dashboard: 'Escritorio',
-    example: 'Ejemplo',
-    contact: 'Contactos'
+    movies: 'Peliculas',
+    genre: 'Generos',
+  },
+  admin: {
+    genre,
+    movies
   }
 }

@@ -1,0 +1,11 @@
+App\Infrastructure\Api\FilmArchive\Dto\GenreDto:
+    properties:
+        name:
+            - Choice:
+                  choices:  [hola, adios]
+                  message:  Choose a valid genre.
+            -   Length:
+                    min: 4
+                    max: 6
+                    minMessage: 'Your first name must be at least {{ limit }} characters long'
+                    maxMessage: 'Your first name cannot be longer than {{ limit }} characters'

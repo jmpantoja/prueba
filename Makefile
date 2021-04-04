@@ -23,3 +23,6 @@ xdebug-enabled:
 	docker-compose exec php mv /usr/local/etc/php/conf.d/disabled/docker-php-ext-xdebug.ini /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 	docker-compose exec php pkill -o -USR2 php-fpm
 	#docker-compose exec php /etc/init.d/blackfire-agent restart
+
+varnish-purge:
+	docker-compose exec cache-proxy varnishadm "ban req.url ~ /"

@@ -1,0 +1,11 @@
+App\Infrastructure\Api\FilmArchive\Dto\GenreOutput:
+    attributes:
+        id:
+             groups: ['read']
+
+        name:
+             groups: ['write', 'read']
+
+        movies:
+             groups: ['write', 'read']
+
