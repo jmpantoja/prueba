@@ -11,6 +11,11 @@ const form: FormOptions = {
       fields: [
         {key: 'title'},
         {key: 'year', type: 'atn-field-movie-year', width:'40%'},
+      ]
+    },
+    {
+      label: 'genres',
+      fields: [
         {key: 'genres', type: 'atn-field-movie-genres', },
       ]
     },

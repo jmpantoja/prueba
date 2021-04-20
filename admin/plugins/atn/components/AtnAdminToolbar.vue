@@ -1,7 +1,7 @@
 <template>
   <v-toolbar class="mx-2 toolbar crud-toolbar" flat>
     <v-toolbar-title class="text-h3 font-weight-thin">
-      {{ trans('title') }}
+      {{ t('title') }}
     </v-toolbar-title>
     <v-spacer/>
 
@@ -10,6 +10,7 @@
       :ref="'button-'+name"
       :key="name"
       :button="button"/>
+
   </v-toolbar>
 </template>
 
@@ -23,7 +24,12 @@ export default {
       type: Toolbar
     }
   },
-  inject: ['trans']
+  computed: {
+    namespace() {
+      return this.toolbar.namespace
+    }
+  }
+
 }
 </script>
 

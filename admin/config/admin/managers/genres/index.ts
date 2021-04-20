@@ -6,7 +6,7 @@ import actions from "./actions";
 
 const admin: AdminOptions = {
   i18n: {
-    namespace: "admin.genre"
+    namespace: "admin.genres"
   },
   api: {
     endpoint: '/genres'

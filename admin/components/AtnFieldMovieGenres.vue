@@ -2,7 +2,7 @@
   <atn-field v-bind="$props" v-on="$listeners">
 
     <v-autocomplete
-      :items="genres"
+      :items="items"
       :cache-items="true"
       v-model="data"
       chips
@@ -10,7 +10,6 @@
       multiple
       clearable
       item-text="name"
-      item-color="primary"
       return-object
       hide-details
     >
@@ -21,13 +20,14 @@
       </template>
     </v-autocomplete>
 
-    <atn-admin-form :form="admin.form" />
-    <v-btn text color="primary" small @click="create">
-      <v-icon left>
-        mdi-plus
-      </v-icon>
-      Nuevo Genre
-    </v-btn>
+    <atn-admin-form :form="admin.form">
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn text color="primary" small v-bind="attrs" v-on="on">
+          <v-icon left>mdi-plus</v-icon>
+          Nuevo Genre
+        </v-btn>
+      </template>
+    </atn-admin-form>
 
   </atn-field>
 
@@ -36,24 +36,18 @@
 
 <script>
 import AtnField from "~/plugins/atn/components/AtnField";
+import AtnButton from "@/plugins/atn/components/AtnButton";
 
 const _ = require('lodash')
 
 export default {
   name: "AtnFieldMovieGenres",
-  components: {AtnField},
+  components: {AtnButton, AtnField},
   mixins: [AtnField],
-  // provide() {
-  //   return {
-  //     trans: (key) => {
-  //       return this.admin.i18n.translate(key)
-  //     },
-  //     manager: this.admin.actionManager
-  //   }
-  // },
+  inject: ['dispatcher'],
   data() {
     return {
-      genres: [],
+      items: [],
       admin: this.$adminManager.byName('genres')
     }
   },
@@ -63,16 +57,18 @@ export default {
         return data.id !== item.id
       });
     },
-    create() {
-      this.admin.form.show()
-    },
+    load() {
+      this.admin.client.read({page_size: 50})
+        .success((response) => {
+          this.items = response.items
+        }).run()
+    }
   },
   mounted() {
-
-    this.admin.client.read()
-      .success((response) => {
-        this.genres = response.items
-      }).run()
+    this.dispatcher.on('genres.post.save', () => {
+      this.load()
+    })
+    this.load()
   }
 }
 

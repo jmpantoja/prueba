@@ -1,9 +1,12 @@
 import {AdminContext, Button, ButtonList, ButtonOptionsList, ToolbarOptions} from "~/plugins/atn/src/index";
 
 class Toolbar {
+  private _namespace: string;
   private _buttons: ButtonList;
 
-  public constructor(context: AdminContext, options: ToolbarOptions) {
+
+  public constructor(namespace: string, context: AdminContext, options: ToolbarOptions) {
+    this._namespace = namespace;
     this._buttons = this.initButtons(options.buttons)
   }
 
@@ -11,15 +14,15 @@ class Toolbar {
     const entries = Object
       .entries(actions || {})
       .map(([key, options]) => {
-        const button = new Button({
-          ...options
-        })
-
-        const name = options.name || key
-        return [name, button]
+        const button = new Button(this._namespace, options)
+        return [key, button]
       })
 
     return Object.fromEntries(entries)
+  }
+
+  public get namespace(): string {
+    return this._namespace;
   }
 
   public get buttons(): ButtonList {

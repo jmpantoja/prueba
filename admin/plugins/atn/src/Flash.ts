@@ -2,6 +2,8 @@ import {AdminContext, EventDispatcher} from "~/plugins/atn/src/index";
 
 
 class Flash {
+  private _params: object = {};
+  private _namespace: string;
   private _message: string = ''
   private _visible: boolean = false
   private _color: string = 'success';
@@ -10,12 +12,18 @@ class Flash {
   private _isError: boolean = false;
   private _dispatcher: EventDispatcher;
 
-  public constructor(context: AdminContext) {
+
+  public constructor(namespace: string, context: AdminContext) {
+    this._namespace = namespace;
     this._dispatcher = context.dispatcher
 
     this._dispatcher.on('flash.error', (message: string, reason: string) => {
       this.error(message, reason)
     })
+  }
+
+  public get namespace(): string {
+    return this._namespace;
   }
 
   public set visible(value: boolean) {
@@ -34,6 +42,10 @@ class Flash {
     return this._reason;
   }
 
+  public get params(): object {
+    return this._params;
+  }
+
   public get color(): string {
     return this._color;
   }
@@ -46,7 +58,8 @@ class Flash {
     return this._isError
   }
 
-  public success(message: string) {
+  public success(message: string, params: object = {}) {
+    this._params = params;
     this._isError = false
     this._timeout = 2000
     this._message = `flash.success.${message}`;
@@ -55,11 +68,12 @@ class Flash {
     this._visible = true
   }
 
-  public error(message: string, reason: string) {
+  public error(message: string, reason: string, params: object = {}) {
+    this._params = params;
     this._isError = true
     this._timeout = -1
     this._message = `flash.error.${message}`;
-    this._reason = reason.replace('\n', '<br/>' );
+    this._reason = reason.replace('\n', '<br/>');
     this._color = 'error'
     this._visible = true
   }

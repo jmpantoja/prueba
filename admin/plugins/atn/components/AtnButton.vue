@@ -3,9 +3,7 @@
   <v-btn
     v-if="computedProps.visible"
     v-bind="computedProps"
-
-    @click="onClick"
-  >
+    @click="onClick">
     <v-icon
       v-if="button.icon"
       :left="!button.props.icon"
@@ -15,7 +13,7 @@
       {{ button.icon }}
     </v-icon>
     <template v-if="button.text">
-      {{ trans(`button.${button.text}`) }}
+      {{ t(`button.${button.text}`) }}
     </template>
   </v-btn>
 
@@ -35,25 +33,27 @@ export default {
       }
     },
   },
-  inject: ['trans', 'manager'],
   data() {
     return {
       visible: true
     }
   },
   computed: {
+    namespace(){
+      return this.button.namespace
+    },
     computedProps() {
       let props = _.cloneDeep(this.button.props);
 
-      props.visible = this.manager.isGranted(this.button.action, this.params)
-      props.disabled = this.manager.disabled(this.button.action, this.params)
+      props.visible = this.$actionManager.isGranted(this.button, this.params)
+      props.disabled = this.$actionManager.disabled(this.button, this.params)
 
       return this.button.customize(props, this.params)
     }
   },
   methods: {
     onClick() {
-      this.manager.run(this.button.action, this.params)
+      this.$actionManager.run(this.button.namespace, this.button.action, this.params)
     }
   }
 }

@@ -1,6 +1,5 @@
 import {
   ActionContext,
-  ActionManager,
   AdminContext,
   AdminOptions,
   ApiClient,
@@ -12,6 +11,7 @@ import {
   Grid,
   I18n,
   Toolbar,
+  UrlAction,
   UrlManager,
   User,
 } from "~/plugins/atn/src/index";
@@ -19,10 +19,12 @@ import {
 const _ = require('lodash')
 
 class Admin {
-  private _actionManager: ActionManager;
+  // private _actionManager: ActionManager;
 
   private _context: AdminContext;
+  private _dispatcher: EventDispatcher;
   private _user: User;
+  private _namespace: string;
   private _i18n: I18n;
   private _grid: Grid;
   private _form: Form;
@@ -31,38 +33,33 @@ class Admin {
   private _flash: Flash;
 
 
-  public constructor(app: AppContext, config: AdminOptions) {
+  public constructor(namespace: string, app: AppContext, options: AdminOptions) {
+    this._namespace = namespace;
 
-    const options = _.cloneDeep(config)
     this._context = this.adminContext(app, options);
+    this._dispatcher = app.dispatcher
 
     this._user = this.makeUser(app)
-    this._dialog = new Dialog()
-    this._flash = new Flash(this._context)
+    this._dialog = new Dialog(namespace)
+    this._flash = new Flash(namespace, this._context)
     this._i18n = new I18n(this._context, options.i18n)
-    this._grid = new Grid(this._context, options.grid)
-    this._form = new Form(this._context, options.form)
-    this._toolbar = new Toolbar(this._context, options.toolbar)
-
-    this._actionManager = new ActionManager(this.actionContext, app.security)
-    this._actionManager.attach(options.actions)
-  }
-
-  public doAction() {
-    const urlAction = this._context.urlManager.dataAction;
-    this._actionManager.doAction(urlAction)
+    this._grid = new Grid(namespace, this._context, options.grid)
+    this._form = new Form(namespace, this._context, options.form)
+    this._toolbar = new Toolbar(namespace, this._context, options.toolbar)
   }
 
   private adminContext(app: AppContext, options: AdminOptions): AdminContext {
-    app.dispatcher = new EventDispatcher()
-
     return {
       i18n: app.i18n,
       dispatcher: app.dispatcher,
       client: new ApiClient(app, options.api),
-      urlManager: new UrlManager(app),
+      urlManager: new UrlManager(this._namespace, app),
       user: this._user
     }
+  }
+
+  private get dispatcher(): EventDispatcher {
+    return this._dispatcher
   }
 
   private makeUser(app: AppContext): User {
@@ -73,7 +70,11 @@ class Admin {
     };
   }
 
-  private get actionContext(): ActionContext {
+  public get namespace(): string {
+    return this._namespace;
+  }
+
+  public get actionContext(): ActionContext {
     return {
       grid: this._grid,
       form: this._form,
@@ -81,6 +82,10 @@ class Admin {
       flash: this._flash,
       user: this._user
     };
+  }
+
+  public get urlAction(): UrlAction | undefined {
+    return this._context.urlManager.urlAction
   }
 
 
@@ -112,9 +117,9 @@ class Admin {
     return this._flash;
   }
 
-  public get actionManager(): ActionManager {
-    return this._actionManager;
-  }
+  // public get actionManager(): ActionManager {
+  //   return this._actionManager;
+  // }
 
 }
 

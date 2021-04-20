@@ -94,11 +94,11 @@ export type ActionContext = {
   form: Form,
   dialog: Dialog,
   flash: Flash,
-  user: User,
+  user: User
 }
 
+
 export type ButtonOptions = {
-  name?: string,
   text?: string,
   icon?: string,
   tile?: boolean,
@@ -137,6 +137,7 @@ export type I18nOptions = {
 }
 
 export type GridOptions = {
+  namespace?: string;
   options?: GridDataOptions,
   filters?: FilterFieldList
   columns: ColumnList,
@@ -191,6 +192,7 @@ export type FilterList = { [key: string]: Filter };
 
 
 export type FormOptions = {
+  namespace?: string;
   width?: number,
   height?: number,
   groups: FormGroup[],
@@ -219,6 +221,7 @@ export type DialogOptions = {
 
 
 export type ToolbarOptions = {
+  namespace?: string;
   buttons?: ButtonOptionsList
 }
 
@@ -243,6 +246,7 @@ export type UrlEntry = {
 }
 
 export type UrlAction = {
+  namespace: string,
   name: string,
   id: string | number | null
 }

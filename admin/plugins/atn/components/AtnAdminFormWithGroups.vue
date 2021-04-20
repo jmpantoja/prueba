@@ -13,7 +13,7 @@
 
             <v-list-item-content>
               <v-list-item-title @click="goTo(`#group-${index}`, $event)">
-                {{ trans(`form.group.${group.label}`) }}
+                {{ t(`form.group.${group.label}`) }}
               </v-list-item-title>
             </v-list-item-content>
 
@@ -29,6 +29,7 @@
         :key="index"
         :group="group"
         :id="'group-'+index"
+        :namespace="namespace"
         :item="form.item"
       />
 
@@ -46,7 +47,6 @@ export default {
       required: true
     }
   },
-  inject: ['trans'],
   data() {
     const height = this.form.height
     return {
@@ -82,6 +82,11 @@ export default {
         offset: -62,
       })
     },
+  },
+  computed:{
+    namespace(){
+      return this.form.namespace
+    }
   }
 }
 </script>

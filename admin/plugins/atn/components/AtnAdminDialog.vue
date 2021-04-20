@@ -1,11 +1,11 @@
 <template>
   <atn-modal
     v-model="dialog.visible"
-    :title="dialog.title"
+    :title="t(dialog.title, dialog.params)"
     :width="dialog.width"
   >
     <template slot="content">
-      <p v-if="dialog.message" class="text-subtitle-1" v-html="trans(dialog.message)"/>
+      <p v-if="dialog.message" class="text-subtitle-1" v-html="t(dialog.message, dialog.params)"/>
     </template>
     <template slot="actions:right">
       <v-btn
@@ -40,13 +40,17 @@ export default {
       required: true
     }
   },
-  inject: ['trans'],
   methods: {
     onCancel() {
       this.dialog.visible = false
     },
     onConfirm() {
       this.dialog.confirm()
+    }
+  },
+  computed: {
+    namespace() {
+      return this.dialog.namespace
     }
   }
 }

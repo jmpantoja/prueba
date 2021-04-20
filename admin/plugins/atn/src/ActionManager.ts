@@ -1,61 +1,85 @@
-import {ActionContext, ActionList, UrlAction} from "~/plugins/atn/src";
-import RolesManager from "~/plugins/atn/src/RolesManager";
+import {ActionContext, ActionList, RolesManager, UrlAction} from "~/plugins/atn/src";
+import Button from "~/plugins/atn/src/Button";
+
+type ContextList = { [key: string]: ActionContext }
+type ActionListList = { [key: string]: ActionList }
+
 
 class ActionManager {
-  private _context: ActionContext;
   private _security: RolesManager;
-  private _actions: ActionList = {};
+  private _actions: ActionListList = {};
+  private _contexts: ContextList = {}
 
-  public constructor(context: ActionContext, security: RolesManager) {
-    this._context = context;
+  public constructor(security: RolesManager) {
     this._security = security;
+
   }
 
-  public attach(actions: ActionList) {
-    this._actions = actions
-  }
+  public attach(namespace: string, context: ActionContext, actions: ActionList) {
+    this._contexts[namespace] = context;
 
-  public run(name: string, params: object) {
+    Object.entries(actions)
+      .forEach(([key, action]) => {
+        this._actions[namespace] = this._actions[namespace] || {}
 
-    const action = this.actionByName(name);
-    if (!action.dialog) {
-      action.run(this._context, params)
-      return
-    }
-
-    this._context.dialog
-      .open(action.dialog)
-      .then(() => {
-        action.run(this._context, params)
+        this._actions[namespace][key] = action
       })
   }
 
-  public isGranted(name: string, params: object) {
-    const action = this.actionByName(name);
+  public run(namespace: string, name: string, params: object) {
+
+    const context = this._contexts[namespace]
+    const action = this.actionByName(namespace, name);
+    if (!action.dialog) {
+      action.run(context, params)
+      return
+    }
+    const values = context.toString()
+    context.dialog
+      .open(action.dialog, params)
+      .then(() => {
+        action.run(context, params)
+      })
+  }
+
+  public isGranted(button: Button, params: object) {
+    const action = this.actionFromButton(button);
     if (!action.roles) {
       return true
     }
+    const namespace = button.namespace
+    const context = this._contexts[namespace]
 
     const roles = typeof action.roles === 'function' ?
-      action.roles(this._context, params) :
+      action.roles(context, params) :
       action.roles
 
-    return this._security.isGranted(roles, this._context.user)
+    return this._security.isGranted(roles, context.user)
   }
 
-  public disabled(name: string, params: object) {
-    const action = this.actionByName(name);
+  public disabled(button: Button, params: object) {
+    const action = this.actionFromButton(button);
     if (!action.disabled) {
       return false
     }
 
-    return action.disabled(this._context, params)
+    const namespace = button.namespace
+    const context = this._contexts[namespace]
+
+    return action.disabled(context, params)
   }
 
-  private actionByName(name: string) {
-    const action = this._actions[name]
+  private actionFromButton(button: Button) {
+    const namespace = button.namespace
+    const name = button.action
+
+    return this.actionByName(namespace, name)
+  }
+
+  private actionByName(namespace: string, name: string) {
+    const action = this._actions[namespace][name]
     if (!action) {
-      throw new Error(`La accción "${name}" no existe`)
+      throw new Error(`La accción "${namespace}.${name}" no existe`)
     }
     return action
   }
@@ -64,7 +88,7 @@ class ActionManager {
     if (!action) {
       return
     }
-    this.run(action.name, {item: {id: action.id}})
+    this.run(action.namespace, action.name, {item: {id: action.id}})
   }
 }
 

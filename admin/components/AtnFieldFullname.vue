@@ -2,10 +2,10 @@
   <atn-field v-bind="$props" v-on="$listeners">
     <v-row>
       <v-col>
-        <v-text-field :label="trans('form.field.firstName')" v-model="data.firstName" :rules="nameRules"/>
+        <v-text-field :label="$t('form.field.firstName')" v-model="data.firstName" :rules="nameRules"/>
       </v-col>
       <v-col>
-        <v-text-field :label="trans('form.field.lastName')" v-model="data.lastName" :rules="nameRules"/>
+        <v-text-field :label="$t('form.field.lastName')" v-model="data.lastName" :rules="nameRules"/>
       </v-col>
     </v-row>
   </atn-field>
@@ -19,7 +19,6 @@ export default {
   name: 'AtnFieldFullname',
   components: {AtnField},
   mixins: [AtnField],
-  inject: ['trans'],
   data() {
     return {
       nameRules: [

@@ -7,9 +7,13 @@
     @click:outside="onClose"
     @keydown.esc="onClose"
   >
+    <template v-slot:activator="{ on, attrs }">
+      <slot name="activator" :on="on" :attrs="attrs"/>
+    </template>
+
     <v-card :class="name" :loading="loading">
       <v-card-title class="card-title" v-if="title">
-        {{ trans(title) }}
+        {{ title }}
       </v-card-title>
       <v-divider style="margin-bottom: 2em"/>
 
@@ -29,7 +33,6 @@
 <script>
 export default {
   name: "AtnModal",
-  inject: ['trans'],
   props: {
     name: {
       type: String | Object,

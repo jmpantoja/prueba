@@ -1,24 +1,27 @@
 <template>
   <atn-modal
-    :title="form.title"
+    :title="t(form.title, {item: form.item} )"
     :width="form.width"
     :height="form.height"
     :loading="form.loading"
     :name="{'form-with-groups': !isSimple}"
-    v-model="form.visible"
-  >
+    v-model="form.visible">
+
+    <template v-slot:activator="{ on, attrs }">
+      <slot name="activator" :on="on" :attrs="attrs"/>
+    </template>
+
     <template slot="content">
       <v-form v-model="form.valid"
               ref="form"
               lazy-validation
               onSubmit="return false;"
               @keyup.enter.native="onEnter">
-
-
         <atn-field-wrapper
           v-if="isSimple"
           v-for="(field, name) in group.fields"
           v-model="form.item[field.key]"
+          :namespace="form.namespace"
           :key="name"
           :field="field"/>
 
@@ -69,13 +72,15 @@ export default {
       required: true
     }
   },
-  inject: ['manager'],
   methods: {
     onEnter() {
-      this.manager.run('save', {item: this.form.item})
+      this.$actionManager.run(this.form.namespace, 'save', {item: this.form.item})
     }
   },
   computed: {
+    namespace() {
+      return this.form.namespace
+    },
     isSimple() {
       return this.form.groups.length === 1
     },

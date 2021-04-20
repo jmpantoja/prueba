@@ -1,6 +1,7 @@
 import {FormOptions, Props} from "~/plugins/atn/src";
 
 const form: FormOptions = {
+  width: 500,
   default: {
     id: null,
     fullName: {}

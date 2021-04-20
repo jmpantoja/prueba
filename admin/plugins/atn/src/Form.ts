@@ -4,6 +4,7 @@ import {
   Button,
   ButtonList,
   ButtonOptionsList,
+  EventDispatcher,
   FormGroup,
   FormNormalizer,
   FormOptions,
@@ -11,15 +12,15 @@ import {
   UrlManager
 } from "~/plugins/atn/src/index";
 
-
 const _ = require('lodash')
 
 class Form {
-
+  private _namespace: string;
   private _item: Record;
   private _default: Record;
   private _client: ApiClient;
   private _urlManager: UrlManager;
+  private _dispatcher: EventDispatcher;
   private _visible: boolean = false;
   private _valid: boolean = false;
   private _width: number;
@@ -29,10 +30,12 @@ class Form {
   private _buttons: ButtonList;
 
 
-  public constructor(context: AdminContext, options: FormOptions) {
+  public constructor(namespace: string, context: AdminContext, options: FormOptions) {
+    this._namespace = namespace;
     this._client = context.client
     this._urlManager = context.urlManager
 
+    this._dispatcher = context.dispatcher
     this._width = options.width || 750
     this._height = options.height || 500
     this._loading = false
@@ -47,16 +50,16 @@ class Form {
     const entries = Object
       .entries(actions || {})
       .map(([key, options]) => {
-        const action = new Button({
-          slot: 'default',
-          ...options
-        })
-
-        const name = options.name || key
-        return [name, action]
+        const button = new Button(this._namespace, options)
+        return [key, button]
       })
 
     return Object.fromEntries(entries)
+  }
+
+
+  public get namespace(): string {
+    return this._namespace;
   }
 
   public get valid(): boolean {
@@ -129,6 +132,7 @@ class Form {
         this._loading = value
       })
       .success((item: Record) => {
+        this._dispatcher.emit(`${this._namespace}.post.save`, item)
         return item
       })
       .end(() => {
@@ -143,6 +147,7 @@ class Form {
         this._loading = value
       })
       .success((item: Record) => {
+        this._dispatcher.emit(`${this._namespace}.post.save`, item)
         return item
       })
       .end(() => {
@@ -157,6 +162,7 @@ class Form {
         this._loading = value
       })
       .success((item: Record) => {
+        this._dispatcher.emit(`${this._namespace}.post.delete`, item)
         return item
       })
       .end(() => {
@@ -188,6 +194,7 @@ class Form {
     const name = item ? 'edit' : 'create'
     const id = item ? item.id : null
     this._urlManager.setAction({
+      namespace: this._namespace,
       name,
       id
     })

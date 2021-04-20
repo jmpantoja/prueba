@@ -31,7 +31,7 @@
         <v-card height="100%" class="d-flex flex-column">
           <v-card-text>
             <template v-for="(field, key) in grid.filterFields">
-              <atn-field-wrapper :key="key" :field="field" v-model="item[key]"/>
+              <atn-field-wrapper :key="key" :namespace="namespace" :field="field" v-model="item[key]"/>
             </template>
 
           </v-card-text>
@@ -70,18 +70,6 @@ export default {
       item: this.grid.filtersDefault,
     }
   },
-//   watch: {
-//     item: {
-//       handler(value) {
-//         if (!this.default) {
-//           this.default = _.cloneDeep(value)
-//           this.grid.reload()
-// //          this.onReset()
-//         }
-//       },
-//       deep: true
-//     }
-//   },
   methods: {
     onFilter() {
       this.grid.filters = this.item
@@ -92,6 +80,11 @@ export default {
       this.visible = false
     },
   },
+  computed:{
+    namespace(){
+      return this.grid.namespace
+    }
+  }
 
 }
 </script>

@@ -6,7 +6,7 @@
     :multi-line="true"
     top>
 
-    <p class="title" v-html="message"/>
+    <p class="title" v-if="flash.message" v-html="t(flash.message, flash.params)"/>
     <p class="text-body-1" v-html="flash.reason"/>
 
     <template v-slot:action="{ attrs }">
@@ -32,13 +32,9 @@ export default {
       required: true
     }
   },
-  inject: ['trans'],
   computed: {
-    message() {
-      if (!this.flash.message) {
-        return null
-      }
-      return this.trans(this.flash.message)
+    namespace() {
+      return this.flash.namespace
     },
 
   }

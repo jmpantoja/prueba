@@ -16,7 +16,7 @@
       v-for="(column, name) in grid.columns"
       :slot="'header.'+column.value">
       <span v-if="column.text" :key="name">
-        {{ trans('grid.header.' + column.text) }}
+        {{ t(`grid.header.${column.text}`) }}
       </span>
     </template>
 
@@ -38,7 +38,6 @@
         :params="{item}"
         :button="button"/>
 
-
     </template>
   </v-data-table>
 
@@ -51,13 +50,20 @@ import AtnButton from "./AtnButton";
 export default {
   name: "AtnAdminGrid",
   components: {AtnButton},
-  inject: ['trans'],
   props: {
     grid: {
       type: Grid,
       required: true
     }
   },
+  computed:{
+    namespace(){
+      return this.grid.namespace
+    }
+  },
+  mounted() {
+    this.grid.reload()
+  }
 }
 </script>
 

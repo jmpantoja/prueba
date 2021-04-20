@@ -31,6 +31,7 @@ const actionsColumn: Column = {
 };
 
 class Grid {
+  private _namespace: string;
   private readonly _columns: Array<Column>;
   private _client: ApiClient;
   private _urlManager: UrlManager;
@@ -50,7 +51,8 @@ class Grid {
   private _pageCount: number = 0
 
 
-  constructor(context: AdminContext, options: GridOptions) {
+  constructor(namespace: string, context: AdminContext, options: GridOptions) {
+    this._namespace = namespace;
     this._client = context.client
     this._urlManager = context.urlManager
 
@@ -65,7 +67,7 @@ class Grid {
     this._page = this._options.page
     this._filters = this._urlManager.dataFilters
 
-    this.reload()
+    //  this.reload()
   }
 
   private initOptionsDefault(options?: GridDataOptions): DataOptions {
@@ -130,11 +132,15 @@ class Grid {
     const entries = Object
       .entries(actions || {})
       .map(([key, options]) => {
-        const action = new Button(options)
-        return [key, action]
+        const button = new Button(this._namespace, options)
+        return [key, button]
       })
 
     return Object.fromEntries(entries)
+  }
+
+  public get namespace(): string {
+    return this._namespace;
   }
 
   public get columns(): Column[] {

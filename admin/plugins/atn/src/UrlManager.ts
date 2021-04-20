@@ -17,8 +17,10 @@ class UrlNormalizer {
     sortDesc: [],
   };
 
+  private _namespace: string;
   private _filters: FilterList = {};
   private _action?: UrlAction;
+
 
   private static createEntry(field: string, value: any): UrlEntry {
     const matches = field.match(/^(.*)\[(.*)\]/i);
@@ -37,16 +39,18 @@ class UrlNormalizer {
     }
   }
 
-  public static fromQuery(query: object) {
+  public static fromQuery(namespace: string, query: object) {
     const entries = Object.entries(query)
       .map(([field, value]) => {
         return this.createEntry(field, value);
       })
 
-    return new UrlNormalizer(entries)
+    return new UrlNormalizer(namespace, entries)
   }
 
-  private constructor(entries: UrlEntry[]) {
+  private constructor(namespace: string, entries: UrlEntry[]) {
+    this._namespace = namespace
+
     entries.forEach((entry: UrlEntry) => {
       this.sortEntry(entry)
       this.pageEntry(entry)
@@ -78,8 +82,8 @@ class UrlNormalizer {
       return
     }
 
-
     this._action = {
+      namespace: this._namespace,
       name: entry.key || '',
       id: entry.value,
     }
@@ -114,9 +118,10 @@ class UrlManager {
   private _router: VueRouter;
   private _normalizer: UrlNormalizer;
 
-  public constructor(context: AppContext) {
+
+  public constructor(namespace: string, context: AppContext) {
     this._router = context.router
-    this._normalizer = UrlNormalizer.fromQuery(this.query)
+    this._normalizer = UrlNormalizer.fromQuery(namespace, this.query)
   }
 
   private get query(): object {
@@ -163,14 +168,14 @@ class UrlManager {
     return this._normalizer.filters
   }
 
-  public get dataAction() {
+  public get urlAction() {
     return this._normalizer.action
   }
 
   public update(params: object) {
     const query = {
       ...params,
-      ...this.actionToArg(this.dataAction)
+      ...this.actionToArg(this.urlAction)
     }
     this.push(query);
   }

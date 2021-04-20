@@ -11,15 +11,17 @@ class Button {
   private readonly _icon?: string
   private readonly _customize?: Customize
   private readonly _large: boolean;
+  private _namespace: string;
 
-  public constructor(options: ButtonOptions) {
+  public constructor(namespace: string, options: ButtonOptions) {
     this._props = this.initProps(options);
+    this._namespace = namespace
     this._icon = options.icon
     this._text = options.text
-    this._slot = options.slot
+    this._slot = options.slot || 'default'
     this._large = options.large || false
-
     this._action = options.action
+
     this._customize = options.customize
   }
 
@@ -36,6 +38,10 @@ class Button {
       icon: !hasText,
       color: options.color || 'primary'
     }
+  }
+
+  public get namespace(): string {
+    return this._namespace;
   }
 
   public customize(props: Props, params: object): Props {

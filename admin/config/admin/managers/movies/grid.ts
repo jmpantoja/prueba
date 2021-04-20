@@ -7,14 +7,14 @@ const grid: GridOptions = {
   },
   filters: [
     {
-      key: 'name'
+      key: 'title'
     }
   ],
   columns: [
     {
       key: 'title',
       text: 'title',
-    //  type: 'atn-grid-movie-title',
+      type: 'atn-grid-movie-title',
       sortable: true,
     },
     {

@@ -2,13 +2,14 @@
   <fieldset
     :id="id"
     :class="{invalid: this.inValid}">
-    <legend>{{ trans(`form.group.${group.label}`) }}</legend>
+    <legend>{{ t(`form.group.${group.label}`) }}</legend>
     <atn-field-wrapper
       v-for="(field, name) in group.fields"
       @update:error="onUpdateError(field.key, $event)"
       :ref="'field-'+field.key"
       v-model="item[field.key]"
       :key="name"
+      :namespace="namespace"
       :field="field"/>
   </fieldset>
 </template>
@@ -29,8 +30,10 @@ export default {
       type: Object,
       required: true
     },
+    namespace: {
+      type: String,
+    }
   },
-  inject: ['trans'],
   data() {
     return {
       inValid: false,

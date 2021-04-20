@@ -1,6 +1,6 @@
 <template>
   <dl :class="{'v-fieldset': true, 'error--text': inValid }" :style="{width:field.width}">
-    <dd class="label">{{ trans(`form.field.${field.label}`) }}</dd>
+    <dd class="label">{{ t(`form.field.${field.label}`) }}</dd>
     <dt>
       <component
         ref="field"
@@ -15,8 +15,7 @@
 <script>
 export default {
   name: "AtnFieldWrapper",
-  props: ['field', 'value'],
-  inject: ['trans'],
+  props: ['field', 'value', 'namespace'],
   computed: {
     data: {
       get() {

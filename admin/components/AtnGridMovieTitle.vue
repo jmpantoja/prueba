@@ -1,6 +1,6 @@
 <template>
   <div>
-    {{ value }}
+    {{ value }}  <i>({{item.year}})</i>
   </div>
 </template>
 

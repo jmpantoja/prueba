@@ -34,7 +34,7 @@ export default {
       trans: (key) => {
         return this.admin.i18n.translate(key)
       },
-      manager: this.admin.actionManager
+      dispatcher: this.admin.dispatcher
     }
   },
   props: {
@@ -44,7 +44,8 @@ export default {
     }
   },
   mounted() {
-    this.admin.doAction()
+    const action = this.admin.urlAction
+    this.$actionManager.doAction(action)
   }
 }
 </script>
