@@ -82,7 +82,10 @@ class Form {
   }
 
   public get title(): string {
-    return 'form.title.edit';
+    if(this.editMode){
+      return 'form.title.edit';
+    }
+    return 'form.title.create';
   }
 
   public get groups(): FormGroup[] {

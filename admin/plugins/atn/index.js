@@ -1,18 +1,19 @@
 import Vue from 'vue'
-import {admins, menu, roles} from '~/config/admin'
-import {ActionManager, AdminManager, Locale, Panel, RolesManager} from "~/plugins/atn/src";
+import {admins, roles} from '~/config/admin'
+import {ActionManager, AdminManager, Locale, RolesManager} from "~/plugins/atn/src";
+
 const _ = require('lodash')
 
 
 Vue.mixin({
   methods: {
     t(key, params) {
-      if(!key){
+      if (!key) {
         return ''
       }
 
       var name = key
-      if(this.namespace){
+      if (this.namespace) {
         name = `admin.${this.namespace}.${key}`;
       }
       return this.$t(name, params);
@@ -47,7 +48,7 @@ export default ({app}, inject) => {
   const actionManager = new ActionManager(app.security, admins)
   inject('actionManager', actionManager)
 
-  const adminManager = new AdminManager(actionManager,  admins, app)
+  const adminManager = new AdminManager(actionManager, admins, app)
   inject('adminManager', adminManager)
 
 }

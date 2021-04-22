@@ -1,5 +1,5 @@
 import $predef from '~/plugins/atn/lang/es'
-import genre from '~/lang/es/genres'
+import genres from '~/lang/es/genres'
 import movies from '~/lang/es/movies'
 
 export default {
@@ -10,7 +10,8 @@ export default {
     genre: 'Generos',
   },
   admin: {
-    genre,
-    movies
+    genres,
+    movies,
+
   }
 }

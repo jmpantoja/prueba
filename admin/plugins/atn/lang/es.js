@@ -21,16 +21,6 @@ export default {
     yes: 'Si',
     no: 'No'
   },
-  flash: {
-    save: {
-      success: 'Registro guardado correctamente',
-      failure: 'No se pudo guardar el registro'
-    },
-    delete: {
-      success: 'Registro borrado correctamente',
-      failure: 'No se pudo borrar el registro'
-    }
-  },
   filter: {
     equals: 'igual a',
     contains: 'contiene',

@@ -1,42 +1,44 @@
-const admin = {
-  title: 'Generos',
-  flash: {
-    error: {
-      404: 'Error 404'
-    },
-    success: {
-      delete: 'Genero eliminado correctamente',
-      save: 'Genero guardado correctamente'
-    }
-  },
-  dialog: {
-    delete: {
-      title: 'Borrar genero',
-      message: '¿Esta seguro que desea borrar este elemento?<br/>Esta acción no podrá ser desecha'
-    }
-  },
-  grid: {
-    header: {
-      id: '#',
-      name: 'Nombre',
-      birthDate: 'Fec. Nac',
-    }
-  },
-  form: {
-    title: {
-      edit: 'editando',
-      create: 'creando',
-    },
-    group: {
-    },
-    field: {
-      name: 'Nombre',
-    }
-  },
-  button: {
-    save: 'Guardar',
-    delete: 'Borrar'
-  }
-}
+import replace from "~/plugins/atn/lang/replace";
+import defaults from "~/plugins/atn/lang/admin/es"
 
-export default admin
+export default replace({
+  extract(params) {
+    const item = params.named('item') || {};
+    return {
+      item: item.name,
+      singular: 'genero'
+    }
+  },
+  defaults,
+  messages: {
+    title: 'Generos',
+    flash: {
+      success: {
+        delete: 'El género "{item}" ha sido eliminado correctamente',
+        save: 'El género "{item}" ha sido guardado correctamente'
+      }
+    },
+    dialog: {
+      delete: {
+        title: 'Borrar género "{item}"',
+      }
+    },
+    grid: {
+      header: {
+        id: '#',
+        name: 'Nombre',
+        birthDate: 'Fec. Nac',
+      }
+    },
+    form: {
+      title: {
+        edit: 'Editar género "{item}"',
+        create: 'Nuevo {singular}',
+      },
+      group: {},
+      field: {
+        name: 'Nombre',
+      }
+    }
+  }
+})
