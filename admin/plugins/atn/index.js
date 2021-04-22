@@ -1,10 +1,11 @@
 import Vue from 'vue'
+import { VueMaskDirective } from 'v-mask'
 import {admins, roles} from '~/config/admin'
 import {ActionManager, AdminManager, Locale, RolesManager} from "~/plugins/atn/src";
 
 const _ = require('lodash')
 
-
+Vue.directive('mask', VueMaskDirective);
 Vue.mixin({
   methods: {
     t(key, params) {

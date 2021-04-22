@@ -6,7 +6,7 @@ export default replace({
     const item = params.named('item') || {};
     return {
       item: item.title,
-      singular: 'película'
+      singular: 'película',
     }
   },
   defaults,

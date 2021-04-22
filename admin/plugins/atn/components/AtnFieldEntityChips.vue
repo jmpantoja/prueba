@@ -7,11 +7,9 @@
       v-model="data"
       chips
       deletable-chips
-      multiple
-      clearable
-      item-text="name"
       return-object
       hide-details
+      v-bind="$props"
     >
       <template v-slot:selection="{ item }">
         <v-chip close color="info" @click:close="remove(item)">
@@ -24,7 +22,7 @@
       <template v-slot:activator="{ on, attrs }">
         <v-btn text color="primary" small v-bind="attrs" v-on="on">
           <v-icon left>mdi-plus</v-icon>
-          Nuevo Genre
+          {{ t('form.title.create') }}
         </v-btn>
       </template>
     </atn-admin-form>
@@ -35,20 +33,43 @@
 </template>
 
 <script>
-import AtnField from "~/plugins/atn/components/AtnField";
+import AtnField from "@/plugins/atn/components/AtnField";
 import AtnButton from "@/plugins/atn/components/AtnButton";
+import {VAutocomplete} from 'vuetify/lib'
 
 const _ = require('lodash')
 
+const props = VAutocomplete.options.props
+delete props.items;
+
 export default {
-  name: "AtnFieldMovieGenres",
+  name: "AtnFieldEntityChips",
   components: {AtnButton, AtnField},
   mixins: [AtnField],
   inject: ['dispatcher'],
+  props: {
+    ...props,
+    entity: {
+      type: String,
+      required: true
+    },
+    multiple: {
+      type: Boolean,
+      default() {
+        return true
+      }
+    },
+    clearable: {
+      type: Boolean,
+      default() {
+        return true
+      }
+    }
+  },
   data() {
     return {
       items: [],
-      admin: this.$adminManager.byName('genres')
+      admin: this.$adminManager.byName(this.entity)
     }
   },
   methods: {
@@ -64,8 +85,14 @@ export default {
         }).run()
     }
   },
+  computed: {
+    namespace() {
+      return this.entity
+    }
+  },
   mounted() {
-    this.dispatcher.on('genres.post.save', () => {
+    const event = `${this.entity}.post.save`
+    this.dispatcher.on(event, () => {
       this.load()
     })
     this.load()

@@ -22,6 +22,7 @@
     "nuxt": "^2.14.6",
     "nuxt-i18n": "^6.15.4",
     "url": "^0.11.0",
+    "v-mask": "^2.2.4",
     "vue-country-flag": "^2.0.2",
     "vue-perfect-scrollbar": "^0.2.1",
     "vuejs-datepicker": "^1.6.2"

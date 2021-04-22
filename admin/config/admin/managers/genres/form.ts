@@ -4,7 +4,6 @@ const form: FormOptions = {
   width: 500,
   default: {
     id: null,
-    fullName: {}
   },
   groups: [
     {

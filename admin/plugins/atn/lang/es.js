@@ -28,6 +28,22 @@ export default {
     ends: 'termina en'
   },
   rules: {
+    year(params) {
+      const min = params.named('min')
+      const max = params.named('max')
+
+      if (min && max) {
+        return `El año debe estar entre ${min} y ${max}`
+      }
+      if (min) {
+        return `El año debe ser ${min} o posterior`
+      }
+      if (max) {
+        return `El año debe ser ${max} o anterior`
+      }
+
+
+    },
     date: 'No es una fecha correcta'
   },
 }

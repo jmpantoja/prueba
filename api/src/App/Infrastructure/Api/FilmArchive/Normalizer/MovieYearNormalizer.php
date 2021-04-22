@@ -1,12 +1,12 @@
 <?php
 /**
-* This file is part of the planb project.
-*
-* (c) jmpantoja <jmpantoja@gmail.com>
-*
-* For the full copyright and license information, please view the LICENSE
-* file that was distributed with this source code.
-*/
+ * This file is part of the planb project.
+ *
+ * (c) jmpantoja <jmpantoja@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 declare(strict_types=1);
 
@@ -16,12 +16,13 @@ use App\Domain\FilmArchive\MovieYear;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
-final class MovieYearNormalizer implements NormalizerInterface, DenormalizerInterface {
+final class MovieYearNormalizer implements NormalizerInterface, DenormalizerInterface
+{
     /**
-    * @param MovieYear $movieYear    * @param string|null $format
-    * @param array $context
-    * @return mixed
-    */
+     * @param MovieYear $movieYear * @param string|null $format
+     * @param array $context
+     * @return mixed
+     */
     public function normalize($movieYear, string $format = null, array $context = [])
     {
         return $movieYear->year();
