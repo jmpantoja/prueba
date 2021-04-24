@@ -2,7 +2,8 @@ export default {
   flash: {
     error: {
       404: 'Error 404',
-      500: 'Error 500'
+      500: 'Error 500',
+      422: 'The given data is not valid',
     },
     success: {
       delete: '"{item}" eliminado correctamente',

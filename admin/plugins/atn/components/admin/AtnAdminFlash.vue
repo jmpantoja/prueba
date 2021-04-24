@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import {Flash} from "../src";
+import {Flash} from "../../src";
 
 export default {
   name: "AtnAdminFlash",

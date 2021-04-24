@@ -8,9 +8,8 @@
         <id name="id" column="id" type="GenreId"/>
         <field name="name"/>
 
-        <many-to-many field="movies" target-entity="App\Domain\FilmArchive\Movie" mapped-by="genres">
+        <many-to-many field="movies" target-entity="App\Domain\FilmArchive\Movie" mapped-by="genres" />
 
-        </many-to-many>
 
     </entity>
 </doctrine-mapping>

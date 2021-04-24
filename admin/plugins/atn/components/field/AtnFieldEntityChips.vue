@@ -33,8 +33,8 @@
 </template>
 
 <script>
-import AtnField from "@/plugins/atn/components/AtnField";
-import AtnButton from "@/plugins/atn/components/AtnButton";
+import AtnField from "@/plugins/atn/components/field/AtnField";
+import AtnButton from "@/plugins/atn/components/admin/AtnButton";
 import {VAutocomplete} from 'vuetify/lib'
 
 const _ = require('lodash')

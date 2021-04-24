@@ -4,7 +4,7 @@
 
 <script>
 
-import AtnAdmin from "../../plugins/atn/components/AtnAdmin";
+import AtnAdmin from "../../plugins/atn/components/admin/AtnAdmin";
 
 export default {
   components: {AtnAdmin},

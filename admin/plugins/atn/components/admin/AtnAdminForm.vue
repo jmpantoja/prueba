@@ -56,10 +56,10 @@
 
 <script>
 import AtnModal from "./AtnModal";
-import {Form} from "../src";
+import {Form} from "../../src";
 import AtnAdmin from "./AtnAdmin";
 import AtnButton from "./AtnButton";
-import AtnFieldWrapper from "./AtnFieldWrapper";
+import AtnFieldWrapper from "../field/AtnFieldWrapper";
 import AtnAdminFormGroup from "./AtnAdminFormGroup";
 import AtnAdminFormWithGroups from "./AtnAdminFormWithGroups";
 

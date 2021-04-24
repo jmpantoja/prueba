@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import {Button} from "../src";
+import {Button} from "../../src";
 
 export default {
   name: "AtnButton",
@@ -44,7 +44,6 @@ export default {
     },
     computedProps() {
       let props = _.cloneDeep(this.button.props);
-
       props.visible = this.$actionManager.isGranted(this.button, this.params)
       props.disabled = this.$actionManager.disabled(this.button, this.params)
 

@@ -9,6 +9,11 @@
         <embedded name="title" class="App\Domain\FilmArchive\MovieTitle" use-column-prefix="false"/>
         <embedded name="year" class="App\Domain\FilmArchive\MovieYear" use-column-prefix="false"/>
 
+        <many-to-one field="director" target-entity="App\Domain\FilmArchive\Director">
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </many-to-one>
 
         <many-to-many field="genres" target-entity="App\Domain\FilmArchive\Genre" inversed-by="movies">
             <cascade>

@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import {Toolbar} from "../src";
+import {Toolbar} from "../../src";
 
 export default {
   name: "AtnAdminToolbar",

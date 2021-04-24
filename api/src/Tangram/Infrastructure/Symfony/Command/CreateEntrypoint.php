@@ -75,6 +75,7 @@ final class CreateEntrypoint extends Command
 
         $creator->createFile('api-mapping', $overwrite);
         $creator->createFile('serialize-mapping', $overwrite);
+        $creator->createFile('validation', $overwrite);
 
         $creator->writeChanges();
 

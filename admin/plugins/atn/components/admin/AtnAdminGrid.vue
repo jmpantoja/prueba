@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import {Grid} from "../src";
+import {Grid} from "../../src";
 import AtnButton from "./AtnButton";
 
 export default {

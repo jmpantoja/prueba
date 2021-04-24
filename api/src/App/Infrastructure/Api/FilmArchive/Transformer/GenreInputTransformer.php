@@ -13,12 +13,19 @@ declare(strict_types=1);
 namespace App\Infrastructure\Api\FilmArchive\Transformer;
 
 use ApiPlatform\Core\DataTransformer\DataTransformerInterface;
+use ApiPlatform\Core\Validator\ValidatorInterface;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use App\Infrastructure\Api\FilmArchive\Dto\GenreInput;
 use App\Domain\FilmArchive\Genre;
 
 final class GenreInputTransformer implements DataTransformerInterface {
 
+    private ValidatorInterface $validator;
+
+    public function __construct(ValidatorInterface $validator)
+    {
+        $this->validator = $validator;
+    }
 
     /**
     * @param GenreInput $genreInput
@@ -28,6 +35,8 @@ final class GenreInputTransformer implements DataTransformerInterface {
     */
     public function transform($input, string $to, array $context = [])
     {
+        $this->validator->validate($input, $context);
+
         /** @var Genre $genre */
         $genre = $context[ObjectNormalizer::OBJECT_TO_POPULATE] ?? null;
         $data = (array)$input;

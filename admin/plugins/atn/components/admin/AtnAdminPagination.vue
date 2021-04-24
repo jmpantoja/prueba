@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import {Grid} from "~/plugins/atn/src";
+import {Grid} from "@/plugins/atn/src";
 
 export default {
   name: 'AtnAdminPagination',

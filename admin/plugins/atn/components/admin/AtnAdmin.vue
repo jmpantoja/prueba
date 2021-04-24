@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import {Admin} from "../src";
+import {Admin} from "../../src";
 import AtnAdminPagination from "./AtnAdminPagination";
 import AtnAdminFilters from "./AtnAdminFilters";
 import AtnAdminForm from "./AtnAdminForm";

@@ -18,7 +18,7 @@ use App\Domain\FilmArchive\MovieYear;
 
 final class MovieInput
 {
-    public MovieTitle $title;
-    public MovieYear $year;
     public GenreList $genres;
+    public MovieYear $year;
+    public MovieTitle $title;
 }

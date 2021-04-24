@@ -82,7 +82,7 @@ class Form {
   }
 
   public get title(): string {
-    if(this.editMode){
+    if (this.editMode) {
       return 'form.title.edit';
     }
     return 'form.title.create';
@@ -174,16 +174,19 @@ class Form {
       .run()
   }
 
-  public show(item?: Record) {
+  public show(item?: Record): Promise<void | Record> {
     this.urlAction(item);
 
     if (!item || !item.id) {
-      this._item = _.cloneDeep(this._default)
-      this._visible = true
-      return;
+      return new Promise<void | Record>((resolve) => {
+        this._item = _.cloneDeep(this._default)
+        this._visible = true
+        resolve(this._item)
+      })
+
     }
 
-    this._client.item(item.id)
+    return this._client.item(item.id)
       .run()
       .then((response) => {
         this._item = _.cloneDeep(response)

@@ -1,0 +1,18 @@
+App\Domain\FilmArchive\Director:
+    collectionOperations:
+        get:
+            filters:
+        post: ~
+
+    properties:
+        id:
+            identifier: true
+
+    attributes:
+        input: App\Infrastructure\Api\FilmArchive\Dto\DirectorInput
+        output: App\Infrastructure\Api\FilmArchive\Dto\DirectorOutput
+    normalization_context:
+        groups: [ 'read' ]
+    denormalization_context:
+        groups: [ 'write' ]
+

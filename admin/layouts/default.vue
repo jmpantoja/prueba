@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import AtnPanel from "../plugins/atn/components/AtnPanel";
+import AtnPanel from "../plugins/atn/components/panel/AtnPanel";
 
 export default {
   components: {AtnPanel},

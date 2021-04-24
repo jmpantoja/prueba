@@ -14,12 +14,17 @@ declare(strict_types=1);
 namespace App\Domain\FilmArchive;
 
 
+use Tangram\Domain\Assertion\Traits\Assert;
+
 final class MovieYear
 {
+    use Assert;
+
     private int $year;
 
     public function __construct(int $year)
     {
+        $this->assert($year);
         $this->year = $year;
     }
 

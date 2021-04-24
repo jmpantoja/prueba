@@ -13,13 +13,17 @@ declare(strict_types=1);
 
 namespace App\Domain\FilmArchive;
 
+use Tangram\Domain\Assertion\Traits\Assert;
 
 final class MovieTitle
 {
+    use Assert;
+
     private string $title;
 
     public function __construct(string $title)
     {
+        $this->assert($title);
         $this->title = $title;
     }
 
@@ -35,6 +39,4 @@ final class MovieTitle
     {
         return $this->title();
     }
-
-
 }

@@ -6,7 +6,8 @@ doctrine:
         #esto puede ir a un fichero aparte, para poder sobrescribirlo
         types:
             GenreId: App\Infrastructure\Doctrine\DBAL\Type\GenreIdType
-            MovieId: \App\Infrastructure\Doctrine\DBAL\Type\MovieIdType
+            MovieId: App\Infrastructure\Doctrine\DBAL\Type\MovieIdType
+            DirectorId: App\Infrastructure\Doctrine\DBAL\Type\DirectorIdType
     orm:
         auto_generate_proxy_classes: true
         naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware

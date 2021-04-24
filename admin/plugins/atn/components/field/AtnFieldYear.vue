@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import AtnField from "@/plugins/atn/components/AtnField";
+import AtnField from "@/plugins/atn/components/field/AtnField";
 
 const _ = require('lodash')
 

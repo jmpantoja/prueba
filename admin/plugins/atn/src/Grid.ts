@@ -151,6 +151,10 @@ class Grid {
     return this._items;
   }
 
+  public set loading(loading) {
+    this._loading = loading;
+  }
+
   public get loading(): boolean {
     return this._loading;
   }

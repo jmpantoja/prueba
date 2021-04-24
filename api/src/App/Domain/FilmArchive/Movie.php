@@ -28,35 +28,40 @@ class Movie implements Entity
     private MovieId $id;
     private MovieTitle $title;
     private MovieYear $year;
+    private Director $director;
     private Collection $genres;
 
     public function __construct(
         MovieTitle $title,
         MovieYear $year,
+        Director $director,
         GenreList $genres = null
     )
     {
         $this->id = new MovieId();
         $this->genres = new ArrayCollection();
 
-        $this->apply($title, $year, $genres);
+        $this->apply($title, $year, $director, $genres);
         $this->notify(new MovieHasBeenCreated($this));
     }
 
     public function update(MovieTitle $title,
                            MovieYear $year,
+                           Director $director,
                            GenreList $genres = null)
     {
-        $this->apply($title, $year, $genres);
+        $this->apply($title, $year, $director, $genres);
         $this->notify(new MovieHasBeenUpdated($this));
     }
 
     private function apply(MovieTitle $title,
                            MovieYear $year,
+                           Director $director,
                            GenreList $genres = null)
     {
         $this->title = $title;
         $this->year = $year;
+        $this->director = $director;
 
         $this->genres()
             ->diff($genres)

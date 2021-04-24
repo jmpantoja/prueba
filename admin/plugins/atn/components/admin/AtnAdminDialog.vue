@@ -29,7 +29,7 @@
 <script>
 
 import AtnModal from "./AtnModal";
-import {Dialog} from "../src";
+import {Dialog} from "../../src";
 
 export default {
   name: "AtnAdminDialog",

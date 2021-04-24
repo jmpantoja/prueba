@@ -52,8 +52,8 @@
 </template>
 
 <script>
-import {Grid} from "../src";
-import AtnFieldWrapper from "./AtnFieldWrapper";
+import {Grid} from "../../src";
+import AtnFieldWrapper from "../field/AtnFieldWrapper";
 
 export default {
   name: "AtnAdminFilters",

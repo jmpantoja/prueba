@@ -13,7 +13,7 @@
 
 <script>
 
-import AtnField from "../plugins/atn/components/AtnField";
+import AtnField from "../plugins/atn/components/field/AtnField";
 
 export default {
   name: 'AtnFieldFullname',

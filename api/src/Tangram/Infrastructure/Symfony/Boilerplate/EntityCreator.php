@@ -76,6 +76,11 @@ class EntityCreator
             $options->setFileName($module, $name, 'yaml');
         });
 
+        $this->addFile('validation', function (CreateFileOptions $options, $name, $module) {
+            $options->setTarget('config/mapping/validation');
+            $options->setFileName($module, $name, 'yaml');
+        });
+
         $this->addClass('entity', function (CreateClassOptions $options, $name, $module) {
             $options->setNamespace('Domain', $module);
             $options->setClassName($name);
@@ -109,6 +114,11 @@ class EntityCreator
         $this->addClass('delete-event', function (CreateClassOptions $options, $name, $module) {
             $options->setNamespace('Domain', $module, 'Event');
             $options->setClassName($name, 'HasBeenDeleted');
+        });
+
+        $this->addClass('constraint', function (CreateClassOptions $options, $name, $module) {
+            $options->setNamespace('Domain', $module, 'Constraint');
+            $options->setClassName($name);
         });
 
         $this->addClass('save-command', function (CreateClassOptions $options, $name, $module) {

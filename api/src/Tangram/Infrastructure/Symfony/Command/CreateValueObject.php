@@ -53,6 +53,7 @@ final class CreateValueObject extends Command
         $creator = call_user_func($this->factory, $console, $entityName);
 
         $creator->createClass('normalizer', $overwrite);
+        $creator->createClass('constraint', $overwrite);
 
         $creator->writeChanges();
 

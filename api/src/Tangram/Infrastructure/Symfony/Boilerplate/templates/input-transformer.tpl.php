@@ -13,12 +13,19 @@ declare(strict_types=1);
 namespace <?= $namespace; ?>;
 
 use ApiPlatform\Core\DataTransformer\DataTransformerInterface;
+use ApiPlatform\Core\Validator\ValidatorInterface;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use <?= $input['fullName'] ?>;
 use <?= $entity['fullName'] ?>;
 
 final class <?= $class_name ?> implements DataTransformerInterface {
 
+    private ValidatorInterface $validator;
+
+    public function __construct(ValidatorInterface $validator)
+    {
+        $this->validator = $validator;
+    }
 
     /**
     * @param <?= $input['shortName']?> $<?= $input['varName'] . "\n"?>
@@ -28,6 +35,8 @@ final class <?= $class_name ?> implements DataTransformerInterface {
     */
     public function transform($input, string $to, array $context = [])
     {
+        $this->validator->validate($input, $context);
+
         /** @var <?= $entity['shortName']?> $<?= $entity['varName']?> */
         $<?= $entity['varName']?> = $context[ObjectNormalizer::OBJECT_TO_POPULATE] ?? null;
         $data = (array)$input;

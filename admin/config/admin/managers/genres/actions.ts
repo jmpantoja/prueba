@@ -9,8 +9,12 @@ const actions: ActionList = {
   },
   edit: {
     roles: ['REVISOR'],
-    run({form}: ActionContext, params) {
-      form.show(params.item)
+
+    run({form, grid}: ActionContext, params) {
+      grid.loading = true
+      form.show(params.item).then(() => {
+        grid.loading = false
+      })
     }
   },
   delete: {
