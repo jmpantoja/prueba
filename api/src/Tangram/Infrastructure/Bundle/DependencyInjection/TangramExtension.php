@@ -34,12 +34,20 @@ final class TangramExtension extends Extension implements PrependExtensionInterf
                 'typehints' => true
             ]);
 
+        $configDir = dirname(__DIR__) . '/Resources/config';
+
         $loader = new YamlFileLoader(
             $container,
-            new FileLocator(dirname(__DIR__) . '/Resources/config')
+            new FileLocator($configDir)
         );
 
+        $env = $container->getParameter("kernel.environment");
         $loader->load('services.yaml');
+
+        $path = "$configDir/services_$env.yaml";
+        if (file_exists($path)) {
+            $loader->load("services_$env.yaml");
+        }
     }
 
     public function prepend(ContainerBuilder $container)

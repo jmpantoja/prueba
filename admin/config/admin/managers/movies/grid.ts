@@ -22,6 +22,12 @@ const grid: GridOptions = {
       text: 'year',
       //  type: 'atn-grid-movie-title',
       sortable: true,
+    },
+    {
+      key: 'director',
+      text: 'director',
+      type: 'atn-grid-movie-director',
+      sortable: true,
     }
   ],
   buttons: [

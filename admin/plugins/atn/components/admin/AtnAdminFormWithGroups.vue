@@ -1,6 +1,7 @@
 <template>
-  <v-row dense>
-    <v-col cols="3">
+  <div class="wrapper">
+
+    <div class="toc">
       <v-list flat>
         <v-list-item-group
           v-model="selected"
@@ -20,9 +21,9 @@
           </v-list-item>
         </v-list-item-group>
       </v-list>
-    </v-col>
-    <v-col cols="9" ref="area" class="area" :style="contentStyles" @scroll="handleScroll">
+    </div>
 
+    <div ref="area" class="area" :style="contentStyles" @scroll="handleScroll">
       <atn-admin-form-group
         v-for="(group, index) in form.groups"
         @update:error="onUpdateError(index, $event)"
@@ -33,8 +34,8 @@
         :item="form.item"
       />
 
-    </v-col>
-  </v-row>
+    </div>
+  </div>
 
 </template>
 
@@ -83,8 +84,8 @@ export default {
       })
     },
   },
-  computed:{
-    namespace(){
+  computed: {
+    namespace() {
       return this.form.namespace
     }
   }
@@ -94,23 +95,53 @@ export default {
 <style scoped lang="scss">
 @import '~vuetify/src/styles/styles.sass';
 
-.toc {
-  padding: 5px !important;
-  overflow-y: hidden;
+.wrapper {
+  display: flex;
+  flex-direction: row;
+
+  .toc {
+    min-width: 200px;
+    border-right: solid 1px #e0e0e0;
+  }
 
   .area {
-    overflow-y: auto;
+    flex: 1;
+    background-color: #fafafa;
+    padding: 0 1em;
+
   }
 
-  .v-list-item.invalid {
-    color: map-get($red, 'accent-2')
-  }
 
-  .v-list-item--active {
-    border-left: solid;
-    font-weight: 500;
-  }
-
+  //.menu {
+  //  display: block;
+  //  background-color: yellow;
+  //  border: solid 1px red;
+  //}
+  //
+  //.area {
+  //  background-color: #b1dfbb;
+  //}
 }
+
+
+//
+//.toc {
+//  padding: 5px !important;
+//  overflow-y: hidden;
+//
+//  .area {
+//    overflow-y: auto;
+//  }
+//
+//  .v-list-item.invalid {
+//    color: map-get($red, 'accent-2')
+//  }
+//
+//  .v-list-item--active {
+//    border-left: solid;
+//    font-weight: 500;
+//  }
+//
+//}
 
 </style>

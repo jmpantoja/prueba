@@ -2,7 +2,8 @@
   <fieldset
     :id="id"
     :class="{invalid: this.inValid}">
-    <legend>{{ t(`form.group.${group.label}`) }}</legend>
+    <legend class="display-1">{{ t(`form.group.${group.label}`) }}</legend>
+
     <atn-field-wrapper
       v-for="(field, name) in group.fields"
       @update:error="onUpdateError(field.key, $event)"
@@ -57,7 +58,6 @@ export default {
       this.$set(this.errorBag, key, value)
     }
   }
-
 }
 </script>
 
@@ -65,18 +65,19 @@ export default {
 @import '~vuetify/src/styles/styles.sass';
 
 fieldset {
-  border: solid lightgray 1px;
-  padding: 2em !important;
+  border: solid 1px #e0e0e0;
+  padding: 1em  !important;
+  margin-top: 1em;
   margin-bottom: 2em;
-
+  background-color: white;
 
   legend {
-    margin-left: -8px;
-    font-size: 1.6em;
-    font-weight: 500;
-    padding: 0 10px 0 5px;
+    text-align: center;
+    width: 100%;
+    font-weight: 300 !important;
     text-transform: capitalize;
-    font-family: "Roboto";
+    float: left;
+    margin-bottom: 1em;
   }
 
   &.invalid {

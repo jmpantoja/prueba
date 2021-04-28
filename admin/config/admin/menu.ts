@@ -19,6 +19,12 @@ const menu: MenuGroup[] = [
         }
       },
       {
+        text: 'menu.directors',
+        href: {
+          name: 'data-directors'
+        }
+      },
+      {
         text: 'menu.genre',
         href: {
           name: 'data-genres'

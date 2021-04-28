@@ -42,12 +42,22 @@ export default {
 
 <style scoped lang="scss">
 
-::v-deep dd.label {
-  font-size: 1.2em;
-  font-weight: 600;
-  text-transform: capitalize;
-  margin-bottom: 2px;
-  //margin-bottom: -7px;
+
+dl {
+  margin-top: 2em;
+  min-height: 100px;
+
+  dd.label {
+    //min-width: 150px;
+    font-size: 1.3em;
+    font-weight: 500;
+    text-transform: capitalize;
+    padding-right: 0.5em;
+
+    &:after{
+      content: ':';
+    }
+  }
 }
 
 </style>

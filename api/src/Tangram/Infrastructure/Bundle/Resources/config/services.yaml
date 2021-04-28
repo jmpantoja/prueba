@@ -24,25 +24,18 @@ services:
         autoconfigure: true
         public: false
 
-    Tangram\Infrastructure\Symfony\:
-        resource: '../../../Symfony'
-        autowire: true
-        autoconfigure: true
-        public: false
-        exclude: ['../../../Symfony/Boilerplate/ModelCreator.php']
-
     Tangram\Infrastructure\ApiPlatform\Core\Bridge\:
         resource: '../../../ApiPlatform/Core/Bridge'
         autowire: true
         autoconfigure: true
         public: false
-        
+
     Tangram\Infrastructure\Api\:
         resource: '../../../Api'
         autowire: true
         autoconfigure: true
         public: false
-        
+
 
     Tangram\Domain\Event\EventStore:
         alias: Tangram\Infrastructure\Doctrine\Repository\DoctrineEventStore
@@ -53,8 +46,4 @@ services:
         autowire: true
         autoconfigure: true
         public: false
-
-    Symfony\Bundle\MakerBundle\FileManager:
-        alias: maker.file_manager
-
 

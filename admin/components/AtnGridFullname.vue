@@ -1,6 +1,6 @@
 <template>
   <div>
-    {{ value.lastName }}, {{ value.firstName }}
+    {{ value.lastName }}, {{ value.name }}
   </div>
 </template>
 

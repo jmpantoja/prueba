@@ -39,11 +39,12 @@ class FormNormalizer {
   }
 
   private normalizeField(field: FormField) {
+
     return {
       type: 'v-text-field',
       label: field.key,
       width: '100%',
-      ...field
+      ...field,
     }
   }
 

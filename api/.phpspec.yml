@@ -1,0 +1,16 @@
+formatter.name: pretty
+extensions:
+    FriendsOfPhpSpec\PhpSpec\CodeCoverage\CodeCoverageExtension:
+        format:
+            - xml
+            - html
+            - 
+        output:
+            xml: build/coverage.xml
+            html: build/coverage
+            
+        whitelist:
+            - src/App
+suites: 
+    default:
+        spec_path: tests

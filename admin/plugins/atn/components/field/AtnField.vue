@@ -57,12 +57,12 @@ export default {
 <style lang="scss" scoped>
 
 ::v-deep .v-input__slot .row {
-  padding: 0 !important;
-
-  .col {
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
-  }
+  //padding: 0 !important;
+  //
+  //.col {
+  //  padding-top: 0 !important;
+  //  padding-bottom: 0 !important;
+  //}
 }
 
 </style>

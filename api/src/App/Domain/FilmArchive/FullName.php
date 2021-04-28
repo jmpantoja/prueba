@@ -24,4 +24,21 @@ final class FullName
         $this->name = $name;
         $this->lastName = $lastName;
     }
+
+    /**
+     * @return string
+     */
+    public function name(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @return string
+     */
+    public function lastName(): string
+    {
+        return $this->lastName;
+    }
+
 }

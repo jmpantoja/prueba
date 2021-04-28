@@ -29,15 +29,17 @@ class Director implements Entity
     private FullName $name;
     private Collection $movies;
 
-    public function __construct(FullName $name, MovieList $movies)
+    public function __construct(FullName $name, ?MovieList $movies = null)
     {
+        $movies = $movies ?? MovieList::collect();
+
         $this->id = new DirectorId();
         $this->movies = new ArrayCollection();
         $this->apply($name, $movies);
         $this->notify(new DirectorHasBeenCreated($this));
     }
 
-    private function apply(FullName $name, MovieList $movies)
+    private function apply(FullName $name, ?MovieList $movies = null)
     {
         $this->name = $name;
         $this->movies()
@@ -46,7 +48,7 @@ class Director implements Entity
             ->deletes(fn(Movie $movie) => $this->removeMovie($movie));
     }
 
-    public function update(FullName $name, MovieList $movies)
+    public function update(FullName $name, ?MovieList $movies = null)
     {
         $this->apply($name, $movies);
         $this->notify(new DirectorHasBeenUpdated($this));
@@ -54,7 +56,7 @@ class Director implements Entity
 
     public function id(): DirectorId
     {
-        return $this->id();
+        return $this->id;
     }
 
     /**

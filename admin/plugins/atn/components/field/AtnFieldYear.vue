@@ -1,6 +1,6 @@
 <template>
   <atn-field v-bind="$props" v-on="$listeners">
-    <v-text-field v-model.number="data" v-mask="'####'" placeholder="1980" :rules="constraints"/>
+    <v-text-field  v-model.number="data" v-mask="'####'" placeholder="1980" :rules="constraints"/>
   </atn-field>
 </template>
 

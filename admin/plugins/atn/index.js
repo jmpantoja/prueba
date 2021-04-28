@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import { VueMaskDirective } from 'v-mask'
+import {VueMaskDirective} from 'v-mask'
 import {admins, roles} from '~/config/admin'
 import {ActionManager, AdminManager, Locale, RolesManager} from "~/plugins/atn/src";
 
@@ -17,7 +17,7 @@ Vue.mixin({
       if (this.namespace) {
         name = `admin.${this.namespace}.${key}`;
       }
-      return this.$t(name, params);
+      return this.$t(name, _.cloneDeep(params));
     }
   }
 })

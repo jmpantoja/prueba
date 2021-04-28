@@ -94,6 +94,14 @@ class Movie implements Entity
     }
 
     /**
+     * @return Director
+     */
+    public function director(): Director
+    {
+        return $this->director;
+    }
+
+    /**
      * @return GenreList
      */
     public function genres(): GenreList

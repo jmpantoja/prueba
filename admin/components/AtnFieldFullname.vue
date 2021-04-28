@@ -2,10 +2,10 @@
   <atn-field v-bind="$props" v-on="$listeners">
     <v-row>
       <v-col>
-        <v-text-field :label="$t('form.field.firstName')" v-model="data.firstName" :rules="nameRules"/>
+        <v-text-field :label="t('form.field.fullName.firstName')" v-model="data.name" :rules="nameRules"/>
       </v-col>
       <v-col>
-        <v-text-field :label="$t('form.field.lastName')" v-model="data.lastName" :rules="nameRules"/>
+        <v-text-field :label="t('form.field.fullName.lastName')" v-model="data.lastName" :rules="nameRules"/>
       </v-col>
     </v-row>
   </atn-field>

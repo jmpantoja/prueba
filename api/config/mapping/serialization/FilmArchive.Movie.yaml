@@ -9,6 +9,9 @@ App\Infrastructure\Api\FilmArchive\Dto\MovieOutput:
         year:
              groups: ['write', 'read']
 
+        director:
+             groups: ['write', 'read']
+
         genres:
              groups: ['write', 'read']
 

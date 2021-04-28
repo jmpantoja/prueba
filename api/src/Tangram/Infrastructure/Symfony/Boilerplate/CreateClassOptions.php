@@ -18,7 +18,6 @@ final class CreateClassOptions
 {
     private string $name;
     private string $module;
-
     private string $className;
     private string $namespace;
 

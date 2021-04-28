@@ -1,0 +1,936 @@
+<?xml version="1.0"?>
+<phpunit xmlns="https://schema.phpunit.de/coverage/1.0">
+  <build time="Thu Apr 29 11:37:11 CEST 2021" phpunit="9.2.6" coverage="9.2.6">
+    <runtime name="PHP" version="8.0.3" url="https://secure.php.net/"/>
+    <driver name="xdebug" version="3.0.3"/>
+  </build>
+  <project source="/mnt/workspace/prueba/api/src/App">
+    <tests>
+      <test name="spec\App\Domain\FilmArchive\DirectorSpec::it_is_initializable" size="unknown" result="-1" status="UNKNOWN"/>
+      <test name="spec\App\Domain\FilmArchive\DirectorSpec::it_implements_entity_interface" size="unknown" result="-1" status="UNKNOWN"/>
+      <test name="spec\App\Domain\FilmArchive\DirectorSpec::it_is_updatable" size="unknown" result="-1" status="UNKNOWN"/>
+      <test name="spec\App\Domain\FilmArchive\FullNameSpec::it_is_initializable" size="unknown" result="-1" status="UNKNOWN"/>
+      <test name="spec\App\Domain\FilmArchive\GenreSpec::it_is_initializable" size="unknown" result="-1" status="UNKNOWN"/>
+      <test name="spec\App\Domain\FilmArchive\GenreSpec::it_implements_entity_interface" size="unknown" result="-1" status="UNKNOWN"/>
+      <test name="spec\App\Domain\FilmArchive\GenreSpec::it_is_updatable" size="unknown" result="-1" status="UNKNOWN"/>
+    </tests>
+    <directory name="/">
+      <totals>
+        <lines total="2824" comments="778" code="2046" executable="288" executed="30" percent="10.42"/>
+        <methods count="147" tested="10" percent="6.80"/>
+        <functions count="0" tested="0" percent="0"/>
+        <classes count="55" tested="1" percent="1.82"/>
+        <traits count="0" tested="0" percent="0"/>
+      </totals>
+      <directory name="Application">
+        <totals>
+          <lines total="445" comments="173" code="272" executable="24" executed="0" percent="0.00"/>
+          <methods count="24" tested="0" percent="0.00"/>
+          <functions count="0" tested="0" percent="0"/>
+          <classes count="12" tested="0" percent="0.00"/>
+          <traits count="0" tested="0" percent="0"/>
+        </totals>
+        <directory name="FilmArchive">
+          <totals>
+            <lines total="423" comments="165" code="258" executable="24" executed="0" percent="0.00"/>
+            <methods count="24" tested="0" percent="0.00"/>
+            <functions count="0" tested="0" percent="0"/>
+            <classes count="12" tested="0" percent="0.00"/>
+            <traits count="0" tested="0" percent="0"/>
+          </totals>
+          <file name="DeleteDirector.php" href="Application/FilmArchive/DeleteDirector.php.xml">
+            <totals>
+              <lines total="38" comments="18" code="20" executable="2" executed="0" percent="0.00"/>
+              <methods count="2" tested="0" percent="0.00"/>
+              <functions count="0" tested="0" percent="0"/>
+              <classes count="1" tested="0" percent="0.00"/>
+              <traits count="0" tested="0" percent="0"/>
+            </totals>
+          </file>
+          <file name="DeleteDirectorUseCase.php" href="Application/FilmArchive/DeleteDirectorUseCase.php.xml">
+            <totals>
+              <lines total="33" comments="10" code="23" executable="2" executed="0" percent="0.00"/>
+              <methods count="2" tested="0" percent="0.00"/>
+              <functions count="0" tested="0" percent="0"/>
+              <classes count="1" tested="0" percent="0.00"/>
+              <traits count="0" tested="0" percent="0"/>
+            </totals>
+          </file>
+          <file name="DeleteGenre.php" href="Application/FilmArchive/DeleteGenre.php.xml">
+            <totals>
+              <lines total="38" comments="18" code="20" executable="2" executed="0" percent="0.00"/>
+              <methods count="2" tested="0" percent="0.00"/>
+              <functions count="0" tested="0" percent="0"/>
+              <classes count="1" tested="0" percent="0.00"/>
+              <traits count="0" tested="0" percent="0"/>
+            </totals>
+          </file>
+          <file name="DeleteGenreUseCase.php" href="Application/FilmArchive/DeleteGenreUseCase.php.xml">
+            <totals>
+              <lines total="33" comments="10" code="23" executable="2" executed="0" percent="0.00"/>
+              <methods count="2" tested="0" percent="0.00"/>
+              <functions count="0" tested="0" percent="0"/>
+              <classes count="1" tested="0" percent="0.00"/>
+              <traits count="0" tested="0" percent="0"/>
+            </totals>
+          </file>
+          <file name="DeleteMovie.php" href="Application/FilmArchive/DeleteMovie.php.xml">
+            <totals>
+              <lines total="38" comments="18" code="20" executable="2" executed="0" percent="0.00"/>
+              <methods count="2" tested="0" percent="0.00"/>
+              <functions count="0" tested="0" percent="0"/>
+              <classes count="1" tested="0" percent="0.00"/>
+              <traits count="0" tested="0" percent="0"/>
+            </totals>
+          </file>
+          <file name="DeleteMovieUseCase.php" href="Application/FilmArchive/DeleteMovieUseCase.php.xml">
+            <totals>
+              <lines total="33" comments="10" code="23" executable="2" executed="0" percent="0.00"/>
+              <methods count="2" tested="0" percent="0.00"/>
+              <functions count="0" tested="0" percent="0"/>
+              <classes count="1" tested="0" percent="0.00"/>
+              <traits count="0" tested="0" percent="0"/>
+            </totals>
+          </file>
+          <file name="SaveDirector.php" href="Application/FilmArchive/SaveDirector.php.xml">
+            <totals>
+              <lines total="37" comments="17" code="20" executable="2" executed="0" percent="0.00"/>
+              <methods count="2" tested="0" percent="0.00"/>
+              <functions count="0" tested="0" percent="0"/>
+              <classes count="1" tested="0" percent="0.00"/>
+              <traits count="0" tested="0" percent="0"/>
+            </totals>
+          </file>
+          <file name="SaveDirectorUseCase.php" href="Application/FilmArchive/SaveDirectorUseCase.php.xml">
+            <totals>
+              <lines total="33" comments="10" code="23" executable="2" executed="0" percent="0.00"/>
+              <methods count="2" tested="0" percent="0.00"/>
+              <functions count="0" tested="0" percent="0"/>
+              <classes count="1" tested="0" percent="0.00"/>
+              <traits count="0" tested="0" percent="0"/>
+            </totals>
+          </file>
+          <file name="SaveGenre.php" href="Application/FilmArchive/SaveGenre.php.xml">
+            <totals>
+              <lines total="37" comments="17" code="20" executable="2" executed="0" percent="0.00"/>
+              <methods count="2" tested="0" percent="0.00"/>
+              <functions count="0" tested="0" percent="0"/>
+              <classes count="1" tested="0" percent="0.00"/>
+              <traits count="0" tested="0" percent="0"/>
+            </totals>
+          </file>
+          <file name="SaveGenreUseCase.php" href="Application/FilmArchive/SaveGenreUseCase.php.xml">
+            <totals>
+              <lines total="33" comments="10" code="23" executable="2" executed="0" percent="0.00"/>
+              <methods count="2" tested="0" percent="0.00"/>
+              <functions count="0" tested="0" percent="0"/>
+              <classes count="1" tested="0" percent="0.00"/>
+              <traits count="0" tested="0" percent="0"/>
+            </totals>
+          </file>
+          <file name="SaveMovie.php" href="Application/FilmArchive/SaveMovie.php.xml">
+            <totals>
+              <lines total="37" comments="17" code="20" executable="2" executed="0" percent="0.00"/>
+              <methods count="2" tested="0" percent="0.00"/>
+              <functions count="0" tested="0" percent="0"/>
+              <classes count="1" tested="0" percent="0.00"/>
+              <traits count="0" tested="0" percent="0"/>
+            </totals>
+          </file>
+          <file name="SaveMovieUseCase.php" href="Application/FilmArchive/SaveMovieUseCase.php.xml">
+            <totals>
+              <lines total="33" comments="10" code="23" executable="2" executed="0" percent="0.00"/>
+              <methods count="2" tested="0" percent="0.00"/>
+              <functions count="0" tested="0" percent="0"/>
+              <classes count="1" tested="0" percent="0.00"/>
+              <traits count="0" tested="0" percent="0"/>
+            </totals>
+          </file>
+        </directory>
+        <directory name="User">
+          <totals>
+            <lines total="22" comments="8" code="14" executable="0" executed="0" percent="0"/>
+            <methods count="0" tested="0" percent="0"/>
+            <functions count="0" tested="0" percent="0"/>
+            <classes count="0" tested="0" percent="0"/>
+            <traits count="0" tested="0" percent="0"/>
+          </totals>
+          <directory name="Dto">
+            <totals>
+              <lines total="22" comments="8" code="14" executable="0" executed="0" percent="0"/>
+              <methods count="0" tested="0" percent="0"/>
+              <functions count="0" tested="0" percent="0"/>
+              <classes count="0" tested="0" percent="0"/>
+              <traits count="0" tested="0" percent="0"/>
+            </totals>
+            <file name="UserDto.php" href="Application/User/Dto/UserDto.php.xml">
+              <totals>
+                <lines total="22" comments="8" code="14" executable="0" executed="0" percent="0"/>
+                <methods count="0" tested="0" percent="0"/>
+                <functions count="0" tested="0" percent="0"/>
+                <classes count="0" tested="0" percent="0"/>
+                <traits count="0" tested="0" percent="0"/>
+              </totals>
+            </file>
+          </directory>
+        </directory>
+      </directory>
+      <directory name="Domain">
+        <totals>
+          <lines total="947" comments="267" code="680" executable="90" executed="30" percent="33.33"/>
+          <methods count="44" tested="10" percent="22.73"/>
+          <functions count="0" tested="0" percent="0"/>
+          <classes count="13" tested="1" percent="7.69"/>
+          <traits count="0" tested="0" percent="0"/>
+        </totals>
+        <directory name="FilmArchive">
+          <totals>
+            <lines total="854" comments="250" code="604" executable="77" executed="30" percent="38.96"/>
+            <methods count="36" tested="10" percent="27.78"/>
+            <functions count="0" tested="0" percent="0"/>
+            <classes count="12" tested="1" percent="8.33"/>
+            <traits count="0" tested="0" percent="0"/>
+          </totals>
+          <directory name="Constraint">
+            <totals>
+              <lines total="80" comments="24" code="56" executable="3" executed="0" percent="0.00"/>
+              <methods count="3" tested="0" percent="0.00"/>
+              <functions count="0" tested="0" percent="0"/>
+              <classes count="3" tested="0" percent="0.00"/>
+              <traits count="0" tested="0" percent="0"/>
+            </totals>
+            <file name="FullName.php" href="Domain/FilmArchive/Constraint/FullName.php.xml">
+              <totals>
+                <lines total="23" comments="8" code="15" executable="1" executed="0" percent="0.00"/>
+                <methods count="1" tested="0" percent="0.00"/>
+                <functions count="0" tested="0" percent="0"/>
+                <classes count="1" tested="0" percent="0.00"/>
+                <traits count="0" tested="0" percent="0"/>
+              </totals>
+            </file>
+            <file name="MovieTitle.php" href="Domain/FilmArchive/Constraint/MovieTitle.php.xml">
+              <totals>
+                <lines total="30" comments="8" code="22" executable="1" executed="0" percent="0.00"/>
+                <methods count="1" tested="0" percent="0.00"/>
+                <functions count="0" tested="0" percent="0"/>
+                <classes count="1" tested="0" percent="0.00"/>
+                <traits count="0" tested="0" percent="0"/>
+              </totals>
+            </file>
+            <file name="MovieYear.php" href="Domain/FilmArchive/Constraint/MovieYear.php.xml">
+              <totals>
+                <lines total="27" comments="8" code="19" executable="1" executed="0" percent="0.00"/>
+                <methods count="1" tested="0" percent="0.00"/>
+                <functions count="0" tested="0" percent="0"/>
+                <classes count="1" tested="0" percent="0.00"/>
+                <traits count="0" tested="0" percent="0"/>
+              </totals>
+            </file>
+          </directory>
+          <directory name="Event">
+            <totals>
+              <lines total="162" comments="72" code="90" executable="0" executed="0" percent="0"/>
+              <methods count="0" tested="0" percent="0"/>
+              <functions count="0" tested="0" percent="0"/>
+              <classes count="0" tested="0" percent="0"/>
+              <traits count="0" tested="0" percent="0"/>
+            </totals>
+            <file name="DirectorHasBeenCreated.php" href="Domain/FilmArchive/Event/DirectorHasBeenCreated.php.xml">
+              <totals>
+                <lines total="18" comments="8" code="10" executable="0" executed="0" percent="0"/>
+                <methods count="0" tested="0" percent="0"/>
+                <functions count="0" tested="0" percent="0"/>
+                <classes count="0" tested="0" percent="0"/>
+                <traits count="0" tested="0" percent="0"/>
+              </totals>
+            </file>
+            <file name="DirectorHasBeenDeleted.php" href="Domain/FilmArchive/Event/DirectorHasBeenDeleted.php.xml">
+              <totals>
+                <lines total="18" comments="8" code="10" executable="0" executed="0" percent="0"/>
+                <methods count="0" tested="0" percent="0"/>
+                <functions count="0" tested="0" percent="0"/>
+                <classes count="0" tested="0" percent="0"/>
+                <traits count="0" tested="0" percent="0"/>
+              </totals>
+            </file>
+            <file name="DirectorHasBeenUpdated.php" href="Domain/FilmArchive/Event/DirectorHasBeenUpdated.php.xml">
+              <totals>
+                <lines total="18" comments="8" code="10" executable="0" executed="0" percent="0"/>
+                <methods count="0" tested="0" percent="0"/>
+                <functions count="0" tested="0" percent="0"/>
+                <classes count="0" tested="0" percent="0"/>
+                <traits count="0" tested="0" percent="0"/>
+              </totals>
+            </file>
+            <file name="GenreHasBeenCreated.php" href="Domain/FilmArchive/Event/GenreHasBeenCreated.php.xml">
+              <totals>
+                <lines total="18" comments="8" code="10" executable="0" executed="0" percent="0"/>
+                <methods count="0" tested="0" percent="0"/>
+                <functions count="0" tested="0" percent="0"/>
+                <classes count="0" tested="0" percent="0"/>
+                <traits count="0" tested="0" percent="0"/>
+              </totals>
+            </file>
+            <file name="GenreHasBeenDeleted.php" href="Domain/FilmArchive/Event/GenreHasBeenDeleted.php.xml">
+              <totals>
+                <lines total="18" comments="8" code="10" executable="0" executed="0" percent="0"/>
+                <methods count="0" tested="0" percent="0"/>
+                <functions count="0" tested="0" percent="0"/>
+                <classes count="0" tested="0" percent="0"/>
+                <traits count="0" tested="0" percent="0"/>
+              </totals>
+            </file>
+            <file name="GenreHasBeenUpdated.php" href="Domain/FilmArchive/Event/GenreHasBeenUpdated.php.xml">
+              <totals>
+                <lines total="18" comments="8" code="10" executable="0" executed="0" percent="0"/>
+                <methods count="0" tested="0" percent="0"/>
+                <functions count="0" tested="0" percent="0"/>
+                <classes count="0" tested="0" percent="0"/>
+                <traits count="0" tested="0" percent="0"/>
+              </totals>
+            </file>
+            <file name="MovieHasBeenCreated.php" href="Domain/FilmArchive/Event/MovieHasBeenCreated.php.xml">
+              <totals>
+                <lines total="18" comments="8" code="10" executable="0" executed="0" percent="0"/>
+                <methods count="0" tested="0" percent="0"/>
+                <functions count="0" tested="0" percent="0"/>
+                <classes count="0" tested="0" percent="0"/>
+                <traits count="0" tested="0" percent="0"/>
+              </totals>
+            </file>
+            <file name="MovieHasBeenDeleted.php" href="Domain/FilmArchive/Event/MovieHasBeenDeleted.php.xml">
+              <totals>
+                <lines total="18" comments="8" code="10" executable="0" executed="0" percent="0"/>
+                <methods count="0" tested="0" percent="0"/>
+                <functions count="0" tested="0" percent="0"/>
+                <classes count="0" tested="0" percent="0"/>
+                <traits count="0" tested="0" percent="0"/>
+              </totals>
+            </file>
+            <file name="MovieHasBeenUpdated.php" href="Domain/FilmArchive/Event/MovieHasBeenUpdated.php.xml">
+              <totals>
+                <lines total="18" comments="8" code="10" executable="0" executed="0" percent="0"/>
+                <methods count="0" tested="0" percent="0"/>
+                <functions count="0" tested="0" percent="0"/>
+                <classes count="0" tested="0" percent="0"/>
+                <traits count="0" tested="0" percent="0"/>
+              </totals>
+            </file>
+          </directory>
+          <file name="Director.php" href="Domain/FilmArchive/Director.php.xml">
+            <totals>
+              <lines total="95" comments="14" code="81" executable="26" executed="17" percent="65.38"/>
+              <methods count="8" tested="5" percent="62.50"/>
+              <functions count="0" tested="0" percent="0"/>
+              <classes count="1" tested="0" percent="0.00"/>
+              <traits count="0" tested="0" percent="0"/>
+            </totals>
+          </file>
+          <file name="DirectorId.php" href="Domain/FilmArchive/DirectorId.php.xml">
+            <totals>
+              <lines total="19" comments="8" code="11" executable="0" executed="0" percent="0"/>
+              <methods count="0" tested="0" percent="0"/>
+              <functions count="0" tested="0" percent="0"/>
+              <classes count="0" tested="0" percent="0"/>
+              <traits count="0" tested="0" percent="0"/>
+            </totals>
+          </file>
+          <file name="DirectorList.php" href="Domain/FilmArchive/DirectorList.php.xml">
+            <totals>
+              <lines total="24" comments="8" code="16" executable="1" executed="0" percent="0.00"/>
+              <methods count="1" tested="0" percent="0.00"/>
+              <functions count="0" tested="0" percent="0"/>
+              <classes count="1" tested="0" percent="0.00"/>
+              <traits count="0" tested="0" percent="0"/>
+            </totals>
+          </file>
+          <file name="DirectorRepository.php" href="Domain/FilmArchive/DirectorRepository.php.xml">
+            <totals>
+              <lines total="25" comments="8" code="17" executable="0" executed="0" percent="0"/>
+              <methods count="0" tested="0" percent="0"/>
+              <functions count="0" tested="0" percent="0"/>
+              <classes count="0" tested="0" percent="0"/>
+              <traits count="0" tested="0" percent="0"/>
+            </totals>
+          </file>
+          <file name="FullName.php" href="Domain/FilmArchive/FullName.php.xml">
+            <totals>
+              <lines total="44" comments="14" code="30" executable="5" executed="3" percent="60.00"/>
+              <methods count="3" tested="1" percent="33.33"/>
+              <functions count="0" tested="0" percent="0"/>
+              <classes count="1" tested="0" percent="0.00"/>
+              <traits count="0" tested="0" percent="0"/>
+            </totals>
+          </file>
+          <file name="Genre.php" href="Domain/FilmArchive/Genre.php.xml">
+            <totals>
+              <lines total="67" comments="12" code="55" executable="11" executed="9" percent="81.82"/>
+              <methods count="5" tested="3" percent="60.00"/>
+              <functions count="0" tested="0" percent="0"/>
+              <classes count="1" tested="0" percent="0.00"/>
+              <traits count="0" tested="0" percent="0"/>
+            </totals>
+          </file>
+          <file name="GenreId.php" href="Domain/FilmArchive/GenreId.php.xml">
+            <totals>
+              <lines total="19" comments="8" code="11" executable="0" executed="0" percent="0"/>
+              <methods count="0" tested="0" percent="0"/>
+              <functions count="0" tested="0" percent="0"/>
+              <classes count="0" tested="0" percent="0"/>
+              <traits count="0" tested="0" percent="0"/>
+            </totals>
+          </file>
+          <file name="GenreList.php" href="Domain/FilmArchive/GenreList.php.xml">
+            <totals>
+              <lines total="24" comments="8" code="16" executable="1" executed="0" percent="0.00"/>
+              <methods count="1" tested="0" percent="0.00"/>
+              <functions count="0" tested="0" percent="0"/>
+              <classes count="1" tested="0" percent="0.00"/>
+              <traits count="0" tested="0" percent="0"/>
+            </totals>
+          </file>
+          <file name="GenreRepository.php" href="Domain/FilmArchive/GenreRepository.php.xml">
+            <totals>
+              <lines total="25" comments="8" code="17" executable="0" executed="0" percent="0"/>
+              <methods count="0" tested="0" percent="0"/>
+              <functions count="0" tested="0" percent="0"/>
+              <classes count="0" tested="0" percent="0"/>
+              <traits count="0" tested="0" percent="0"/>
+            </totals>
+          </file>
+          <file name="Movie.php" href="Domain/FilmArchive/Movie.php.xml">
+            <totals>
+              <lines total="122" comments="20" code="102" executable="22" executed="0" percent="0.00"/>
+              <methods count="9" tested="0" percent="0.00"/>
+              <functions count="0" tested="0" percent="0"/>
+              <classes count="1" tested="0" percent="0.00"/>
+              <traits count="0" tested="0" percent="0"/>
+            </totals>
+          </file>
+          <file name="MovieId.php" href="Domain/FilmArchive/MovieId.php.xml">
+            <totals>
+              <lines total="19" comments="8" code="11" executable="0" executed="0" percent="0"/>
+              <methods count="0" tested="0" percent="0"/>
+              <functions count="0" tested="0" percent="0"/>
+              <classes count="0" tested="0" percent="0"/>
+              <traits count="0" tested="0" percent="0"/>
+            </totals>
+          </file>
+          <file name="MovieList.php" href="Domain/FilmArchive/MovieList.php.xml">
+            <totals>
+              <lines total="24" comments="8" code="16" executable="1" executed="1" percent="100.00"/>
+              <methods count="1" tested="1" percent="100.00"/>
+              <functions count="0" tested="0" percent="0"/>
+              <classes count="1" tested="1" percent="100.00"/>
+              <traits count="0" tested="0" percent="0"/>
+            </totals>
+          </file>
+          <file name="MovieRepository.php" href="Domain/FilmArchive/MovieRepository.php.xml">
+            <totals>
+              <lines total="25" comments="8" code="17" executable="0" executed="0" percent="0"/>
+              <methods count="0" tested="0" percent="0"/>
+              <functions count="0" tested="0" percent="0"/>
+              <classes count="0" tested="0" percent="0"/>
+              <traits count="0" tested="0" percent="0"/>
+            </totals>
+          </file>
+          <file name="MovieTitle.php" href="Domain/FilmArchive/MovieTitle.php.xml">
+            <totals>
+              <lines total="42" comments="11" code="31" executable="4" executed="0" percent="0.00"/>
+              <methods count="3" tested="0" percent="0.00"/>
+              <functions count="0" tested="0" percent="0"/>
+              <classes count="1" tested="0" percent="0.00"/>
+              <traits count="0" tested="0" percent="0"/>
+            </totals>
+          </file>
+          <file name="MovieYear.php" href="Domain/FilmArchive/MovieYear.php.xml">
+            <totals>
+              <lines total="38" comments="11" code="27" executable="3" executed="0" percent="0.00"/>
+              <methods count="2" tested="0" percent="0.00"/>
+              <functions count="0" tested="0" percent="0"/>
+              <classes count="1" tested="0" percent="0.00"/>
+              <traits count="0" tested="0" percent="0"/>
+            </totals>
+          </file>
+        </directory>
+        <directory name="User">
+          <totals>
+            <lines total="93" comments="17" code="76" executable="13" executed="0" percent="0.00"/>
+            <methods count="8" tested="0" percent="0.00"/>
+            <functions count="0" tested="0" percent="0"/>
+            <classes count="1" tested="0" percent="0.00"/>
+            <traits count="0" tested="0" percent="0"/>
+          </totals>
+          <file name="User.php" href="Domain/User/User.php.xml">
+            <totals>
+              <lines total="93" comments="17" code="76" executable="13" executed="0" percent="0.00"/>
+              <methods count="8" tested="0" percent="0.00"/>
+              <functions count="0" tested="0" percent="0"/>
+              <classes count="1" tested="0" percent="0.00"/>
+              <traits count="0" tested="0" percent="0"/>
+            </totals>
+          </file>
+        </directory>
+      </directory>
+      <directory name="FilmArchive">
+        <totals>
+          <lines total="23" comments="8" code="15" executable="1" executed="0" percent="0.00"/>
+          <methods count="1" tested="0" percent="0.00"/>
+          <functions count="0" tested="0" percent="0"/>
+          <classes count="1" tested="0" percent="0.00"/>
+          <traits count="0" tested="0" percent="0"/>
+        </totals>
+        <file name="GenreSpec.php" href="FilmArchive/GenreSpec.php.xml">
+          <totals>
+            <lines total="23" comments="8" code="15" executable="1" executed="0" percent="0.00"/>
+            <methods count="1" tested="0" percent="0.00"/>
+            <functions count="0" tested="0" percent="0"/>
+            <classes count="1" tested="0" percent="0.00"/>
+            <traits count="0" tested="0" percent="0"/>
+          </totals>
+        </file>
+      </directory>
+      <directory name="Infrastructure">
+        <totals>
+          <lines total="1409" comments="330" code="1079" executable="173" executed="0" percent="0.00"/>
+          <methods count="78" tested="0" percent="0.00"/>
+          <functions count="0" tested="0" percent="0"/>
+          <classes count="29" tested="0" percent="0.00"/>
+          <traits count="0" tested="0" percent="0"/>
+        </totals>
+        <directory name="Api">
+          <totals>
+            <lines total="983" comments="268" code="715" executable="107" executed="0" percent="0.00"/>
+            <methods count="58" tested="0" percent="0.00"/>
+            <functions count="0" tested="0" percent="0"/>
+            <classes count="19" tested="0" percent="0.00"/>
+            <traits count="0" tested="0" percent="0"/>
+          </totals>
+          <directory name="FilmArchive">
+            <totals>
+              <lines total="936" comments="254" code="682" executable="100" executed="0" percent="0.00"/>
+              <methods count="56" tested="0" percent="0.00"/>
+              <functions count="0" tested="0" percent="0"/>
+              <classes count="18" tested="0" percent="0.00"/>
+              <traits count="0" tested="0" percent="0"/>
+            </totals>
+            <directory name="Dto">
+              <totals>
+                <lines total="183" comments="50" code="133" executable="12" executed="0" percent="0.00"/>
+                <methods count="6" tested="0" percent="0.00"/>
+                <functions count="0" tested="0" percent="0"/>
+                <classes count="3" tested="0" percent="0.00"/>
+                <traits count="0" tested="0" percent="0"/>
+              </totals>
+              <file name="DirectorInput.php" href="Infrastructure/Api/FilmArchive/Dto/DirectorInput.php.xml">
+                <totals>
+                  <lines total="22" comments="8" code="14" executable="0" executed="0" percent="0"/>
+                  <methods count="0" tested="0" percent="0"/>
+                  <functions count="0" tested="0" percent="0"/>
+                  <classes count="0" tested="0" percent="0"/>
+                  <traits count="0" tested="0" percent="0"/>
+                </totals>
+              </file>
+              <file name="DirectorOutput.php" href="Infrastructure/Api/FilmArchive/Dto/DirectorOutput.php.xml">
+                <totals>
+                  <lines total="39" comments="8" code="31" executable="4" executed="0" percent="0.00"/>
+                  <methods count="2" tested="0" percent="0.00"/>
+                  <functions count="0" tested="0" percent="0"/>
+                  <classes count="1" tested="0" percent="0.00"/>
+                  <traits count="0" tested="0" percent="0"/>
+                </totals>
+              </file>
+              <file name="GenreInput.php" href="Infrastructure/Api/FilmArchive/Dto/GenreInput.php.xml">
+                <totals>
+                  <lines total="18" comments="8" code="10" executable="0" executed="0" percent="0"/>
+                  <methods count="0" tested="0" percent="0"/>
+                  <functions count="0" tested="0" percent="0"/>
+                  <classes count="0" tested="0" percent="0"/>
+                  <traits count="0" tested="0" percent="0"/>
+                </totals>
+              </file>
+              <file name="GenreOutput.php" href="Infrastructure/Api/FilmArchive/Dto/GenreOutput.php.xml">
+                <totals>
+                  <lines total="38" comments="10" code="28" executable="3" executed="0" percent="0.00"/>
+                  <methods count="2" tested="0" percent="0.00"/>
+                  <functions count="0" tested="0" percent="0"/>
+                  <classes count="1" tested="0" percent="0.00"/>
+                  <traits count="0" tested="0" percent="0"/>
+                </totals>
+              </file>
+              <file name="MovieInput.php" href="Infrastructure/Api/FilmArchive/Dto/MovieInput.php.xml">
+                <totals>
+                  <lines total="24" comments="8" code="16" executable="0" executed="0" percent="0"/>
+                  <methods count="0" tested="0" percent="0"/>
+                  <functions count="0" tested="0" percent="0"/>
+                  <classes count="0" tested="0" percent="0"/>
+                  <traits count="0" tested="0" percent="0"/>
+                </totals>
+              </file>
+              <file name="MovieOutput.php" href="Infrastructure/Api/FilmArchive/Dto/MovieOutput.php.xml">
+                <totals>
+                  <lines total="42" comments="8" code="34" executable="5" executed="0" percent="0.00"/>
+                  <methods count="2" tested="0" percent="0.00"/>
+                  <functions count="0" tested="0" percent="0"/>
+                  <classes count="1" tested="0" percent="0.00"/>
+                  <traits count="0" tested="0" percent="0"/>
+                </totals>
+              </file>
+            </directory>
+            <directory name="Normalizer">
+              <totals>
+                <lines total="138" comments="39" code="99" executable="12" executed="0" percent="0.00"/>
+                <methods count="12" tested="0" percent="0.00"/>
+                <functions count="0" tested="0" percent="0"/>
+                <classes count="3" tested="0" percent="0.00"/>
+                <traits count="0" tested="0" percent="0"/>
+              </totals>
+              <file name="FullNameNormalizer.php" href="Infrastructure/Api/FilmArchive/Normalizer/FullNameNormalizer.php.xml">
+                <totals>
+                  <lines total="49" comments="13" code="36" executable="4" executed="0" percent="0.00"/>
+                  <methods count="4" tested="0" percent="0.00"/>
+                  <functions count="0" tested="0" percent="0"/>
+                  <classes count="1" tested="0" percent="0.00"/>
+                  <traits count="0" tested="0" percent="0"/>
+                </totals>
+              </file>
+              <file name="MovieTitleNormalizer.php" href="Infrastructure/Api/FilmArchive/Normalizer/MovieTitleNormalizer.php.xml">
+                <totals>
+                  <lines total="44" comments="13" code="31" executable="4" executed="0" percent="0.00"/>
+                  <methods count="4" tested="0" percent="0.00"/>
+                  <functions count="0" tested="0" percent="0"/>
+                  <classes count="1" tested="0" percent="0.00"/>
+                  <traits count="0" tested="0" percent="0"/>
+                </totals>
+              </file>
+              <file name="MovieYearNormalizer.php" href="Infrastructure/Api/FilmArchive/Normalizer/MovieYearNormalizer.php.xml">
+                <totals>
+                  <lines total="45" comments="13" code="32" executable="4" executed="0" percent="0.00"/>
+                  <methods count="4" tested="0" percent="0.00"/>
+                  <functions count="0" tested="0" percent="0"/>
+                  <classes count="1" tested="0" percent="0.00"/>
+                  <traits count="0" tested="0" percent="0"/>
+                </totals>
+              </file>
+            </directory>
+            <directory name="Persister">
+              <totals>
+                <lines total="201" comments="57" code="144" executable="24" executed="0" percent="0.00"/>
+                <methods count="12" tested="0" percent="0.00"/>
+                <functions count="0" tested="0" percent="0"/>
+                <classes count="3" tested="0" percent="0.00"/>
+                <traits count="0" tested="0" percent="0"/>
+              </totals>
+              <file name="DirectorPersister.php" href="Infrastructure/Api/FilmArchive/Persister/DirectorPersister.php.xml">
+                <totals>
+                  <lines total="67" comments="19" code="48" executable="8" executed="0" percent="0.00"/>
+                  <methods count="4" tested="0" percent="0.00"/>
+                  <functions count="0" tested="0" percent="0"/>
+                  <classes count="1" tested="0" percent="0.00"/>
+                  <traits count="0" tested="0" percent="0"/>
+                </totals>
+              </file>
+              <file name="GenrePersister.php" href="Infrastructure/Api/FilmArchive/Persister/GenrePersister.php.xml">
+                <totals>
+                  <lines total="67" comments="19" code="48" executable="8" executed="0" percent="0.00"/>
+                  <methods count="4" tested="0" percent="0.00"/>
+                  <functions count="0" tested="0" percent="0"/>
+                  <classes count="1" tested="0" percent="0.00"/>
+                  <traits count="0" tested="0" percent="0"/>
+                </totals>
+              </file>
+              <file name="MoviePersister.php" href="Infrastructure/Api/FilmArchive/Persister/MoviePersister.php.xml">
+                <totals>
+                  <lines total="67" comments="19" code="48" executable="8" executed="0" percent="0.00"/>
+                  <methods count="4" tested="0" percent="0.00"/>
+                  <functions count="0" tested="0" percent="0"/>
+                  <classes count="1" tested="0" percent="0.00"/>
+                  <traits count="0" tested="0" percent="0"/>
+                </totals>
+              </file>
+            </directory>
+            <directory name="Repository">
+              <totals>
+                <lines total="144" comments="24" code="120" executable="21" executed="0" percent="0.00"/>
+                <methods count="12" tested="0" percent="0.00"/>
+                <functions count="0" tested="0" percent="0"/>
+                <classes count="3" tested="0" percent="0.00"/>
+                <traits count="0" tested="0" percent="0"/>
+              </totals>
+              <file name="DirectorDoctrineRepository.php" href="Infrastructure/Api/FilmArchive/Repository/DirectorDoctrineRepository.php.xml">
+                <totals>
+                  <lines total="48" comments="8" code="40" executable="7" executed="0" percent="0.00"/>
+                  <methods count="4" tested="0" percent="0.00"/>
+                  <functions count="0" tested="0" percent="0"/>
+                  <classes count="1" tested="0" percent="0.00"/>
+                  <traits count="0" tested="0" percent="0"/>
+                </totals>
+              </file>
+              <file name="GenreDoctrineRepository.php" href="Infrastructure/Api/FilmArchive/Repository/GenreDoctrineRepository.php.xml">
+                <totals>
+                  <lines total="48" comments="8" code="40" executable="7" executed="0" percent="0.00"/>
+                  <methods count="4" tested="0" percent="0.00"/>
+                  <functions count="0" tested="0" percent="0"/>
+                  <classes count="1" tested="0" percent="0.00"/>
+                  <traits count="0" tested="0" percent="0"/>
+                </totals>
+              </file>
+              <file name="MovieDoctrineRepository.php" href="Infrastructure/Api/FilmArchive/Repository/MovieDoctrineRepository.php.xml">
+                <totals>
+                  <lines total="48" comments="8" code="40" executable="7" executed="0" percent="0.00"/>
+                  <methods count="4" tested="0" percent="0.00"/>
+                  <functions count="0" tested="0" percent="0"/>
+                  <classes count="1" tested="0" percent="0.00"/>
+                  <traits count="0" tested="0" percent="0"/>
+                </totals>
+              </file>
+            </directory>
+            <directory name="Transformer">
+              <totals>
+                <lines total="270" comments="84" code="186" executable="31" executed="0" percent="0.00"/>
+                <methods count="14" tested="0" percent="0.00"/>
+                <functions count="0" tested="0" percent="0"/>
+                <classes count="6" tested="0" percent="0.00"/>
+                <traits count="0" tested="0" percent="0"/>
+              </totals>
+              <file name="DirectorInputTransformer.php" href="Infrastructure/Api/FilmArchive/Transformer/DirectorInputTransformer.php.xml">
+                <totals>
+                  <lines total="57" comments="14" code="43" executable="9" executed="0" percent="0.00"/>
+                  <methods count="3" tested="0" percent="0.00"/>
+                  <functions count="0" tested="0" percent="0"/>
+                  <classes count="1" tested="0" percent="0.00"/>
+                  <traits count="0" tested="0" percent="0"/>
+                </totals>
+              </file>
+              <file name="DirectorOutputTransformer.php" href="Infrastructure/Api/FilmArchive/Transformer/DirectorOutputTransformer.php.xml">
+                <totals>
+                  <lines total="36" comments="14" code="22" executable="2" executed="0" percent="0.00"/>
+                  <methods count="2" tested="0" percent="0.00"/>
+                  <functions count="0" tested="0" percent="0"/>
+                  <classes count="1" tested="0" percent="0.00"/>
+                  <traits count="0" tested="0" percent="0"/>
+                </totals>
+              </file>
+              <file name="GenreInputTransformer.php" href="Infrastructure/Api/FilmArchive/Transformer/GenreInputTransformer.php.xml">
+                <totals>
+                  <lines total="57" comments="14" code="43" executable="9" executed="0" percent="0.00"/>
+                  <methods count="3" tested="0" percent="0.00"/>
+                  <functions count="0" tested="0" percent="0"/>
+                  <classes count="1" tested="0" percent="0.00"/>
+                  <traits count="0" tested="0" percent="0"/>
+                </totals>
+              </file>
+              <file name="GenreOutputTransformer.php" href="Infrastructure/Api/FilmArchive/Transformer/GenreOutputTransformer.php.xml">
+                <totals>
+                  <lines total="36" comments="14" code="22" executable="2" executed="0" percent="0.00"/>
+                  <methods count="2" tested="0" percent="0.00"/>
+                  <functions count="0" tested="0" percent="0"/>
+                  <classes count="1" tested="0" percent="0.00"/>
+                  <traits count="0" tested="0" percent="0"/>
+                </totals>
+              </file>
+              <file name="MovieInputTransformer.php" href="Infrastructure/Api/FilmArchive/Transformer/MovieInputTransformer.php.xml">
+                <totals>
+                  <lines total="48" comments="14" code="34" executable="7" executed="0" percent="0.00"/>
+                  <methods count="2" tested="0" percent="0.00"/>
+                  <functions count="0" tested="0" percent="0"/>
+                  <classes count="1" tested="0" percent="0.00"/>
+                  <traits count="0" tested="0" percent="0"/>
+                </totals>
+              </file>
+              <file name="MovieOutputTransformer.php" href="Infrastructure/Api/FilmArchive/Transformer/MovieOutputTransformer.php.xml">
+                <totals>
+                  <lines total="36" comments="14" code="22" executable="2" executed="0" percent="0.00"/>
+                  <methods count="2" tested="0" percent="0.00"/>
+                  <functions count="0" tested="0" percent="0"/>
+                  <classes count="1" tested="0" percent="0.00"/>
+                  <traits count="0" tested="0" percent="0"/>
+                </totals>
+              </file>
+            </directory>
+          </directory>
+          <directory name="User">
+            <totals>
+              <lines total="47" comments="14" code="33" executable="7" executed="0" percent="0.00"/>
+              <methods count="2" tested="0" percent="0.00"/>
+              <functions count="0" tested="0" percent="0"/>
+              <classes count="1" tested="0" percent="0.00"/>
+              <traits count="0" tested="0" percent="0"/>
+            </totals>
+            <file name="UserTransformer.php" href="Infrastructure/Api/User/UserTransformer.php.xml">
+              <totals>
+                <lines total="47" comments="14" code="33" executable="7" executed="0" percent="0.00"/>
+                <methods count="2" tested="0" percent="0.00"/>
+                <functions count="0" tested="0" percent="0"/>
+                <classes count="1" tested="0" percent="0.00"/>
+                <traits count="0" tested="0" percent="0"/>
+              </totals>
+            </file>
+          </directory>
+        </directory>
+        <directory name="Doctrine">
+          <totals>
+            <lines total="280" comments="54" code="226" executable="34" executed="0" percent="0.00"/>
+            <methods count="12" tested="0" percent="0.00"/>
+            <functions count="0" tested="0" percent="0"/>
+            <classes count="7" tested="0" percent="0.00"/>
+            <traits count="0" tested="0" percent="0"/>
+          </totals>
+          <directory name="DBAL">
+            <totals>
+              <lines total="96" comments="27" code="69" executable="6" executed="0" percent="0.00"/>
+              <methods count="6" tested="0" percent="0.00"/>
+              <functions count="0" tested="0" percent="0"/>
+              <classes count="3" tested="0" percent="0.00"/>
+              <traits count="0" tested="0" percent="0"/>
+            </totals>
+            <directory name="Type">
+              <totals>
+                <lines total="96" comments="27" code="69" executable="6" executed="0" percent="0.00"/>
+                <methods count="6" tested="0" percent="0.00"/>
+                <functions count="0" tested="0" percent="0"/>
+                <classes count="3" tested="0" percent="0.00"/>
+                <traits count="0" tested="0" percent="0"/>
+              </totals>
+              <file name="DirectorIdType.php" href="Infrastructure/Doctrine/DBAL/Type/DirectorIdType.php.xml">
+                <totals>
+                  <lines total="32" comments="9" code="23" executable="2" executed="0" percent="0.00"/>
+                  <methods count="2" tested="0" percent="0.00"/>
+                  <functions count="0" tested="0" percent="0"/>
+                  <classes count="1" tested="0" percent="0.00"/>
+                  <traits count="0" tested="0" percent="0"/>
+                </totals>
+              </file>
+              <file name="GenreIdType.php" href="Infrastructure/Doctrine/DBAL/Type/GenreIdType.php.xml">
+                <totals>
+                  <lines total="32" comments="9" code="23" executable="2" executed="0" percent="0.00"/>
+                  <methods count="2" tested="0" percent="0.00"/>
+                  <functions count="0" tested="0" percent="0"/>
+                  <classes count="1" tested="0" percent="0.00"/>
+                  <traits count="0" tested="0" percent="0"/>
+                </totals>
+              </file>
+              <file name="MovieIdType.php" href="Infrastructure/Doctrine/DBAL/Type/MovieIdType.php.xml">
+                <totals>
+                  <lines total="32" comments="9" code="23" executable="2" executed="0" percent="0.00"/>
+                  <methods count="2" tested="0" percent="0.00"/>
+                  <functions count="0" tested="0" percent="0"/>
+                  <classes count="1" tested="0" percent="0.00"/>
+                  <traits count="0" tested="0" percent="0"/>
+                </totals>
+              </file>
+            </directory>
+          </directory>
+          <directory name="DataFixtures">
+            <totals>
+              <lines total="184" comments="27" code="157" executable="28" executed="0" percent="0.00"/>
+              <methods count="6" tested="0" percent="0.00"/>
+              <functions count="0" tested="0" percent="0"/>
+              <classes count="4" tested="0" percent="0.00"/>
+              <traits count="0" tested="0" percent="0"/>
+            </totals>
+            <directory name="FilmArchive">
+              <totals>
+                <lines total="138" comments="24" code="114" executable="16" executed="0" percent="0.00"/>
+                <methods count="4" tested="0" percent="0.00"/>
+                <functions count="0" tested="0" percent="0"/>
+                <classes count="3" tested="0" percent="0.00"/>
+                <traits count="0" tested="0" percent="0"/>
+              </totals>
+              <file name="DirectorFixtures.php" href="Infrastructure/Doctrine/DataFixtures/FilmArchive/DirectorFixtures.php.xml">
+                <totals>
+                  <lines total="56" comments="8" code="48" executable="5" executed="0" percent="0.00"/>
+                  <methods count="1" tested="0" percent="0.00"/>
+                  <functions count="0" tested="0" percent="0"/>
+                  <classes count="1" tested="0" percent="0.00"/>
+                  <traits count="0" tested="0" percent="0"/>
+                </totals>
+              </file>
+              <file name="GenreFixtures.php" href="Infrastructure/Doctrine/DataFixtures/FilmArchive/GenreFixtures.php.xml">
+                <totals>
+                  <lines total="34" comments="8" code="26" executable="5" executed="0" percent="0.00"/>
+                  <methods count="1" tested="0" percent="0.00"/>
+                  <functions count="0" tested="0" percent="0"/>
+                  <classes count="1" tested="0" percent="0.00"/>
+                  <traits count="0" tested="0" percent="0"/>
+                </totals>
+              </file>
+              <file name="MovieFixtures.php" href="Infrastructure/Doctrine/DataFixtures/FilmArchive/MovieFixtures.php.xml">
+                <totals>
+                  <lines total="48" comments="8" code="40" executable="6" executed="0" percent="0.00"/>
+                  <methods count="2" tested="0" percent="0.00"/>
+                  <functions count="0" tested="0" percent="0"/>
+                  <classes count="1" tested="0" percent="0.00"/>
+                  <traits count="0" tested="0" percent="0"/>
+                </totals>
+              </file>
+            </directory>
+            <file name="UserFixtures.php" href="Infrastructure/Doctrine/DataFixtures/UserFixtures.php.xml">
+              <totals>
+                <lines total="46" comments="3" code="43" executable="12" executed="0" percent="0.00"/>
+                <methods count="2" tested="0" percent="0.00"/>
+                <functions count="0" tested="0" percent="0"/>
+                <classes count="1" tested="0" percent="0.00"/>
+                <traits count="0" tested="0" percent="0"/>
+              </totals>
+            </file>
+          </directory>
+        </directory>
+        <directory name="UI">
+          <totals>
+            <lines total="146" comments="8" code="138" executable="32" executed="0" percent="0.00"/>
+            <methods count="8" tested="0" percent="0.00"/>
+            <functions count="0" tested="0" percent="0"/>
+            <classes count="3" tested="0" percent="0.00"/>
+            <traits count="0" tested="0" percent="0"/>
+          </totals>
+          <directory name="Symfony">
+            <totals>
+              <lines total="78" comments="8" code="70" executable="9" executed="0" percent="0.00"/>
+              <methods count="3" tested="0" percent="0.00"/>
+              <functions count="0" tested="0" percent="0"/>
+              <classes count="2" tested="0" percent="0.00"/>
+              <traits count="0" tested="0" percent="0"/>
+            </totals>
+            <directory name="Controller">
+              <totals>
+                <lines total="78" comments="8" code="70" executable="9" executed="0" percent="0.00"/>
+                <methods count="3" tested="0" percent="0.00"/>
+                <functions count="0" tested="0" percent="0"/>
+                <classes count="2" tested="0" percent="0.00"/>
+                <traits count="0" tested="0" percent="0"/>
+              </totals>
+              <file name="BorrameController.php" href="Infrastructure/UI/Symfony/Controller/BorrameController.php.xml">
+                <totals>
+                  <lines total="38" comments="8" code="30" executable="2" executed="0" percent="0.00"/>
+                  <methods count="1" tested="0" percent="0.00"/>
+                  <functions count="0" tested="0" percent="0"/>
+                  <classes count="1" tested="0" percent="0.00"/>
+                  <traits count="0" tested="0" percent="0"/>
+                </totals>
+              </file>
+              <file name="ProfileController.php" href="Infrastructure/UI/Symfony/Controller/ProfileController.php.xml">
+                <totals>
+                  <lines total="40" comments="0" code="40" executable="7" executed="0" percent="0.00"/>
+                  <methods count="2" tested="0" percent="0.00"/>
+                  <functions count="0" tested="0" percent="0"/>
+                  <classes count="1" tested="0" percent="0.00"/>
+                  <traits count="0" tested="0" percent="0"/>
+                </totals>
+              </file>
+            </directory>
+          </directory>
+          <file name="Kernel.php" href="Infrastructure/UI/Kernel.php.xml">
+            <totals>
+              <lines total="68" comments="0" code="68" executable="23" executed="0" percent="0.00"/>
+              <methods count="5" tested="0" percent="0.00"/>
+              <functions count="0" tested="0" percent="0"/>
+              <classes count="1" tested="0" percent="0.00"/>
+              <traits count="0" tested="0" percent="0"/>
+            </totals>
+          </file>
+        </directory>
+      </directory>
+    </directory>
+  </project>
+</phpunit>

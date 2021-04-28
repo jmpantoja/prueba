@@ -12,10 +12,10 @@
     </template>
 
     <v-card :class="name" :loading="loading">
-      <v-card-title class="card-title" v-if="title">
+      <v-card-title class="card-title display-1" v-if="title">
         {{ title }}
       </v-card-title>
-      <v-divider style="margin-bottom: 2em"/>
+      <v-divider/>
 
       <v-card-text class="modal-content">
         <slot name="content"/>
@@ -92,10 +92,7 @@ export default {
 
 <style scoped lang="scss">
 .card-title {
-  font-size: 1.8em !important;
-  font-weight: 300;
+  font-weight: 300 !important;
   text-transform: capitalize;
-  font-family: "Roboto";
-
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <atn-modal
-    :title="t(form.title, {item: form.item} )"
+    :title="t(form.title, {item: this.form.original} )"
     :width="form.width"
     :height="form.height"
     :loading="form.loading"
@@ -72,6 +72,7 @@ export default {
       required: true
     }
   },
+
   methods: {
     onEnter() {
       this.$actionManager.run(this.form.namespace, 'save', {item: this.form.item})

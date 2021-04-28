@@ -17,6 +17,7 @@ const _ = require('lodash')
 class Form {
   private _namespace: string;
   private _item: Record;
+  private _original: Record;
   private _default: Record;
   private _client: ApiClient;
   private _urlManager: UrlManager;
@@ -41,6 +42,7 @@ class Form {
     this._loading = false
     this._default = options.default || {id: null};
     this._item = _.cloneDeep(this._default)
+    this._original = _.cloneDeep(this._default)
 
     this._groups = FormNormalizer.normalize(options.groups)
     this._buttons = this.initButtons(options.buttons)
@@ -56,7 +58,6 @@ class Form {
 
     return Object.fromEntries(entries)
   }
-
 
   public get namespace(): string {
     return this._namespace;
@@ -107,6 +108,10 @@ class Form {
 
   public get item(): Record {
     return this._item
+  }
+
+  public get original(): Record {
+    return this._original
   }
 
   public get buttons(): ButtonList {
@@ -180,6 +185,7 @@ class Form {
     if (!item || !item.id) {
       return new Promise<void | Record>((resolve) => {
         this._item = _.cloneDeep(this._default)
+        this._original = _.cloneDeep(this._default)
         this._visible = true
         resolve(this._item)
       })
@@ -190,6 +196,7 @@ class Form {
       .run()
       .then((response) => {
         this._item = _.cloneDeep(response)
+        this._original = _.cloneDeep(response)
         this._visible = true
         this._loading = false
       })

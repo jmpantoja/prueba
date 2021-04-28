@@ -27,6 +27,14 @@ export default {
     begins: 'begins by',
     ends: 'ends by'
   },
+  form: {
+    field: {
+      fullName: {
+        firstName: 'Name',
+        lastName: 'Last Name'
+      }
+    }
+  },
   rules: {
     date: 'The date is wrong'
   },

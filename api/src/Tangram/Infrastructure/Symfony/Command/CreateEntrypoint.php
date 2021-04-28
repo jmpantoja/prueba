@@ -73,9 +73,12 @@ final class CreateEntrypoint extends Command
         $creator->createClass('persister', $overwrite);
         $creator->createClass('fixtures', $overwrite);
 
+        $creator->createClass('test', $overwrite);
+
         $creator->createFile('api-mapping', $overwrite);
         $creator->createFile('serialize-mapping', $overwrite);
         $creator->createFile('validation', $overwrite);
+
 
         $creator->writeChanges();
 

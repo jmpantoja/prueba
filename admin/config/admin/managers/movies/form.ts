@@ -1,6 +1,7 @@
 import {FormOptions, Props} from "~/plugins/atn/src";
 
 const form: FormOptions = {
+  width: 900,
   default: {
     id: null,
   },
@@ -8,27 +9,42 @@ const form: FormOptions = {
     {
       label: 'default',
       fields: [
-        {key: 'title'},
+        {
+          key: 'title',
+        },
         {
           key: 'year',
           type: 'atn-field-year',
-          width: '40%',
+          width: '300px',
           props: {
+            width: '200px',
             min: 1900,
             max: new Date().getFullYear() + 10
+          }
+        },
+        {
+          key: 'genres',
+          type: 'atn-field-relation',
+          props: {
+            type: 'labels',
+            entity: 'genres',
+            itemText: "name",
           }
         },
       ]
     },
     {
-      label: 'genres',
+      label: 'director',
       fields: [
         {
-          key: 'genres',
-          type: 'atn-field-entity-chips',
+          key: 'director',
+          type: 'atn-field-relation',
           props: {
-            entity: 'genres',
-            itemText: "name",
+            type: 'one',
+            entity: 'directors',
+            itemText: (item: any) => {
+              return `${item.name.lastName}, ${item.name.name}`;
+            },
           }
         },
       ]

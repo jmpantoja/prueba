@@ -186,6 +186,10 @@ class EntityCreator
             $options->setClassName($name, 'Fixtures');
         });
 
+        $this->addClass('test', function (CreateClassOptions $options, $name, $module) {
+            $options->setNamespace('spec\\App\\Domain', $module);
+            $options->setClassName($name, 'Spec');
+        });
 
     }
 
@@ -210,10 +214,15 @@ class EntityCreator
         $details = $this->generator->createClassNameDetails($options->className(), $options->namespace());
 
         $fullName = $details->getFullName();
+
+        if (str_starts_with($fullName, 'App\\spec')) {
+            $fullName = str_replace('App\\spec', 'spec', $fullName);
+        }
+
         $shortName = $details->getShortName();
         $target = $this->fileManager->getRelativePathForFutureClass($fullName);
-        $template = sprintf('%s/templates/%s.tpl.php', __DIR__, $key);
 
+        $template = sprintf('%s/templates/%s.tpl.php', __DIR__, $key);
 
         $varName = $this->normalize($key);
 
@@ -254,7 +263,8 @@ class EntityCreator
             return;
         }
 
-        $this->generator->generateClass($class['fullName'], $class['template'], $this->variables());
+        $path = $this->generator->generateClass($class['fullName'], $class['template'], $this->variables());
+
     }
 
     public function createFile(string $key, bool $overwrite = false)

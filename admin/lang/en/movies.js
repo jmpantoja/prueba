@@ -27,6 +27,7 @@ export default replace({
       header: {
         title: 'Title',
         year: 'Release year',
+        director: 'Director',
       }
     },
     form: {
@@ -36,12 +37,14 @@ export default replace({
       },
       group: {
         default: 'General',
-        genres: 'Genres'
+        genres: 'Genres',
+        director: 'Director',
       },
       field: {
         title: 'Title',
         year: 'Release year',
         genres: 'Genres',
+        director: 'Director',
       }
     }
   }

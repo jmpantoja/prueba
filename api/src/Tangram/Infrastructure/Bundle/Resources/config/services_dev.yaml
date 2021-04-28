@@ -1,0 +1,14 @@
+parameters:
+
+services:
+    Tangram\Infrastructure\Symfony\:
+        resource: '../../../Symfony'
+        autowire: true
+        autoconfigure: true
+        public: false
+        exclude: [ '../../../Symfony/Boilerplate/ModelCreator.php' ]
+
+    Symfony\Bundle\MakerBundle\FileManager:
+        alias: maker.file_manager
+
+

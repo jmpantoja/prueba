@@ -27,6 +27,14 @@ export default {
     begins: 'empieza por',
     ends: 'termina en'
   },
+  form: {
+    field: {
+      fullName: {
+        firstName: 'Nombre',
+        lastName: 'Apellidos'
+      }
+    }
+  },
   rules: {
     year(params) {
       const min = params.named('min')

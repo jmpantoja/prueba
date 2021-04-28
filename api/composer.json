@@ -20,6 +20,7 @@
         "nelmio/cors-bundle": "^2.1",
         "nesbot/carbon": "^2.41",
         "phpdocumentor/reflection-docblock": "^5.2",
+        "phpspec/phpspec": "^7.0",
         "symfony/asset": "5.1.*",
         "symfony/console": "5.1.*",
         "symfony/dotenv": "5.1.*",
@@ -40,13 +41,19 @@
     },
     "require-dev": {
         "api-platform/schema-generator": "^2.2",
+        "beberlei/assert": "^3.3",
+        "behat/behat": "^3.8",
         "doctrine/doctrine-fixtures-bundle": "^3.3",
         "fakerphp/faker": "^1.11",
+        "friends-of-behat/mink": "^1.9",
+        "friends-of-behat/mink-browserkit-driver": "^1.5",
+        "friends-of-behat/mink-extension": "^2.5",
+        "friends-of-behat/symfony-extension": "^2.1",
+        "friends-of-phpspec/phpspec-code-coverage": "^6.1",
         "symfony/browser-kit": "^5.1",
         "symfony/css-selector": "^5.1",
         "symfony/debug-bundle": "^5.1",
         "symfony/maker-bundle": "^1.21",
-        "symfony/phpunit-bridge": "^5.1",
         "symfony/stopwatch": "^5.1",
         "symfony/var-dumper": "^5.1",
         "symfony/web-profiler-bundle": "^5.1"
@@ -56,6 +63,7 @@
         "preferred-install": {
             "*": "dist"
         },
+        "bin-dir": "bin",
         "sort-packages": true
     },
     "autoload": {
@@ -69,7 +77,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "App\\Tests\\": "tests/"
+            "App\\Behat\\Context\\": "tests/features/Context",
+            "spec\\App\\": "tests/spec/App"
         }
     },
     "replace": {

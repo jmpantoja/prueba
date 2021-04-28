@@ -1,0 +1,15 @@
+parameters:
+    behat_base_url: 'https://api.prueba.local'
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    App\Behat\Context\:
+        resource: '../tests/features/Context'
+#        public: true
+#        arguments:
+#            - "@kernel"
+#            - '@parameter_bag'
+

@@ -50,6 +50,7 @@ final class UpdateEntrypoint extends Command
         $creator = call_user_func($this->factory, $console, $entityName);
 
         $creator->createClass('input', true);
+        $creator->createClass('output', true);
         $creator->createClass('input-transformer', true);
         $creator->createFile('serialize-mapping', true);
 

@@ -1,2 +1,11 @@
 App\Infrastructure\Api\FilmArchive\Dto\DirectorOutput:
     attributes:
+        id:
+             groups: ['read']
+
+        name:
+             groups: ['write', 'read']
+
+        movies:
+             groups: ['director.write', 'director.read']
+
