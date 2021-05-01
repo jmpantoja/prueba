@@ -6,36 +6,32 @@
       :cache-items="true"
       :clearable="false"
       v-model="data"
-      chips
-      deletable-chips
+      dense
+      :chips="chips"
+      :deletable-chips="chips"
       return-object
       hide-details
-      v-bind="$props"
-    >
+      v-bind="$props">
 
-      <template v-slot:prepend-item>
+      <template v-slot:append-outer>
         <atn-admin-form :form="admin.form">
           <template v-slot:activator="{ on, attrs }">
-            <v-btn plain color="primary" v-bind="attrs" v-on="on">
-              <v-icon left>mdi-plus</v-icon>
-              {{ t('form.title.create') }}
+            <v-btn icon color="primary" v-bind="attrs" v-on="on" style="margin-top: -8px">
+              <v-icon>mdi-plus</v-icon>
             </v-btn>
           </template>
         </atn-admin-form>
         <v-divider/>
       </template>
 
-      <template v-slot:selection="{ item }">
+      <template v-if="chips" v-slot:selection="{ item }">
         <v-chip close color="info" @click:close="remove(item)">
           {{ itemToString(item) }}
         </v-chip>
       </template>
+
     </v-autocomplete>
-
-
   </atn-field>
-
-
 </template>
 
 <script>
@@ -48,6 +44,7 @@ const _ = require('lodash')
 const props = VAutocomplete.options.props
 delete props.items;
 delete props.multiple;
+delete props.chips;
 
 export default {
   name: "AtnFieldRelation",
@@ -60,11 +57,11 @@ export default {
       type: String,
       required: true
     },
-    type: {
+    mode: {
       type: String,
       required: true,
       validator: (value) => {
-        return ['labels', 'one'].includes(value)
+        return ['labels', 'single'].includes(value)
       }
     },
     clearable: {
@@ -86,7 +83,6 @@ export default {
         this.data = null
         return
       }
-
       this.data = this.data.filter((data) => {
         return data.id !== item.id
       });
@@ -106,7 +102,10 @@ export default {
   },
   computed: {
     multiple() {
-      return ['labels'].includes(this.type)
+      return ['labels'].includes(this.mode)
+    },
+    chips() {
+      return ['labels'].includes(this.mode)
     },
     namespace() {
       return this.entity

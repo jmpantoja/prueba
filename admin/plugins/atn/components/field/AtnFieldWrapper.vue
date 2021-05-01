@@ -53,6 +53,7 @@ dl {
     font-weight: 500;
     text-transform: capitalize;
     padding-right: 0.5em;
+    color: #444;
 
     &:after{
       content: ':';

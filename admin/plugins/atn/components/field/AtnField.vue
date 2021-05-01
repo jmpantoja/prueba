@@ -1,5 +1,5 @@
 <template>
-  <v-input v-bind="$props" :error="inValid">
+  <v-input v-bind="$props" dense :error="inValid">
     <slot/>
   </v-input>
 </template>

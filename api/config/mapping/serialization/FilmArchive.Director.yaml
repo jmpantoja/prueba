@@ -7,5 +7,5 @@ App\Infrastructure\Api\FilmArchive\Dto\DirectorOutput:
              groups: ['write', 'read']
 
         movies:
-             groups: ['director.write', 'director.read']
+             groups: ['write', 'read']
 

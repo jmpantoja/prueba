@@ -73,6 +73,7 @@ fieldset {
 
   legend {
     text-align: center;
+    color: #444;
     width: 100%;
     font-weight: 300 !important;
     text-transform: capitalize;

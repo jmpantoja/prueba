@@ -23,13 +23,13 @@ final class DirectorOutput  {
 	public ?DirectorId $id = null;
 	public FullName $name;
 
+
     public static function make(Director $entity): self
     {
         return new self($entity);
     }
 
     private function __construct(Director $entity){
-
 		$this->id = $entity->id();
 		$this->name = $entity->name();
     }

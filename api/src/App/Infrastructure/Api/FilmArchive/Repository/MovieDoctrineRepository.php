@@ -15,7 +15,6 @@ namespace App\Infrastructure\Api\FilmArchive\Repository;
 use App\Domain\FilmArchive\Movie;
 use App\Domain\FilmArchive\MovieId;
 use App\Domain\FilmArchive\MovieRepository;
-use App\Infrastructure\Api\FilmArchive\Dto\MovieInput;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -37,12 +36,8 @@ final class MovieDoctrineRepository extends ServiceEntityRepository implements M
         $this->getEntityManager()->remove($movie);
     }
 
-    public function findOrCreate(MovieInput $input)
+    public function findById(MovieId $movieId): ?Movie
     {
-        if (null !== $input->id) {
-            return $this->find($input->id);
-        }
-
-        return new Movie($input);
+        return $this->find($movieId);
     }
 }

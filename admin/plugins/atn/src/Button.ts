@@ -34,7 +34,7 @@ class Button {
 
     return {
       tile: hasTile && hasText,
-      text: !hasTile && hasText,
+      outlined: !hasTile && hasText,
       icon: !hasText,
       color: options.color || 'primary'
     }

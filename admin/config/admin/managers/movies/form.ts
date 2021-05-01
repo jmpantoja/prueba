@@ -26,7 +26,7 @@ const form: FormOptions = {
           key: 'genres',
           type: 'atn-field-relation',
           props: {
-            type: 'labels',
+            mode: 'labels',
             entity: 'genres',
             itemText: "name",
           }
@@ -40,7 +40,7 @@ const form: FormOptions = {
           key: 'director',
           type: 'atn-field-relation',
           props: {
-            type: 'one',
+            mode: 'single',
             entity: 'directors',
             itemText: (item: any) => {
               return `${item.name.lastName}, ${item.name.name}`;

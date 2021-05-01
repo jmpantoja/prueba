@@ -1,5 +1,6 @@
 <template>
 
+
   <v-btn
     v-if="computedProps.visible"
     v-bind="computedProps"
@@ -39,7 +40,7 @@ export default {
     }
   },
   computed: {
-    namespace(){
+    namespace() {
       return this.button.namespace
     },
     computedProps() {

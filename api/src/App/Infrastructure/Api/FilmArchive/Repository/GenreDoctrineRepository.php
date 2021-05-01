@@ -15,7 +15,6 @@ namespace App\Infrastructure\Api\FilmArchive\Repository;
 use App\Domain\FilmArchive\Genre;
 use App\Domain\FilmArchive\GenreId;
 use App\Domain\FilmArchive\GenreRepository;
-use App\Infrastructure\Api\FilmArchive\Dto\GenreInput;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -37,12 +36,8 @@ final class GenreDoctrineRepository extends ServiceEntityRepository implements G
         $this->getEntityManager()->remove($genre);
     }
 
-    public function findOrCreate(GenreInput $input)
+    public function findById(GenreId $genreId): ?Genre
     {
-        if (null !== $input->id) {
-            return $this->find($input->id);
-        }
-
-        return new Genre($input);
+        return $this->find($genreId);
     }
 }

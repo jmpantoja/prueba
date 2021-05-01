@@ -30,7 +30,7 @@ foreach ($fields as $name=> $type) {
     function input_property($name, $type){
 
         if($name === 'id'){
-            return null;
+            return sprintf('public ?%s $%s = null;', $type['shortName'], $name);
         }
 
          if($type['nullable']){

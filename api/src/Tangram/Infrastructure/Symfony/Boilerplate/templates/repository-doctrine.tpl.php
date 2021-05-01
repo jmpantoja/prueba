@@ -15,7 +15,6 @@ namespace <?= $namespace; ?>;
 use <?= $entity['fullName']?>;
 use <?= $entityId['fullName']?>;
 use <?= $repository['fullName']?>;
-use <?= $input['fullName']?>;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -37,12 +36,8 @@ final class <?= $class_name ?> extends ServiceEntityRepository implements <?= $r
         $this->getEntityManager()->remove($<?= $entity['varName'] ?>);
     }
 
-    public function findOrCreate(<?= $input['shortName']?> $input)
+    public function findById(<?= $entityId['shortName']?> $<?= $entityId['varName'] ?>): ?<?= $entity['shortName'] ?>
     {
-        if (null !== $input->id) {
-            return $this->find($input->id);
-        }
-
-        return new <?= $entity['shortName']?>($input);
+        return $this->find($<?= $entityId['varName'] ?>);
     }
 }
