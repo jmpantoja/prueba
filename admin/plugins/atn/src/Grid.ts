@@ -67,7 +67,6 @@ class Grid {
     this._page = this._options.page
     this._filters = this._urlManager.dataFilters
 
-    //  this.reload()
   }
 
   private initOptionsDefault(options?: GridDataOptions): DataOptions {
@@ -165,9 +164,7 @@ class Grid {
 
   public set options(value: DataOptions) {
     this._options = value;
-    if (this._initialized) {
-      this.reload()
-    }
+    this.refresh()
   }
 
   public get total(): number {
@@ -193,7 +190,7 @@ class Grid {
   public set filters(filters: FilterList) {
     this._options.page = 1
     this._filters = filters
-    this.reload()
+    this.load()
   }
 
   public get filterFields(): FilterFieldList {
@@ -211,10 +208,10 @@ class Grid {
   public reset() {
     this._options = _.cloneDeep(this._optionsDefault)
     this._filters = _.cloneDeep(this._filtersDefault)
-    this.reload()
+    this.load()
   }
 
-  public reload() {
+  public load() {
 
     const params = DataGridRequest.normalize(this._options, this._filters);
     this._urlManager.update(params)
@@ -229,6 +226,12 @@ class Grid {
         this._items = dataset.items
       })
       .run()
+  }
+
+  public refresh() {
+    if (this._initialized) {
+      this.load()
+    }
   }
 }
 

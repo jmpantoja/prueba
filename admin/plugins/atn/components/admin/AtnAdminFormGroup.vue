@@ -1,23 +1,34 @@
 <template>
   <fieldset
     :id="id"
-    :class="{invalid: this.inValid}">
+    :class="{invalid: this.isError}">
     <legend class="display-1">{{ t(`form.group.${group.label}`) }}</legend>
 
     <atn-field-wrapper
       v-for="(field, name) in group.fields"
       @update:error="onUpdateError(field.key, $event)"
+      @focus="onFocus"
       :ref="'field-'+field.key"
-      v-model="item[field.key]"
       :key="name"
-      :namespace="namespace"
-      :field="field"/>
+      :label="field.label"
+      :type="field.type"
+      :multiple="field.multiple"
+      :props="field.props"
+      v-model="item[field.key]"/>
   </fieldset>
 </template>
 
 <script>
+import AtnFieldWrapper from "@/plugins/atn/components/form/AtnFieldWrapper";
+
 export default {
   name: "AtnAdminFormGroup",
+  components: {AtnFieldWrapper},
+  inject: {
+    namespace: {
+      default: null
+    },
+  },
   props: {
     group: {
       type: Object,
@@ -30,30 +41,46 @@ export default {
     item: {
       type: Object,
       required: true
-    },
-    namespace: {
-      type: String,
     }
   },
   data() {
     return {
-      inValid: false,
+      containsErrors: false,
+      containsShouldValidate: false,
       errorBag: {}
     }
   },
+  computed: {
+    isError() {
+      return (this.containsShouldValidate && this.containsErrors)
+    }
+  },
   watch: {
+    containsShouldValidate() {
+      const errors = Object.values(this.errorBag).includes(true)
+      this.containsErrors = errors
+      this.$emit('update:error', errors)
+    },
     errorBag: {
-      handler(errors) {
-        const hasError = Object.values(errors).includes(true)
-        if (hasError !== this.inValid) {
-          this.inValid = hasError
-          this.$emit('update:error', hasError)
+      handler(value) {
+        if (!this.containsShouldValidate) {
+          return
         }
+        const errors = Object.values(value).includes(true)
+        this.containsErrors = errors
+        this.$emit('update:error', errors)
+
       },
       deep: true
     }
   },
   methods: {
+    resetValidation() {
+      this.containsShouldValidate = false
+    },
+    onFocus() {
+      this.containsShouldValidate = true
+    },
     onUpdateError(key, value) {
       this.$set(this.errorBag, key, value)
     }
@@ -66,10 +93,12 @@ export default {
 
 fieldset {
   border: solid 1px #e0e0e0;
-  padding: 1em  !important;
+  padding: 1em !important;
   margin-top: 1em;
   margin-bottom: 2em;
   background-color: white;
+  display: flex;
+  flex-direction: column;
 
   legend {
     text-align: center;
@@ -78,7 +107,7 @@ fieldset {
     font-weight: 300 !important;
     text-transform: capitalize;
     float: left;
-    margin-bottom: 1em;
+    margin-bottom: 0.5em;
   }
 
   &.invalid {

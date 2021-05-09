@@ -37,8 +37,7 @@ export default replace({
       },
       group: {
         default: 'General',
-        genres: 'Generos',
-        director: 'Director',
+        cast: 'Cast'
       },
       field: {
         title: 'Título',

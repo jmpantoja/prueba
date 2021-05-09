@@ -31,7 +31,13 @@
         <v-card height="100%" class="d-flex flex-column">
           <v-card-text>
             <template v-for="(field, key) in grid.filterFields">
-              <atn-field-wrapper :key="key" :namespace="namespace" :field="field" v-model="item[key]"/>
+              <atn-field-wrapper
+                :key="key"
+                :label="field.label"
+                :type="field.type"
+                :multiple="field.multiple"
+                :props="field.props"
+                v-model="item[key]"/>
             </template>
 
           </v-card-text>
@@ -53,11 +59,12 @@
 
 <script>
 import {Grid} from "../../src";
-import AtnFieldWrapper from "../field/AtnFieldWrapper";
+import AtnFieldTemplate from "../form/AtnFieldWrapper";
+import AtnFieldWrapper from "@/plugins/atn/components/form/AtnFieldWrapper";
 
 export default {
   name: "AtnAdminFilters",
-  components: {AtnFieldWrapper},
+  components: {AtnFieldWrapper, AtnFieldTemplate},
   props: {
     grid: {
       type: Grid,
@@ -79,13 +86,7 @@ export default {
       this.grid.reset()
       this.visible = false
     },
-  },
-  computed:{
-    namespace(){
-      return this.grid.namespace
-    }
   }
-
 }
 </script>
 

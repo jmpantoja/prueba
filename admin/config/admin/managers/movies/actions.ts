@@ -27,7 +27,7 @@ const actions: ActionList = {
     run({dialog, form, grid, flash}: ActionContext, params: { item: Record }) {
       form.delete(params.item).then(() => {
         flash.success('delete', params)
-        grid.reload()
+        grid.refresh()
       })
     }
   },
@@ -44,7 +44,7 @@ const actions: ActionList = {
       }
       form.save(params.item).then(() => {
         flash.success('save', params)
-        grid.reload()
+        grid.refresh()
       })
     }
   },

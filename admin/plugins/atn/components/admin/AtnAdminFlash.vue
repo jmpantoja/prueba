@@ -26,17 +26,16 @@ import {Flash} from "../../src";
 
 export default {
   name: "AtnAdminFlash",
+  inject: {
+    namespace: {
+      default: null
+    },
+  },
   props: {
     flash: {
       type: Flash,
       required: true
     }
-  },
-  computed: {
-    namespace() {
-      return this.flash.namespace
-    },
-
   }
 }
 </script>

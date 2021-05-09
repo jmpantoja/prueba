@@ -25,6 +25,11 @@ import {Button} from "../../src";
 
 export default {
   name: "AtnButton",
+  inject: {
+    namespace: {
+      default: null
+    },
+  },
   props: {
     button: Button,
     params: {
@@ -40,9 +45,6 @@ export default {
     }
   },
   computed: {
-    namespace() {
-      return this.button.namespace
-    },
     computedProps() {
       let props = _.cloneDeep(this.button.props);
       props.visible = this.$actionManager.isGranted(this.button, this.params)

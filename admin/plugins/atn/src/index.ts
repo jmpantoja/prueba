@@ -209,6 +209,7 @@ export type FormField = {
   key: string,
   label?: string,
   type?: string,
+  multiple?: boolean,
   width?: number | string,
   props?: Props
 }

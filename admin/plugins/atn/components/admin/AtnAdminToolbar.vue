@@ -19,14 +19,14 @@ import {Toolbar} from "../../src";
 
 export default {
   name: "AtnAdminToolbar",
+  inject: {
+    namespace: {
+      default: null
+    },
+  },
   props: {
     toolbar: {
       type: Toolbar
-    }
-  },
-  computed: {
-    namespace() {
-      return this.toolbar.namespace
     }
   }
 

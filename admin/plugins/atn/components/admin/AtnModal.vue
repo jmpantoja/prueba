@@ -6,6 +6,7 @@
     :width="width"
     @click:outside="onClose"
     @keydown.esc="onClose"
+    @input="$emit('input', $event)"
   >
     <template v-slot:activator="{ on, attrs }">
       <slot name="activator" :on="on" :attrs="attrs"/>
@@ -71,7 +72,16 @@ export default {
       }
     }
   },
-
+  watch: {
+    value(value) {
+      if(value){
+        this.$emit('open', value)
+        return
+      }
+      this.$emit('close', value)
+      return
+    }
+  },
   computed: {
     visible: {
       get() {
@@ -80,6 +90,11 @@ export default {
       set(visible) {
         this.$emit('input', visible)
       }
+    }
+  },
+  data() {
+    return {
+      //  visible: false
     }
   },
   methods: {

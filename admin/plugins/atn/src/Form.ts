@@ -32,6 +32,7 @@ class Form {
 
 
   public constructor(namespace: string, context: AdminContext, options: FormOptions) {
+
     this._namespace = namespace;
     this._client = context.client
     this._urlManager = context.urlManager
@@ -47,6 +48,7 @@ class Form {
     this._groups = FormNormalizer.normalize(options.groups)
     this._buttons = this.initButtons(options.buttons)
   }
+
 
   private initButtons(actions?: ButtonOptionsList): ButtonList {
     const entries = Object

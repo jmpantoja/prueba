@@ -25,6 +25,7 @@
     "v-mask": "^2.2.4",
     "vue-country-flag": "^2.0.2",
     "vue-perfect-scrollbar": "^0.2.1",
+    "vuedraggable": "^2.24.3",
     "vuejs-datepicker": "^1.6.2"
   },
   "devDependencies": {

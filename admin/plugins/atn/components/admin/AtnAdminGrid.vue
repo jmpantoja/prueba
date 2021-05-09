@@ -50,19 +50,19 @@ import AtnButton from "./AtnButton";
 export default {
   name: "AtnAdminGrid",
   components: {AtnButton},
+  inject:{
+    namespace: {
+      default: null
+    },
+  },
   props: {
     grid: {
       type: Grid,
       required: true
     }
   },
-  computed:{
-    namespace(){
-      return this.grid.namespace
-    }
-  },
   mounted() {
-    this.grid.reload()
+    this.grid.load()
   }
 }
 </script>

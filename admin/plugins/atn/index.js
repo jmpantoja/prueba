@@ -8,14 +8,16 @@ const _ = require('lodash')
 Vue.directive('mask', VueMaskDirective);
 Vue.mixin({
   methods: {
-    t(key, params) {
+    t(key, params, namespace = null) {
       if (!key) {
         return ''
       }
 
-      var name = key
-      if (this.namespace) {
-        name = `admin.${this.namespace}.${key}`;
+      name = key
+      namespace = namespace || this.namespace
+
+      if (namespace) {
+        name = `admin.${namespace}.${key}`;
       }
       return this.$t(name, _.cloneDeep(params));
     }

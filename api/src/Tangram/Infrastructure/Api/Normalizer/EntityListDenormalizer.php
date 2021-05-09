@@ -58,7 +58,10 @@ final class EntityListDenormalizer implements DenormalizerInterface, Denormalize
         $id = $item['id'] ?? null;
 
         if (!is_null($id)) {
-            return $this->entityManager->find($className, $id);
+            $classNameId = sprintf('%sId', $className);
+            $entityId = new $classNameId($id);
+
+            return $this->entityManager->getReference($className, $entityId);
         }
 
         unset($item['id']);

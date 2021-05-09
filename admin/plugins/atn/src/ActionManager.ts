@@ -58,7 +58,9 @@ class ActionManager {
   }
 
   public disabled(button: Button, params: object) {
+
     const action = this.actionFromButton(button);
+
     if (!action.disabled) {
       return false
     }

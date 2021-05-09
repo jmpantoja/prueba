@@ -4,4 +4,6 @@
 // $font-size-root: 20px;
 
 
-$pepe: #00FFFF
+@import '~vuetify/src/styles/styles.sass';
+
+$pepe: map-get($teal, 'lighten1')

@@ -6,12 +6,11 @@
 
 <script>
 
-import AtnField from "./AtnField";
+import dataInput from "@/plugins/atn/components/form/mixins/dataInput";
 
 export default {
   name: 'AtnFieldDate',
-  components: {AtnField},
-  mixins: [AtnField],
+  mixins: [dataInput],
   computed: {
     data: {
       get() {

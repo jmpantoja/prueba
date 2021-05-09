@@ -19,6 +19,7 @@ export default {
   form: {
     title: {
       edit: 'Editar "{item}"',
+      create: 'Create "{singular}"',
     },
     group: {},
   },

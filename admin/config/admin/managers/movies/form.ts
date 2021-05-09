@@ -24,9 +24,8 @@ const form: FormOptions = {
         },
         {
           key: 'genres',
-          type: 'atn-field-relation',
+          type: 'atn-field-entity-listbox',
           props: {
-            mode: 'labels',
             entity: 'genres',
             itemText: "name",
           }
@@ -34,16 +33,17 @@ const form: FormOptions = {
       ]
     },
     {
-      label: 'director',
+      label: 'cast',
       fields: [
         {
+          label: 'director',
           key: 'director',
-          type: 'atn-field-relation',
+          type: 'atn-field-entity',
           props: {
-            mode: 'single',
             entity: 'directors',
             itemText: (item: any) => {
-              return `${item.name.lastName}, ${item.name.name}`;
+              const fullName = item.name || {}
+              return `${fullName.lastName}, ${fullName.name}`;
             },
           }
         },

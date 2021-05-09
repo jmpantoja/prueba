@@ -31,9 +31,10 @@ export default {
   components: {AtnAdminFlash, AtnAdminDialog, AtnAdminForm, AtnAdminFilters, AtnAdminPagination},
   provide() {
     return {
-      trans: (key) => {
-        return this.admin.i18n.translate(key)
-      },
+      namespace: this.admin.namespace,
+      // trans: (key) => {
+      //   return this.admin.i18n.translate(key)
+      // },
       dispatcher: this.admin.dispatcher
     }
   },

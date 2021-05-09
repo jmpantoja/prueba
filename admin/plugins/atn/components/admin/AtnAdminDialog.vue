@@ -34,6 +34,11 @@ import {Dialog} from "../../src";
 export default {
   name: "AtnAdminDialog",
   components: {AtnModal},
+  inject: {
+    namespace: {
+      default: null
+    },
+  },
   props: {
     dialog: {
       type: Dialog,
@@ -48,11 +53,6 @@ export default {
       this.dialog.confirm()
     }
   },
-  computed: {
-    namespace() {
-      return this.dialog.namespace
-    }
-  }
 }
 </script>
 

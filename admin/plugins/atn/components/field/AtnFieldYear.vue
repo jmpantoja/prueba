@@ -1,18 +1,19 @@
 <template>
+
   <atn-field v-bind="$props" v-on="$listeners">
-    <v-text-field  v-model.number="data" v-mask="'####'" placeholder="1980" :rules="constraints"/>
+    <v-text-field v-model.number="data" v-mask="'####'" placeholder="1980" :rules="constraints"/>
   </atn-field>
 </template>
 
 <script>
-import AtnField from "@/plugins/atn/components/field/AtnField";
+import dataInput from "@/plugins/atn/components/form/mixins/dataInput";
 
 const _ = require('lodash')
 
 export default {
   name: "AtnFieldYear",
-  components: {AtnField},
-  mixins: [AtnField],
+
+  mixins: [dataInput],
   props: {
     min: {
       type: Number,
