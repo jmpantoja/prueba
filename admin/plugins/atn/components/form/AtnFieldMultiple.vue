@@ -74,14 +74,20 @@ export default {
 
 <style scoped lang="scss">
 ul {
+
   width: 100%;
   padding: 0;
 
   li {
+    width: 100%;
     display: flex;
     flex-direction: row;
     align-items: end;
     padding: 0;
+
+    > div {
+      flex: 1;
+    }
   }
 }
 </style>
