@@ -1,12 +1,24 @@
 <template>
-  <atn-panel/>
+  <el-container class="is-vertical">
+    <ad-panel-header/>
+    <el-container class="is-horizontal">
+      <ad-panel-menu/>
+      <el-main>
+        <nuxt/>
+      </el-main>
+    </el-container>
+  </el-container>
 </template>
 
-<script>
-import AtnPanel from "../plugins/atn/components/panel/AtnPanel";
+<style scoped lang="scss">
 
-export default {
-  components: {AtnPanel},
+.el-container.is-vertical {
+  min-height: 100vh;
+
+  .el-main {
+    background-color: $main-background-color;
+    padding: $main-padding;
+  }
 }
-</script>
+</style>
 

@@ -1,20 +1,23 @@
-import $predef from '~/plugins/atn/lang/es'
-import genres from '~/lang/es/genres'
-import movies from '~/lang/es/movies'
-import directors from '~/lang/es/directors'
-
-
 export default {
-  ...$predef,
+  profile: {
+    profile: 'Perfil',
+    logout: 'Salir'
+  },
+  lang: {
+    es: 'Español',
+    en: 'Ingles',
+  },
   menu: {
+    film_archive: 'Filmoteca',
     dashboard: 'Escritorio',
     movies: 'Peliculas',
-    genre: 'Generos',
+    borrame: 'Borrame',
+    genres: 'Géneros',
     directors: 'Directores',
   },
   admin: {
-    genres,
-    movies,
-    directors,
+    genre: {
+      title: 'Géneros'
+    }
   }
 }

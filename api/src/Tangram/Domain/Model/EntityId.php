@@ -29,7 +29,7 @@ class EntityId
         if (is_null($ulid)) {
             $this->ulid = new Ulid();
             return;
-        }
+            }
 
         $this->ulid = Ulid::fromString($ulid);
     }

@@ -14,7 +14,7 @@
       <method name="getProjectDir" signature="getProjectDir(): string" start="27" end="30" crap="2" executable="1" executed="0" coverage="0"/>
       <method name="getCacheDir" signature="getCacheDir()" start="32" end="35" crap="2" executable="1" executed="0" coverage="0"/>
       <method name="configureContainer" signature="configureContainer(Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator $container): void" start="38" end="53" crap="12" executable="9" executed="0" coverage="0"/>
-      <method name="configureRoutes" signature="configureRoutes(Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator $routes): void" start="55" end="67" crap="12" executable="7" executed="0" coverage="0"/>
+      <method name="configureRoutes" signature="configureRoutes(Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator $menu): void" start="55" end="67" crap="12" executable="7" executed="0" coverage="0"/>
     </class>
     <source>
       <line no="1">
@@ -485,7 +485,7 @@
         <token name="T_OPEN_BRACKET">(</token>
         <token name="T_STRING">RoutingConfigurator</token>
         <token name="T_WHITESPACE"> </token>
-        <token name="T_VARIABLE">$routes</token>
+        <token name="T_VARIABLE">$menu</token>
         <token name="T_CLOSE_BRACKET">)</token>
         <token name="T_COLON">:</token>
         <token name="T_WHITESPACE"> </token>
@@ -515,7 +515,7 @@
       <line no="58"/>
       <line no="59">
         <token name="T_WHITESPACE">        </token>
-        <token name="T_VARIABLE">$routes</token>
+        <token name="T_VARIABLE">$menu</token>
         <token name="T_OBJECT_OPERATOR">-&gt;</token>
         <token name="T_STRING">import</token>
         <token name="T_OPEN_BRACKET">(</token>
@@ -523,7 +523,7 @@
         <token name="T_WHITESPACE"> </token>
         <token name="T_DOT">.</token>
         <token name="T_WHITESPACE"> </token>
-        <token name="T_CONSTANT_ENCAPSED_STRING">'/{routes}/'</token>
+        <token name="T_CONSTANT_ENCAPSED_STRING">'/{menu}/'</token>
         <token name="T_WHITESPACE"> </token>
         <token name="T_DOT">.</token>
         <token name="T_WHITESPACE"> </token>
@@ -539,7 +539,7 @@
       </line>
       <line no="60">
         <token name="T_WHITESPACE">        </token>
-        <token name="T_VARIABLE">$routes</token>
+        <token name="T_VARIABLE">$menu</token>
         <token name="T_OBJECT_OPERATOR">-&gt;</token>
         <token name="T_STRING">import</token>
         <token name="T_OPEN_BRACKET">(</token>
@@ -547,7 +547,7 @@
         <token name="T_WHITESPACE"> </token>
         <token name="T_DOT">.</token>
         <token name="T_WHITESPACE"> </token>
-        <token name="T_CONSTANT_ENCAPSED_STRING">'/{routes}/*.yaml'</token>
+        <token name="T_CONSTANT_ENCAPSED_STRING">'/{menu}/*.yaml'</token>
         <token name="T_CLOSE_BRACKET">)</token>
         <token name="T_SEMICOLON">;</token>
       </line>
@@ -563,7 +563,7 @@
         <token name="T_WHITESPACE"> </token>
         <token name="T_DOT">.</token>
         <token name="T_WHITESPACE"> </token>
-        <token name="T_CONSTANT_ENCAPSED_STRING">'/routes.yaml'</token>
+        <token name="T_CONSTANT_ENCAPSED_STRING">'/menu.yaml'</token>
         <token name="T_CLOSE_BRACKET">)</token>
         <token name="T_CLOSE_BRACKET">)</token>
         <token name="T_WHITESPACE"> </token>
@@ -571,7 +571,7 @@
       </line>
       <line no="63">
         <token name="T_WHITESPACE">            </token>
-        <token name="T_VARIABLE">$routes</token>
+        <token name="T_VARIABLE">$menu</token>
         <token name="T_OBJECT_OPERATOR">-&gt;</token>
         <token name="T_STRING">import</token>
         <token name="T_OPEN_BRACKET">(</token>
@@ -579,7 +579,7 @@
         <token name="T_WHITESPACE"> </token>
         <token name="T_DOT">.</token>
         <token name="T_WHITESPACE"> </token>
-        <token name="T_CONSTANT_ENCAPSED_STRING">'/{routes}.yaml'</token>
+        <token name="T_CONSTANT_ENCAPSED_STRING">'/{menu}.yaml'</token>
         <token name="T_CLOSE_BRACKET">)</token>
         <token name="T_SEMICOLON">;</token>
       </line>
@@ -600,7 +600,7 @@
         <token name="T_WHITESPACE"> </token>
         <token name="T_DOT">.</token>
         <token name="T_WHITESPACE"> </token>
-        <token name="T_CONSTANT_ENCAPSED_STRING">'/config/routes.php'</token>
+        <token name="T_CONSTANT_ENCAPSED_STRING">'/config/menu.php'</token>
         <token name="T_CLOSE_BRACKET">)</token>
         <token name="T_CLOSE_BRACKET">)</token>
         <token name="T_WHITESPACE"> </token>
@@ -614,7 +614,7 @@
         <token name="T_VARIABLE">$path</token>
         <token name="T_CLOSE_BRACKET">)</token>
         <token name="T_OPEN_BRACKET">(</token>
-        <token name="T_VARIABLE">$routes</token>
+        <token name="T_VARIABLE">$menu</token>
         <token name="T_OBJECT_OPERATOR">-&gt;</token>
         <token name="T_STRING">withPath</token>
         <token name="T_OPEN_BRACKET">(</token>

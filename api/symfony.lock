@@ -9,7 +9,7 @@
         },
         "files": [
             "config/packages/api_platform.yaml",
-            "config/routes/api_platform.yaml",
+            "config/menu/api_platform.yaml",
             "src/Entity/.gitignore"
         ]
     },
@@ -46,7 +46,7 @@
             "ref": "a2759dd6123694c8d901d0ec80006e044c2e6457"
         },
         "files": [
-            "config/routes/annotations.yaml"
+            "config/menu/annotations.yaml"
         ]
     },
     "doctrine/cache": {
@@ -473,7 +473,7 @@
             "config/packages/cache.yaml",
             "config/packages/framework.yaml",
             "config/packages/test/framework.yaml",
-            "config/routes/dev/framework.yaml",
+            "config/menu/dev/framework.yaml",
             "config/services.yaml",
             "public/index.php",
             "src/Controller/.gitignore",
@@ -575,7 +575,7 @@
         "files": [
             "config/packages/prod/routing.yaml",
             "config/packages/routing.yaml",
-            "config/routes.yaml"
+            "config/menu.yaml"
         ]
     },
     "symfony/security-bundle": {
@@ -683,7 +683,7 @@
         "files": [
             "config/packages/dev/web_profiler.yaml",
             "config/packages/test/web_profiler.yaml",
-            "config/routes/dev/web_profiler.yaml"
+            "config/menu/dev/web_profiler.yaml"
         ]
     },
     "symfony/yaml": {

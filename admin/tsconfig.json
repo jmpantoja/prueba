@@ -24,10 +24,13 @@
       ]
     },
     "types": [
+      "@nuxt/types",
+      "@nuxtjs/axios",
       "@types/node",
-      "@nuxt/types"
-    ],
-    "jsx": "react"
+      "nuxt-i18n",
+      "@nuxtjs/auth-next",
+      "./types"
+    ]
   },
   "exclude": [
     "node_modules",

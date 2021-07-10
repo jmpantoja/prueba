@@ -1,22 +1,15 @@
-import colors from 'vuetify/es5/util/colors'
-import config from './config'
+import config from "./config";
 
 export default {
-  // Disable server-side rendering (https://go.nuxtjs.dev/ssr-mode)
+  // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
 
-  // Target (https://go.nuxtjs.dev/config-target)
-  target: 'static',
-
-  generate: {
-    // choose to suit your project
-    interval: 2000,
-  },
-
-  // Global page headers (https://go.nuxtjs.dev/config-head)
+  // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: '%s - Admin',
-    title: 'admin',
+    title: 'Panel de control',
+    htmlAttrs: {
+      lang: 'es'
+    },
     meta: [
       {charset: 'utf-8'},
       {name: 'viewport', content: 'width=device-width, initial-scale=1'},
@@ -27,70 +20,57 @@ export default {
     ]
   },
 
-  // Global CSS (https://go.nuxtjs.dev/config-css)
-  css: [],
-
-  // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
-  plugins: [
-    '~/plugins/atn'
+  // Global CSS: https://go.nuxtjs.dev/config-css
+  css: [
+    'element-ui/lib/theme-chalk/index.css',
+    '~assets/scss'
   ],
 
-  // Auto import components (https://go.nuxtjs.dev/config-components)
+  styleResources: {
+    scss: ['./assets/scss/*.scss']
+  },
+
+  // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
+  plugins: [
+    '@/plugins/element-ui',
+    '@/plugins/security.ts',
+    '@/plugins/api.ts',
+  ],
+
+  // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
 
-  // Modules for dev and build (recommended) (https://go.nuxtjs.dev/config-modules)
+  router: {
+    middleware: ['auth'],
+    extendRoutes(routes, resolve) {
+      routes.push(...config.routes)
+    }
+  },
+
+  // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
     // https://go.nuxtjs.dev/typescript
-    '@nuxt/typescript-build',
-    // https://go.nuxtjs.dev/vuetify
-    '@nuxtjs/vuetify',
-    '@nuxtjs/composition-api',
+    '@nuxt/typescript-build'
   ],
 
-  // Modules (https://go.nuxtjs.dev/config-modules)
+  // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
+    // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
-    '@nuxtjs/auth-next',
     'nuxt-i18n',
-    '@nuxtjs/moment'
+    '@nuxtjs/auth-next',
+    '@nuxtjs/style-resources'
   ],
-
-  router: {
-    middleware: ['auth']
-  },
-
-  axios: {
-    baseURL: process.env.API_ENDPOINT,
-    headers: {
-      common: {
-        'Accept': 'application/ld+json'
-      },
-    }
-  },
 
   i18n: config.i18n,
+
   auth: config.auth,
-  moment: config.moment,
 
-  // Vuetify module configuration (https://go.nuxtjs.dev/config-vuetify)
-  vuetify: {
-    customVariables: ['~/assets/variables.scss'],
-    theme: {
-      dark: false,
-      themes: {
-        dark: {
-          primary: colors.blue.darken2,
-          accent: colors.grey.darken3,
-          secondary: colors.amber.darken3,
-          info: colors.teal.lighten1,
-          warning: colors.amber.base,
-          error: colors.deepOrange.accent4,
-          success: colors.green.accent3
-        }
-      }
-    }
-  },
+  // Axios module configuration: https://go.nuxtjs.dev/config-axios
+  axios: {},
 
-  // Build Configuration (https://go.nuxtjs.dev/config-build)
-  build: {}
+  // Build Configuration: https://go.nuxtjs.dev/config-build
+  build: {
+    transpile: [/^element-ui/]
+  }
 }

@@ -1,18 +1,17 @@
 <template>
-  <v-app>
-    <v-main>
-      <v-container fluid fill-height>
-        <nuxt/>
-      </v-container>
-    </v-main>
-  </v-app>
+  <el-container class="is-vertical">
+    <nuxt/>
+  </el-container>
 </template>
 
-<script>
-</script>
+<style scoped lang="scss">
 
-<style lang="scss">
-.container {
-  padding: 0;
+.el-container.is-vertical {
+  min-height: 100vh;
+
+  .el-main {
+    background-color: $main-background-color;
+  }
 }
 </style>
+

@@ -1,0 +1,15 @@
+@import "~element-ui/packages/theme-chalk/src/common/var.scss";
+
+$aside_width: 250px;
+$header-height: 60px;
+
+$main-background-color: #f9f9f9;
+$main-padding: 1.5rem;
+
+$toolbar-height: 4rem;
+
+$panel-height: calc(100vh - #{$header-height} - #{$toolbar-height} - #{$main-padding} * 3 - 2px);
+
+$pagination-height: 4rem;
+
+$table-height: calc(#{$panel-height} - #{$pagination-height});
