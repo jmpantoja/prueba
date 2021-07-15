@@ -7,7 +7,7 @@
 
     <el-form ref="form" :model="model" label-width="10rem">
 
-      <full-name v-model="model.fullName" prop="fullName"/>
+      <ad-form-full-name v-model="model.fullName" prop="fullName"/>
       <el-button type="primary" @click="submitForm('form')">Submit</el-button>
 
     </el-form>

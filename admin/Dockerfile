@@ -1,4 +1,6 @@
-FROM node:10-alpine as api_platform_admin
+FROM node:16-alpine as api_platform_admin
+
+RUN apk add --no-cache python3 py3-pip make g++
 
 # Create app directory
 RUN mkdir -p /usr/app

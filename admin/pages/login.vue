@@ -65,7 +65,7 @@ import  {AxiosError} from 'axios';
 })
 export default class Login extends Vue {
 
-  error?: string
+  error: string | null = null
   visible: boolean = false
   loading: boolean = false
 

@@ -1,6 +1,6 @@
 <template>
-  <el-form-item :label="label" :prop="prop">
-    <el-form-item>
+  <el-form-item class="filter-text" :label="label">
+    <el-form-item class="filter-text__mode" :prop="prop + '.mode'">
       <el-select v-model="data.mode" placeholder="Mode">
         <el-option
           v-for="item in modes"
@@ -11,7 +11,7 @@
       </el-select>
     </el-form-item>
 
-    <el-form-item>
+    <el-form-item class="filter-text__value" :prop="prop + '.value'">
       <el-input v-model="data.value" autocomplete="off"/>
     </el-form-item>
 
@@ -28,17 +28,29 @@ const _ = require("lodash")
   name: 'FilterText'
 })
 export default class extends mixins(Field) {
-
-  public modes = ['contains', 'equals', 'begins', 'ends']
+  public modes = ['equals', 'contains', 'begins', 'ends']
 
   public defaults(data: Object): Object {
-    return _.merge(data, {
+    const value = _.merge(data, {
       mode: 'contains',
       value: null
     })
-  }
 
+    this.$emit('input', value)
+    return value
+  }
 }
 
 </script>
 
+<style scoped lang="scss">
+.filter-text {
+  .filter-text__mode {
+    max-width: 10rem;
+  }
+
+  .filter-text__value {
+    flex-grow: 1;
+  }
+}
+</style>

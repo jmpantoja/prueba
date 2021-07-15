@@ -1,12 +1,12 @@
 services:
     genre.text_filter:
         parent: 'tangram.api_platform.doctrine.orm.text_filter'
-        arguments: { $properties: { name: "asc" } }
+        arguments: { $properties: { name: ~ } }
         tags: [ 'api_platform.filter' ]
         autowire: false
         autoconfigure: false
         public: false
-        
+
     genre.order_filter:
         parent: 'api_platform.doctrine.orm.order_filter'
         arguments: { $properties: { id: ~, name: ~ } }
@@ -14,18 +14,6 @@ services:
         autowire: false
         autoconfigure: false
         public: false
-        
-#
-#    contact.order_filter:
-#        parent: 'api_platform.doctrine.orm.order_filter'
-#        arguments: { $properties: { id: "asc", fullName.lastName: "asc", birthDate: "asc" } }
-#        tags: [ 'api_platform.filter' ]
-#        ###        # The following are mandatory only if a _defaults section is defined
-#        ###        # You may want to isolate filters in a dedicated file to avoid adding them
-#        autowire: false
-#        autoconfigure: false
-#        public: false
-
 
     user.order_filter:
         parent: 'api_platform.doctrine.orm.order_filter'

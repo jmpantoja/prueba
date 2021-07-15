@@ -2,7 +2,8 @@
   <ad-datatable :endpoint="endpoint">
 
     <template v-slot:filters="{filters}">
-      <ad-filter-text label="name" prop="name" v-model="filters.name"/>
+      <ad-filter-text label="id" prop="id" v-model="filters.id"/>
+      <ad-filter-text label="genre" prop="name" v-model="filters.name"/>
     </template>
 
     <template v-slot:columns>
@@ -23,6 +24,8 @@ import {Component, Prop, Vue} from 'nuxt-property-decorator'
 })
 export default class extends Vue {
   @Prop({required: true, type: String}) endpoint!: string
+
+  modes = []
 }
 </script>
 

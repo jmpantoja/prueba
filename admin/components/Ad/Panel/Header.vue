@@ -19,7 +19,6 @@ import {mapGetters} from "vuex";
 
 @Component({
   name: 'Header',
-
   computed: mapGetters({
     'closed': 'aside/closed',
   })

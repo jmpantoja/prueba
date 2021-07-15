@@ -1,41 +1,57 @@
 <template>
-  <el-tabs v-model="tab" tab-position="left">
 
-    <el-tab-pane name="filters">
-      <el-button slot="label" circle type="text">
+  <div class="datatable">
+    <div class="menu">
+      <el-button type="text" @click="toggle">
         <i class="fas el-icon-fa-search"></i>
       </el-button>
+      <el-button type="text" @click="reset">
+        <i class="fas el-icon-fa-sync-alt"></i>
+      </el-button>
+    </div>
+    <div class="wrapper">
+      <div class="panel data">
+        <el-table v-loading="loading" v-bind="props" @sort-change="sort">
+          <slot name="columns"/>
+        </el-table>
+        <el-pagination
+          v-if="page_size > 0"
+          layout="total, prev, pager, next"
+          :total="total"
+          :page-size="page_size"
+          :current-page.sync="query.page"
+        />
+      </div>
+      <div class="panel overlay" :class="{visible:show_filters}"/>
 
-      <el-form
-        v-model="filters"
-        label-position="left"
-        label-width="100px">
+      <div class="panel filters"
+           :class="{visible:show_filters}"
+           v-clickoutside="outside">
+        <header>
+          <el-button class="close-btn" circle type="text" @click="hide">
+            <i class="el-icon-close"></i>
+          </el-button>
+        </header>
 
-        <slot name="filters" :filters="filters"/>
+        <el-form
+          ref="filters"
+          :model="filters"
+          label-position="left"
+          label-width="6rem">
 
-        <el-form-item>
-          <el-button type="primary" @click="filter">Submit</el-button>
-          <!--                <el-button @click="resetForm('ruleForm')">Reset</el-button>-->
-        </el-form-item>
-      </el-form>
+          <slot name="filters" :filters="filters"/>
 
+          <footer>
+            <el-form-item>
+              <el-button @click="reset">Reset</el-button>
+              <el-button type="primary" @click="filter">Submit</el-button>
+            </el-form-item>
+          </footer>
+        </el-form>
+      </div>
+    </div>
+  </div>
 
-    </el-tab-pane>
-
-    <el-tab-pane name="data">
-      <el-table v-loading="loading" v-bind="props" @sort-change="sort">
-        <slot name="columns"/>
-      </el-table>
-      <el-pagination
-        v-if="page_size > 0"
-        layout="total, prev, pager, next"
-        :total="total"
-        :page-size="page_size"
-        :current-page.sync="query.page"
-      />
-    </el-tab-pane>
-
-  </el-tabs>
 
 </template>
 
@@ -46,6 +62,8 @@ import {DefaultSortOptions} from "element-ui/types/table";
 import {AxiosResponse} from "axios"
 import {normalizeQuery} from "~/utils/grid"
 import {FilterList, TableProps, TableQuery} from "~/types";
+import {Form} from "element-ui";
+
 const _ = require("lodash")
 
 @Component({
@@ -55,6 +73,7 @@ export default class extends Vue {
   @Prop({required: true, type: String}) endpoint!: string
 
   tab: string = 'data'
+  show_filters: boolean = false
 
   props: TableProps = {
     stripe: true,
@@ -79,6 +98,23 @@ export default class extends Vue {
     this.reload()
   }
 
+  toggle() {
+    this.show_filters = !this.show_filters
+  }
+
+  outside() {
+    const target = (event?.target as Element)
+
+    if (target.closest('.el-popper')) {
+      return
+    }
+    this.hide()
+  }
+
+  hide() {
+    this.show_filters = false
+  }
+
   fetch() {
     this.reload()
   }
@@ -88,8 +124,19 @@ export default class extends Vue {
   }
 
   filter() {
+
     this.$set(this.query, 'filters', _.cloneDeep(this.filters))
     this.tab = 'data'
+    this.hide()
+  }
+
+  reset() {
+    const form = (this.$refs['filters'] as Form)
+    form.resetFields()
+    this.hide()
+    this.query = {
+      page: 1,
+    }
   }
 
   reload() {
@@ -119,6 +166,117 @@ export default class extends Vue {
 </script>
 
 
-<style scoped>
+<style scoped lang="scss">
+
+.datatable {
+  height: $panel-height;
+  box-sizing: border-box;
+  display: flex;
+
+  .menu {
+    display: flex;
+    flex-direction: column;
+
+    width: 50px;
+    border-right: 1px solid #DCDFE6;
+    background-color: white;
+    position: relative;
+    z-index: 9;
+
+    .el-button {
+      margin: 2px 0;
+    }
+  }
+
+  .wrapper {
+    flex-grow: 1;
+    position: relative;
+
+    .panel {
+      position: absolute;
+
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+    }
+
+    .panel.visible {
+      left: 0;
+
+    }
+
+    .filters {
+      background-color: white;
+      left: -5000px;
+      width: 40%;
+      transition: left 200ms;
+      box-shadow: 3px 3px 5px 6px #cccccc; /* Opera 10.5, IE 9, Firefox 4+, Chrome 6+, iOS 5 */
+      box-shadow: 0 2px 12px 0 rgba(0, 0, 0, .6);
+      display: flex;
+      flex-direction: column;
+
+
+      header {
+        display: flex;
+        justify-content: flex-end;
+
+        .close-btn {
+          color: #666;
+          font-size: 1.1rem;
+        }
+      }
+
+      .el-form {
+        padding: 1em;
+        flex-grow: 1;
+
+        display: flex;
+        flex-direction: column;
+
+        footer {
+          flex-grow: 1;
+          display: flex;
+          align-items: flex-end;
+          justify-content: flex-end;
+
+          padding: 0;
+
+          .el-form-item {
+            margin: 0;
+          }
+        }
+      }
+
+    }
+
+    .overlay {
+      background-color: rgba(0, 0, 0, .1);
+      left: -5000px;
+      width: 100%;
+    }
+
+    .data {
+    }
+
+  }
+
+  .el-table {
+    height: $table-height;
+    overflow-y: auto;
+
+    &:before {
+      background-color: transparent;
+    }
+  }
+
+  .el-pagination {
+    height: $pagination-height;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+}
+
 
 </style>

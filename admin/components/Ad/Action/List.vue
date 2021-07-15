@@ -43,46 +43,32 @@ export default class extends Vue {
     }
   }
 
+  //
+  //.el-tabs {
+  //  height: $panel-height;
+  //
+  //  .el-tabs__header {
+  //
+  //    .el-tabs__nav {
+  //      padding-top: 1em;
+  //    }
+  //
+  //    #tab-data {
+  //      display: none;
+  //    }
+  //
+  //    .el-tabs__item {
+  //      padding: 0 0.5rem;
+  //    }
+  //
+  //    .el-tabs__active-bar {
+  //      background-color: transparent;
+  //    }
+  //  }
 
-  .el-tabs {
-    height: $panel-height;
-
-    .el-tabs__header {
-
-      .el-tabs__nav {
-        padding-top: 1em;
-      }
-
-      #tab-data {
-        display: none;
-      }
-
-      .el-tabs__item {
-        padding: 0 0.5rem;
-      }
-
-      .el-tabs__active-bar {
-        background-color: transparent;
-      }
-    }
 
 
-    .el-table {
-      height: $table-height;
-      overflow-y: auto;
-
-      &:before {
-        background-color: transparent;
-      }
-    }
-
-    .el-pagination {
-      height: $pagination-height;
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-    }
-  }
+//  }
 }
 
 
