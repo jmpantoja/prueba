@@ -8,6 +8,51 @@ api_platform:
     patch_formats:
         json: [ 'application/merge-patch+json' ]
 
+    formats:
+        jsonld:
+            mime_types:
+                - 'application/ld+json'
+        jsonhal:
+            mime_types:
+                - 'application/hal+json'
+        jsonapi:
+            mime_types:
+                - 'application/vnd.api+json'
+        json:
+            mime_types:
+                - 'application/json'
+        xml:
+            mime_types:
+                - 'application/xml' 
+                - 'text/xml'
+        yaml:
+            mime_types:
+                - 'application/x-yaml'
+        csv:
+            mime_types:
+                - 'text/csv'
+        html:
+            mime_types:
+                - 'text/html'
+        xlsx:
+            mime_types:
+                - 'application/vnd.ms-excel'
+        
+    #    formats:
+    #        csv:
+    #            mime_types:
+    #                - text/csv
+    #        xlsx:
+    #            mime_types:
+    #                - application/vnd.ms-excel
+    #        xls:
+    #            mime_types:
+    #                - application/vnd.ms-excel
+    #        xml:
+    #            mime_types:
+    #                - application/xml
+    #                - text/xml
+
     collection:
         pagination:
             items_per_page: 15

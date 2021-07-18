@@ -54,8 +54,6 @@ export default class extends Vue {
 <style scoped lang="scss">
 .el-button {
   font-size: 1.2em;
-
 }
-
 
 </style>

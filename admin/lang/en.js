@@ -7,6 +7,17 @@ export default {
     es: 'Spanish',
     en: 'English',
   },
+  filters: {
+    equals: 'equals',
+    contains: 'contains',
+    begins: 'starts with',
+    ends: 'ends in'
+  },
+  buttons: {
+    reset: 'Reset',
+    filter: 'Filter'
+  },
+
   menu: {
     film_archive: 'Film Archive',
     dashboard: 'Dashboard',
@@ -17,7 +28,14 @@ export default {
   },
   admin: {
     genre: {
-      title: 'Genres'
+      title: 'Genres',
+      filters: {
+        genre: 'Genre'
+      },
+      columns: {
+        id: '#',
+        genre: 'genre'
+      }
     }
   }
 }

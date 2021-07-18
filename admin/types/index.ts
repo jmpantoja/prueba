@@ -26,13 +26,20 @@ declare module 'vue/types/vue' {
 type RouteMeta = {
   roles?: string[]
   endpoint: string,
-  components: { [key: string]: string }
+  components: { [key: string]: string },
+  actions: { [key: string]: string }
+}
+
+type AdminContext = {
+  endpoint: string,
+  actions: { [key: string]: string }
 }
 
 
 //GRID
 type TableQuery = {
   page?: number,
+  page_size?: number,
   order?: DefaultSortOptions,
   filters?: FilterList
 }
@@ -42,6 +49,9 @@ type TableProps = {
   height: string,
   data: []
 }
+
+type QueryGetter = (endpoint: string) => TableQuery
+
 
 type Filter = {
   mode?: string,
@@ -53,8 +63,10 @@ type FilterList = { [key: string]: Filter }
 export {
   Context,
   RouteMeta,
+  AdminContext,
   TableQuery,
   TableProps,
+  QueryGetter,
   Filter,
   FilterList
 }

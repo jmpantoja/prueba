@@ -3,7 +3,7 @@
 
     <el-button type="primary" size="mini">
       <country-flag :country='current.flag'/>
-      <i class="el-icon-arrow-down el-icon--right"></i>
+      <i class="el-icon-arrow-down el-icon--left"></i>
     </el-button>
 
     <el-dropdown-menu
@@ -62,8 +62,9 @@ export default class extends Vue {
 .el-button {
   font-size: 1.2em;
 
-  span.flag {
-    margin-bottom: -15px;
+  ::v-deep & > span {
+    display: flex;
+    align-items: center;
   }
 }
 

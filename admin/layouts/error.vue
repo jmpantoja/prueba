@@ -1,22 +1,16 @@
 <template>
-  <div>
-    <p>OOOOPPPPPPS. ERROR</p>
+  <div class="container">
+    <h1 v-if="error.statusCode === 404">Page not found</h1>
+    <h1 v-else>An error occurred</h1>
 
-    {{ message }}
+    {{ error }}
+
+    <NuxtLink to="/">Home page</NuxtLink>
   </div>
 </template>
 
-<script lang="ts">
-
-import {Component, Prop, Vue} from 'nuxt-property-decorator'
-
-@Component({
-  name: 'Error',
-})
-export default class extends Vue {
-  @Prop({required: false, type: Object}) error: Object = {}
-
-  public message = this.error
+<script>
+export default {
+  props: ['error'],
 }
-
 </script>

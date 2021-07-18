@@ -5,7 +5,7 @@
         <el-option
           v-for="item in modes"
           :key="item"
-          :label="item"
+          :label="$t('filters.'+item)"
           :value="item">
         </el-option>
       </el-select>

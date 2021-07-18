@@ -260,6 +260,9 @@
             "config/packages/lexik_jwt_authentication.yaml"
         ]
     },
+    "mk-j/php_xlsxwriter": {
+        "version": "0.38"
+    },
     "monolog/monolog": {
         "version": "2.1.1"
     },

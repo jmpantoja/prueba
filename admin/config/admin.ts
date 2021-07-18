@@ -18,8 +18,14 @@ export default {
         props: {}
       },
       edit: {
-        component: '~/components/Ad/Action/List.vue',
+        component: '~/components/Ad/Action/Form.vue',
         path: '/edit/:id',
+        roles: ['EDITOR', 'USER'],
+        props: {}
+      },
+      create: {
+        component: '~/components/Ad/Action/Form.vue',
+        path: '/create/',
         roles: ['EDITOR', 'USER'],
         props: {}
       }

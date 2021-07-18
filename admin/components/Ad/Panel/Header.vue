@@ -4,11 +4,13 @@
       aqui el logo
     </div>
 
-    <ad-panel-toggle/>
+    <div class="left-menu">
+      <ad-panel-toggle/>
+    </div>
 
     <div class="right-menu">
-      <ad-panel-language-switcher/>
       <ad-panel-profile/>
+      <ad-panel-language-switcher/>
     </div>
   </el-header>
 </template>
@@ -41,10 +43,23 @@ export default class extends Vue {
   align-items: center;
   justify-content: flex-end;
 
+  .left-menu {
+    flex: 1;
+  }
+
   .right-menu {
-    flex: 2;
     display: flex;
-    flex-direction: row-reverse;
+    justify-content: flex-end;
+    flex-direction: row;
+
+    .el-dropdown {
+      display: block;
+      height: $header-height;
+
+      ::v-deep .el-button {
+        height: $header-height;
+      }
+    }
 
   }
 

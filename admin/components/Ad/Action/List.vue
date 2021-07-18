@@ -1,32 +1,23 @@
 <template>
   <div class="admin">
-    <component :is="components.toolbar"/>
+    <component :is="components.toolbar" :context="context"/>
     <el-card>
-      <component :is="components.list" :endpoint="endpoint"/>
+      <component :is="components.list" :context="context"/>
     </el-card>
   </div>
 </template>
 
 <script lang="ts">
 
-import {Context, RouteMeta} from "~/types";
-import {Component, Vue} from 'nuxt-property-decorator'
+import {Component, mixins} from 'nuxt-property-decorator'
+import Action from '~/mixins/Action'
 
 @Component({
   name: 'List',
 })
-export default class extends Vue {
+export default class extends mixins(Action) {
 
-  async asyncData({route, security}: Context) {
-    const metas = (route.meta[0] as RouteMeta)
-    security.assert(metas.roles)
 
-    return {
-      roles: metas.roles,
-      endpoint: metas.endpoint,
-      components: metas.components
-    }
-  }
 }
 </script>
 
@@ -42,33 +33,6 @@ export default class extends Vue {
       padding: 0;
     }
   }
-
-  //
-  //.el-tabs {
-  //  height: $panel-height;
-  //
-  //  .el-tabs__header {
-  //
-  //    .el-tabs__nav {
-  //      padding-top: 1em;
-  //    }
-  //
-  //    #tab-data {
-  //      display: none;
-  //    }
-  //
-  //    .el-tabs__item {
-  //      padding: 0 0.5rem;
-  //    }
-  //
-  //    .el-tabs__active-bar {
-  //      background-color: transparent;
-  //    }
-  //  }
-
-
-
-//  }
 }
 
 

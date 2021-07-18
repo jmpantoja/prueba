@@ -43,8 +43,8 @@
 
           <footer>
             <el-form-item>
-              <el-button @click="reset">Reset</el-button>
-              <el-button type="primary" @click="filter">Submit</el-button>
+              <el-button @click="reset">{{ $t('buttons.reset') }}</el-button>
+              <el-button type="primary" @click="filter">{{ $t('buttons.filter') }}</el-button>
             </el-form-item>
           </footer>
         </el-form>
@@ -57,21 +57,26 @@
 
 <script lang="ts">
 
-import {Component, Prop, Vue, Watch} from 'nuxt-property-decorator'
+import {Component, mixins, Watch} from 'nuxt-property-decorator'
 import {DefaultSortOptions} from "element-ui/types/table";
 import {AxiosResponse} from "axios"
-import {normalizeQuery} from "~/utils/grid"
+import {denormalizeQuery, normalizeQuery} from "~/utils/grid"
 import {FilterList, TableProps, TableQuery} from "~/types";
 import {Form} from "element-ui";
+import {mapActions} from "vuex";
+import Context from "~/mixins/Context"
 
 const _ = require("lodash")
 
 @Component({
   name: 'Datatable',
+  methods: mapActions({
+    saveQuery: 'grid/save'
+  })
 })
-export default class extends Vue {
-  @Prop({required: true, type: String}) endpoint!: string
+export default class extends mixins(Context) {
 
+  saveQuery!: Function
   tab: string = 'data'
   show_filters: boolean = false
 
@@ -93,8 +98,13 @@ export default class extends Vue {
   }
 
 
+  created() {
+    this.query = denormalizeQuery(this.$route.query)
+  }
+
+
   @Watch('query', {deep: true})
-  updateQuery() {
+  onQueryUpdated() {
     this.reload()
   }
 
@@ -124,7 +134,6 @@ export default class extends Vue {
   }
 
   filter() {
-
     this.$set(this.query, 'filters', _.cloneDeep(this.filters))
     this.tab = 'data'
     this.hide()
@@ -140,15 +149,21 @@ export default class extends Vue {
   }
 
   reload() {
+    if (this.loading) {
+      return
+    }
+
     this.loading = true
     const query = normalizeQuery(this.query)
+
+    this.persistQuery(query);
 
     this.$api.GET(this.endpoint, query)
       .then((response: AxiosResponse) => {
         this.props.data = response.data['hydra:member']
         this.total = response.data['hydra:totalItems']
+        this.updatePageSize()
 
-        this.page_size = this.page_size > 0 ? this.page_size : this.props.data.length
         this.loading = false
       })
       .catch((error: Error) => {
@@ -162,6 +177,28 @@ export default class extends Vue {
       })
   }
 
+  private updatePageSize() {
+
+    let candidate = (this.query.page_size as number) || this.props.data.length
+
+    if (candidate < 1) {
+      candidate = 10
+    }
+
+    if (candidate !== this.page_size) {
+      this.page_size = candidate
+    }
+  }
+
+  private persistQuery(query: {}) {
+
+    this.saveQuery({
+      endpoint: this.endpoint,
+      query
+    })
+
+    this.$router.push({query})
+  }
 }
 </script>
 

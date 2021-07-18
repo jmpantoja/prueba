@@ -19,7 +19,7 @@ class Security {
   }
 
 
-  public isGranted(roles?: string[]) {
+  public isGranted(roles?: string[]): boolean {
     roles = roles || []
     if (roles.length === 0) {
       return true
