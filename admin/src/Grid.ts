@@ -1,6 +1,5 @@
-import {Filter, FilterList, TableQuery} from "~/types";
-import {DefaultSortOptions} from "element-ui/types/table";
-import {Dictionary} from "vue-router/types/router";
+import {DefaultSortOptions, Dictionary, Filter, FilterList, TableQuery} from "~/types/grid";
+
 
 const _ = require("lodash")
 const ORDER_PATTERN = /^order\[(.*)\]/;
@@ -129,7 +128,6 @@ export function denormalizeQuery(query: Dictionary<string | (string | null)[]>):
       tableQuery.order = denormalizeOrder(key, value, tableQuery.order)
       tableQuery.filters = denormalizeFilters(key, value, tableQuery.filters)
     })
-
 
 
   return tableQuery

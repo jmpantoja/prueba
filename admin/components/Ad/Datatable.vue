@@ -13,13 +13,32 @@
       <div class="panel data">
         <el-table v-loading="loading" v-bind="props" @sort-change="sort">
           <slot name="columns"/>
+
+          <slot name="actions">
+            <el-table-column width="200">
+              <template v-slot="scope">
+
+                <slot name="action_edit" :on="goToEdit">
+                  <el-button type="text" icon="el-icon-edit" @click.native.prevent="goToEdit(scope.row)"/>
+                </slot>
+
+                <slot name="action_delete" :on="goToDelete">
+                  <el-button type="text" icon="el-icon-delete" @click.native.prevent="goToDelete(scope.row)"/>
+                </slot>
+              </template>
+            </el-table-column>
+
+
+          </slot>
+
         </el-table>
         <el-pagination
           v-if="page_size > 0"
           layout="total, prev, pager, next"
           :total="total"
           :page-size="page_size"
-          :current-page.sync="query.page"
+          :current-page.sync="page"
+
         />
       </div>
       <div class="panel overlay" :class="{visible:show_filters}"/>
@@ -57,14 +76,17 @@
 
 <script lang="ts">
 
-import {Component, mixins, Watch} from 'nuxt-property-decorator'
+import {Component, Inject, Vue, Watch} from 'nuxt-property-decorator'
 import {DefaultSortOptions} from "element-ui/types/table";
 import {AxiosResponse} from "axios"
-import {denormalizeQuery, normalizeQuery} from "~/utils/grid"
-import {FilterList, TableProps, TableQuery} from "~/types";
 import {Form} from "element-ui";
 import {mapActions} from "vuex";
-import Context from "~/mixins/Context"
+
+import {Admin} from "~/types/admin";
+import {denormalizeQuery, normalizeQuery} from "~/src/Grid"
+import {FilterList, TableProps, TableQuery} from "~/types/grid";
+import {Entity} from "~/types/api";
+
 
 const _ = require("lodash")
 
@@ -74,7 +96,9 @@ const _ = require("lodash")
     saveQuery: 'grid/save'
   })
 })
-export default class extends mixins(Context) {
+export default class extends Vue {
+
+  @Inject('admin') private admin!: Admin
 
   saveQuery!: Function
   tab: string = 'data'
@@ -89,6 +113,7 @@ export default class extends mixins(Context) {
   loading: boolean = false
   total: number = 0
   page_size: number = 0
+  page: number = 1
   filters: FilterList = {}
 
   query: TableQuery = {
@@ -97,11 +122,16 @@ export default class extends mixins(Context) {
     filters: undefined
   }
 
-
   created() {
     this.query = denormalizeQuery(this.$route.query)
+    this.page = this.query.page || 1
   }
 
+  @Watch('page')
+  onPageUpdated() {
+    this.query.page = this.page
+    this.reload()
+  }
 
   @Watch('query', {deep: true})
   onQueryUpdated() {
@@ -158,7 +188,7 @@ export default class extends mixins(Context) {
 
     this.persistQuery(query);
 
-    this.$api.GET(this.endpoint, query)
+    this.$api.GET(this.admin.endpoint, query)
       .then((response: AxiosResponse) => {
         this.props.data = response.data['hydra:member']
         this.total = response.data['hydra:totalItems']
@@ -193,12 +223,27 @@ export default class extends mixins(Context) {
   private persistQuery(query: {}) {
 
     this.saveQuery({
-      endpoint: this.endpoint,
+      endpoint: this.admin.endpoint,
       query
     })
 
     this.$router.push({query})
   }
+
+  public goToEdit(entity: Entity) {
+    const path = this.admin.pathByKey('edit', entity)
+    this.$router.push({
+      path
+    })
+  }
+
+  public goToDelete(entity: Entity) {
+    const path = this.admin.pathByKey('delete', entity)
+    this.$router.push({
+      path
+    })
+  }
+
 }
 </script>
 

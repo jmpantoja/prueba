@@ -1,34 +1,33 @@
-console.log(process.env)
+import {AdminConfig} from "~/types/admin";
 
-export default {
-  genres: {
-    path: '/data/genres',
-    endpoint: '/genres',
-    components: {
-      list: 'AppGenreList',
-      form: 'AppGenreList',
-      toolbar: 'AppGenreToolbar',
+const genres: AdminConfig = {
+  path: '/data/genres',
+  endpoint: '/genres',
+  components: {
+    list: 'AppGenreList',
+    form: 'AppGenreForm',
+    toolbar: 'AppGenreToolbar',
+  },
+  actions: {
+    list: {
+      component: '~/components/Ad/Action/List.vue',
+      path: '/list',
     },
-
-    actions: {
-      list: {
-        component: '~/components/Ad/Action/List.vue',
-        path: '/list',
-        roles: ['USER'],
-        props: {}
-      },
-      edit: {
-        component: '~/components/Ad/Action/Form.vue',
-        path: '/edit/:id',
-        roles: ['EDITOR', 'USER'],
-        props: {}
-      },
-      create: {
-        component: '~/components/Ad/Action/Form.vue',
-        path: '/create/',
-        roles: ['EDITOR', 'USER'],
-        props: {}
-      }
+    edit: {
+      component: '~/components/Ad/Action/Form.vue',
+      path: '/edit/:id',
+    },
+    delete: {
+      component: '~/components/Ad/Action/Delete.vue',
+      path: '/delete/:id',
+    },
+    create: {
+      component: '~/components/Ad/Action/Form.vue',
+      path: '/create/',
     }
   }
+}
+
+export default {
+  genres
 }

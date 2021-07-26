@@ -1,6 +1,7 @@
 <template>
 
-  <el-dropdown v-if="allowed && multiple" type="primary" size="large" @command="download">
+  <el-dropdown v-granted="roles" v-if="multiple" type="primary" size="large" @command="download">
+
     <el-button type="text" size="large">
       <i class="el-icon-bottom"></i>
     </el-button>
@@ -16,7 +17,7 @@
     </el-dropdown-menu>
 
   </el-dropdown>
-  <el-button v-else-if="allowed && single"
+  <el-button v-else-if="single"
              type="text"
              size="large"
              @click="download(formats[0])"
@@ -29,10 +30,10 @@
 
 <script lang="ts">
 
-import {Component, mixins, Prop} from 'nuxt-property-decorator'
+import {Component, Inject, Prop, Vue} from 'nuxt-property-decorator'
 import {mapGetters} from "vuex";
-import Context from "~/mixins/Context";
-import {QueryGetter} from "~/types";
+import {Admin} from "~/types/admin";
+import {QueryGetter} from "~/types/grid";
 
 const parse = require('url-parse');
 
@@ -42,12 +43,15 @@ const parse = require('url-parse');
     query: 'grid/query'
   })
 })
-export default class extends mixins(Context) {
-  query!: QueryGetter
+export default class extends Vue {
+  @Inject('admin') private admin!: Admin
   @Prop({required: true, type: Array}) formats!: []
 
+  public roles: string[] = ['export']
+
+  private query!: QueryGetter
+
   private get single(): boolean {
-    console.log(this.formats.length)
     return (this.formats.length as number) === 1
   }
 
@@ -63,14 +67,15 @@ export default class extends mixins(Context) {
 
 
   private urlByFormat(format: string): string {
-    const url = parse(this.endpoint + `.${format}`);
+
+    const url = parse(this.admin.endpoint + `.${format}`);
     url.set('query', this.downloadQuery())
 
     return url.toString();
   }
 
   private downloadQuery() {
-    const query = this.query(this.endpoint)
+    const query = this.query(this.admin.endpoint)
 
     return {
       ...query,

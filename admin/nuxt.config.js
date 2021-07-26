@@ -30,11 +30,17 @@ export default {
     scss: ['./assets/scss/*.scss']
   },
 
+  env: {
+    API_ENDPOINT: process.env.API_ENDPOINT
+  },
+
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     '@/plugins/element-ui',
     '@/plugins/security.ts',
     '@/plugins/api.ts',
+    '@/plugins/admin.ts',
+    '@/plugins/acl.ts',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

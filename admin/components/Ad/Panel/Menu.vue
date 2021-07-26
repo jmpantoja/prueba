@@ -53,7 +53,7 @@ import {mapGetters} from 'vuex'
 })
 export default class extends Vue {
   select(path: string, paths: Array<string>) {
-    console.log(path, paths)
+//    console.log(path, paths)
   }
 }
 </script>

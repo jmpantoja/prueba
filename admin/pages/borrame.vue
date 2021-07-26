@@ -1,6 +1,7 @@
 <template>
   <div>
 
+    <nuxt-link to="/es/data/genres/delete/017acfd5-a4a6-e64d-9dba-0807890aabb9" >go</nuxt-link>
     <!--    <genre-list endpoint="https://api.prueba.local/genres"/>-->
   </div>
 

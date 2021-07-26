@@ -1,5 +1,5 @@
 import {ActionTree, GetterTree, MutationTree} from 'vuex'
-import {QueryGetter, TableQuery} from "~/types";
+import {QueryGetter, TableQuery} from "~/types/grid";
 
 type State = ReturnType<typeof state>
 

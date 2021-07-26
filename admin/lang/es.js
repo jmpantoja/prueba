@@ -1,3 +1,5 @@
+import genre from "./es/genre"
+
 export default {
   profile: {
     profile: 'Perfil',
@@ -15,7 +17,8 @@ export default {
   },
   buttons: {
     reset: 'Restaurar',
-    filter: 'Filtrar'
+    filter: 'Filtrar',
+    save: 'Guardar'
   },
 
   menu: {
@@ -27,15 +30,6 @@ export default {
     directors: 'Directores',
   },
   admin: {
-    genre: {
-      title: 'Géneros',
-      filters: {
-        genre: 'Género'
-      },
-      columns: {
-        id: '#',
-        genre: 'género'
-      }
-    }
+    genre
   }
 }

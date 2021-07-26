@@ -1,8 +1,8 @@
 <template>
-  <div class="admin">
-    <component :is="components.toolbar" :context="context"/>
+  <div class="action action-list">
+    <component :is="components.toolbar"/>
     <el-card>
-      <component :is="components.list" :context="context"/>
+      <component :is="components.list"/>
     </el-card>
   </div>
 </template>
@@ -17,23 +17,9 @@ import Action from '~/mixins/Action'
 })
 export default class extends mixins(Action) {
 
-
 }
 </script>
 
 <style scoped lang="scss">
-::v-deep {
-
-  .el-card {
-    margin-top: $main-padding;
-    padding: 0;
-    height: $panel-height;
-
-    .el-card__body {
-      padding: 0;
-    }
-  }
-}
-
 
 </style>

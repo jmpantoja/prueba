@@ -1,24 +1,48 @@
 <template>
-  <ad-toolbar title="admin.genre.title">
+  <ad-toolbar :title="title" :entity="entity">
 
-    <ad-toolbar-download :context="context"
-                         :formats="['xlsx', 'csv', 'yaml']"
-                         :roles="['admin']"/>
+    <template slot="list">
+      <ad-toolbar-download :formats="['xlsx', 'csv', 'yaml']"/>
+      <ad-toolbar-create/>
+    </template>
 
-    <ad-toolbar-create :context="context"/>
+    <template slot="delete">
+      <ad-toolbar-back/>
+    </template>
+
+    <template slot="edit">
+      <ad-toolbar-back/>
+    </template>
+
+    <template slot="create">
+      <ad-toolbar-back/>
+    </template>
+
 
   </ad-toolbar>
 </template>
 
 <script lang="ts">
 
-import {Component, mixins} from 'nuxt-property-decorator'
-import Context from '~/mixins/Context'
+import {Component, Inject, Prop, Vue} from 'nuxt-property-decorator'
+import {Admin} from "~/types/admin";
 
 @Component({
   name: 'GenreToolbar'
 })
-export default class extends mixins(Context) {
+export default class extends Vue {
+  @Inject('admin') private admin!: Admin
+
+  @Prop({required: false, type: Object}) entity!: object;
+
+  public get title(): string | undefined {
+    return {
+      'list': 'admin.genre.toolbar.list',
+      'edit': 'admin.genre.toolbar.edit',
+      'create': 'admin.genre.toolbar.create',
+      'delete': 'admin.genre.toolbar.delete',
+    }[this.admin.view]
+  }
 
 }
 </script>

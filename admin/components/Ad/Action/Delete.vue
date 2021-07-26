@@ -3,7 +3,9 @@
     <component :is="components.toolbar" :entity="entity"/>
 
     <el-card>
-      <component :is="components.form" :entity="entity"/>
+      {{ admin.view }}
+      {{ entity }}
+
     </el-card>
   </div>
 </template>

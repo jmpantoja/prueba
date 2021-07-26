@@ -1,74 +1,55 @@
 .el-form {
-  .el-form-item__content {
-    margin-left: 0 !important;
-  }
+  .el-form-item {
+    margin-bottom: 2em;
 
-  .el-form-item__label {
-    line-height: 1em;
-    padding-bottom: 5px;
-    text-transform: capitalize;
-  }
+    .el-form-item__label {
+      font-size: 1.05rem;
+      text-align: right;
+      padding-right: 1em;
 
-  > .el-form-item {
-    display: flex;
-    margin-bottom: 3em;
-
-    > .el-form-item__label {
-      font-weight: 400;
-      font-family: "Roboto";
-      font-size: 1.2em;
-
-      display: flex;
-      justify-content: flex-end;
-      align-items: flex-end;
+      &:after {
+        content: ':';
+      }
     }
+  }
 
-    > .el-form-item__content {
-      flex: 1;
+  .el-form-item.form-item-inline {
+
+    margin-bottom: 0;
+
+    .el-form-item__content {
       display: flex;
 
-      > .el-form-item {
+      .el-form-item__label {
+        color: #606266;
+        font-size: 0.9rem;
+        text-align: right;
+      }
+
+      .el-form-item {
+        flex-grow: 1;
         margin-right: 1em;
-
-        &:last-child {
-          margin-right: 0;
-        }
-
-        > .el-form-item__label {
-          text-align: left;
-        }
-
-        > .el-form-item__content {
-          text-align: left;
-        }
       }
-    }
 
-  }
-
-  &.el-form--label-top {
-    > .el-form-item {
-      flex-direction: column;
-
-      > .el-form-item__content {
-        > .el-form-item {
-          display: flex;
-          flex-direction: column;
-        }
+      .el-form-item:last-child {
+        margin-right: 0;
       }
     }
   }
 
-  &.el-form--label-left, &.el-form--label-top {
+  fieldset {
+    border-radius: 4px;
+    margin-bottom: 4em;
+    padding-top: 3em;
+    border: $--border-base;
 
-    > .el-form-item {
-      > .el-form-item__label {
-        justify-content: flex-start;
-      }
+
+    legend {
+      font-size: 1.2rem;
+      padding: 0 1em 0 0.5em;
+      color: #606266;
+
     }
-
   }
-
-
 }
 

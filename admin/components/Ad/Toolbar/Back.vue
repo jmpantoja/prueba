@@ -1,6 +1,6 @@
 <template>
   <el-button v-granted="roles" type="text" size="large" @click="click">
-    <i class="el-icon-plus"></i>
+    <i class="el-icon-back"></i>
   </el-button>
 </template>
 
@@ -16,11 +16,18 @@ var parse = require('url-parse');
 })
 export default class extends Vue {
   @Inject('admin') private admin!: Admin
-  public roles: string[] = ['create']
+  public roles: string[] = ['list']
 
   click() {
-    const path = this.admin.pathByKey('create')
-    this.$router.push(path)
+    const previous = this.$nuxt.context.from
+    const list = this.admin.pathByKey('list')
+
+    if (previous.path !== list) {
+      this.$router.push(list)
+      return
+    }
+
+    this.$router.push(this.$nuxt.context.from.fullPath)
   }
 
 }

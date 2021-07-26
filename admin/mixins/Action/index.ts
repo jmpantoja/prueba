@@ -1,31 +1,27 @@
-import {Component, Vue} from 'nuxt-property-decorator'
-import {AdminContext, Context, RouteMeta} from "~/types";
+import {Component, Provide, Vue} from 'nuxt-property-decorator'
+import {Context} from "~/types/";
+import {RouteMeta} from "~/types/route";
+import {Admin} from "~/types/admin";
 
 @Component({
   name: 'Action',
 })
 export default class extends Vue {
-  private roles!: Extract<RouteMeta, 'roles'>;
-  private endpoint!: Extract<RouteMeta, 'endpoint'>;
-  private actions!: Extract<RouteMeta, 'actions'>;
+  @Provide('admin') protected admin!: Admin;
 
-  public async asyncData({route, security}: Context) {
+  public async asyncData({route, security, adminManager}: Context) {
     const metas = (route.meta as RouteMeta[])
     const meta = (metas[0] as RouteMeta)
 
-    security.assert(meta.roles)
+    const admin = adminManager.byName(meta.admin).setView(meta.view)
+    const roles = admin.rolesByName(meta.view)
+
+    security.assert(roles)
 
     return {
-      endpoint: meta.endpoint,
       components: meta.components,
-      actions: meta.actions
+      admin
     }
   }
 
-  public get context(): AdminContext {
-    return {
-      endpoint: this.endpoint,
-      actions: this.actions
-    }
-  }
 }

@@ -10,3 +10,5 @@ Vue.mixin({
     clickoutside
   }
 })
+
+

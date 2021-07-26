@@ -1,4 +1,11 @@
 security:
+    role_hierarchy:
+        ROLE_ADMIN_GENRES: [ ROLE_GENRES_EDIT, ROLE_GENRES_CREATE, ROLE_GENRES_DELETE, ROLE_GENRES_LIST, ROLE_GENRES_EXPORT ]
+        ROLE_ADMIN_MOVIES: [ ROLE_MOVIES_EDIT, ROLE_MOVIES_CREATE, ROLE_MOVIES_DELETE, ROLE_MOVIES_LIST, ROLE_MOVIES_EXPORT ]
+        
+        ROLE_ADMIN: [ ROLE_USER, ROLE_ADMIN_GENRES, ROLE_ADMIN_MOVIES ]
+        ROLE_SUPER_ADMIN: [ ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH ]
+
     encoders:
         App\Domain\User\User:
             algorithm: auto
@@ -31,22 +38,22 @@ security:
                     - lexik_jwt_authentication.jwt_token_authenticator
 
         refresh:
-            pattern:  ^/token/refresh
+            pattern: ^/token/refresh
             stateless: true
             anonymous: true
 
-    # activate different ways to authenticate
-    # https://symfony.com/doc/current/security.html#firewalls-authentication
+        # activate different ways to authenticate
+        # https://symfony.com/doc/current/security.html#firewalls-authentication
 
-    # https://symfony.com/doc/current/security/impersonating_user.html
-    # switch_user: true
+        # https://symfony.com/doc/current/security/impersonating_user.html
+        # switch_user: true
 
-    # Easy way to control access for large sections of your site
-    # Note: Only the *first* access control that matches will be used
-#    access_control:
-#        - { path: ^/docs, roles: IS_AUTHENTICATED_ANONYMOUSLY } # Allows accessing the Swagger UI
-#        - { path: ^/token, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-#        - { path: ^/profile, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-#        - { path: ^/, roles: IS_AUTHENTICATED_FULLY }
+        # Easy way to control access for large sections of your site
+        # Note: Only the *first* access control that matches will be used
+        #    access_control:
+        #        - { path: ^/docs, roles: IS_AUTHENTICATED_ANONYMOUSLY } # Allows accessing the Swagger UI
+        #        - { path: ^/token, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        #        - { path: ^/profile, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        #        - { path: ^/, roles: IS_AUTHENTICATED_FULLY }
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }

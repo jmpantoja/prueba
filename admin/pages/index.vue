@@ -28,7 +28,7 @@ import {mapGetters} from "vuex";
 @Component({
   name: 'Admin',
   computed: mapGetters({
-    'user': 'user/roles',
+    'user': 'user/user',
   }),
 })
 export default class Dashboard extends Vue {

@@ -1,16 +1,17 @@
-import {Security} from "~/plugins/security";
-import {Api} from "~/plugins/api";
-
+import {Security} from "~/types/security";
+import {Api} from "~/src/Api";
 import {Context} from "@nuxt/types";
-import {DefaultSortOptions} from "element-ui/types/table";
+import {AdminManager} from "~/types/admin";
 
 declare module '@nuxt/types' {
   interface Context {
+    adminManager: AdminManager
     security: Security
     api: Api
   }
 
   interface NuxtAppOptions {
+    adminManager: AdminManager
     security: Security,
     api: Api
   }
@@ -18,57 +19,14 @@ declare module '@nuxt/types' {
 
 declare module 'vue/types/vue' {
   interface Vue {
+    $adminManager: AdminManager
     $security: Security,
     $api: Api
   }
 }
 
-type RouteMeta = {
-  roles?: string[]
-  endpoint: string,
-  components: { [key: string]: string },
-  actions: { [key: string]: string }
-}
-
-type AdminContext = {
-  endpoint: string,
-  actions: { [key: string]: string }
-}
-
-
-//GRID
-type TableQuery = {
-  page?: number,
-  page_size?: number,
-  order?: DefaultSortOptions,
-  filters?: FilterList
-}
-
-type TableProps = {
-  stripe: boolean,
-  height: string,
-  data: []
-}
-
-type QueryGetter = (endpoint: string) => TableQuery
-
-
-type Filter = {
-  mode?: string,
-  value: any
-}
-
-type FilterList = { [key: string]: Filter }
-
 export {
-  Context,
-  RouteMeta,
-  AdminContext,
-  TableQuery,
-  TableProps,
-  QueryGetter,
-  Filter,
-  FilterList
+  Context
 }
 
 
