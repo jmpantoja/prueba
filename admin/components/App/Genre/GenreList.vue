@@ -2,13 +2,12 @@
   <ad-datatable >
 
     <template v-slot:filters="{filters}">
-      <ad-filter-text :label="$t('admin.genre.filters.genre')" prop="name" v-model="filters.name"/>
+      <ad-filter-text :label="$t('admin.genres.filters.genre')" prop="name" v-model="filters.name"/>
     </template>
 
-    <template v-slot:columns="{goToEdit, goToDelete}">
-      <el-table-column prop="id" :label="$t('admin.genre.columns.id')" sortable="custom" width="300"/>
-      <el-table-column prop="name" :label="$t('admin.genre.columns.genre')" sortable="custom"/>
-
+    <template slot="columns">
+      <el-table-column prop="id" :label="$t('admin.genres.columns.id')" sortable="custom" width="300"/>
+      <el-table-column prop="name" :label="$t('admin.genres.columns.genre')" sortable="custom"/>
     </template>
 
   </ad-datatable>

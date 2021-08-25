@@ -28,7 +28,7 @@ import {Component, Inject, Prop, Vue} from 'nuxt-property-decorator'
 import {Admin} from "~/types/admin";
 
 @Component({
-  name: 'GenreToolbar'
+  name: 'DirectorToolbar'
 })
 export default class extends Vue {
   @Inject('admin') private admin!: Admin

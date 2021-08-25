@@ -1,4 +1,7 @@
 import {Admin, AdminManager} from '~/src/Admin'
+import {NuxtI18nInstance} from "nuxt-i18n";
+import {Api} from "~/src/Api";
+import VueRouter, {Route} from 'vue-router'
 
 
 enum ViewType {
@@ -11,6 +14,10 @@ enum ViewType {
 type AdminContext = {
   api_endpoint: string,
   localePath: Function,
+  i18n: NuxtI18nInstance,
+  api: Api,
+  router: VueRouter,
+  from: () => Route
 }
 
 type ActionConfig = {

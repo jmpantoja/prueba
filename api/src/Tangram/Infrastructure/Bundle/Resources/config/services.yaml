@@ -47,3 +47,10 @@ services:
         autoconfigure: true
         public: false
 
+    tangram.api_platform.doctrine.orm.fullname_filter:
+        class: Tangram\Infrastructure\ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\FullNameFilter
+        arguments: [ '@doctrine', ~, '@?logger' ]
+        autowire: true
+        autoconfigure: true
+        public: false
+

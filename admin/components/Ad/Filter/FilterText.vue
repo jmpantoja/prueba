@@ -1,5 +1,5 @@
 <template>
-  <el-form-item class="filter-text" :label="label">
+  <el-form-item class="form-item-inline filter-text" :label="label">
     <el-form-item class="filter-text__mode" :prop="prop + '.mode'">
       <el-select v-model="data.mode" placeholder="Mode">
         <el-option

@@ -1,3 +1,5 @@
+import genres from './en/genres'
+
 export default {
   profile: {
     profile: 'Profile',
@@ -15,9 +17,9 @@ export default {
   },
   buttons: {
     reset: 'Reset',
-    filter: 'Filter'
+    filter: 'Filter',
+    save: 'Save'
   },
-
   menu: {
     film_archive: 'Film Archive',
     dashboard: 'Dashboard',
@@ -27,15 +29,6 @@ export default {
     directors: 'Directors',
   },
   admin: {
-    genre: {
-      title: 'Genres',
-      filters: {
-        genre: 'Genre'
-      },
-      columns: {
-        id: '#',
-        genre: 'genre'
-      }
-    }
+    genres
   }
 }

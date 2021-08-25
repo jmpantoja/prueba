@@ -6,7 +6,8 @@
     <entity name="App\Domain\FilmArchive\Director" table="directors">
 
         <id name="id" column="id" type="DirectorId"/>
-        <embedded name="name" class="App\Domain\FilmArchive\FullName" use-column-prefix="false"/>
-        <one-to-many field="movies" target-entity="App\Domain\FilmArchive\Movie" mapped-by="director"/>
+        <embedded name="name" class="Tangram\Domain\ValueObject\FullName" use-column-prefix="false"/>
+        <one-to-many field="movies" target-entity="App\Domain\FilmArchive\Movie" mapped-by="director" />
+
     </entity>
 </doctrine-mapping>

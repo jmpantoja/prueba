@@ -10,12 +10,11 @@
 
 declare(strict_types=1);
 
-namespace App\Infrastructure\Api\FilmArchive\Normalizer;
+namespace Tangram\Infrastructure\Api\Normalizer;
 
-use App\Domain\FilmArchive\FullName;
-use Negotiation\Tests\DummyAccept;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Tangram\Domain\ValueObject\FullName;
 
 final class FullNameNormalizer implements NormalizerInterface, DenormalizerInterface {
     /**
@@ -25,7 +24,6 @@ final class FullNameNormalizer implements NormalizerInterface, DenormalizerInter
     */
     public function normalize($fullName, string $format = null, array $context = [])
     {
-
         return [
             'name'=>$fullName->name(),
             'lastName'=>$fullName->lastName(),

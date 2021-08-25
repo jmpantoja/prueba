@@ -12,11 +12,9 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Api\FilmArchive\Dto;
 
-use App\Domain\FilmArchive\DirectorId;
-use App\Domain\FilmArchive\FullName;
-use App\Domain\FilmArchive\MovieList;
-use Doctrine\Common\Collections\Collection;
 use App\Domain\FilmArchive\Director;
+use App\Domain\FilmArchive\DirectorId;
+use Tangram\Domain\ValueObject\FullName;
 
 final class DirectorOutput  {
 

@@ -3,7 +3,7 @@ App\Domain\FilmArchive\Genre:
         get:
             filters: 
                 - 'genre.order_filter'
-                - 'genre.text_filter'
+                - 'genre.name_filter'
         post: ~
 
     properties:

@@ -1,44 +1,57 @@
-import replace from "~/plugins/atn/lang/replace";
-import defaults from "~/plugins/atn/lang/admin/es"
+const _ = require('lodash')
 
-export default replace({
-  extract(params) {
-    const item = params.named('item') || {};
-    item.name = item.name || {}
-    return {
-      item: `${item.name.lastName}, ${item.name.name}`,
-      singular: 'director'
+const toString = (genre) => {
+  const name = _.get(genre, 'name')
+  if (name) {
+    return `${name.name} ${name.lastName}`
+  }
+  return ''
+
+}
+export default {
+  toolbar: {
+    list: 'Directores',
+    edit: (params) => {
+      const entity = params.named('entity');
+      return `Editar '${toString(entity)}'`
+    },
+    create: 'Nuevo director',
+    delete: (params) => {
+      return `Borrar '${toString(params.named('entity'))}'`
+    },
+  },
+  filters: {
+    name: 'Nombre'
+  },
+  columns: {
+    id: '#',
+    name: 'nombre'
+  },
+  form: {
+    name: 'nombre'
+  },
+  buttons: {
+    back: 'Volver',
+    yes_delete: '<strong>Sí,</strong> borrar'
+  },
+  text: {
+    delete_confirmation: (params) => {
+      const entity = params.named('entity');
+      return `Realmente desea borrar el director <strong>'${toString(entity)}'</strong>`
     }
   },
-  defaults,
-  messages: {
-    title: 'Directores',
-    flash: {
-      success: {
-        delete: 'El director "{item}" ha sido eliminado correctamente',
-        save: 'El director "{item}" ha sido guardado correctamente'
-      }
+  message: {
+    save: (params) => {
+      const entity = params.named('entity');
+      return `El director <strong>'${toString(entity)}'</strong> se ha guardado correctamente`
     },
-    dialog: {
-      delete: {
-        title: 'Borrar director "{item}"',
-      }
+    delete: (params) => {
+      const entity = params.named('entity');
+      return `El director <strong>'${toString(entity)}'</strong> se ha borrado correctamente`
     },
-    grid: {
-      header: {
-        id: '#',
-        name: 'Nombre',
-      }
+    error: (params) => {
+      const description = params.named('description');
+      return `Se ha producido un error: <br/><br/> <strong>'${description}'</strong>`
     },
-    form: {
-      title: {
-        edit: 'Editar director "{item}"',
-        create: 'Nuevo {singular}',
-      },
-      group: {},
-      field: {
-        name: 'Nombre Completo',
-      }
-    }
   }
-})
+}

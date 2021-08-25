@@ -6,13 +6,13 @@ use App\Domain\FilmArchive\Director;
 use App\Domain\FilmArchive\DirectorId;
 use App\Domain\FilmArchive\Event\DirectorHasBeenCreated;
 use App\Domain\FilmArchive\Event\DirectorHasBeenUpdated;
-use App\Domain\FilmArchive\FullName;
 use App\Domain\FilmArchive\MovieList;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Tangram\Domain\Event\DomainEventDispatcher;
 use Tangram\Domain\Event\DomainEventsCollector;
 use Tangram\Domain\Model\Entity;
+use Tangram\Domain\ValueObject\FullName;
 
 class DirectorSpec extends ObjectBehavior
 {

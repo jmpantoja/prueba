@@ -1,5 +1,6 @@
 import {DefaultSortOptions} from "element-ui/types/table";
 import {Dictionary} from "vue-router/types/router";
+import {Entity} from "~/types/api";
 
 type TableQuery = {
   page?: number,
@@ -11,7 +12,7 @@ type TableQuery = {
 type TableProps = {
   stripe: boolean,
   height: string,
-  data: []
+  data: Entity[]
 }
 
 type QueryGetter = (endpoint: string) => TableQuery

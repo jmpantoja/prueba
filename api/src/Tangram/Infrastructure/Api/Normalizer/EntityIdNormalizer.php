@@ -26,6 +26,7 @@ final class EntityIdNormalizer implements NormalizerInterface
      */
     public function normalize($object, string $format = null, array $context = [])
     {
+        //usleep((int)3 * 1000000);
         return (string)$object;
     }
 

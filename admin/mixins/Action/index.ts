@@ -20,8 +20,7 @@ export default class extends Vue {
 
     return {
       components: meta.components,
-      admin
+      admin,
     }
   }
-
 }

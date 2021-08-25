@@ -1,17 +1,15 @@
 <template>
   <div class="admin-toolbar">
-    <div class="admin-toolbar__title">
+    <div class="admin-toolbar__title" v-if="title">
       <slot name="title">
-        {{ $t(title, {entity: model}) }}
+        {{ title }}
       </slot>
     </div>
 
     <div class="admin-toolbar__actions">
-
       <slot v-for="(_, action) in admin.paths"
             v-if="action === admin.view"
             :name="action"/>
-
     </div>
   </div>
 </template>
@@ -19,25 +17,30 @@
 <script lang="ts">
 import {Component, Inject, Prop, Vue, Watch} from 'nuxt-property-decorator'
 import {Admin} from "~/types/admin";
+import {Entity} from "~/types/api";
+
+const _ = require("lodash")
 
 @Component({
-  name: 'Toolbar',
+  name: 'Toolbar'
 })
 export default class extends Vue {
+
   @Inject('admin') private admin!: Admin
+  @Prop({required: false, type: Object as () => Entity}) readonly entity!: Entity;
+  private title: string | null = null;
 
-  @Prop({required: false, type: String}) title!: string
-  @Prop({required: false, type: Object}) entity!: object;
-
-  public model: object | null = null;
+  created() {
+    this.updateEntity(this.entity);
+  }
 
   @Watch('entity')
-  private updateEntity(entity) {
+  updateEntity(entity?: Entity) {
 
-    if (!!this.model) {
-      return
-    }
-    this.model = {...entity}
+    const key = `toolbar.${this.admin.view}`;
+    const params = {entity: entity};
+
+    this.title = this.admin.message(key, params)
   }
 
 }

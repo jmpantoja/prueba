@@ -1,43 +1,34 @@
-import replace from "~/plugins/atn/lang/replace";
-import defaults from "~/plugins/atn/lang/admin/en"
+const _ = require('lodash')
 
-export default replace({
-  extract(params) {
-    const item = params.named('item') || {};
-    return {
-      item: item.name,
-      singular: 'genre'
-    }
+const toString = (genre) => {
+  return _.get(genre, 'name', '')
+}
+export default {
+  toolbar: {
+    list: 'Genres',
+    edit: (params) => {
+      const entity = params.named('entity');
+      return `Edit '${toString(entity)}'`
+    },
+    create: 'new genre',
+    delete: (params) => {
+      return `Delete '${toString(params.named('entity'))}'`
+    },
   },
-  defaults,
-  messages: {
-    title: 'Genres',
-    flash: {
-      success: {
-        delete: 'The genre "{item}" has been deleted successfully',
-        save: 'The genre "{item}" has been saved successfully'
-      }
+  filters: {
+    genre: 'genre'
+  },
+  columns: {
+    id: '#',
+    genre: 'genre'
+  },
+  form: {
+    name: 'genre'
+  },
+  api: {
+    save: (params) => {
+      const entity = params.named('entity');
+      return `The genre <strong>'${toString(entity)}'</strong> has been saved successfully`
     },
-    dialog: {
-      delete: {
-        title: 'Delete genre "{item}"',
-      }
-    },
-    grid: {
-      header: {
-        id: '#',
-        name: 'Name',
-      }
-    },
-    form: {
-      title: {
-        edit: 'Edit genre "{item}"',
-        create: 'New {singular}',
-      },
-      group: {},
-      field: {
-        name: 'name',
-      }
-    }
   }
-})
+}

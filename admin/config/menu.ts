@@ -27,6 +27,10 @@ const menu: Menu = [
       {
         path: '/data/genres/list',
         title: 'menu.genres',
+      },
+      {
+        path: '/data/directors/list',
+        title: 'menu.directors',
       }
     ]
   },

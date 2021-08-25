@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\FilmArchive;
+namespace Tangram\Domain\ValueObject;
 
 
 final class FullName

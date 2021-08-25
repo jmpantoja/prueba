@@ -11,19 +11,24 @@
     </div>
     <div class="wrapper">
       <div class="panel data">
-        <el-table v-loading="loading" v-bind="props" @sort-change="sort">
+        <el-table v-loading="admin.loading" v-bind="props" @sort-change="sort">
           <slot name="columns"/>
 
           <slot name="actions">
-            <el-table-column width="200">
+            <el-table-column width="150" align="center">
               <template v-slot="scope">
 
                 <slot name="action_edit" :on="goToEdit">
-                  <el-button type="text" icon="el-icon-edit" @click.native.prevent="goToEdit(scope.row)"/>
+                  <el-button type="text"
+                             icon="el-icon-edit"
+                             @click.native.prevent="goToEdit(scope.row)"/>
                 </slot>
 
                 <slot name="action_delete" :on="goToDelete">
-                  <el-button type="text" icon="el-icon-delete" @click.native.prevent="goToDelete(scope.row)"/>
+                  <el-button type="text"
+                             class="btn_delete"
+                             icon="el-icon-delete"
+                             @click.native.prevent="goToDelete(scope.row)"/>
                 </slot>
               </template>
             </el-table-column>
@@ -78,14 +83,13 @@
 
 import {Component, Inject, Vue, Watch} from 'nuxt-property-decorator'
 import {DefaultSortOptions} from "element-ui/types/table";
-import {AxiosResponse} from "axios"
 import {Form} from "element-ui";
 import {mapActions} from "vuex";
 
 import {Admin} from "~/types/admin";
 import {denormalizeQuery, normalizeQuery} from "~/src/Grid"
 import {FilterList, TableProps, TableQuery} from "~/types/grid";
-import {Entity} from "~/types/api";
+import {Dataset, Entity} from "~/types/api";
 
 
 const _ = require("lodash")
@@ -183,27 +187,15 @@ export default class extends Vue {
       return
     }
 
-    this.loading = true
-    const query = normalizeQuery(this.query)
 
+    const query = normalizeQuery(this.query)
     this.persistQuery(query);
 
-    this.$api.GET(this.admin.endpoint, query)
-      .then((response: AxiosResponse) => {
-        this.props.data = response.data['hydra:member']
-        this.total = response.data['hydra:totalItems']
+    this.admin.get(query)
+      .then((dataSet: Dataset) => {
+        this.props.data = dataSet.items
+        this.total = dataSet.totalItems
         this.updatePageSize()
-
-        this.loading = false
-      })
-      .catch((error: Error) => {
-        this.loading = false
-        this.$message({
-          dangerouslyUseHTMLString: true,
-          showClose: true,
-          message: `<strong>${error.message}</strong>`,
-          type: 'error'
-        });
       })
   }
 
@@ -243,7 +235,6 @@ export default class extends Vue {
       path
     })
   }
-
 }
 </script>
 
@@ -254,6 +245,10 @@ export default class extends Vue {
   height: $panel-height;
   box-sizing: border-box;
   display: flex;
+
+  .btn_delete {
+    color: $--color-danger;
+  }
 
   .menu {
     display: flex;

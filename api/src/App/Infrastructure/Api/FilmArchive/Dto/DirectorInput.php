@@ -13,9 +13,7 @@ declare(strict_types=1);
 namespace App\Infrastructure\Api\FilmArchive\Dto;
 
 use App\Domain\FilmArchive\DirectorId;
-use App\Domain\FilmArchive\FullName;
-use Doctrine\Common\Collections\Collection;
-use App\Domain\FilmArchive\Director;
+use Tangram\Domain\ValueObject\FullName;
 
 final class DirectorInput  {
 

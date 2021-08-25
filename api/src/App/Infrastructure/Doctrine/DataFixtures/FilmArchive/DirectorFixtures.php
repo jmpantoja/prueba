@@ -14,8 +14,8 @@ namespace App\Infrastructure\Doctrine\DataFixtures\FilmArchive;
 
 use App\Application\FilmArchive\SaveDirector;
 use App\Domain\FilmArchive\Director;
-use App\Domain\FilmArchive\FullName;
 use App\Domain\FilmArchive\MovieList;
+use Tangram\Domain\ValueObject\FullName;
 use Tangram\Infrastructure\Doctrine\DataFixtures\UseCaseFixture;
 
 final class DirectorFixtures extends UseCaseFixture

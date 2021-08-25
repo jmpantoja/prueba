@@ -1,5 +1,6 @@
 <template>
   <el-form-item class="form-item-inline" :label="label" :prop="prop">
+
     <el-form-item
       label="Name"
       label-width="5rem"
@@ -30,16 +31,17 @@ import {Component, mixins} from 'nuxt-property-decorator'
 })
 export default class extends mixins(Field) {
 
-  rules: Object = {
+  public rules: Object = {
     name: [
       {required: true, message: 'es requerido'},
-      {min: 4, message: 'name is too short', trigger: 'blur'}
+      {min: 4, message: 'name is too short'}
     ],
     lastName: [
       {required: true, message: 'es requerido'},
-      {min: 4, message: 'name is too short', trigger: 'blur'}
+      {min: 4, message: 'name is too short'}
     ]
   }
+
 }
 
 </script>

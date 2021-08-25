@@ -1,44 +1,34 @@
-import replace from "~/plugins/atn/lang/replace";
-import defaults from "~/plugins/atn/lang/admin/es"
+const _ = require('lodash')
 
-export default replace({
-  extract(params) {
-    const item = params.named('item') || {};
-    return {
-      item: item.name,
-      singular: 'genero'
-    }
+const toString = (genre) => {
+  return _.get(genre, 'name', '')
+}
+export default {
+  toolbar: {
+    list: 'Géneros',
+    edit: (params) => {
+      const entity = params.named('entity');
+      return `Editar '${toString(entity)}'`
+    },
+    create: 'Nuevo género',
+    delete: (params) => {
+      return `Borrar '${toString(params.named('entity'))}'`
+    },
   },
-  defaults,
-  messages: {
-    title: 'Generos',
-    flash: {
-      success: {
-        delete: 'El género "{item}" ha sido eliminado correctamente',
-        save: 'El género "{item}" ha sido guardado correctamente'
-      }
+  filters: {
+    genre: 'Género'
+  },
+  columns: {
+    id: '#',
+    genre: 'género'
+  },
+  form: {
+    name: 'nombre'
+  },
+  api: {
+    save: (params) => {
+      const entity = params.named('entity');
+      return `El género <strong>'${toString(entity)}'</strong> se ha guardado correctamente`
     },
-    dialog: {
-      delete: {
-        title: 'Borrar género "{item}"',
-      }
-    },
-    grid: {
-      header: {
-        id: '#',
-        name: 'Nombre',
-        birthDate: 'Fec. Nac',
-      }
-    },
-    form: {
-      title: {
-        edit: 'Editar género "{item}"',
-        create: 'Nuevo {singular}',
-      },
-      group: {},
-      field: {
-        name: 'Nombre',
-      }
-    }
   }
-})
+}

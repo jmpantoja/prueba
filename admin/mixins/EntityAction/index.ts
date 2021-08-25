@@ -1,29 +1,37 @@
 import {Component, mixins} from 'nuxt-property-decorator'
-import {AxiosResponse} from "axios";
 import Action from "~/mixins/Action";
+import {Entity} from "~/types/api";
+
+const _ = require("lodash")
+
+const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
 
 @Component({
   name: 'EntityAction',
 })
 export default class extends mixins(Action) {
-  protected entity: object = {}
+  protected entity: Entity = {id: null}
 
   public async fetch() {
+
     const id = this.$route.params.id
     if (!id) {
       return
     }
 
-    const endpoint = this.admin.endpoint
-    const url = `${endpoint}/${id}`
+    await this.admin.findOne(id)
+      .then((entity: Entity) => {
+        this.entity = entity
+      })
 
-    await this.$api.GET(url)
-      .then((response: AxiosResponse) => {
-        this.entity = response['data']
-      })
-      .catch((error: Error) => {
-        alert('error')
-      })
   }
+
+  public get waiting(): boolean {
+    if (this.admin.view === 'create') {
+      return false;
+    }
+    return this.entity.id === null
+  }
+
 
 }

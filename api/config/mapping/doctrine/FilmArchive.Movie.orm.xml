@@ -13,6 +13,7 @@
             <cascade>
                 <cascade-persist/>
             </cascade>
+            <join-column on-delete="SET NULL"/>
         </many-to-one>
 
         <many-to-many field="genres" target-entity="App\Domain\FilmArchive\Genre" inversed-by="movies">

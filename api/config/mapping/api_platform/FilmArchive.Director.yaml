@@ -2,6 +2,8 @@ App\Domain\FilmArchive\Director:
     collectionOperations:
         get:
             filters:
+                - 'director.name_filter'
+                
         post: ~
 
     properties:

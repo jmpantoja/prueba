@@ -1,9 +1,9 @@
 <?php
 
-namespace spec\App\Domain\FilmArchive;
+namespace spec\Tangram\Domain\ValueObject\FullName;
 
-use App\Domain\FilmArchive\FullName;
 use PhpSpec\ObjectBehavior;
+use Tangram\Domain\ValueObject\FullName;
 
 class FullNameSpec extends ObjectBehavior
 {

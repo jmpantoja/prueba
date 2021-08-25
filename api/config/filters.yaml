@@ -1,5 +1,5 @@
 services:
-    genre.text_filter:
+    genre.name_filter:
         parent: 'tangram.api_platform.doctrine.orm.text_filter'
         arguments: { $properties: { name: ~ } }
         tags: [ 'api_platform.filter' ]
@@ -10,6 +10,15 @@ services:
     genre.order_filter:
         parent: 'api_platform.doctrine.orm.order_filter'
         arguments: { $properties: { id: ~, name: ~ } }
+        tags: [ 'api_platform.filter' ]
+        autowire: false
+        autoconfigure: false
+        public: false
+
+
+    director.name_filter:
+        parent: 'tangram.api_platform.doctrine.orm.fullname_filter'
+        arguments: { $properties: { name: ~ } }
         tags: [ 'api_platform.filter' ]
         autowire: false
         autoconfigure: false

@@ -20,6 +20,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Tangram\Domain\Model\Entity;
 use Tangram\Domain\Model\Traits\NotifyEvents;
+use Tangram\Domain\ValueObject\FullName;
 
 class Director implements Entity
 {
