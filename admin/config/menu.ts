@@ -25,6 +25,10 @@ const menu: Menu = [
     icon: 'el-icon-setting',
     children: [
       {
+        path: '/data/movies/list',
+        title: 'menu.movies',
+      },
+      {
         path: '/data/genres/list',
         title: 'menu.genres',
       },

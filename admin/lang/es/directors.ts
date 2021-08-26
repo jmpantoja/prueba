@@ -1,14 +1,16 @@
+import {AdminTranslation} from "~/types/lang";
+
 const _ = require('lodash')
 
-const toString = (genre) => {
-  const name = _.get(genre, 'name')
+const toString = (director: any) => {
+  const name = _.get(director, 'name')
   if (name) {
     return `${name.name} ${name.lastName}`
   }
   return ''
-
 }
-export default {
+
+const directors: AdminTranslation = {
   toolbar: {
     list: 'Directores',
     edit: (params) => {
@@ -30,17 +32,13 @@ export default {
   form: {
     name: 'nombre'
   },
-  buttons: {
-    back: 'Volver',
-    yes_delete: '<strong>Sí,</strong> borrar'
-  },
-  text: {
+  message: {
     delete_confirmation: (params) => {
       const entity = params.named('entity');
       return `Realmente desea borrar el director <strong>'${toString(entity)}'</strong>`
     }
   },
-  message: {
+  flash: {
     save: (params) => {
       const entity = params.named('entity');
       return `El director <strong>'${toString(entity)}'</strong> se ha guardado correctamente`
@@ -55,3 +53,6 @@ export default {
     },
   }
 }
+
+
+export default directors

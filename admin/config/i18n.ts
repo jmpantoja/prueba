@@ -3,8 +3,8 @@ import {dateTimeFormats, numberFormats} from "./locale";
 
 export default {
   locales: [
-    {code: 'en', file: 'en.js', flag: 'gb', rtl: false},
-    {code: 'es', file: 'es.js', flag: 'es', rtl: false},
+    {code: 'en', file: 'en.ts', flag: 'gb', rtl: false},
+    {code: 'es', file: 'es.ts', flag: 'es', rtl: false},
   ],
   defaultLocale: 'es',
   vueI18nLoader: true,

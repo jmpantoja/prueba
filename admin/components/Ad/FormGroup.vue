@@ -41,7 +41,7 @@ export default class extends Vue {
     this._propNames = this.findProps(this.$children)
     this._name = `fieldset-${this._uid}`
     const rect = this.$el.getBoundingClientRect();
-    const position = rect.top - rect.height;// - (15 * 4)
+    const position = rect.top - rect.height - 90;// - (15 * 4)
 
     this.adForm.addGroup({
       title: this.title,
@@ -74,12 +74,5 @@ export default class extends Vue {
 </script>
 
 <style scoped lang="scss">
-fieldset.is-error {
-  border: solid 1px $--color-danger;
- // background-color: $--color-danger-lighter;
 
-  legend {
-    color: $--color-danger;
-  }
-}
 </style>

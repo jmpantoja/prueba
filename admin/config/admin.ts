@@ -56,7 +56,36 @@ const directors: AdminConfig = {
   }
 }
 
+const movies: AdminConfig = {
+  path: '/data/movies',
+  endpoint: '/movies',
+  components: {
+    list: 'AppMovieList',
+    form: 'AppMovieForm',
+    toolbar: 'AppMovieToolbar',
+  },
+  actions: {
+    list: {
+      component: '~/components/Ad/Action/List.vue',
+      path: '/list',
+    },
+    edit: {
+      component: '~/components/Ad/Action/Form.vue',
+      path: '/edit/:id',
+    },
+    delete: {
+      component: '~/components/Ad/Action/Delete.vue',
+      path: '/delete/:id',
+    },
+    create: {
+      component: '~/components/Ad/Action/Form.vue',
+      path: '/create/',
+    }
+  }
+}
+
 export default {
   genres,
-  directors
+  directors,
+  movies
 }

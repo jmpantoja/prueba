@@ -43,26 +43,37 @@
   }
 
   fieldset {
+    position: relative;
+    margin-top: 1.6rem;
+
     border-radius: 4px;
     margin-bottom: 4em;
     padding-top: 3em;
+    box-shadow: 10px 10px 5px $--border-base;
     border: $--border-base;
+    //border-color: $--color-primary-light-4;
 
     background: white;
 
     legend {
-      font-size: 1.2rem;
-      padding: 0 1em 0 0.5em;
-      color: #606266;
+      position: absolute;
+      top: -1.6rem;
+      left: 2px;
+      //padding: 0 1em 0 0.5em;
 
+      font-size: 1.1rem;
+      text-transform: capitalize;
+      color: #606266;
     }
   }
 
-}
+  fieldset.is-error {
+    border-color: $--color-danger-light-4;
 
-.el-form-item.is-error {
-  label {
-    color: $--color-danger !important;
+    legend {
+      color: $--color-danger;
+    }
   }
+
 }
 

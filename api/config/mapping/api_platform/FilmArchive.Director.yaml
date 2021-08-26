@@ -3,6 +3,7 @@ App\Domain\FilmArchive\Director:
         get:
             filters:
                 - 'director.name_filter'
+                - 'director.name_order'
                 
         post: ~
 

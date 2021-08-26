@@ -1,7 +1,14 @@
-import genres from "./es/genres"
-import directors from "./es/directors"
+import {Translation} from "~/types/lang";
 
-export default {
+// @ts-ignore
+import genres from "./es/genres.ts"
+// @ts-ignore
+import directors from "./es/directors.ts"
+// @ts-ignore
+import movies from "./es/movies.ts"
+
+
+const spanish: Translation = {
   profile: {
     profile: 'Perfil',
     logout: 'Salir'
@@ -19,9 +26,10 @@ export default {
   buttons: {
     reset: 'Restaurar',
     filter: 'Filtrar',
-    save: 'Guardar'
+    save: 'Guardar',
+    back: 'Volver',
+    yes_delete: '<strong>Sí,</strong> Volver'
   },
-
   menu: {
     film_archive: 'Filmoteca',
     dashboard: 'Escritorio',
@@ -32,6 +40,9 @@ export default {
   },
   admin: {
     genres,
-    directors
+    directors,
+    movies
   }
 }
+
+export default spanish;

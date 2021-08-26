@@ -2,6 +2,9 @@ App\Domain\FilmArchive\Movie:
     collectionOperations:
         get:
             filters:
+                - 'movie.id_order'
+                - 'movie.title_order'
+                - 'movie.title_filter'
         post: ~
 
     properties:

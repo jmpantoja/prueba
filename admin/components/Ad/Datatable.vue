@@ -91,7 +91,6 @@ import {denormalizeQuery, normalizeQuery} from "~/src/Grid"
 import {FilterList, TableProps, TableQuery} from "~/types/grid";
 import {Dataset, Entity} from "~/types/api";
 
-
 const _ = require("lodash")
 
 @Component({
@@ -101,7 +100,6 @@ const _ = require("lodash")
   })
 })
 export default class extends Vue {
-
   @Inject('admin') private admin!: Admin
 
   saveQuery!: Function
@@ -186,7 +184,6 @@ export default class extends Vue {
     if (this.loading) {
       return
     }
-
 
     const query = normalizeQuery(this.query)
     this.persistQuery(query);

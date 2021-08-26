@@ -18,6 +18,7 @@ type TableProps = {
 type QueryGetter = (endpoint: string) => TableQuery
 
 
+
 type Filter = {
   mode?: string,
   value: any

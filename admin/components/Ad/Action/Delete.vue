@@ -5,11 +5,11 @@
     <el-card>
 
       <div class="delete-confirmation">
-        <p v-html="admin.message('text.delete_confirmation', {entity})"></p>
+        <p v-html="admin.message('message.delete_confirmation', {entity})"></p>
         <el-button @click="back">
-          {{ admin.message('buttons.back') }}
+          {{ $t('buttons.back') }}
         </el-button>
-        <el-button @click="ok" type="danger" v-html="admin.message('buttons.yes_delete')"/>
+        <el-button @click="ok" type="danger" v-html="$t('buttons.yes_delete')"/>
       </div>
     </el-card>
   </div>

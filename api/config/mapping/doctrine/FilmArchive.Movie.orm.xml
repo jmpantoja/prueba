@@ -6,7 +6,9 @@
     <entity name="App\Domain\FilmArchive\Movie" table="movies">
 
         <id name="id" column="id" type="MovieId"/>
+
         <embedded name="title" class="App\Domain\FilmArchive\MovieTitle" use-column-prefix="false"/>
+
         <embedded name="year" class="App\Domain\FilmArchive\MovieYear" use-column-prefix="false"/>
 
         <many-to-one field="director" target-entity="App\Domain\FilmArchive\Director">

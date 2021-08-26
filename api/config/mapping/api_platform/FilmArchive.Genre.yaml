@@ -2,7 +2,7 @@ App\Domain\FilmArchive\Genre:
     collectionOperations:
         get:
             filters: 
-                - 'genre.order_filter'
+                - 'genre.order'
                 - 'genre.name_filter'
         post: ~
 

@@ -1,7 +1,7 @@
 <template>
   <div class="action action-form" v-loading="waiting">
     <component :is="components.toolbar" :entity="entity"/>
-    <el-card>
+    <el-card shadow="never">
       <component :is="components.form" :entity="entity"/>
     </el-card>
   </div>
@@ -26,5 +26,8 @@ export default class extends mixins(EntityAction) {
 </script>
 
 <style scoped lang="scss">
-
+  .el-card {
+    background-color: transparent;
+    border-color: transparent;
+  }
 </style>

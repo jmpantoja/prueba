@@ -26,6 +26,7 @@
           <slot name="fields" :model="model"/>
         </el-form>
 
+
       </div>
 
       <div class="footer">
@@ -156,10 +157,9 @@ export default class extends Vue {
   }
 
   private onValidate(prop: string, valid: boolean) {
+
     this.$set(this.errorBag, prop, valid)
-
     this.$emit('validate', prop, valid)
-
   }
 
   private submit() {
@@ -188,7 +188,7 @@ export default class extends Vue {
 
 <style scoped lang="scss">
 
-$toc-width: 18rem;
+$toc-width: 20rem;
 
 .admin-form {
   display: flex;
@@ -201,11 +201,6 @@ $toc-width: 18rem;
     overflow-y: auto;
     width: $toc-width;
     border-right: $--border-base;
-
-    &.toc-empty {
-      background: #fafafa;
-      border-right: #fafafa;
-    }
 
     ul {
       padding: 0;
@@ -233,17 +228,16 @@ $toc-width: 18rem;
   }
 
   .main {
-    background: #fafafa;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
     position: relative;
 
     .form-wrapper {
-      padding: 1em;
+      padding: 3em 1em;
       flex-grow: 1;
       overflow-y: auto;
-      margin-right: $toc-width;
+      padding: 3em $toc-width 0;
     }
 
     .footer {
@@ -253,7 +247,8 @@ $toc-width: 18rem;
       bottom: 0;
       right: 10px;
       left: 0;
-      background: linear-gradient(180deg, hsla(0, 0%, 100%, .18) 0, hsla(0, 0%, 100%, .98) 87%, hsla(0, 0%, 100%, .98))
+      //background: linear-gradient(180deg, hsla(0, 0%, 100%, .18) 0, hsla(0, 0%, 100%, .98) 87%, hsla(0, 0%, 100%, .98));
+      background: linear-gradient(180deg, rgba($main-background-color, .18) 0, rgba($main-background-color, .98) 87%, rgba($main-background-color, .98))
     }
   }
 }

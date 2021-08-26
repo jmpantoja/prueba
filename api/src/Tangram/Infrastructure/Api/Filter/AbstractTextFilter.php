@@ -11,16 +11,15 @@
 
 declare(strict_types=1);
 
-namespace Tangram\Infrastructure\ApiPlatform\Core\Bridge\Doctrine\Orm\Filter;
+namespace Tangram\Infrastructure\Api\Filter;
 
 
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\AbstractContextAwareFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Util\QueryNameGeneratorInterface;
 use Doctrine\ORM\QueryBuilder;
 
-class TextFilter extends AbstractContextAwareFilter
+abstract class AbstractTextFilter extends AbstractContextAwareFilter
 {
-
     public const PARAMETER_EQUALS = 'equals';
     public const PARAMETER_CONTAINS = 'contains';
     public const PARAMETER_BEGINS = 'begins';
@@ -40,7 +39,9 @@ class TextFilter extends AbstractContextAwareFilter
 
         foreach ($value as $strategy => $token) {
             $paramName = $queryNameGenerator->generateParameterName('value');
-            $queryBuilder->andWhere(sprintf('%s.%s like :%s', $alias, $property, $paramName))
+            $clause = $this->formatWhereClause($alias, $property, $paramName);
+
+            $queryBuilder->andWhere($clause)
                 ->setParameter($paramName, $this->paramValue($strategy, $token));
         }
     }
@@ -94,5 +95,13 @@ class TextFilter extends AbstractContextAwareFilter
             ],
         ];
     }
+
+    /**
+     * @param mixed $alias
+     * @param string $property
+     * @param string $paramName
+     * @return string
+     */
+    abstract protected function formatWhereClause(string $alias, string $property, string $paramName): string;
 
 }

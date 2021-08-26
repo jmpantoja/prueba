@@ -133,7 +133,7 @@ class Admin {
   }
 
   public error(description: string) {
-    const message = this.message('message.error', {description});
+    const message = this.message('flash.error', {description});
 
     Message({
       dangerouslyUseHTMLString: true,
@@ -158,7 +158,7 @@ class Admin {
   public async save(entity: Entity): Promise<Entity> {
     const request = this.api.PUT(this.endpoint, entity)
     return this.request(request, (response: AxiosResponse) => {
-      this.success('message.save', {entity})
+      this.success('flash.save', {entity})
       return response['data']
     })
   }
@@ -167,7 +167,7 @@ class Admin {
 
     const request = this.api.POST(this.endpoint, entity)
     return this.request(request, (response: AxiosResponse) => {
-      this.success('message.save', {entity})
+      this.success('flash.save', {entity})
       return response['data']
     })
   }
@@ -187,7 +187,7 @@ class Admin {
 
     const request = this.api.DELETE(this.endpoint, entity)
     return this.request(request, (response: AxiosResponse) => {
-      this.success('message.delete', {entity})
+      this.success('flash.delete', {entity})
       return response['data']
     })
   }
@@ -214,7 +214,7 @@ class Admin {
           const message = error.response?.data['hydra:description'] || 'Not Found'
           this._loading = false
           this.error(message)
-          reject(message)
+          reject(error)
         })
     })
 

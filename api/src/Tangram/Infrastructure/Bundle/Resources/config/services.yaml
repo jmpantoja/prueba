@@ -23,12 +23,12 @@ services:
         autowire: true
         autoconfigure: true
         public: false
-
-    Tangram\Infrastructure\ApiPlatform\Core\Bridge\:
-        resource: '../../../ApiPlatform/Core/Bridge'
-        autowire: true
-        autoconfigure: true
-        public: false
+    #
+    #    Tangram\Infrastructure\ApiPlatform\Core\Bridge\:
+    #        resource: '../../../ApiPlatform/Core/Bridge'
+    #        autowire: true
+    #        autoconfigure: true
+    #        public: false
 
     Tangram\Infrastructure\Api\:
         resource: '../../../Api'
@@ -40,17 +40,40 @@ services:
     Tangram\Domain\Event\EventStore:
         alias: Tangram\Infrastructure\Doctrine\Repository\DoctrineEventStore
 
-    tangram.api_platform.doctrine.orm.text_filter:
-        class: Tangram\Infrastructure\ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\TextFilter
+    order_filter:
+        alias: api_platform.doctrine.orm.order_filter
+
+    order_filter_base:
+        alias: Tangram\Infrastructure\Api\Filter\AbstractOrderFilter
+
+    Tangram\Infrastructure\Api\Filter\AbstractOrderFilter:
+        abstract: true
+        arguments: {
+            $managerRegistry: '@doctrine',
+            $requestStack: ~,
+            $orderParameterName: '%api_platform.collection.order_parameter_name%',
+            $logger: '@?logger',
+            $nameConverter: '@?api_platform.name_converter'
+        }
+
+    TextFilter:
+        class: Tangram\Infrastructure\Api\Filter\TextFilter
         arguments: [ '@doctrine', ~, '@?logger' ]
         autowire: true
         autoconfigure: true
         public: false
 
-    tangram.api_platform.doctrine.orm.fullname_filter:
-        class: Tangram\Infrastructure\ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\FullNameFilter
+    FullnameFilter:
+        class: Tangram\Infrastructure\Api\Filter\FullNameFilter
         arguments: [ '@doctrine', ~, '@?logger' ]
         autowire: true
         autoconfigure: true
         public: false
+
+    FullnameOrder:
+        class: Tangram\Infrastructure\Api\Filter\FullNameOrder
+        parent: order_filter_base
+        autowire: true
+        autoconfigure: true
+        public: false        
 

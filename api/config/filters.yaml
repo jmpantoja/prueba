@@ -1,35 +1,59 @@
 services:
+    #SERVICES
+    #movies
+    MovieTitleFilter:
+        class: App\Infrastructure\Api\FilmArchive\Filter\MovieTitleFilter
+        arguments: [ '@doctrine', ~, '@?logger' ]
+
+    MovieTitleOrder:
+        class: App\Infrastructure\Api\FilmArchive\Filter\MovieTitleOrder
+        parent: 'order_filter_base'
+
+
+
+    #FILTERS
+    #movies
+    movie.title_filter:
+        parent: MovieTitleFilter
+        arguments: { $properties: { 'title': ~ } }
+        tags: [ 'api_platform.filter' ]
+
+    movie.id_order:
+        parent: 'order_filter'
+        arguments: { $properties: { 'id': ~ } }
+        tags: [ 'api_platform.filter' ]
+
+    movie.title_order:
+        parent: MovieTitleOrder
+        arguments: { $properties: { 'title': ~ } }
+        tags: [ 'api_platform.filter' ]
+
+    #genres
     genre.name_filter:
-        parent: 'tangram.api_platform.doctrine.orm.text_filter'
+        parent: TextFilter
         arguments: { $properties: { name: ~ } }
         tags: [ 'api_platform.filter' ]
-        autowire: false
-        autoconfigure: false
-        public: false
 
-    genre.order_filter:
-        parent: 'api_platform.doctrine.orm.order_filter'
+    genre.order:
+        parent: 'order_filter'
         arguments: { $properties: { id: ~, name: ~ } }
         tags: [ 'api_platform.filter' ]
-        autowire: false
-        autoconfigure: false
-        public: false
 
-
+    #director
     director.name_filter:
-        parent: 'tangram.api_platform.doctrine.orm.fullname_filter'
+        parent: FullnameFilter
         arguments: { $properties: { name: ~ } }
         tags: [ 'api_platform.filter' ]
-        autowire: false
-        autoconfigure: false
-        public: false
+        
+    director.name_order:
+        parent: FullnameOrder
+        arguments: { $properties: { name: '~' } }
+        tags: [ 'api_platform.filter' ]
 
+
+
+    #user
     user.order_filter:
-        parent: 'api_platform.doctrine.orm.order_filter'
+        parent: 'order_filter'
         arguments: { $properties: { email: "asc" } }
         tags: [ 'api_platform.filter' ]
-        ###        # The following are mandatory only if a _defaults section is defined
-        ###        # You may want to isolate filters in a dedicated file to avoid adding them
-        autowire: false
-        autoconfigure: false
-        public: false
