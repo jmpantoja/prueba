@@ -2,7 +2,7 @@
   <div class="action action-list">
     <component :is="components.toolbar"/>
     <el-card>
-      <component :is="components.list"/>
+      <component :is="components.grid"/>
     </el-card>
   </div>
 </template>

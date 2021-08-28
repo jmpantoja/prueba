@@ -4,7 +4,7 @@ const genres: AdminConfig = {
   path: '/data/genres',
   endpoint: '/genres',
   components: {
-    list: 'AppGenreList',
+    grid: 'AppGenreGrid',
     form: 'AppGenreForm',
     toolbar: 'AppGenreToolbar',
   },
@@ -32,7 +32,7 @@ const directors: AdminConfig = {
   path: '/data/directors',
   endpoint: '/directors',
   components: {
-    list: 'AppDirectorList',
+    grid: 'AppDirectorGrid',
     form: 'AppDirectorForm',
     toolbar: 'AppDirectorToolbar',
   },
@@ -60,7 +60,7 @@ const movies: AdminConfig = {
   path: '/data/movies',
   endpoint: '/movies',
   components: {
-    list: 'AppMovieList',
+    grid: 'AppMovieGrid',
     form: 'AppMovieForm',
     toolbar: 'AppMovieToolbar',
   },

@@ -24,7 +24,7 @@ import {Admin} from "~/src/Admin";
 
 
 @Component({
-  name: 'MovieList'
+  name: 'MovieGrid'
 })
 export default class extends Vue {
   @Inject('admin') admin!: Admin;

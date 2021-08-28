@@ -34,7 +34,7 @@ type AdminConfig = {
   path: string,
   endpoint: string,
   components: {
-    list: string,
+    grid: string,
     form: string,
     toolbar: string,
   },

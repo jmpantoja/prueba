@@ -1,18 +1,16 @@
-<!--suppress ALL -->
 <template>
   <ad-datatable :default-query="defaultQuery">
 
     <template v-slot:filters="{filters}">
-      <ad-filter-text :label="admin.message('filters.name')" prop="name" v-model="filters.name"/>
+      <ad-filter-text :label="admin.message('filters.genre')" prop="name" v-model="filters.name"/>
     </template>
 
     <template slot="columns">
-      <el-table-column prop="name" :label="admin.message('columns.name')" sortable="custom" v-slot="{row}">
-        <ad-goto :entity="row">
-          {{ row.name.lastName }}, {{ row.name.name }}
-        </ad-goto>
+      <el-table-column prop="name" :label="admin.message('columns.genre')" sortable="custom" v-slot="{row}">
+        <ad-goto :entity="row" :value="row.name"/>
       </el-table-column>
     </template>
+
   </ad-datatable>
 
 </template>
@@ -25,18 +23,17 @@ import {TableQuery} from "~/types/grid";
 
 
 @Component({
-  name: 'DirectorList'
+  name: 'GenreGrid'
 })
 export default class extends Vue {
-  @Inject('admin') private admin!: Admin
+  @Inject('admin') admin!: Admin;
 
   public defaultQuery: TableQuery = {
     order: {
       prop: 'name',
-      order: 'ascending'
+      order: 'descending'
     }
   }
-
 }
 </script>
 
