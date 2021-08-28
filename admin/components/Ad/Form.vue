@@ -1,7 +1,7 @@
 <template>
-  <div class="admin-form">
-    <div class="toc" :class="{'toc-empty': !hasToc}">
-      <ul v-if="hasToc">
+  <div class="admin-form" v-loading="admin.loading">
+    <div class="toc">
+      <ul>
         <li v-for="(group, key) in groups"
             :key="key"
             @click="goTo(group)"
@@ -20,8 +20,7 @@
           validate-on-rule-change
           @validate="onValidate"
           label-position="left"
-          label-width="9rem"
-          v-loading="admin.loading">
+          label-width="9rem">
 
           <slot name="fields" :model="model"/>
         </el-form>
@@ -65,7 +64,6 @@ export default class extends Vue {
   public groups: { [key: string]: FormGroupDefinition } = {}
   public active: string = ''
   private errorBag = {}
-  private numOfGroups: number = 0;
   private groupErrorBag: object = {};
 
 
@@ -96,16 +94,10 @@ export default class extends Vue {
     }
     this.$set(this.groups, group.name, group)
 
-    this.numOfGroups++
   }
 
   public validateGroup(group: string, valid: boolean) {
     this.$set(this.groupErrorBag, group, !valid)
-  }
-
-
-  get hasToc() {
-    return this.numOfGroups > 1;
   }
 
   private goTo(group: FormGroupDefinition) {

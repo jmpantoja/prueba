@@ -1,13 +1,14 @@
 import {Component, Provide, Vue} from 'nuxt-property-decorator'
 import {Context} from "~/types/";
 import {RouteMeta} from "~/types/route";
-import {Admin} from "~/types/admin";
+import {Admin, AdminManager} from "~/types/admin";
 
 @Component({
   name: 'Action',
 })
 export default class extends Vue {
   @Provide('admin') protected admin!: Admin;
+  @Provide('adminManager') protected adminManager!: AdminManager;
 
   public async asyncData({route, security, adminManager}: Context) {
     const metas = (route.meta as RouteMeta[])
@@ -20,6 +21,7 @@ export default class extends Vue {
 
     return {
       components: meta.components,
+      adminManager,
       admin,
     }
   }

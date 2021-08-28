@@ -1,5 +1,6 @@
 <template>
   <el-form-item class="form-item-inline filter-text" :label="label">
+
     <el-form-item class="filter-text__mode" :prop="prop + '.mode'">
       <el-select v-model="data.mode" placeholder="Mode">
         <el-option
@@ -31,10 +32,10 @@ export default class extends mixins(Field) {
   public modes = ['equals', 'contains', 'begins', 'ends']
 
   public defaults(data: Object): Object {
-    const value = _.merge(data, {
+    const value = _.merge({
       mode: 'contains',
       value: null
-    })
+    }, data)
 
     this.$emit('input', value)
     return value

@@ -12,6 +12,7 @@
 
     <template slot="edit">
       <ad-toolbar-back/>
+      <ad-toolbar-create/>
     </template>
 
     <template slot="create">

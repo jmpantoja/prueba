@@ -1,6 +1,5 @@
 html {
-  font-family:
-    Roboto,
+  font-family: Roboto,
   Verdana,
   'Segoe UI',
   'Helvetica Neue',
@@ -27,3 +26,12 @@ body {
 .aside-collapsable__collapsed {
   width: 66px !important;
 }
+
+a,
+a:visited,
+a:hover {
+  text-decoration: none;
+  color: $--color-primary;
+  font-weight: 500;
+}
+

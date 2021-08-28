@@ -31,7 +31,7 @@ const genres: AdminTranslation = {
   message: {
     delete_confirmation: (params) => {
       const entity = params.named('entity');
-      return `Realmente desea borrar el director <strong>'${toString(entity)}'</strong>`
+      return `Realmente desea borrar el género <strong>'${toString(entity)}'</strong>`
     }
   },
   flash: {
@@ -41,7 +41,7 @@ const genres: AdminTranslation = {
     },
     delete: (params) => {
       const entity = params.named('entity');
-      return `El director <strong>'${toString(entity)}'</strong> se ha borrado correctamente`
+      return `El género <strong>'${toString(entity)}'</strong> se ha borrado correctamente`
     },
     error: (params) => {
       const description = params.named('description');

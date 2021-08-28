@@ -1,16 +1,16 @@
 <!--suppress ALL -->
 <template>
-  <ad-datatable>
+  <ad-datatable :default-query="defaultQuery">
 
     <template v-slot:filters="{filters}">
       <ad-filter-text :label="admin.message('filters.name')" prop="name" v-model="filters.name"/>
     </template>
 
     <template slot="columns">
-      <el-table-column prop="id" :label="admin.message('columns.id')" sortable="custom" width="300"/>
-
       <el-table-column prop="name" :label="admin.message('columns.name')" sortable="custom" v-slot="{row}">
-        {{ row.name.name }} {{ row.name.lastName }}
+        <ad-goto :entity="row">
+          {{ row.name.lastName }}, {{ row.name.name }}
+        </ad-goto>
       </el-table-column>
     </template>
   </ad-datatable>
@@ -21,6 +21,7 @@
 
 import {Component, Inject, Vue} from 'nuxt-property-decorator'
 import {Admin} from "~/src/Admin";
+import {TableQuery} from "~/types/grid";
 
 
 @Component({
@@ -28,6 +29,14 @@ import {Admin} from "~/src/Admin";
 })
 export default class extends Vue {
   @Inject('admin') private admin!: Admin
+
+  public defaultQuery: TableQuery = {
+    order: {
+      prop: 'name',
+      order: 'ascending'
+    }
+  }
+
 }
 </script>
 

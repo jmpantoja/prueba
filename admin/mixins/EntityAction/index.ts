@@ -23,8 +23,8 @@ export default class extends mixins(Action) {
       .then((entity: Entity) => {
         this.entity = entity
       })
-
   }
+
 
   public get waiting(): boolean {
     if (this.admin.view === 'create') {
@@ -32,6 +32,4 @@ export default class extends mixins(Action) {
     }
     return this.entity.id === null
   }
-
-
 }

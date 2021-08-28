@@ -7,6 +7,46 @@
         <ad-form-full-name v-model="model.name" prop="name" :label="admin.message('form.name')"/>
       </ad-form-group>
 
+      <!--      <ad-form-group title="Director B">-->
+      <!--        <ad-form-full-name v-model="model.name" prop="name" :label="admin.message('form.name')"/>-->
+      <!--      </ad-form-group>-->
+
+      <!--      <ad-form-group title="Director C">-->
+      <!--        <ad-form-full-name v-model="model.name" prop="name" :label="admin.message('form.name')"/>-->
+      <!--      </ad-form-group>-->
+
+      <!--      <ad-form-group title="Director D">-->
+      <!--        <ad-form-full-name v-model="model.name" prop="name" :label="admin.message('form.name')"/>-->
+      <!--      </ad-form-group>-->
+
+      <!--      <ad-form-group title="Director E">-->
+      <!--        <ad-form-full-name v-model="model.name" prop="name" :label="admin.message('form.name')"/>-->
+      <!--      </ad-form-group>-->
+
+      <!--      <ad-form-group title="Director F">-->
+      <!--        <ad-form-full-name v-model="model.name" prop="name" :label="admin.message('form.name')"/>-->
+      <!--      </ad-form-group>-->
+
+      <!--      <ad-form-group title="Director G">-->
+      <!--        <ad-form-full-name v-model="model.name" prop="name" :label="admin.message('form.name')"/>-->
+      <!--      </ad-form-group>-->
+
+      <!--      <ad-form-group title="Director H">-->
+      <!--        <ad-form-full-name v-model="model.name" prop="name" :label="admin.message('form.name')"/>-->
+      <!--      </ad-form-group>-->
+
+      <!--      <ad-form-group title="Director I">-->
+      <!--        <ad-form-full-name v-model="model.name" prop="name" :label="admin.message('form.name')"/>-->
+      <!--      </ad-form-group>-->
+
+      <!--      <ad-form-group title="Director J">-->
+      <!--        <ad-form-full-name v-model="model.name" prop="name" :label="admin.message('form.name')"/>-->
+      <!--      </ad-form-group>-->
+
+      <!--      <ad-form-group title="Director K">-->
+      <!--        <ad-form-full-name v-model="model.name" prop="name" :label="admin.message('form.name')"/>-->
+      <!--      </ad-form-group>-->
+
     </template>
   </ad-form>
 </template>

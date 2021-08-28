@@ -32,8 +32,6 @@
                 </slot>
               </template>
             </el-table-column>
-
-
           </slot>
 
         </el-table>
@@ -81,7 +79,7 @@
 
 <script lang="ts">
 
-import {Component, Inject, Vue, Watch} from 'nuxt-property-decorator'
+import {Component, Inject, Prop, Vue, Watch} from 'nuxt-property-decorator'
 import {DefaultSortOptions} from "element-ui/types/table";
 import {Form} from "element-ui";
 import {mapActions} from "vuex";
@@ -101,6 +99,13 @@ const _ = require("lodash")
 })
 export default class extends Vue {
   @Inject('admin') private admin!: Admin
+  @Prop({
+    required: false,
+    default: () => {
+      return {}
+    },
+    type: Object as () => TableQuery
+  }) defaultQuery!: TableQuery
 
   saveQuery!: Function
   tab: string = 'data'
@@ -125,8 +130,14 @@ export default class extends Vue {
   }
 
   created() {
-    this.query = denormalizeQuery(this.$route.query)
+
+    this.query = denormalizeQuery({
+      ...normalizeQuery(this.defaultQuery),
+      ...this.$route.query,
+    })
+
     this.page = this.query.page || 1
+    this.filters = _.cloneDeep(this.query.filters || {})
   }
 
   @Watch('page')
@@ -175,9 +186,13 @@ export default class extends Vue {
     const form = (this.$refs['filters'] as Form)
     form.resetFields()
     this.hide()
+
     this.query = {
+      ...this.defaultQuery,
       page: 1,
     }
+
+    this.filters = _.cloneDeep(this.query.filters || {})
   }
 
   reload() {
