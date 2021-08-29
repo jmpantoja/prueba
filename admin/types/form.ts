@@ -1,4 +1,4 @@
-import FormGroup from "~/components/Ad/FormGroup.vue";
+import FormGroup from "~/components/Ad/FieldGroup.vue";
 
 type FormGroupDefinition = {
     name: string,

@@ -26,7 +26,8 @@ const movies: AdminTranslation = {
     title: 'título'
   },
   form: {
-    name: 'nombre'
+    title: 'título',
+    year: 'estreno'
   },
   message: {
     delete_confirmation: (params) => {

@@ -3,13 +3,27 @@
   <ad-form :entity="entity" :empty="empty">
     <template v-slot:fields="{model}">
 
-      <ad-form-group title="Director">
+      <ad-field-group title="Director">
         <ad-form-full-name v-model="model.name" prop="name" :label="admin.message('form.name')"/>
-      </ad-form-group>
+        <ad-form-full-name v-model="model.name" prop="name" label="otro nombre"/>
 
-      <!--      <ad-form-group title="Director B">-->
-      <!--        <ad-form-full-name v-model="model.name" prop="name" :label="admin.message('form.name')"/>-->
-      <!--      </ad-form-group>-->
+        <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+        <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+        <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+        <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+        <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+        <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+        <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+        <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+        <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+        <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+        <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+
+      </ad-field-group>
+
+<!--      <ad-form-group title="Director B">-->
+<!--        <ad-form-full-name v-model="model.name" prop="name" :label="admin.message('form.name')"/>-->
+<!--      </ad-form-group>-->
 
       <!--      <ad-form-group title="Director C">-->
       <!--        <ad-form-full-name v-model="model.name" prop="name" :label="admin.message('form.name')"/>-->

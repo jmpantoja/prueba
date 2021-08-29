@@ -1,9 +1,8 @@
 <template>
-  <el-form-item class="form-item-inline" :label="label" :prop="prop">
+  <el-form-item :label="label" :prop="prop">
 
     <el-form-item
       label="Name"
-      label-width="5rem"
       :prop="prop + '.name'"
       :rules="rules.name"
     >
@@ -12,7 +11,6 @@
 
     <el-form-item
       label="Last name"
-      label-width="7rem"
       :prop="prop + '.lastName'"
       :rules="rules.lastName"
     >

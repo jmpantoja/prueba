@@ -1,79 +1,69 @@
 .el-form {
-  .el-form-item {
-    margin-bottom: 2em;
 
-    .el-form-item__label {
-      font-size: 1.05rem;
-      text-align: right;
-      padding-right: 1em;
-      text-transform: lowercase;
+  //.el-form-item {
+  //  margin-bottom: 2em;
+  //
+  //  .el-form-item__label {
+  //    font-size: 1.1rem;
+  //    font-weight: 300;
+  //
+  //    text-align: left;
+  //    padding-right: 0.5em;
+  //    text-transform: capitalize;
+  //
+  //    &:after {
+  //      content: ':';
+  //    }
+  //  }
+  //}
 
-      &:first-letter {
-        text-transform: uppercase;
-      }
+  //.el-form-item.form-item-inline {
+  //
+  //  margin-bottom: 0;
+  //
+  //  .el-form-item__content {
+  //    display: flex;
+  //
+  //    .el-form-item:first-of-type {
+  //      flex-grow: 1;
+  //
+  //      display: flex;
+  //      flex-direction: column;
+  //
+  //      margin-right: 1em;
+  //
+  //      .el-form-item__label {
+  //
+  //        font-size: 0.9rem;
+  //        text-align: right;
+  //
+  //        background-color: cadetblue;
+  //        border: solid 1px green;
+  //
+  //        width: 100%;
+  //
+  //        padding: 0;
+  //      }
+  //
+  //      .el-form-item__content {
+  //
+  //        background-color: pink;
+  //        border: solid 1px red;
+  //
+  //        width: 100%;
+  //      }
+  //
+  //    }
+  //
+  //    .el-form-item:last-child {
+  //      margin-right: 0;
+  //    }
+  //  }
+  //}
 
-      &:after {
-        content: ':';
-      }
-    }
-  }
 
-  .el-form-item.form-item-inline {
 
-    margin-bottom: 0;
 
-    .el-form-item__content {
-      display: flex;
-
-      .el-form-item__label {
-        color: #606266;
-        font-size: 0.9rem;
-        text-align: right;
-      }
-
-      .el-form-item {
-        flex-grow: 1;
-        margin-right: 1em;
-      }
-
-      .el-form-item:last-child {
-        margin-right: 0;
-      }
-    }
-  }
-
-  fieldset {
-    position: relative;
-    margin-top: 1.6rem;
-
-    border-radius: 4px;
-    margin-bottom: 4em;
-    padding-top: 3em;
-    box-shadow: 10px 10px 5px $--border-base;
-    border: $--border-base;
-    //border-color: $--color-primary-light-4;
-
-    background: white;
-
-    legend {
-      position: absolute;
-      top: -1.6rem;
-      left: 2px;
-      //padding: 0 1em 0 0.5em;
-
-      font-size: 1.1rem;
-      text-transform: capitalize;
-      color: #606266;
-    }
-  }
-
-  fieldset.is-error {
-    border-color: $--color-danger-light-4;
-
-    legend {
-      color: $--color-danger;
-    }
-  }
 
 }
 

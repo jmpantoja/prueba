@@ -1,6 +1,6 @@
 <template>
-  <div class="admin-form" v-loading="admin.loading">
-    <div class="toc">
+  <div class="admin-form" :class="{'has-toc': hasToc}" v-loading="admin.loading">
+    <div v-if="hasToc" class="toc">
       <ul>
         <li v-for="(group, key) in groups"
             :key="key"
@@ -17,17 +17,13 @@
           ref="form"
           :model="model"
           @submit.native.prevent="submit"
-          validate-on-rule-change
           @validate="onValidate"
-          label-position="left"
-          label-width="9rem">
-
+          validate-on-rule-change
+          label-position="top"
+          label-width="8rem">
           <slot name="fields" :model="model"/>
         </el-form>
-
-
       </div>
-
       <div class="footer">
         <el-button type="primary" :disabled="!valid" @click="submit">{{ $t('buttons.save') }}</el-button>
       </div>
@@ -65,6 +61,7 @@ export default class extends Vue {
   public active: string = ''
   private errorBag = {}
   private groupErrorBag: object = {};
+  private hasToc!: boolean = false;
 
 
   @Watch('errorBag', {deep: true})
@@ -94,6 +91,7 @@ export default class extends Vue {
     }
     this.$set(this.groups, group.name, group)
 
+    this.hasToc = Object.keys(this.groups).length > 1;
   }
 
   public validateGroup(group: string, valid: boolean) {
@@ -226,11 +224,16 @@ $toc-width: 20rem;
     position: relative;
 
     .form-wrapper {
-      padding: 3em 1em;
       flex-grow: 1;
       overflow-y: auto;
-      padding: 3em $toc-width 0;
+      //padding: 3em $toc-width 0;
+
+      form {
+        width: 55em;
+        margin: auto;
+      }
     }
+
 
     .footer {
       position: absolute;
@@ -239,8 +242,13 @@ $toc-width: 20rem;
       bottom: 0;
       right: 10px;
       left: 0;
-      //background: linear-gradient(180deg, hsla(0, 0%, 100%, .18) 0, hsla(0, 0%, 100%, .98) 87%, hsla(0, 0%, 100%, .98));
       background: linear-gradient(180deg, rgba($main-background-color, .18) 0, rgba($main-background-color, .98) 87%, rgba($main-background-color, .98))
+    }
+  }
+
+  &.has-toc {
+    .toc {
+
     }
   }
 }

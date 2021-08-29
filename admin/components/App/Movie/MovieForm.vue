@@ -2,9 +2,7 @@
 
   <ad-form :entity="entity" :empty="empty">
     <template v-slot:fields="{model}">
-
-      <ad-form-group title="general">
-
+      <ad-field-group title="general">
         <el-form-item :label="admin.message('form.title')">
           <el-input type="text" v-model="model.title" prop="title"/>
         </el-form-item>
@@ -12,9 +10,7 @@
         <el-form-item :label="admin.message('form.year')">
           <el-input type="number" v-model="model.year" prop="year"/>
         </el-form-item>
-
-      </ad-form-group>
-
+      </ad-field-group>
     </template>
   </ad-form>
 </template>
