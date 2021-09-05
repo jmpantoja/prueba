@@ -1,5 +1,6 @@
 parameters:
 
+
 services:
     Tangram\Infrastructure\ApiPlatform\Core\Swagger\Serializer\SwaggerDecorator:
         decorates: 'api_platform.swagger.normalizer.documentation'
@@ -11,6 +12,20 @@ services:
         public: true
         arguments: [ '@doctrine.orm.default_entity_manager', 'Gesdinet\JWTRefreshTokenBundle\Entity\RefreshToken' ]
 
+    tangram.http_cache.client:
+        class: GuzzleHttp\Client
+        arguments:
+            - { base_uri: '%env(HTTP_CACHE_URL)%' }
+
+
+    api_platform.http_cache.purger:
+        alias: Tangram\Infrastructure\ApiPlatform\Core\HttpCache\RedisPurger
+
+
+    Tangram\Infrastructure\ApiPlatform\Core\HttpCache\RedisPurger:
+        autowire: false
+        arguments:
+            - '@tangram.http_cache.client'        
 
     Tangram\Infrastructure\Tactician\:
         resource: '../../../Tactician'
@@ -23,12 +38,12 @@ services:
         autowire: true
         autoconfigure: true
         public: false
-    #
-    #    Tangram\Infrastructure\ApiPlatform\Core\Bridge\:
-    #        resource: '../../../ApiPlatform/Core/Bridge'
-    #        autowire: true
-    #        autoconfigure: true
-    #        public: false
+
+#    Tangram\Infrastructure\ApiPlatform\Core\:
+#        resource: '../../../ApiPlatform/Core'
+#        autowire: true
+#        autoconfigure: true
+#        public: false
 
     Tangram\Infrastructure\Api\:
         resource: '../../../Api'

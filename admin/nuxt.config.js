@@ -73,7 +73,13 @@ export default {
   auth: config.auth,
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
+  axios: {
+    headers: {
+      common: {
+        'Accept': 'application/ld+json, text/plain, */*'
+      }
+    }
+  },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {

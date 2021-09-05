@@ -52,13 +52,13 @@ final class TangramExtension extends Extension implements PrependExtensionInterf
 
     public function prepend(ContainerBuilder $container)
     {
+
         $extensions = array_keys($container->getExtensions());
         $pathToPackages = realpath(__DIR__ . '/../Resources/config/packages');
 
         $config = $this->loadPackagesConfig($pathToPackages);
 
         foreach ($extensions as $extension) {
-
             if (isset($config[$extension])) {
                 $container->prependExtensionConfig($extension, $config[$extension]);
             }

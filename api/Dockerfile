@@ -152,9 +152,16 @@ VOLUME /srv/api/var
 # "nginx" stage
 # depends on the "php" stage above
 # The OpenResty distribution of NGINX is only needed for Kubernetes compatiblity (dynamic upstream resolution)
-FROM openresty/openresty:${OPENRESTY_VERSION}-alpine AS api_platform_nginx
+FROM openresty/openresty:${OPENRESTY_VERSION}-alpine-fat AS api_platform_nginx
 
-RUN echo -e "env UPSTREAM;\n$(cat /usr/local/openresty/nginx/conf/nginx.conf)" > /usr/local/openresty/nginx/conf/nginx.conf
+ENV APP_ENV=prod
+
+RUN echo -e "env UPSTREAM;\nenv APP_ENV;\nenv REDIS;$(cat /usr/local/openresty/nginx/conf/nginx.conf)" > /usr/local/openresty/nginx/conf/nginx.conf
+
+RUN apk add git
+RUN /usr/local/openresty/luajit/bin/luarocks install lua-cjson
+RUN /usr/local/openresty/luajit/bin/luarocks install oops
+
 COPY docker/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf
 
 WORKDIR /srv/api/public
@@ -162,24 +169,24 @@ WORKDIR /srv/api/public
 COPY public /srv/api/public/
 
 
-# "varnish" stage
-# does not depend on any of the above stages, but placed here to keep everything in one Dockerfile
-FROM varnish:${VARNISH_VERSION} AS api_platform_varnish
-
-ENV BACKEND=api
-ENV UPSTREAM=php
-
-COPY docker/varnish/conf/default.tmpl /usr/local/etc/varnish/default.tmpl
-
-RUN set -eux; \
-	apt-get update; \
-	apt-get install -y gettext-base; \
-	apt-get clean; \
-	rm -rf /var/lib/apt/lists/*
-
-COPY docker/varnish/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
-RUN chmod +x /usr/local/bin/docker-entrypoint
-
-ENTRYPOINT ["docker-entrypoint"]
-
-CMD ["varnishd", "-F", "-f", "/etc/varnish/default.vcl", "-p", "http_resp_hdr_len=65536", "-p", "http_resp_size=98304"]
+## "varnish" stage
+## does not depend on any of the above stages, but placed here to keep everything in one Dockerfile
+#FROM varnish:${VARNISH_VERSION} AS api_platform_varnish
+#
+#ENV BACKEND=api
+#ENV UPSTREAM=php
+#
+#COPY docker/varnish/conf/default.tmpl /usr/local/etc/varnish/default.tmpl
+#
+#RUN set -eux; \
+#	apt-get update; \
+#	apt-get install -y gettext-base; \
+#	apt-get clean; \
+#	rm -rf /var/lib/apt/lists/*
+#
+#COPY docker/varnish/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
+#RUN chmod +x /usr/local/bin/docker-entrypoint
+#
+#ENTRYPOINT ["docker-entrypoint"]
+#
+#CMD ["varnishd", "-F", "-f", "/etc/varnish/default.vcl", "-p", "http_resp_hdr_len=65536", "-p", "http_resp_size=98304"]

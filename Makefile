@@ -1,8 +1,14 @@
 dev:
-	docker-compose -f docker-compose.yml -f docker/docker-compose.dev.yml up -d
+	docker-compose -f docker-compose.yml -f docker/docker-compose.dev.yml up -d --remove-orphans
+
+pro:
+	docker-compose -f docker-compose.yml -f docker/docker-compose.pro.yml up -d --remove-orphans
 
 down:
-	docker-compose down
+	docker-compose -f docker-compose.yml  -f docker/docker-compose.dev.yml -f docker/docker-compose.pro.yml down --remove-orphans
+
+restart:
+	docker-compose -f docker-compose.yml -f docker/docker-compose.dev.yml restart
 
 build:
 	docker-compose -f docker/docker-compose.build.yml pull --ignore-pull-failures
@@ -10,6 +16,12 @@ build:
 
 push:
 	docker-compose -f docker/docker-compose.build.yml push
+
+ps:
+	docker-compose ps
+
+nginx-reload:
+	docker-compose exec api  nginx -s reload -c /usr/local/openresty/nginx/conf/nginx.conf
 
 admin-restart:
 	docker-compose restart admin

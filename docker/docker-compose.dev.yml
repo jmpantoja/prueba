@@ -1,17 +1,30 @@
 version: '3.4'
 
 services:
+  api:
+    environment:
+      APP_ENV: dev  
+  
+  php:
+    environment:
+      APP_DEBUG: 1
+      APP_ENV: dev
+
+      #https://brunopaz.dev/blog/docker-phpstorm-and-xdebug-the-definitive-guide
+      PHP_IDE_CONFIG: serverName=symfony-demo
+      XDEBUG_CONFIG: remote_host=172.17.0.1 #ifconfig -- docker0          
+
   db:
     ports:
       - 3306:3306
-    
+
   client:
     command: "yarn dev"
-    
+
   admin:
     command: "yarn dev"
-    
-  proxy:      
+
+  proxy:
     environment:
       CLIENT_MAX_BODY_SIZE: 64M
       DOMAINS: "

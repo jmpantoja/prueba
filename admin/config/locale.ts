@@ -1,5 +1,6 @@
 export const dateTimeFormats = {
   es: {
+    picker: 'd/M/yyyy',
     short: {
       year: 'numeric',
       month: 'short',

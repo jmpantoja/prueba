@@ -8,7 +8,7 @@ const _ = require("lodash")
 export default class extends Vue {
   @Prop({required: false, type: String}) prop!: string
   @Prop({required: false, type: String}) label!: string
-  @Prop({required: false, type: Object}) value!: {}
+  @Prop({required: false}) value!: null
 
 
   @Watch('data', {'deep': true, immediate: false})
@@ -25,9 +25,9 @@ export default class extends Vue {
     this.data = this.defaults(_.cloneDeep(this.value))
   }
 
-  public data: Object = this.defaults(_.cloneDeep(this.value))
+  public data: any = this.defaults(_.cloneDeep(this.value))
 
-  public defaults(data: Object): Object {
+  public defaults(data: any): any {
     return data
   }
 }

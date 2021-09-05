@@ -15,33 +15,29 @@ namespace App\Infrastructure\UI\Symfony\Controller;
 
 
 use App\Domain\FilmArchive\Builder\GenreInput;
-use App\Domain\FilmArchive\GenreList;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
-use Tangram\Infrastructure\Api\Normalizer\EntityListDenormalizer;
+use Symfony\Component\HttpFoundation\Request;
 
 final class BorrameController extends AbstractController
 {
-    private ValidatorInterface $validator;
-    private EntityListDenormalizer $listDenormalizer;
-
-
-    public function __construct(EntityListDenormalizer $listDenormalizer)
+    public function __invoke(Request $request)
     {
-        $this->listDenormalizer = $listDenormalizer;
-    }
-
-    public function __invoke()
-    {
-        $list = $this->listDenormalizer->denormalize([
-            ['id'=>'01792d18-321c-34f2-0018-a02f227b6a73']
-        ], GenreList::class);
-
-
-        return new JsonResponse([
-            'list' => $list->toArray()
+        $response = new JsonResponse([
+            'date' => (new DateTime())->format('H.i.s'),
+            'method' => $request->getMethod()
         ]);
+
+        $date = new DateTime();
+
+//        $response->setMaxAge(600);
+//        $response->setLastModified($date);
+
+        $response->setSharedMaxAge(600);
+        //  $response->setVary('Authorization');
+
+        return $response;
     }
 
 

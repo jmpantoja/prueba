@@ -118,7 +118,7 @@ class Admin {
     return this._context.i18n.t(path, params).toString()
   }
 
-  private get api(): Api {
+  public get api(): Api {
     return this._context.api
   }
 
@@ -157,7 +157,7 @@ class Admin {
 
   public async save(entity: Entity): Promise<Entity> {
     const request = this.api.PUT(this.endpoint, entity)
-    return this.request(request, (response: AxiosResponse) => {
+    return this.apiCall(request, (response: AxiosResponse) => {
       this.success('flash.save', {entity})
       return response['data']
     })
@@ -166,17 +166,17 @@ class Admin {
   public async create(entity: Entity): Promise<Entity> {
 
     const request = this.api.POST(this.endpoint, entity)
-    return this.request(request, (response: AxiosResponse) => {
+    return this.apiCall(request, (response: AxiosResponse) => {
       this.success('flash.save', {entity})
       return response['data']
     })
   }
 
 
-  public async get(query: object): Promise<Dataset> {
+  public async get(query: object = {}): Promise<Dataset> {
 
     const request = this.api.GET(this.endpoint, query)
-    return this.request(request, (response: AxiosResponse) => {
+    return this.apiCall(request, (response: AxiosResponse) => {
       const items = response.data['hydra:member']
       const totalItems = response.data['hydra:totalItems']
       return {items, totalItems}
@@ -186,7 +186,7 @@ class Admin {
   public async delete(entity: Entity): Promise<Entity> {
 
     const request = this.api.DELETE(this.endpoint, entity)
-    return this.request(request, (response: AxiosResponse) => {
+    return this.apiCall(request, (response: AxiosResponse) => {
       this.success('flash.delete', {entity})
       return response['data']
     })
@@ -195,12 +195,12 @@ class Admin {
   public async findOne(id: string): Promise<Entity> {
     const endpoint = `${this.endpoint}/${id}`
     const request = this.api.GET(endpoint);
-    return this.request(request, (response: AxiosResponse) => {
+    return this.apiCall(request, (response: AxiosResponse) => {
       return response['data']
     })
   }
 
-  private request(request: AxiosPromise, then: (response: AxiosResponse) => any): Promise<any> {
+  private apiCall(request: AxiosPromise, then: (response: AxiosResponse) => any): Promise<any> {
     this._loading = true
 
     return new Promise((resolve, reject) => {

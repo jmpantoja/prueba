@@ -8,4 +8,4 @@
 borrame:
     path: /borrame
     controller: App\Infrastructure\UI\Symfony\Controller\BorrameController
-    methods: ['GET']    
+    methods: ['GET', 'POST']    

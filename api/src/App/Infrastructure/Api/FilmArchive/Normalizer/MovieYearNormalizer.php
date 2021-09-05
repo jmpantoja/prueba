@@ -35,7 +35,7 @@ final class MovieYearNormalizer implements NormalizerInterface, DenormalizerInte
 
     public function denormalize($data, string $type, string $format = null, array $context = [])
     {
-        return new MovieYear($data);
+        return new MovieYear((int)$data);
     }
 
     public function supportsDenormalization($data, string $type, string $format = null)

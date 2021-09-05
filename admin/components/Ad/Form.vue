@@ -77,7 +77,6 @@ export default class extends Vue {
     }
   }
 
-
   public created() {
     this.model = {
       ...this.empty,

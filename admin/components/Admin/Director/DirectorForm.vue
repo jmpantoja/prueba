@@ -2,15 +2,11 @@
 
   <ad-form :entity="entity" :empty="empty">
     <template v-slot:fields="{model}">
-      <ad-field-group title="general">
-        <el-form-item :label="admin.message('form.title')">
-          <el-input type="text" v-model="model.title" prop="title"/>
-        </el-form-item>
 
-        <el-form-item :label="admin.message('form.year')">
-          <el-input type="number" v-model="model.year" prop="year"/>
-        </el-form-item>
+      <ad-field-group title="Director">
+        <ad-field-full-name v-model="model.name" prop="name" :label="admin.message('form.name')"/>
       </ad-field-group>
+
     </template>
   </ad-form>
 </template>
@@ -22,7 +18,7 @@ import {Admin} from "~/types/admin";
 import {Entity} from "~/types/api";
 
 @Component({
-  name: 'MovieForm'
+  name: 'DirectorForm'
 })
 export default class extends Vue {
   @Inject('admin') private admin!: Admin

@@ -26,14 +26,14 @@ services:
     depends_on:
       - php
 
-  cache-proxy:
-    build:
-      context: ../api
-      target: api_platform_varnish
-      <<: *api-cache-from
-    image: ${VARNISH_IMAGE:?VARNISH_IMAGE is not set or empty}
-    depends_on:
-      - api
+#  cache-proxy:
+#    build:
+#      context: ../api
+#      target: api_platform_varnish
+#      <<: *api-cache-from
+#    image: ${VARNISH_IMAGE:?VARNISH_IMAGE is not set or empty}
+#    depends_on:
+#      - api
 
   client:
     # in production, we may want to use a static website hosting service
