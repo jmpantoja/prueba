@@ -6,16 +6,15 @@
 
 <script lang="ts">
 
-import {Component, Inject, Vue} from 'nuxt-property-decorator'
-import {Admin} from "~/types/admin";
+import {Component, mixins} from 'nuxt-property-decorator'
+import AdminAware from "~/mixins/AdminAware";
 
 var parse = require('url-parse');
 
 @Component({
   name: 'Create'
 })
-export default class extends Vue {
-  @Inject('admin') private admin!: Admin
+export default class extends mixins(AdminAware) {
   public roles: string[] = ['list']
 
   click() {

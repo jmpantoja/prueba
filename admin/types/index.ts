@@ -3,6 +3,9 @@ import {Api} from "~/src/Api";
 import {Context} from "@nuxt/types";
 import {AdminManager} from "~/types/admin";
 
+declare module "element-ui";
+
+
 declare module '@nuxt/types' {
   interface Context {
     adminManager: AdminManager

@@ -1,0 +1,10 @@
+.filter {
+  .el-form-item__content {
+    display: flex;
+    flex-direction: row;
+
+    .el-form-item {
+      margin-right: 1em;
+    }
+  }
+}

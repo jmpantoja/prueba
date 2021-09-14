@@ -34,6 +34,11 @@ final class EntityListDenormalizer implements DenormalizerInterface, Denormalize
         $this->denormalizer = $denormalizer;
     }
 
+    public function supportsDenormalization($data, string $type, string $format = null)
+    {
+        return is_array($data) && is_a($type, EntityList::class, true);
+    }
+
     public function denormalize($data, string $type, string $format = null, array $context = [])
     {
         $className = ($type::collect())->type();
@@ -48,10 +53,6 @@ final class EntityListDenormalizer implements DenormalizerInterface, Denormalize
 
     }
 
-    public function supportsDenormalization($data, string $type, string $format = null)
-    {
-        return is_array($data) && is_a($type, EntityList::class, true);
-    }
 
     private function findOrCreate(array $item, string $className)
     {

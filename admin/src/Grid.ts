@@ -75,7 +75,6 @@ function denormalizePageSize(key: string, value: string | (string | null)[], pag
   if (key !== 'page_size') {
     return page_size
   }
-
   return page_size || (value as unknown as number) * 1
 }
 

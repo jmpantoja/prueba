@@ -1,25 +1,18 @@
 <template>
-  <div class="action action-list">
-    <component :is="components.toolbar"/>
-    <el-card>
-      <component :is="components.grid"/>
-    </el-card>
-  </div>
+  <ad-action v-slot="{components}">
+
+    <component :is="components.grid" />
+  </ad-action>
 </template>
 
 <script lang="ts">
 
-import {Component, mixins} from 'nuxt-property-decorator'
-import Action from '~/mixins/Action'
+import {Component, Vue} from 'nuxt-property-decorator'
 
 @Component({
   name: 'List',
 })
-export default class extends mixins(Action) {
+export default class extends Vue {
 
 }
 </script>
-
-<style scoped lang="scss">
-
-</style>

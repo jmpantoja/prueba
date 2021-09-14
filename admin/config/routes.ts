@@ -16,7 +16,7 @@ Object.entries(admin)
           component: action.component,
           meta: {
             admin: key,
-            view: name,
+            action: name,
             components: admin.components,
           }
         })

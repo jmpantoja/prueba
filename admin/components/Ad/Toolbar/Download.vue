@@ -30,10 +30,11 @@
 
 <script lang="ts">
 
-import {Component, Inject, Prop, Vue} from 'nuxt-property-decorator'
+import {Component, Inject, mixins, Prop, Vue} from 'nuxt-property-decorator'
 import {mapGetters} from "vuex";
 import {Admin} from "~/types/admin";
 import {QueryGetter} from "~/types/grid";
+import AdminAware from "~/mixins/AdminAware";
 
 const parse = require('url-parse');
 
@@ -43,8 +44,7 @@ const parse = require('url-parse');
     query: 'grid/query'
   })
 })
-export default class extends Vue {
-  @Inject('admin') private admin!: Admin
+export default class extends mixins(AdminAware) {
   @Prop({required: true, type: Array}) formats!: []
 
   public roles: string[] = ['export']

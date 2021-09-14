@@ -11,6 +11,7 @@
     </div>
     <div class="wrapper">
       <div class="panel data">
+
         <el-table v-loading="admin.loading" v-bind="props" @sort-change="sort">
           <slot name="columns"/>
 
@@ -79,15 +80,14 @@
 
 <script lang="ts">
 
-import {Component, Inject, Prop, Vue, Watch} from 'nuxt-property-decorator'
+import {Component, mixins, Prop, Watch} from 'nuxt-property-decorator'
 import {DefaultSortOptions} from "element-ui/types/table";
 import {Form} from "element-ui";
 import {mapActions} from "vuex";
-
-import {Admin} from "~/types/admin";
 import {denormalizeQuery, normalizeQuery} from "~/src/Grid"
 import {FilterList, TableProps, TableQuery} from "~/types/grid";
 import {Dataset, Entity} from "~/types/api";
+import AdminAware from "~/mixins/AdminAware";
 
 const _ = require("lodash")
 
@@ -97,8 +97,8 @@ const _ = require("lodash")
     saveQuery: 'grid/save'
   })
 })
-export default class extends Vue {
-  @Inject('admin') private admin!: Admin
+export default class extends mixins(AdminAware) {
+
   @Prop({
     required: false,
     default: () => {
@@ -117,7 +117,6 @@ export default class extends Vue {
     data: []
   }
 
-  loading: boolean = false
   total: number = 0
   page_size: number = 0
   page: number = 1
@@ -126,7 +125,7 @@ export default class extends Vue {
   query: TableQuery = {
     page: 1,
     order: undefined,
-    filters: undefined
+    filters: undefined,
   }
 
   created() {
@@ -137,6 +136,8 @@ export default class extends Vue {
     })
 
     this.page = this.query.page || 1
+    this.page_size = this.query.page_size || 15
+
     this.filters = _.cloneDeep(this.query.filters || {})
   }
 
@@ -196,7 +197,7 @@ export default class extends Vue {
   }
 
   reload() {
-    if (this.loading) {
+    if (this.admin.loading) {
       return
     }
 
@@ -207,21 +208,7 @@ export default class extends Vue {
       .then((dataSet: Dataset) => {
         this.props.data = dataSet.items
         this.total = dataSet.totalItems
-        this.updatePageSize()
       })
-  }
-
-  private updatePageSize() {
-
-    let candidate = (this.query.page_size as number) || this.props.data.length
-
-    if (candidate < 1) {
-      candidate = 10
-    }
-
-    if (candidate !== this.page_size) {
-      this.page_size = candidate
-    }
   }
 
   private persistQuery(query: {}) {

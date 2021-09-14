@@ -1,49 +1,22 @@
 <template>
-  <div class="action action-form" v-loading="waiting">
-    <component :is="components.toolbar" :entity="entity"/>
+  <ad-action item v-slot="{entity}">
 
-    <el-card>
+    <ad-delete-confirmation :entity="entity" />
 
-      <div class="delete-confirmation">
-        <p v-html="admin.message('message.delete_confirmation', {entity})"></p>
-        <el-button @click="back">
-          {{ $t('buttons.back') }}
-        </el-button>
-        <el-button @click="ok" type="danger" v-html="$t('buttons.yes_delete')"/>
-      </div>
-    </el-card>
-  </div>
+  </ad-action>
 </template>
 
 <script lang="ts">
 
-import {Component, mixins} from 'nuxt-property-decorator'
-import EntityAction from "~/mixins/EntityAction";
-import {Entity} from "~/types/api";
+import {Component, Vue} from 'nuxt-property-decorator'
 
 @Component({
-  name: 'Form',
+  name: 'Delete',
 })
-export default class extends mixins(EntityAction) {
-  in_progress: boolean = false
+export default class extends Vue {
 
-  back() {
-    this.admin.goToList()
-  }
-
-  ok() {
-    this.admin.delete((this.entity as Entity))
-      .finally(() => {
-        this.back()
-      })
-
-  }
 }
 
 </script>
 
-<style scoped lang="scss">
-.delete-confirmation {
-  margin: 2em;
-}
-</style>
+

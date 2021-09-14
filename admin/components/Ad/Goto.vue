@@ -8,28 +8,19 @@
 </template>
 
 <script lang="ts">
-import {Component, Inject, Prop, Vue} from "nuxt-property-decorator";
+import {Component, mixins, Prop} from "nuxt-property-decorator";
 import {Entity} from "~/types/api";
-import {Admin, AdminManager} from "~/src/Admin";
+import AdminAware from '~/mixins/AdminAware'
 
 @Component({
   name: "Goto"
 })
-export default class extends Vue {
-  @Inject('admin') private adminObject!: Admin
-  @Inject('adminManager') private adminManager!: AdminManager
-
+export default class extends mixins(AdminAware) {
   @Prop({required: true, type: Object as () => Entity}) readonly entity!: Entity;
-  @Prop({required: false, type: String}) readonly admin!: string;
   @Prop({required: false, type: String}) readonly value!: string;
 
   public get href() {
-    if (this.admin) {
-      const admin = this.adminManager.byName(this.admin)
-      return admin.pathByKey('edit', this.entity)
-    }
-
-    return this.adminObject.pathByKey('edit', this.entity)
+    return this.admin.pathByKey('edit', this.entity)
   }
 }
 </script>

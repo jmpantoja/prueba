@@ -38,7 +38,6 @@ export default class extends Vue {
 
   }
 
-
   private mounted() {
     this._propNames = this.findProps(this.$children)
     this._name = `fieldset-${this._uid}`
@@ -52,13 +51,15 @@ export default class extends Vue {
     })
 
     this.adForm.$on('validate', this.onValidate)
+    this.adForm.$on('clearValidate', () => {
+      this.$set(this, 'errorBag', {})
+    })
+
   }
 
   private onValidate(prop: string, valid: boolean) {
     if (!this._propNames.includes(prop)) return
-
     this.$set(this.errorBag, prop, valid)
-
   }
 
   private findProps($children: Vue[]): string[] {
@@ -115,9 +116,9 @@ fieldset.field-group {
 
     ::v-deep > .el-form-item__label {
       display: flex;
-      align-items: center;
+      align-items: start;
 
-      font-size: 1.3rem;
+      font-size: 1.2rem;
       font-weight: 300;
       text-transform: capitalize;
 

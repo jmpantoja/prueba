@@ -36,7 +36,6 @@ export default class extends Vue {
       order: 'ascending'
     }
   }
-
 }
 </script>
 

@@ -17,21 +17,20 @@
 
 <script lang="ts">
 
-import {Component, Inject, Vue} from 'nuxt-property-decorator'
-import {Admin} from "~/src/Admin";
+import {Component, mixins} from 'nuxt-property-decorator'
 import {TableQuery} from "~/types/grid";
+import AdminAware from "~/mixins/AdminAware";
 
 
 @Component({
   name: 'GenreGrid'
 })
-export default class extends Vue {
-  @Inject('admin') admin!: Admin;
+export default class extends mixins(AdminAware) {
 
   public defaultQuery: TableQuery = {
     order: {
       prop: 'name',
-      order: 'descending'
+      order: 'ascending'
     }
   }
 }

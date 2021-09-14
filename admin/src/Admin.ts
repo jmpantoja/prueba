@@ -1,5 +1,5 @@
 import {Message} from 'element-ui';
-import {ActionList, AdminConfig, AdminConfigList, AdminContext, PathList, ViewType} from "~/types/admin";
+import {ActionList, AdminConfig, AdminConfigList, AdminContext, PathList} from "~/types/admin";
 import {Api, Dataset, Entity} from "~/types/api";
 import {AxiosPromise, AxiosResponse} from "axios";
 
@@ -33,10 +33,10 @@ class Admin {
 
   private _name: string;
   private _endpoint: string
-  private _view!: ViewType;
   private _paths: PathList;
   private _context: AdminContext;
   private _loading: boolean = false;
+  private _components: { grid: string; form: string; toolbar: string };
 
   constructor(name: string, config: AdminConfig, context: AdminContext) {
 
@@ -44,6 +44,7 @@ class Admin {
     this._context = context;
     this._endpoint = this.initEndpoint(config.endpoint)
     this._paths = this.initPaths(config.path, config.actions)
+    this._components = config.components
   }
 
   private initEndpoint(endpoint: string): string {
@@ -61,12 +62,6 @@ class Admin {
     return Object.fromEntries(entries)
   }
 
-  public setView(view: ViewType): Admin {
-    this._view = view
-    return this
-  }
-
-
   public get endpoint(): string {
     return this._endpoint;
   }
@@ -74,11 +69,6 @@ class Admin {
   get loading(): boolean {
     return this._loading;
   }
-
-  public get view(): ViewType {
-    return this._view;
-  }
-
 
   public get paths(): PathList {
     return this._paths
@@ -99,6 +89,10 @@ class Admin {
       .map((role: string) => {
         return `${this._name}_${role}`
       })
+  }
+
+  public component(name: 'grid' | 'form' | 'toolbar'): string {
+    return this._components[name];
   }
 
   public pathByKey(key: string, entity?: Entity): string {
@@ -195,6 +189,7 @@ class Admin {
   public async findOne(id: string): Promise<Entity> {
     const endpoint = `${this.endpoint}/${id}`
     const request = this.api.GET(endpoint);
+
     return this.apiCall(request, (response: AxiosResponse) => {
       return response['data']
     })
@@ -205,12 +200,20 @@ class Admin {
 
     return new Promise((resolve, reject) => {
       request
-        .then(then)
         .then((response) => {
           this._loading = false
-          resolve(response)
+
+          if (response.data['@type'] === 'hydra:Error') {
+            const message = response.data['hydra:description'] || 'Unknow Error'
+            this.error(message)
+            reject({response})
+            return
+          }
+
+          resolve(then(response))
         })
         .catch((error) => {
+
           const message = error.response?.data['hydra:description'] || 'Not Found'
           this._loading = false
           this.error(message)

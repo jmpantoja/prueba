@@ -23,7 +23,9 @@
           label-width="8rem">
           <slot name="fields" :model="model"/>
         </el-form>
+
       </div>
+
       <div class="footer">
         <el-button type="primary" :disabled="!valid" @click="submit">{{ $t('buttons.save') }}</el-button>
       </div>
@@ -37,6 +39,7 @@ import {Admin} from "~/types/admin";
 import {FormGroupDefinition} from "~/types/form";
 import {Entity} from "~/types/api";
 import {Form} from "element-ui";
+import FormDialog from "~/components/Ad/FormDialog.vue";
 
 const _ = require("lodash")
 
@@ -52,6 +55,11 @@ type CarryGroup = { name: string, diff: number } | null;
 })
 export default class extends Vue {
   @Inject('admin') private admin!: Admin
+  @Inject({
+    from: 'adDialog',
+    default: null
+  }) private adDialog!: FormDialog
+
   @Prop({required: true, type: Object as () => Entity}) entity!: Entity
   @Prop({required: false, type: Object as () => Entity}) empty!: Entity
 
@@ -61,7 +69,7 @@ export default class extends Vue {
   public active: string = ''
   private errorBag = {}
   private groupErrorBag: object = {};
-  private hasToc!: boolean = false;
+  private hasToc: boolean = false;
 
 
   @Watch('errorBag', {deep: true})
@@ -140,13 +148,22 @@ export default class extends Vue {
   }
 
   public mounted() {
+    this.clearValidate()
+    if (!this.adDialog) {
+      return
+    }
+    this.adDialog.setForm(this)
+  }
+
+  public clearValidate() {
     const form = this.$refs['form'] as Form;
     form.validate()
     form.clearValidate()
+
+    this.$emit('clearValidate')
   }
 
   private onValidate(prop: string, valid: boolean) {
-
     this.$set(this.errorBag, prop, valid)
     this.$emit('validate', prop, valid)
   }
@@ -156,28 +173,26 @@ export default class extends Vue {
 
     form.validate((valid) => {
       if (valid) {
-        this.save();
+        this.save()
+          .then((response: any) => {
+            this.$emit('save', response)
+          });
       }
     });
-
   }
 
-  private save() {
-
-    this.admin.view === 'edit'
-      ? this.admin.save(this.model).then((aaa) => {
-        console.log('edit', aaa)
-      })
-      : this.admin.create(this.model).then((aaa) => {
-        console.log('create', aaa)
-      })
+  private async save() {
+    return this.model.id
+      ? await this.admin.save(this.model)
+      : await this.admin.create(this.model)
   }
 }
 </script>
 
 <style scoped lang="scss">
 
-$toc-width: 20rem;
+$toc-width: 13rem;
+$form-width: 50rem;
 
 .admin-form {
   display: flex;
@@ -225,14 +240,13 @@ $toc-width: 20rem;
     .form-wrapper {
       flex-grow: 1;
       overflow-y: auto;
-      //padding: 3em $toc-width 0;
+      padding: 3em 0;
 
       form {
-        width: 55em;
+        width: $form-width;
         margin: auto;
       }
     }
-
 
     .footer {
       position: absolute;
@@ -245,11 +259,6 @@ $toc-width: 20rem;
     }
   }
 
-  &.has-toc {
-    .toc {
-
-    }
-  }
 }
 
 </style>

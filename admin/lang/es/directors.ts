@@ -32,6 +32,9 @@ const directors: AdminTranslation = {
   form: {
     name: 'nombre'
   },
+  buttons: {
+    create: 'nuevo director'
+  },
   message: {
     delete_confirmation: (params) => {
       const entity = params.named('entity');

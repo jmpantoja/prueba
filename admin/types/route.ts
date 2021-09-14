@@ -1,10 +1,7 @@
-import {ViewType} from "~/types/admin";
-
-
 type RouteMeta = {
   admin: string,
   roles?: string[]
-  view: ViewType
+  action: string
   components: { [key: string]: string },
 }
 

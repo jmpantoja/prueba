@@ -1,33 +1,19 @@
 <template>
-  <div class="action action-form" v-loading="waiting">
-    <component :is="components.toolbar" :entity="entity"/>
-    <el-card shadow="never">
-      <component :is="components.form" :entity="entity"/>
-    </el-card>
-  </div>
+  <ad-action item plain v-slot="{entity, components}">
+    <component :is="components.form" :entity="entity"/>
+  </ad-action>
+
 </template>
 
 <script lang="ts">
 
-import {Component, mixins} from 'nuxt-property-decorator'
-import EntityAction from "~/mixins/EntityAction";
-
-function delay(ms: number) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
+import {Component, Vue} from 'nuxt-property-decorator'
 
 @Component({
   name: 'Form',
 })
-export default class extends mixins(EntityAction) {
+export default class extends Vue {
 
 }
-
 </script>
 
-<style scoped lang="scss">
-  .el-card {
-    background-color: transparent;
-    border-color: transparent;
-  }
-</style>

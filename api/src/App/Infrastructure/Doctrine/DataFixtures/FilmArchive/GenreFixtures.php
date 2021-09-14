@@ -22,7 +22,7 @@ final class GenreFixtures extends UseCaseFixture
     public function loadData(): void
     {
 
-        $indexes = range(1, 60);
+        $indexes = range(1, 64);
         $items = $this->createRange($indexes, function (int $index) {
             return new Genre(sprintf('genero %02d', $index));
         });

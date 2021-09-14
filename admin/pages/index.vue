@@ -1,21 +1,6 @@
 <template>
   <div class="container">
-    {{ user }}
-    <hr />
-    <br/>
-    <br/>
-
-    <el-form ref="form" :model="model" label-width="10rem">
-
-      <ad-form-full-name v-model="model.fullName" prop="fullName"/>
-      <el-button type="primary" @click="submitForm('form')">Submit</el-button>
-
-    </el-form>
-
-
-    <pre style="text-align: left; display: block">
-{{ model }}
-    </pre>
+    <ad-form-dialog use="movies" />
 
   </div>
 </template>
@@ -26,46 +11,19 @@ import {Component, Vue} from 'nuxt-property-decorator'
 import {mapGetters} from "vuex";
 
 @Component({
-  name: 'Admin',
+  name: 'Dashboard',
   computed: mapGetters({
     'user': 'user/user',
   }),
 })
-export default class Dashboard extends Vue {
+export default class extends Vue {
 
-  roles: string[] = [];
-
-  model: object = {
-    age: 0,
-    age2: 2,
-    fullName: {
-      name: null,
-      lastName: null
-    }
+  public get admin() {
+    return this.$adminManager.byName('genres')
   }
-
-  submitForm(formName: string) {
-    // @ts-ignore
-    this.$refs[formName].validate((valid: boolean) => {
-      if (valid) {
-        alert('submit!');
-      } else {
-        console.log('error submit!!');
-        return false;
-      }
-    });
-  }
-
-  // resetForm(formName) {
-  //  //this.$refs[formName].resetFields();
-  // }
 
 }
 
 </script>
-
-<style scoped lang="scss">
-
-</style>
 
 

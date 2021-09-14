@@ -7,42 +7,42 @@
     </div>
 
     <div class="admin-toolbar__actions">
-      <slot v-for="(_, action) in admin.paths"
-            v-if="action === admin.view"
-            :name="action"/>
+      <slot v-for="(_, path) in admin.paths"
+            v-if="path === action"
+            :name="path"/>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import {Component, Inject, Prop, Vue, Watch} from 'nuxt-property-decorator'
-import {Admin} from "~/types/admin";
+import {Component, mixins, Prop} from 'nuxt-property-decorator'
 import {Entity} from "~/types/api";
+import AdminAware from "~/mixins/AdminAware";
 
 const _ = require("lodash")
 
 @Component({
   name: 'Toolbar'
 })
-export default class extends Vue {
+export default class extends mixins(AdminAware) {
 
-  @Inject('admin') private admin!: Admin
-  @Prop({required: false, type: Object as () => Entity}) readonly entity!: Entity;
-  private title: string | null = null;
+  @Prop({
+    required: true,
+    type: String
+  }) readonly action!: string;
 
-  created() {
-    this.updateEntity(this.entity);
+  @Prop({
+    required: false,
+    type: Object as () => Entity
+  }) readonly entity!: Entity;
+
+
+  public get title() {
+    const key = `toolbar.${this.action}`;
+    const params = {entity: this.entity};
+
+    return this.admin.message(key, params)
   }
-
-  @Watch('entity')
-  updateEntity(entity?: Entity) {
-
-    const key = `toolbar.${this.admin.view}`;
-    const params = {entity: entity};
-
-    this.title = this.admin.message(key, params)
-  }
-
 }
 </script>
 

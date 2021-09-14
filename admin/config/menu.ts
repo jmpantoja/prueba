@@ -15,11 +15,6 @@ const menu: Menu = [
     icon: 'el-icon-user'
   },
   {
-    path: '/borrame',
-    title: 'menu.borrame',
-    icon: 'el-icon-user'
-  },
-  {
     path: '/data',
     title: 'menu.film_archive',
     icon: 'el-icon-setting',

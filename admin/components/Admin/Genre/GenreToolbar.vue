@@ -1,5 +1,6 @@
 <template>
-  <ad-toolbar :entity="entity">
+
+  <ad-toolbar :action="action" :entity="entity">
 
     <template slot="list">
       <ad-toolbar-download :formats="['xlsx', 'csv', 'yaml']"/>
@@ -18,21 +19,29 @@
       <ad-toolbar-back/>
     </template>
 
-
   </ad-toolbar>
 </template>
 
 <script lang="ts">
 
-import {Component, Inject, Prop, Vue} from 'nuxt-property-decorator'
-import {Admin} from "~/types/admin";
+import {Component, mixins, Prop} from 'nuxt-property-decorator'
+import AdminAware from "~/mixins/AdminAware";
+import {Entity} from "~/types/api";
 
 @Component({
   name: 'GenreToolbar'
 })
-export default class extends Vue {
-  @Inject('admin') private admin!: Admin
-  @Prop({required: false, type: Object}) entity!: object;
+export default class extends mixins(AdminAware) {
+
+  @Prop({
+    required: true,
+    type: String
+  }) readonly action!: string;
+
+  @Prop({
+    required: false,
+    type: Object as () => Entity
+  }) readonly entity!: Entity;
 
 }
 </script>

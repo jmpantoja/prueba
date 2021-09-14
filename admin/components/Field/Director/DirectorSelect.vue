@@ -1,10 +1,12 @@
 <template>
-  <el-form-item :label="label">
+  <el-form-item :label="label" :prop="prop">
+
     <ad-field-select
-      use="genres"
+      use="directors"
       v-model="data"
-      :remote-query="query"
-      :normalize="normalize"/>
+      :normalize="normalize"
+      :remote-query="remote"
+    />
 
   </el-form-item>
 </template>
@@ -19,11 +21,14 @@ import {TableQuery} from "~/types/grid";
   name: 'Select'
 })
 export default class extends mixins(Field) {
-  public normalize(item: { name: string }): string {
-    return item.name
+  public normalize(item: { id: string, name: { name: string, lastName: string } }): string {
+    if (item.name) {
+      return `${item.name.lastName}, ${item.name.name}`
+    }
+    return ''
   }
 
-  public query(input: string): TableQuery {
+  public remote(input: string): TableQuery {
     return {
       filters: {
         name: {
@@ -35,9 +40,8 @@ export default class extends mixins(Field) {
   }
 
   public defaults(data: any): any {
-    return data || []
+    return data || {}
   }
-
 
 }
 </script>

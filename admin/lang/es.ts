@@ -28,7 +28,7 @@ const spanish: Translation = {
     filter: 'Filtrar',
     save: 'Guardar',
     back: 'Volver',
-    yes_delete: '<strong>Sí,</strong> Volver'
+    yes_delete: '<strong>Sí,</strong> Borrar'
   },
   menu: {
     film_archive: 'Filmoteca',

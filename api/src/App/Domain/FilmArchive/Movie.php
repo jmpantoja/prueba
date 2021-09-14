@@ -28,14 +28,14 @@ class Movie implements Entity
     private MovieId $id;
     private MovieTitle $title;
     private MovieYear $year;
-    private Director $director;
+    private ?Director $director;
     private Collection $genres;
 
     public function __construct(
         MovieTitle $title,
-        MovieYear $year,
-        Director $director,
-        GenreList $genres = null
+        MovieYear  $year,
+        Director   $director,
+        GenreList  $genres = null
     )
     {
         $this->id = new MovieId();
@@ -46,18 +46,18 @@ class Movie implements Entity
     }
 
     public function update(MovieTitle $title,
-                           MovieYear $year,
-                           Director $director,
-                           GenreList $genres = null)
+                           MovieYear  $year,
+                           Director   $director,
+                           GenreList  $genres = null)
     {
         $this->apply($title, $year, $director, $genres);
         $this->notify(new MovieHasBeenUpdated($this));
     }
 
     private function apply(MovieTitle $title,
-                           MovieYear $year,
-                           Director $director,
-                           GenreList $genres = null)
+                           MovieYear  $year,
+                           Director   $director,
+                           GenreList  $genres = null)
     {
         $this->title = $title;
         $this->year = $year;

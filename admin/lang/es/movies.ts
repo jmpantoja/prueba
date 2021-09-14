@@ -28,7 +28,11 @@ const movies: AdminTranslation = {
   form: {
     title: 'título',
     year: 'estreno',
-    genres: 'géneros'
+    genres: 'géneros',
+    director: 'director',
+  },
+  buttons: {
+    create: 'nueva película'
   },
   message: {
     delete_confirmation: (params) => {

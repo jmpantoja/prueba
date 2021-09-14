@@ -3,14 +3,6 @@ import {NuxtI18nInstance} from "nuxt-i18n";
 import {Api} from "~/src/Api";
 import VueRouter, {Route} from 'vue-router'
 
-
-enum ViewType {
-  'list' = 'list',
-  'edit' = 'edit',
-  'create' = 'create',
-  'delete' = 'delete'
-};
-
 type AdminContext = {
   api_endpoint: string,
   localePath: Function,
@@ -26,7 +18,7 @@ type ActionConfig = {
 };
 
 type ActionList = {
-  [key in ViewType]: ActionConfig
+  [key:string]: ActionConfig
 };
 
 
@@ -49,7 +41,6 @@ type PathList = { [p: string]: string };
 type RoleList = { [p: string]: string };
 
 export {
-  ViewType,
   PathList,
   RoleList,
   AdminContext,

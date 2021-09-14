@@ -13,6 +13,9 @@ type AdminTranslation = {
   filters: { [key: string]: StringLike },
   columns: { [key: string]: StringLike },
   form: { [key: string]: StringLike },
+  buttons: {
+    create: StringLike
+  },
   message: {
     delete_confirmation: StringLike
   },

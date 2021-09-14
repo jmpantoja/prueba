@@ -1,5 +1,5 @@
 <template>
-  <el-form-item class="form-item-inline filter-text" :label="label">
+  <el-form-item class="filter filter-text" :label="label">
 
     <el-form-item class="filter-text__mode" :prop="prop + '.mode'">
       <el-select v-model="data.mode" placeholder="Mode">
@@ -45,12 +45,15 @@ export default class extends mixins(Field) {
 </script>
 
 <style scoped lang="scss">
+
 .filter-text {
+
   .filter-text__mode {
     max-width: 10rem;
   }
 
   .filter-text__value {
+
     flex-grow: 1;
   }
 }

@@ -2,9 +2,11 @@
   <ad-form :entity="entity">
     <template v-slot:fields="{model}">
       <ad-field-group title="Género">
+
         <el-form-item prop="name" :label="admin.message('form.name')" :rules="rules.name">
           <el-input v-model="model.name" autocomplete="off"/>
         </el-form-item>
+
       </ad-field-group>
     </template>
   </ad-form>

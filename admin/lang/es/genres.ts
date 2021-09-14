@@ -28,6 +28,9 @@ const genres: AdminTranslation = {
   form: {
     name: 'nombre'
   },
+  buttons: {
+    create: 'nuevo género'
+  },
   message: {
     delete_confirmation: (params) => {
       const entity = params.named('entity');
