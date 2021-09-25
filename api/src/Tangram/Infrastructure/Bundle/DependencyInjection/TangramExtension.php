@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Tangram\Infrastructure\Bundle\DependencyInjection;
 
-
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
@@ -22,64 +21,59 @@ use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\Yaml\Yaml;
 use Tangram\Application\UseCase\UseCaseInterface;
-use Tangram\Infrastructure\Doctrine\DBAL\Type\RegistrableType;
 
 final class TangramExtension extends Extension implements PrependExtensionInterface
 {
+	public function load(array $configs, ContainerBuilder $container)
+	{
+		$container->registerForAutoconfiguration(UseCaseInterface::class)
+			->addTag('tactician.handler', [
+				'typehints' => true,
+			]);
 
-    public function load(array $configs, ContainerBuilder $container)
-    {
-        $container->registerForAutoconfiguration(UseCaseInterface::class)
-            ->addTag('tactician.handler', [
-                'typehints' => true
-            ]);
+		$configDir = dirname(__DIR__).'/Resources/config';
 
-        $configDir = dirname(__DIR__) . '/Resources/config';
+		$loader = new YamlFileLoader(
+			$container,
+			new FileLocator($configDir)
+		);
 
-        $loader = new YamlFileLoader(
-            $container,
-            new FileLocator($configDir)
-        );
+		$env = $container->getParameter('kernel.environment');
+		$loader->load('services.yaml');
 
-        $env = $container->getParameter("kernel.environment");
-        $loader->load('services.yaml');
+		$path = "$configDir/services_$env.yaml";
+		if (file_exists($path)) {
+			$loader->load("services_$env.yaml");
+		}
+	}
 
-        $path = "$configDir/services_$env.yaml";
-        if (file_exists($path)) {
-            $loader->load("services_$env.yaml");
-        }
-    }
+	public function prepend(ContainerBuilder $container)
+	{
+		$extensions = array_keys($container->getExtensions());
+		$pathToPackages = realpath(__DIR__.'/../Resources/config/packages');
 
-    public function prepend(ContainerBuilder $container)
-    {
+		$config = $this->loadPackagesConfig($pathToPackages);
 
-        $extensions = array_keys($container->getExtensions());
-        $pathToPackages = realpath(__DIR__ . '/../Resources/config/packages');
+		foreach ($extensions as $extension) {
+			if (isset($config[$extension])) {
+				$container->prependExtensionConfig($extension, $config[$extension]);
+			}
+		}
+	}
 
-        $config = $this->loadPackagesConfig($pathToPackages);
+	/**
+	 * @return mixed[]
+	 */
+	private function loadPackagesConfig(string $pathToDir): array
+	{
+		$finder = new Finder();
+		$finder->name('*.yaml')->in($pathToDir);
 
-        foreach ($extensions as $extension) {
-            if (isset($config[$extension])) {
-                $container->prependExtensionConfig($extension, $config[$extension]);
-            }
-        }
-    }
+		$data = [];
+		foreach ($finder as $file) {
+			$data[] = Yaml::parseFile($file->getPathname());
+		}
 
-    /**
-     * @param string $pathToDir
-     * @return mixed[]
-     */
-    private function loadPackagesConfig(string $pathToDir): array
-    {
-        $finder = new Finder();
-        $finder->name('*.yaml')->in($pathToDir);
-
-
-        $data = [];
-        foreach ($finder as $file) {
-            $data[] = Yaml::parseFile($file->getPathname());
-        }
-
-        return array_merge(...$data);
-    }
+		return array_merge(...$data);
+	}
 }

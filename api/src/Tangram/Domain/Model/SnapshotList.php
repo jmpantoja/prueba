@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Tangram\Domain\Model;
 
-
 use Doctrine\Common\Collections\AbstractLazyCollection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -21,143 +20,139 @@ use Traversable;
 
 class SnapshotList extends AbstractLazyCollection
 {
-    private array $snapshot;
+	private array $snapshot;
 
+	private function __construct(Collection $input)
+	{
+		$this->initialize();
 
-    private function __construct(Collection $input)
-    {
-        $this->initialize();
+		$this->snapshot = $input->toArray();
 
-        $this->snapshot = $input->toArray();
+		while ($input instanceof AbstractLazyCollection) {
+			$input = $input->collection;
+		}
 
-        while ($input instanceof AbstractLazyCollection) {
-            $input = $input->collection;
-        }
+		$this->collection = clone $input;
+	}
 
-        $this->collection = clone $input;
-    }
+	public static function init(?iterable $input = null): self
+	{
+		$snapshotList = static::collect();
+		foreach ($input as $item) {
+			$snapshotList->add($item);
+		}
 
-    public static function collect(?iterable $input = null): self
-    {
-        $input = $input ?? [];
-        if ($input instanceof Collection) {
-            return new static($input);
-        }
+		return $snapshotList;
+	}
 
-        if ($input instanceof Traversable) {
-            $input = iterator_to_array($input);
-        }
+	public static function collect(?iterable $input = null): self
+	{
+		$input = $input ?? [];
+		if ($input instanceof Collection) {
+			return new static($input);
+		}
 
-        return new static(new ArrayCollection($input));
-    }
+		if ($input instanceof Traversable) {
+			$input = iterator_to_array($input);
+		}
 
-    public static function init(?iterable $input = null): self
-    {
-        $snapshotList = static::collect();
-        foreach ($input as $item) {
-            $snapshotList->add($item);
-        }
+		return new static(new ArrayCollection($input));
+	}
 
-        return $snapshotList;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public function __clone()
+	{
+		$this->collection = clone $this->collection;
+	}
 
-    /**
-     * @inheritDoc
-     */
-    public function __clone()
-    {
-        $this->collection = clone $this->collection;
-    }
+	public function clone(): self
+	{
+		return clone $this;
+	}
 
-    public function clone(): self
-    {
-        return clone $this;
-    }
+	public function eachInsert(callable $callback): self
+	{
+		$items = $this->getInsertDiff();
+		foreach ($items as $key => $item) {
+			call_user_func($callback, $item, $key);
+		}
 
-    public function eachInsert(callable $callback): self
-    {
-        $items = $this->getInsertDiff();
-        foreach ($items as $key => $item) {
-            call_user_func($callback, $item, $key);
-        }
+		return $this;
+	}
 
-        return $this;
-    }
+	public function getInsertDiff(): array
+	{
+		$keys = $this->collection->getKeys();
 
-    public function getInsertDiff(): array
-    {
-        $keys = $this->collection->getKeys();
+		$inserted = array_filter($keys, function ($key) {
+			return !isset($this->snapshot[$key]);
+		});
 
-        $inserted = array_filter($keys, function ($key) {
-            return !isset($this->snapshot[$key]);
-        });
+		return array_map(function ($key) {
+			return $this->collection->get($key);
+		}, $inserted);
+	}
 
-        return array_map(function ($key) {
-            return $this->collection->get($key);
-        }, $inserted);
-    }
+	public function eachDelete(callable $callback): self
+	{
+		$items = $this->getDeleteDiff();
+		foreach ($items as $key => $item) {
+			call_user_func($callback, $item, $key);
+		}
 
-    public function eachDelete(callable $callback): self
-    {
-        $items = $this->getDeleteDiff();
-        foreach ($items as $key => $item) {
-            call_user_func($callback, $item, $key);
-        }
+		return $this;
+	}
 
-        return $this;
-    }
+	public function getDeleteDiff(): array
+	{
+		$keys = array_keys($this->snapshot);
 
-    public function getDeleteDiff(): array
-    {
-        $keys = array_keys($this->snapshot);
+		$deleted = array_filter($keys, function ($key) {
+			return !$this->collection->containsKey($key);
+		});
 
-        $deleted = array_filter($keys, function ($key) {
-            return !$this->collection->containsKey($key);
-        });
+		return array_map(function ($key) {
+			return $this->snapshot[$key];
+		}, $deleted);
+	}
 
-        return array_map(function ($key) {
-            return $this->snapshot[$key];
-        }, $deleted);
+	public function eachUpdate(callable $callback): self
+	{
+		$items = $this->getUpdateDiff();
 
-    }
+		foreach ($items as $key => $item) {
+			call_user_func($callback, $key, $item);
+		}
 
-    public function eachUpdate(callable $callback): self
-    {
-        $items = $this->getUpdateDiff();
+		return $this;
+	}
 
-        foreach ($items as $key => $item) {
-            call_user_func($callback, $key, $item);
-        }
+	public function getUpdateDiff(): array
+	{
+		$keys = array_keys($this->snapshot);
 
-        return $this;
-    }
+		$updated = array_filter($keys, function ($key) {
+			if (!$this->collection->containsKey($key)) {
+				return false;
+			}
 
-    public function getUpdateDiff(): array
-    {
+			$original = $this->snapshot[$key];
+			$current = $this->collection->get($key);
 
-        $keys = array_keys($this->snapshot);
+			return $original != $current;
+		});
 
-        $updated = array_filter($keys, function ($key) {
-            if (!$this->collection->containsKey($key)) {
-                return false;
-            }
+		return array_map(function ($key) {
+			return $this->collection->get($key);
+		}, $updated);
+	}
 
-            $original = $this->snapshot[$key];
-            $current = $this->collection->get($key);
-
-            return $original != $current;
-        });
-
-        return array_map(function ($key) {
-            return $this->collection->get($key);
-        }, $updated);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    protected function doInitialize()
-    {
-    }
-
+	/**
+	 * {@inheritDoc}
+	 */
+	protected function doInitialize()
+	{
+	}
 }

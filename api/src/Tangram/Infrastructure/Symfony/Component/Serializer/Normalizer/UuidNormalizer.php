@@ -19,27 +19,27 @@ use Tangram\Domain\Lists\EntityId;
 
 final class UuidNormalizer implements NormalizerInterface, DenormalizerInterface
 {
-    private const supportedTypes = [
-        EntityId::class,
-    ];
+	private const supportedTypes = [
+		EntityId::class,
+	];
 
-    public function denormalize($data, string $type, string $format = null, array $context = [])
-    {
-        return EntityId::fromString($data);
-    }
+	public function denormalize($data, string $type, string $format = null, array $context = [])
+	{
+		return EntityId::fromString($data);
+	}
 
-    public function supportsDenormalization($data, string $type, string $format = null)
-    {
-        return in_array($type, self::supportedTypes);
-    }
+	public function supportsDenormalization($data, string $type, string $format = null)
+	{
+		return in_array($type, self::supportedTypes);
+	}
 
-    public function normalize($object, string $format = null, array $context = [])
-    {
-        return (string)$object;
-    }
+	public function normalize($object, string $format = null, array $context = [])
+	{
+		return (string) $object;
+	}
 
-    public function supportsNormalization($data, string $format = null)
-    {
-        return $data instanceof EntityId;
-    }
+	public function supportsNormalization($data, string $format = null)
+	{
+		return $data instanceof EntityId;
+	}
 }

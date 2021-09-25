@@ -1,0 +1,5 @@
+{{ input | full_name }}:
+    properties:
+{% for attribute in entity.attributes %}
+        {{ attribute.name }}: ~
+{% endfor %}

@@ -13,15 +13,13 @@ declare(strict_types=1);
 
 namespace Tangram\Domain\Assertion\Traits;
 
-
-use Symfony\Component\Validator\Constraint;
 use Tangram\Domain\Assertion\Assertion;
 
 trait Assert
 {
-    private function assert($value, Constraint ...$constraints)
-    {
-        return Assertion::make(__CLASS__, ...$constraints)
-            ->assert($value);
-    }
+	private function assert($value)
+	{
+		return Assertion::make(__CLASS__)
+			->assert($value);
+	}
 }

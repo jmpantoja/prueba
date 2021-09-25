@@ -1,0 +1,188 @@
+{% macro phpdoc_enum(target) %}
+    /**
+    {% for constant in target.constants %}
+        * @method static {{ constant.name }}()
+    {% endfor %}
+    */
+{% endmacro %}
+
+{% macro constructor_argument_list(target, typed) %}
+    {% set temp = [] %}
+    {%- for attribute in target.attributes -%}
+        {% set arg = _self.argument(attribute, typed) %}
+        {% set temp = temp | merge([arg]) %}
+    {%- endfor -%}
+    {{- temp | join(', ') -}}
+{% endmacro %}
+
+{% macro argument_list(target, typed) %}
+    {% set temp = [] %}
+    {%- for attribute in target.attributes -%}
+        {% if attribute.updatable %}
+            {% set arg = _self.argument(attribute, typed) %}
+            {% set temp = temp | merge([arg]) %}
+        {% endif %}
+    {%- endfor -%}
+    {{- temp | join(', ') -}}
+{% endmacro %}
+
+{% macro argument(property, typed) %}
+    {% if typed %}
+        {{- property | arg_type }} {{ property | var_name -}}
+    {% else %}
+        {{ property | var_name -}}
+    {% endif %}
+{% endmacro %}
+
+{% macro properties(target, public) %}
+    {% set visibility = public ? 'public' : 'private' %}
+    {% for attribute in target.attributes %}
+        {{ _self.property(attribute, public) }}
+    {% endfor %}
+{% endmacro %}
+
+{% macro property(attribute, public) %}
+    {% set visibility = public ? 'public' : 'private' %}
+    {{ visibility }} {{ _self.declare_property(attribute) }};
+{% endmacro %}
+
+{% macro declare_property(attribute) %}
+    {{- attribute | type_name }} {{ attribute | var_name -}}
+{% endmacro %}
+
+{% macro init_properties(target) %}
+    {% for attribute in target.attributes %}
+        {% if attribute.isCollection %}
+            $this->{{ attribute | setter }}({{ attribute | var_name }});
+        {% else %}
+            $this->{{ attribute | key_name }} = {{ attribute | var_name }};
+        {% endif %}
+    {% endfor %}
+{% endmacro %}
+
+{% macro init_properties_from_object(target, object) %}
+    {% for attribute in target.attributes %}
+        $this->{{ attribute | key_name }} = {{ object }}->{{ attribute | key_name }}();
+    {% endfor %}
+{% endmacro %}
+
+{% macro update_properties(target) %}
+    {% for attribute in target.attributes %}
+        {% if attribute.updatable %}
+            {% if attribute.isCollection %}
+                $this->{{ attribute | setter }}({{ attribute | var_name }});
+            {% else %}
+                $this->{{ attribute | key_name }} = {{ attribute | var_name }};
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+{% endmacro %}
+
+{% macro constants(target, public) %}
+    {% set visibility = public ? 'public' : 'private' %}
+    {% for constant in target.constants %}
+        {{ visibility }} const {{ constant.name }} = {{ constant.value | add_quotes }};
+    {% endfor %}
+{% endmacro %}
+
+{% macro constants_values(target) %}
+    private const VALUES = [
+    {% for constant in target.constants %}
+        {{ constant.name | add_quotes }} => {{ constant.value | add_quotes }},
+    {% endfor %}
+    ];
+{% endmacro %}
+
+{% macro uses(target) %}
+    {%- for attribute in target.attributes -%}
+        {{- _self.use(attribute.type | ref ) -}}
+        {% if attribute.aggregate %}
+            {%- for aggregate in (attribute.type | ref ).attributes -%}
+                {{- _self.use(aggregate.type | ref ) -}}
+            {%- endfor -%}
+        {%- endif -%}
+    {%- endfor -%}
+{% endmacro %}
+
+{% macro use(attribute) %}
+    {%- if attribute.needToBeImported -%}
+        use {{ attribute | type_full_name }};
+    {%- endif %}
+    {%- if attribute.isCollection -%}
+        use {{ attribute | list_full_name }};
+    {%- endif %}
+    {%- if attribute.isCollection -%}
+        use {{ attribute | full_name }};
+    {%- endif %}
+{% endmacro %}
+
+
+{% macro getters(target) %}
+    {%- for attribute in target.attributes %}
+        {%- if attribute.isCollection -%}
+            {{ _self.collection_getter(attribute) }}
+        {%- else -%}
+            {{ _self.getter(attribute) }}
+        {%- endif -%}
+    {% endfor %}
+{% endmacro %}
+
+
+{% macro getter(attribute) %}
+    public function {{ attribute | key_name }}(): {{ attribute | short_name }}{
+    return $this->{{ attribute | key_name }};
+    }
+{% endmacro %}
+
+{% macro collection_getter(relation) %}
+    {% set listName = relation | list_name %}
+    public function {{ relation | key_name }}(): {{ listName }}{
+    return {{ listName }}::collect($this->{{ relation | key_name }});
+    }
+{% endmacro %}
+
+
+{% macro to_scalar(target) %}
+    {% set type = target.toSingleScalar %}
+    {% if type == 'int' %}
+        {{ _self.to_int(target) }}
+    {% elseif type == 'string' %}
+        {{ _self.to_string(target) }}
+    {% endif %}
+
+{% endmacro %}
+
+
+{% macro to_int(target) %}
+    public function toInt(): int{
+    return $this->{{ target.uniqueAttribute | key_name }};
+    }
+{% endmacro %}
+
+{% macro to_string(target) %}
+    public function __toString(): string{
+    return $this->{{ target.uniqueAttribute | key_name }}();
+    }
+{% endmacro %}
+
+{% macro normalize(target, object) %}
+    {% if target.composed %}
+        [
+        {% for attribute in target.attributes %}
+            {{ attribute.name | add_quotes }} => {{ object }}->{{ attribute | key_name }}(),
+        {% endfor %}
+        ]
+    {%- else -%}
+        {% set mode = target.toSingleScalar %}
+        {%- if mode == 'string' -%}
+            (string){{ object }}
+        {%- elseif mode == 'int' -%}
+            {{ object }}->toInt()
+        {%- else -%}
+        {%- endif -%}
+
+    {%- endif -%}
+{% endmacro %}
+
+
+

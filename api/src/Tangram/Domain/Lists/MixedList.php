@@ -13,11 +13,10 @@ declare(strict_types=1);
 
 namespace Tangram\Domain\Lists;
 
-
 final class MixedList extends AbstractList
 {
-    public static function collect(?iterable $input, string $type = null): self
-    {
-        return new self($input, $type);
-    }
+	public static function collect(?iterable $input = null, string $type = null): static
+	{
+		return new self($input, $type);
+	}
 }

@@ -1,0 +1,21 @@
+{% import 'partials/macros.php.twig' as _ %}
+{% include 'partials/header.php.twig' %}
+
+{{ _.use(repository) }}
+use Tangram\Application\UseCase\UseCaseInterface;
+
+
+final class {{ target | short_name }} implements UseCaseInterface{
+
+private {{ repository | short_name }} $repository;
+
+public function __construct({{ repository | short_name }} $repository)
+{
+$this->repository = $repository;
+}
+
+public function handle({{ deleteCommand | short_name }} $command)
+{
+$this->repository->delete($command->{{ entityId | key_name }}());
+}
+}

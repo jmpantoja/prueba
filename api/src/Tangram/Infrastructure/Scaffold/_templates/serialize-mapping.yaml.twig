@@ -1,0 +1,26 @@
+{% if entity.endpoint %}
+{{ output | full_name }}:
+{% else %}
+{{ entity | full_name }}:
+{% endif %}
+    attributes:
+        id:
+            groups: ['output']
+{% for attribute in entity.attributes %}
+    {% if attribute.isToOne %}
+
+        {{ attribute.name }}:
+            ignore: true
+    {% else %}
+
+        {{ attribute.name }}:
+            groups: ['output']
+    {% endif -%}
+{% endfor %}
+
+{{ input | full_name }}:
+    attributes:
+{% for attribute in entity.attributes %}
+        {{ attribute.name }}:
+            groups: ['input']
+{% endfor %}

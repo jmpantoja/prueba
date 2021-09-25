@@ -15,5 +15,5 @@ namespace Tangram\Domain\Event;
 
 interface EventStore
 {
-    public function persist(DomainEventInterface $event): void;
+	public function persist(DomainEventInterface $event): void;
 }

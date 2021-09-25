@@ -18,46 +18,43 @@ use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\TimeImmutableType;
 
 /**
- * Class CarbonTimeImmutableType
- * @package PlanB\DDDBundle\Doctrine\DBAL\Type
+ * Class CarbonTimeImmutableType.
  */
 class CarbonTimeImmutableType extends TimeImmutableType
 {
-    /**
-     *
-     */
-    private const NAME = 'carbon_time_immutable';
+	private const NAME = 'carbon_time_immutable';
 
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return static::NAME;
-    }
+	/**
+	 * @return string
+	 */
+	public function getName()
+	{
+		return static::NAME;
+	}
 
-    /**
-     * @param mixed $value
-     * @param AbstractPlatform $platform
-     * @return CarbonImmutable|\DateTime|\DateTimeImmutable|false|mixed
-     * @throws \Doctrine\DBAL\Types\ConversionException
-     */
-    public function convertToPHPValue($value, AbstractPlatform $platform)
-    {
-        $result = parent::convertToPHPValue($value, $platform);
+	/**
+	 * @param mixed $value
+	 *
+	 * @return CarbonImmutable|\DateTime|\DateTimeImmutable|false|mixed
+	 *
+	 * @throws \Doctrine\DBAL\Types\ConversionException
+	 */
+	public function convertToPHPValue($value, AbstractPlatform $platform)
+	{
+		$result = parent::convertToPHPValue($value, $platform);
 
-        if ($result instanceof \DateTimeInterface) {
-            return CarbonImmutable::instance($result)->setDate(0, 0, 0);
-        }
-        return $result;
-    }
+		if ($result instanceof \DateTimeInterface) {
+			return CarbonImmutable::instance($result)->setDate(0, 0, 0);
+		}
 
-    /**
-     * @param AbstractPlatform $platform
-     * @return bool
-     */
-    public function requiresSQLCommentHint(AbstractPlatform $platform)
-    {
-        return true;
-    }
+		return $result;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function requiresSQLCommentHint(AbstractPlatform $platform)
+	{
+		return true;
+	}
 }

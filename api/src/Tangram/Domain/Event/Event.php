@@ -13,99 +13,85 @@ declare(strict_types=1);
 
 namespace Tangram\Domain\Event;
 
-
 use DateTimeInterface;
 use Laminas\Filter\Word\CamelCaseToSeparator;
-use PlanB\Edge\Infrastructure\Symfony\Serializer\Normalizer\DomainEventNormalizer;
 
 class Event
 {
-    private const NON_ALLOWED_WORDS = ['has', 'been', 'was', 'event', 'spec', 'entity', 'document', 'model', 'phpcr', 'couchdocument', 'domain', 'doctrine', 'orm', 'mongodb', 'couchdb'];
+	private const NON_ALLOWED_WORDS = ['has', 'been', 'was', 'event', 'spec', 'entity', 'document', 'model', 'phpcr', 'couchdocument', 'domain', 'doctrine', 'orm', 'mongodb', 'couchdb'];
 
-    private EventId $id;
+	private EventId $id;
 
-    private string $name;
+	private string $name;
 
-    private string $event;
+	private string $event;
 
-    private DateTimeInterface $date;
+	private DateTimeInterface $date;
 
-    public function __construct(string $name, string $event, DateTimeInterface $date)
-    {
-        $this->id = new EventId();
+	public function __construct(string $name, string $event, DateTimeInterface $date)
+	{
+		$this->id = new EventId();
 
-        $this->setName($name);
-        $this->setEvent($event);
-        $this->date = $date;
-    }
+		$this->setName($name);
+		$this->setEvent($event);
+		$this->date = $date;
+	}
 
-    /**
-     * @param string $name
-     */
-    private function setName(string $name): self
-    {
+	private function setName(string $name): self
+	{
+		$pieces = explode('\\', $name);
+		$pieces = array_map(function ($piece) {
+			return $this->normalize($piece);
+		}, $pieces);
 
-        $pieces = explode('\\', $name);
-        $pieces = array_map(function ($piece) {
-            return $this->normalize($piece);
-        }, $pieces);
+		$pieces = array_filter($pieces);
+		$eventName = implode('.', $pieces);
 
-        $pieces = array_filter($pieces);
-        $eventName = implode('.', $pieces);
+		$this->name = $eventName;
 
-        $this->name = $eventName;
+		return $this;
+	}
 
-        return $this;
-    }
+	private function normalize(string $name)
+	{
+		$filter = new CamelCaseToSeparator('_');
+		$name = strtolower($filter->filter($name));
 
-    private function normalize(string $name)
-    {
-        $filter = new CamelCaseToSeparator('_');
-        $name = strtolower($filter->filter($name));
+		$pieces = explode('_', $name);
+		$pieces = array_filter($pieces, function (string $item) {
+			return !in_array($item, self::NON_ALLOWED_WORDS);
+		});
 
-        $pieces = explode('_', $name);
-        $pieces = array_filter($pieces, function (string $item) {
-            return !in_array($item, self::NON_ALLOWED_WORDS);
-        });
+		return implode('_', $pieces);
+	}
 
-        return implode('_', $pieces);
-    }
+	private function setEvent(string $event): self
+	{
+		$this->event = $event;
 
-    private function setEvent(string $event): self
-    {
-        $this->event = $event;
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * @return int
-     */
-    public function id(): EventId
-    {
-        return $this->id;
-    }
+	/**
+	 * @return int
+	 */
+	public function id(): EventId
+	{
+		return $this->id;
+	}
 
-    /**
-     * @return string
-     */
-    public function name(): string
-    {
-        return $this->name;
-    }
+	public function name(): string
+	{
+		return $this->name;
+	}
 
-    /**
-     * @return string
-     */
-    public function event(): string
-    {
-        return $this->event;
-    }
+	public function event(): string
+	{
+		return $this->event;
+	}
 
-    /**
-     * @return DateTimeInterface
-     */
-    public function date(): DateTimeInterface
-    {
-        return $this->date;
-    }
+	public function date(): DateTimeInterface
+	{
+		return $this->date;
+	}
 }

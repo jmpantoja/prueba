@@ -1,0 +1,119 @@
+project: ~
+modules:
+    entities:
+        -   module: Music
+            name: MusicGroup
+            endpoint: true
+            properties:
+                -   name: name
+                    type: VO(Music, GroupName)
+
+                -   name: country
+                    type: Enum(Music, Country)
+
+
+            relations:
+                -   name: albums
+                    singular: album
+                    type: OneToMany(Music, Album)
+#                    aggregate: true
+                    mapping_field: group
+
+        -   module: Music
+            name: Album
+            endpoint: true
+            properties:
+                -   name: name
+                    type: VO(Music, AlbumName)
+
+                -   name: price
+                    type: VO(Music, Money)
+
+                -   name: releaseAt
+                    type: VO(Music, Year)
+
+            relations:
+                -   name: group
+                    type: ManyToOne(Music, MusicGroup)
+#                    updatable: false
+
+
+        -   module: Music
+            name: Song
+            properties:
+                -   name: order
+                    type: VO(Music, Position)
+
+                -   name: name
+                    type: VO(Music, SongName)
+
+                -   name: duration
+                    type: VO(Music, Duration)
+
+
+    valueObjects:
+        -   module: Music
+            name: AlbumName
+            properties:
+                -   name: name
+                    type: string
+
+        -   module: Music
+            name: GroupName
+            properties:
+                -   name: name
+                    type: string
+
+
+        -   module: Music
+            name: Year
+            properties:
+                -   name: name
+                    type: int
+
+        -   module: Music
+            name: Money
+            properties:
+                -   name: amount
+                    type: int
+
+                -   name: currency
+                    type: Enum(Music, Currency)
+
+
+        -   module: Music
+            name: Position
+            properties:
+                -   name: position
+                    type: int
+
+
+        -   module: Music
+            name: SongName
+            properties:
+                -   name: name
+                    type: string
+
+        -   module: Music
+            name: Duration
+            properties:
+                -   name: minutes
+                    type: int
+
+                -   name: seconds
+                    type: int
+
+    enums:
+        -   module: Music
+            name: Currency
+            constants:
+                EURO: euro
+                DOLLAR: dollar
+
+        -   module: Music
+            name: Country
+            constants:
+                SPAIN: Spain
+                USA: USA
+                UK: UK
+

@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Tangram\Infrastructure\Doctrine\Repository;
 
-
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -23,25 +22,23 @@ use Tangram\Domain\Event\EventStore;
 
 final class DoctrineEventStore extends ServiceEntityRepository implements EventStore
 {
-    private SerializerInterface $serializer;
+	private SerializerInterface $serializer;
 
-    public function __construct(ManagerRegistry $registry, SerializerInterface $serializer)
-    {
-        parent::__construct($registry, Event::class);
-        $this->serializer = $serializer;
-    }
+	public function __construct(ManagerRegistry $registry, SerializerInterface $serializer)
+	{
+		parent::__construct($registry, Event::class);
+		$this->serializer = $serializer;
+	}
 
-    public function persist(DomainEventInterface $domainEvent): void
-    {
+	public function persist(DomainEventInterface $domainEvent): void
+	{
+		$event = $this->serializer->serialize($domainEvent, 'json', ['groups' => 'output']);
+		$event = new Event(...[
+			get_class($domainEvent),
+			$event,
+			$domainEvent->when(),
+		]);
 
-        $event = $this->serializer->serialize($domainEvent, 'json');
-
-        $event = new Event(...[
-            get_class($domainEvent),
-            $event,
-            $domainEvent->when()
-        ]);
-
-        $this->getEntityManager()->persist($event);
-    }
+		$this->getEntityManager()->persist($event);
+	}
 }

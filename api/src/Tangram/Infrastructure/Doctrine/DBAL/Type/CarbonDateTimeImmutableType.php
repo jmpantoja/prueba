@@ -19,25 +19,26 @@ use Doctrine\DBAL\Types\DateTimeImmutableType;
 
 class CarbonDateTimeImmutableType extends DateTimeImmutableType
 {
-    private const NAME = 'carbon_datetime_immutable';
+	private const NAME = 'carbon_datetime_immutable';
 
-    public function getName()
-    {
-        return static::NAME;
-    }
+	public function getName()
+	{
+		return static::NAME;
+	}
 
-    public function convertToPHPValue($value, AbstractPlatform $platform)
-    {
-        $result = parent::convertToPHPValue($value, $platform);
+	public function convertToPHPValue($value, AbstractPlatform $platform)
+	{
+		$result = parent::convertToPHPValue($value, $platform);
 
-        if ($result instanceof \DateTimeInterface) {
-            return CarbonImmutable::instance($result);
-        }
-        return $result;
-    }
+		if ($result instanceof \DateTimeInterface) {
+			return CarbonImmutable::instance($result);
+		}
 
-    public function requiresSQLCommentHint(AbstractPlatform $platform)
-    {
-        return true;
-    }
+		return $result;
+	}
+
+	public function requiresSQLCommentHint(AbstractPlatform $platform)
+	{
+		return true;
+	}
 }

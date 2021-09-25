@@ -12,29 +12,30 @@
 declare(strict_types=1);
 
 namespace App\Behat\Context\Exception;
+
 use DomainException;
 
 /**
- * Array contains comparator exception
+ * Array contains comparator exception.
  */
 class ArrayDiffException extends DomainException
 {
-    /**
-     * Class constructor
-     *
-     * @param string $message
-     * @param int $code
-     * @param Exception $previous
-     * @param mixed $needle
-     * @param mixed $haystack
-     */
-    public function __construct(string $message, $needle = null, $haystack = null)
-    {
-        // Reusable line of ='s
-        $line = str_repeat('=', 80);
+	/**
+	 * Class constructor.
+	 *
+	 * @param int       $code
+	 * @param Exception $previous
+	 * @param mixed     $needle
+	 * @param mixed     $haystack
+	 */
+	public function __construct(string $message, $needle = null, $haystack = null)
+	{
+		// Reusable line of ='s
+		$line = str_repeat('=', 80);
 
-        // Format the error message
-        $message .= PHP_EOL . PHP_EOL . sprintf(<<<MESSAGE
+		// Format the error message
+		$message .= PHP_EOL.PHP_EOL.sprintf(
+			<<<MESSAGE
 ================================================================================
 = Needle =======================================================================
 ================================================================================
@@ -46,11 +47,11 @@ class ArrayDiffException extends DomainException
 %s
 
 MESSAGE
-                ,
-                json_encode($needle, JSON_PRETTY_PRINT),
-                json_encode($haystack, JSON_PRETTY_PRINT)
-            );
+				,
+			json_encode($needle, JSON_PRETTY_PRINT),
+			json_encode($haystack, JSON_PRETTY_PRINT)
+		);
 
-        parent::__construct($message);
-    }
+		parent::__construct($message);
+	}
 }

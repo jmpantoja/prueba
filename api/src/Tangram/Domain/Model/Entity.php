@@ -13,8 +13,7 @@ declare(strict_types=1);
 
 namespace Tangram\Domain\Model;
 
-
 interface Entity
 {
-    public function id(): EntityId;
+	public function id(): EntityId;
 }

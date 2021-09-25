@@ -1,0 +1,22 @@
+App\Domain\Music\MusicGroup:
+    collectionOperations:
+        get:
+            filters:
+                - 'music_group.order_filter'
+                - 'music_group.text_filter'
+
+        post: ~
+
+    properties:
+        id:
+            identifier: true
+
+    attributes:
+        input: App\Infrastructure\Api\Music\Dto\MusicGroupInput
+        output: App\Infrastructure\Api\Music\Dto\MusicGroupOutput
+
+        normalization_context:
+            groups: [ 'music_group:read' ]
+        denormalization_context:
+            groups: [ 'music_group:write' ]
+

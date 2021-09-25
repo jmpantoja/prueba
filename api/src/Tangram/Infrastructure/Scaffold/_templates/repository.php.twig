@@ -1,0 +1,17 @@
+{% import 'partials/macros.php.twig' as _ %}
+{% include 'partials/header.php.twig' %}
+
+{{ _.use(entity) }}
+{{ _.use(entityId) }}
+
+interface {{ target | short_name}} {
+
+public function save({{ entity | short_name}} {{ entity | var_name }});
+
+public function delete({{ entityId | short_name }} {{ entityId | var_name }});
+
+public function findById({{ entityId | short_name }} {{ entityId | var_name }}): ?{{ entity | short_name }};
+
+}
+
+

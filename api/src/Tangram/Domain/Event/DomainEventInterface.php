@@ -18,5 +18,5 @@ use JsonSerializable;
 
 interface DomainEventInterface extends JsonSerializable
 {
-    public function when(): DateTimeInterface;
+	public function when(): DateTimeInterface;
 }

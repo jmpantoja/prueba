@@ -1,0 +1,62 @@
+{% import 'partials/macros.php.twig' as _ %}
+{% include 'partials/header.php.twig' %}
+
+use ApiPlatform\Core\DataTransformer\DataTransformerInterface;
+use ApiPlatform\Core\Validator\ValidatorInterface;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+
+{{ _.use(input) }}
+{{ _.use(entity) }}
+{{ _.use(repository) }}
+
+final class {{ target | short_name}} implements DataTransformerInterface {
+
+private ValidatorInterface $validator;
+private {{ repository | short_name }} $repository;
+
+public function __construct(ValidatorInterface $validator, {{ repository | short_name }} $repository)
+{
+$this->validator = $validator;
+$this->repository = $repository;
+}
+
+/**
+* @param {{ input | short_name }} $input
+* @param string $to
+* @param array $context
+* @return object|void
+*/
+public function transform($input, string $to, array $context = [])
+{
+$this->validator->validate($input, $context);
+
+{{ entity | var_name }} = $this->findEntity($context);
+$data = (array)$input;
+
+if (null === {{ entity | var_name  }}) {
+return new {{ entity | short_name }}(...$data);
+}
+
+{% for property in entity.readOnlyAttributes %}
+unset($data[{{ property.name | add_quotes }}]);
+{% endfor %}
+
+{{ entity | var_name  }}->update(...$data);
+return {{ entity | var_name  }};
+}
+
+private function findEntity(array $context): ?{{ entity | short_name }}
+{
+{{ entity | var_name }} = $context[ObjectNormalizer::OBJECT_TO_POPULATE] ?? null;
+if({{ entity | var_name }} instanceof {{ entity | short_name }}){
+return {{ entity | var_name  }};
+}
+
+return null;
+}
+
+public function supportsTransformation($data, string $to, array $context = []): bool
+{
+return $to === {{ entity | short_name }}::class;
+}
+}

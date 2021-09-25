@@ -13,20 +13,18 @@ declare(strict_types=1);
 
 namespace Tangram\Infrastructure\Doctrine\DBAL\Type;
 
-
 use Tangram\Domain\Event\EventId;
 use Tangram\Domain\Model\EntityId;
 
 final class EventIdType extends EntityIdType
 {
+	public static function name(): string
+	{
+		return 'EventId';
+	}
 
-    public static function name(): string
-    {
-        return 'EventId';
-    }
-
-    public function makeFromValue(string $value): EntityId
-    {
-        return new EventId($value);
-    }
+	public function makeFromValue(string $value): EntityId
+	{
+		return new EventId($value);
+	}
 }

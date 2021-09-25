@@ -1,0 +1,20 @@
+{% import 'partials/macros.php.twig' as _ %}
+{% include 'partials/header.php.twig' %}
+
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Tangram\Infrastructure\Doctrine\DBAL\Type\EnumType;
+{{ _.use(enumNormalizer) -}}
+
+final class {{ target | short_name }} extends EnumType {
+
+    public static function name(): string
+    {
+        return {{ enum | short_name | add_quotes }};
+    }
+
+    public function normalizer(): NormalizerInterface|DenormalizerInterface
+    {
+        return new  {{ enumNormalizer | short_name }}();
+    }
+}

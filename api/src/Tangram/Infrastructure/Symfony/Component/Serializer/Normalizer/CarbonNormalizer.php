@@ -21,28 +21,28 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 final class CarbonNormalizer implements NormalizerInterface, DenormalizerInterface
 {
-    private const supportedTypes = [
-        CarbonImmutable::class,
-        Carbon::class,
-    ];
+	private const supportedTypes = [
+		CarbonImmutable::class,
+		Carbon::class,
+	];
 
-    public function denormalize($data, string $type, string $format = null, array $context = [])
-    {
-        return forward_static_call([$type, 'make'], $data);
-    }
+	public function denormalize($data, string $type, string $format = null, array $context = [])
+	{
+		return forward_static_call([$type, 'make'], $data);
+	}
 
-    public function supportsDenormalization($data, string $type, string $format = null)
-    {
-        return in_array($type, static::supportedTypes);
-    }
+	public function supportsDenormalization($data, string $type, string $format = null)
+	{
+		return in_array($type, static::supportedTypes);
+	}
 
-    public function normalize($object, string $format = null, array $context = [])
-    {
-        return $object->format('c');
-    }
+	public function normalize($object, string $format = null, array $context = [])
+	{
+		return $object->format('c');
+	}
 
-    public function supportsNormalization($data, string $format = null)
-    {
-        return $data instanceof CarbonInterface;
-    }
+	public function supportsNormalization($data, string $format = null)
+	{
+		return $data instanceof CarbonInterface;
+	}
 }

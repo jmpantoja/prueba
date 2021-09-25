@@ -3,11 +3,8 @@ doctrine:
         url: '%env(resolve:DATABASE_URL)%'
         server_version: '8.0'
 
-        #esto puede ir a un fichero aparte, para poder sobrescribirlo
+        #los tipos estan doctrine_types.yaml
         types:
-            GenreId: App\Infrastructure\Doctrine\DBAL\Type\GenreIdType
-            MovieId: App\Infrastructure\Doctrine\DBAL\Type\MovieIdType
-            DirectorId: App\Infrastructure\Doctrine\DBAL\Type\DirectorIdType
     orm:
         auto_generate_proxy_classes: true
         naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware

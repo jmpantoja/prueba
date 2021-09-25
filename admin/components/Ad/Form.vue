@@ -175,7 +175,9 @@ export default class extends Vue {
       if (valid) {
         this.save()
           .then((response: any) => {
+            this.admin.goToForm(response)
             this.$emit('save', response)
+
           });
       }
     });

@@ -1,0 +1,7 @@
+doctrine:
+    dbal:
+        types:
+{% for type in dbal_types %}
+            {%- set name = type | dbal_type %}
+            {{ name }}: {{ type | full_name }}
+{% endfor %}

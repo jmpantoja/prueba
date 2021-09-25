@@ -1,0 +1,27 @@
+{% import 'partials/macros.php.twig' as _ %}
+{% include 'partials/header.php.twig' %}
+
+{{ _.use(entity) }}
+
+final class {{ target | short_name }} {
+/**
+* @var {{ entity | short_name }}
+*/
+private {{ entity | short_name }} {{ entity | var_name }};
+
+/**
+* @param {{ entity | short_name }} {{ entity | var_name }}
+*/
+public function __construct({{ entity | short_name }} {{ entity | var_name }})
+{
+$this->{{ entity | key_name }} = {{ entity | var_name }};
+}
+
+/**
+* @return {{ entity | short_name }}
+*/
+public function {{ entity | key_name }}(): {{ entity | short_name }}
+{
+return $this->{{ entity | key_name }};
+}
+}

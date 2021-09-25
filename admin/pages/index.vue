@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <ad-form-dialog use="movies" />
-
+<!--    <ad-form-dialog use="movies" />-->
+  {{ user }}
   </div>
 </template>
 

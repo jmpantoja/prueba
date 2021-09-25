@@ -1,0 +1,27 @@
+{% import 'partials/macros.php.twig' as _ %}
+{% include 'partials/header.php.twig' %}
+
+{{ _.uses(target) }}
+use Tangram\Domain\Assertion\Traits\Assert;
+
+final class {{ target | short_name }} {
+
+    use Assert;
+
+    {{ _.properties(target) }}
+
+    public function __construct({{ _.argument_list(target, true) }})
+    {
+        $this->assert(get_defined_vars());
+
+        {{ _.init_properties(target) }}
+    }
+
+    {{ _.getters(target) }}
+
+    {{ _.to_scalar(target) }}
+
+
+}
+
+

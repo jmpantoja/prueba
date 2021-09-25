@@ -13,53 +13,53 @@ declare(strict_types=1);
 
 namespace Tangram\Infrastructure\Doctrine\DataFixtures;
 
-
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 use Faker\Generator;
-use Iterator;
 use League\Tactician\CommandBus;
-use Symfony\Component\Validator\Constraints\Range;
 
 abstract class UseCaseFixture extends Fixture
 {
-    /**
-     * @var CommandBus
-     */
-    private CommandBus $commandBus;
-    protected Generator $faker;
+	private CommandBus $commandBus;
+	protected Generator $faker;
 
-    public function __construct(CommandBus $commandBus)
-    {
-        $this->commandBus = $commandBus;
-        $this->faker = Factory::create();
-    }
+	public function __construct(CommandBus $commandBus)
+	{
+		$this->commandBus = $commandBus;
+		$this->faker = Factory::create();
+	}
 
-    public function load(ObjectManager $manager)
-    {
-        $this->loadData();
-    }
+	public function load(ObjectManager $manager)
+	{
+		$this->loadData();
+	}
 
-    public function handle(object $command)
-    {
-        $this->commandBus->handle($command);
-    }
+	public function handle(object $command)
+	{
+		$this->commandBus->handle($command);
+	}
 
-    abstract public function loadData(): void;
+	abstract public function loadData(): void;
 
-    protected function createMany(int $count, callable $callback): Iterator
-    {
-        return $this->createRange(range(1, $count), $callback);
-    }
+	protected function createMany(int $count, callable $callback): array
+	{
+		$range = range(1, $count);
 
-    protected function createRange(array $range, callable $callback): Iterator
-    {
-        foreach ($range as $index => $data) {
-            $entity = $callback($data, $index);
-            $this->addReference(get_class($entity) . '_' . $index, $entity);
-            yield $entity;
-        }
-    }
+		return $this->createRange($range, $callback);
+	}
 
+	private function createRange(array $range, callable $callback): array
+	{
+		$items = [];
+		foreach ($range as $key => $value) {
+			$entity = $callback($value, $key);
+			if (is_object($entity)) {
+				$this->addReference(get_class($entity).'_'.$key, $entity);
+				$items[] = $entity;
+			}
+		}
+
+		return $items;
+	}
 }

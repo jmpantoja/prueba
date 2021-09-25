@@ -13,10 +13,8 @@ declare(strict_types=1);
 
 namespace Tangram\Domain\Event;
 
-
 use Tangram\Domain\Model\EntityId;
 
 final class EventId extends EntityId
 {
-
 }

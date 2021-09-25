@@ -1,4 +1,4 @@
-import genres from './en/genres'
+import music_groups from './en/music_groups'
 
 export default {
   profile: {
@@ -29,6 +29,6 @@ export default {
     directors: 'Directors',
   },
   admin: {
-    genres
+    music_groups
   }
 }

@@ -13,67 +13,64 @@ declare(strict_types=1);
 
 namespace Tangram\Domain\Event;
 
-
 use BadMethodCallException;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\EventDispatcher\EventDispatcher as BaseEventDispatcher;
 
 final class DomainEventDispatcher extends BaseEventDispatcher
 {
-    protected static ?DomainEventDispatcher $instance = null;
-    private DomainEventsCollector $eventsCollector;
+	protected static ?DomainEventDispatcher $instance = null;
+	private DomainEventsCollector $eventsCollector;
 
-    final private function __construct()
-    {
-        parent::__construct();
-        $this->eventsCollector = new DomainEventsCollector();
-    }
+	final private function __construct()
+	{
+		parent::__construct();
+		$this->eventsCollector = new DomainEventsCollector();
+	}
 
-    public static function instance(): self
-    {
-        if (static::$instance === null) {
-            static::$instance = new self();
-        }
+	public static function instance(): self
+	{
+		if (null === static::$instance) {
+			static::$instance = new self();
+		}
 
-        return static::$instance;
-    }
+		return static::$instance;
+	}
 
-    public function setDomainEventsCollector(DomainEventsCollector $eventsCollector): self
-    {
-        $this->eventsCollector = $eventsCollector;
-        return $this;
-    }
+	public function setDomainEventsCollector(DomainEventsCollector $eventsCollector): self
+	{
+		$this->eventsCollector = $eventsCollector;
 
-    /**
-     * @return DomainEventsCollector
-     */
-    public function eventsCollector(): DomainEventsCollector
-    {
-        return $this->eventsCollector;
-    }
+		return $this;
+	}
 
-    /**
-     * @param object $event
-     * @param null $eventName
-     * @return object|Event|\Symfony\Contracts\EventDispatcher\Event
-     */
-    public function dispatch($event, $eventName = null): object
-    {
-        if ($event instanceof DomainEventInterface) {
-            $this->eventsCollector->handle($event);
-        }
+	public function eventsCollector(): DomainEventsCollector
+	{
+		return $this->eventsCollector;
+	}
 
-        return parent::dispatch($event, $eventName);
-    }
+	/**
+	 * @param object $event
+	 * @param null   $eventName
+	 *
+	 * @return object|Event|\Symfony\Contracts\EventDispatcher\Event
+	 */
+	public function dispatch($event, $eventName = null): object
+	{
+		if ($event instanceof DomainEventInterface) {
+			$this->eventsCollector->handle($event);
+		}
 
-    public function __clone()
-    {
-        throw new BadMethodCallException('Este objeto no puede ser clonado');
-    }
+		return parent::dispatch($event, $eventName);
+	}
 
-    public function __wakeup()
-    {
-        throw new BadMethodCallException('Este objeto no puede ser deserializado');
-    }
+	public function __clone()
+	{
+		throw new BadMethodCallException('Este objeto no puede ser clonado');
+	}
 
+	public function __wakeup()
+	{
+		throw new BadMethodCallException('Este objeto no puede ser deserializado');
+	}
 }

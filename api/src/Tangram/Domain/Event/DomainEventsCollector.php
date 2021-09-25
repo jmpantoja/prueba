@@ -13,32 +13,29 @@ declare(strict_types=1);
 
 namespace Tangram\Domain\Event;
 
-
 class DomainEventsCollector
 {
-    private array $events = [];
+	private array $events = [];
 
-    public function handle(DomainEventInterface $event): self
-    {
-        $this->events[] = $event;
-        return $this;
-    }
+	public function handle(DomainEventInterface $event): self
+	{
+		$this->events[] = $event;
 
-    /**
-     * @return array
-     */
-    public function events(): array
-    {
-        $events = $this->events;
-        $this->clear();
+		return $this;
+	}
 
-        return $events;
-    }
+	public function events(): array
+	{
+		$events = $this->events;
+		$this->clear();
 
-    public function clear(): self
-    {
-        $this->events = [];
-        return $this;
-    }
+		return $events;
+	}
 
+	public function clear(): self
+	{
+		$this->events = [];
+
+		return $this;
+	}
 }

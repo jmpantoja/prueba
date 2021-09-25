@@ -22,6 +22,7 @@ class AdminManager {
     const admin = this._admins[name];
 
     if (!admin) {
+
       throw new Error(`No existe el admin '${name}'`)
     }
     return admin
@@ -149,6 +150,12 @@ class Admin {
     this._context.router.push(previous.fullPath)
   }
 
+
+  public goToForm(entity: Entity) {
+    const edit = this.pathByKey('edit', entity)
+    this._context.router.push(edit)
+  }
+
   public async save(entity: Entity): Promise<Entity> {
     const request = this.api.PUT(this.endpoint, entity)
     return this.apiCall(request, (response: AxiosResponse) => {
@@ -173,6 +180,7 @@ class Admin {
     return this.apiCall(request, (response: AxiosResponse) => {
       const items = response.data['hydra:member']
       const totalItems = response.data['hydra:totalItems']
+
       return {items, totalItems}
     })
   }
@@ -213,7 +221,6 @@ class Admin {
           resolve(then(response))
         })
         .catch((error) => {
-
           const message = error.response?.data['hydra:description'] || 'Not Found'
           this._loading = false
           this.error(message)

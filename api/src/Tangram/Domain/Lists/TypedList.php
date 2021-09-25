@@ -13,19 +13,17 @@ declare(strict_types=1);
 
 namespace Tangram\Domain\Lists;
 
-
 abstract class TypedList extends AbstractList
 {
-    public static function collect(?iterable $input = null): static
-    {
-        return new static($input);
-    }
+	protected function __construct(?iterable $input = null)
+	{
+		parent::__construct($input, $this->type());
+	}
 
-    protected function __construct(?iterable $input = null)
-    {
-        parent::__construct($input, $this->type());
-    }
+	abstract public function type(): string;
 
-    abstract public function type(): string;
-
+	public static function collect(?iterable $input = null): static
+	{
+		return new static($input);
+	}
 }

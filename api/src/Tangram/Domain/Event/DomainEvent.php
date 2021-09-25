@@ -13,34 +13,27 @@ declare(strict_types=1);
 
 namespace Tangram\Domain\Event;
 
-
 use Carbon\CarbonImmutable;
-use DateTime;
 use DateTimeInterface;
 
 abstract class DomainEvent implements DomainEventInterface
 {
-    private DateTimeInterface $when;
-    private object $event;
+	private DateTimeInterface $when;
+	private object $event;
 
-    public function __construct(object $event, DateTimeInterface $when = null)
-    {
-        $this->event = $event;
-        $this->when = $when ?? CarbonImmutable::now();
+	public function __construct(mixed $event, DateTimeInterface $when = null)
+	{
+		$this->event = $event;
+		$this->when = $when ?? CarbonImmutable::now();
+	}
 
-    }
+	public function when(): DateTimeInterface
+	{
+		return $this->when;
+	}
 
-    /**
-     * @return DateTimeInterface
-     */
-    public function when(): DateTimeInterface
-    {
-        return $this->when;
-    }
-
-    public function jsonSerialize()
-    {
-        return $this->event;
-    }
-
+	public function jsonSerialize()
+	{
+		return $this->event;
+	}
 }

@@ -140,7 +140,6 @@ fieldset.field-group {
       display: flex;
       flex-direction: row;
 
-
       .el-form-item {
         margin-left: 1.5rem;
         //border: solid 1px red;

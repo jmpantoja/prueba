@@ -1,9 +1,0 @@
-App\Application\User\Dto\UserDto:
-    attributes:
-        id:
-            groups: ['read']
-        email:
-            groups: ['write', 'read']            
-        roles:
-            groups: ['write', 'read']
-    

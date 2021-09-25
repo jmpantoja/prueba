@@ -15,5 +15,4 @@ namespace Tangram\Application\UseCase;
 
 interface UseCaseInterface
 {
-
 }

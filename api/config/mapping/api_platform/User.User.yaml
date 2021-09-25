@@ -2,13 +2,20 @@ App\Domain\User\User:
     collectionOperations:
         get:
             filters:
+                - 'user.text_filter'
                 - 'user.order_filter'
+        post: ~
+               
+    properties:
+        id:
+            identifier: true               
                 
     attributes:
         input: App\Application\User\Dto\UserDto
         output: App\Application\User\Dto\UserDto
+        
         normalization_context:
-            groups: [ 'read' ]
+            groups: [ 'input' ]
         denormalization_context:
-            groups: [ 'write' ]
+            groups: [ 'output' ]
                         

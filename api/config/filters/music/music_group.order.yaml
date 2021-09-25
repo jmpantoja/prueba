@@ -1,0 +1,5 @@
+services:
+    music_group.order_filter:
+        parent: 'order_filter'
+        arguments: { $properties: {"name":"asc","country":"asc"} }
+        tags: [ 'api_platform.filter' ]

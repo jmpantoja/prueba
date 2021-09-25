@@ -1,0 +1,19 @@
+{% import 'partials/macros.php.twig' as _ %}
+{% include 'partials/header.php.twig' %}
+
+{{ _.use(entityId) }}
+use Tangram\Domain\Model\EntityId;
+use Tangram\Infrastructure\Doctrine\DBAL\Type\EntityIdType;
+
+final class {{ target | short_name }} extends EntityIdType {
+
+public static function name(): string
+{
+return '{{ entityId | short_name }}';
+}
+
+public function makeFromValue(string $value): EntityId
+{
+return new {{ entityId | short_name }}($value);
+}
+}

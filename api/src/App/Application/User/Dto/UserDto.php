@@ -13,10 +13,9 @@ declare(strict_types=1);
 
 namespace App\Application\User\Dto;
 
-
 final class UserDto
 {
-    public ?int $id = null;
-    public string $email;
-    public array $roles = [];
+	public ?int $id = null;
+	public string $email;
+	public array $roles = [];
 }

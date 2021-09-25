@@ -1,0 +1,9 @@
+{%- set args = {} -%}
+{%- for property in  entity.properties  -%}
+    {%- set args = args | merge({(property.name): 'asc'}) -%}
+{%- endfor -%}
+services:
+    {{ entity | table_name }}.order_filter:
+        parent: 'order_filter'
+        arguments: { $properties: {{ args | json_encode | raw }} }
+        tags: [ 'api_platform.filter' ]

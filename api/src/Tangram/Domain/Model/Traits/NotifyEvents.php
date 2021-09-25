@@ -18,9 +18,9 @@ use Tangram\Domain\Event\DomainEventInterface;
 
 trait NotifyEvents
 {
-    final public function notify(DomainEventInterface $domainEvent): void
-    {
-        DomainEventDispatcher::instance()
-            ->dispatch($domainEvent);
-    }
+	final public function notify(DomainEventInterface $domainEvent): void
+	{
+		DomainEventDispatcher::instance()
+			->dispatch($domainEvent);
+	}
 }

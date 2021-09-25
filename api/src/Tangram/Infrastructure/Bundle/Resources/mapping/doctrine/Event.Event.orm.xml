@@ -6,7 +6,7 @@
     <entity name="Tangram\Domain\Event\Event" table="events_store"
             repository-class="Tangram\Infrastructure\Doctrine\Repository\DoctrineEventStore">
 
-        <id name="id" type="EventId" />
+        <id name="id" type="EventId"/>
 
         <field name="name"/>
         <field name="event" type="text"/>

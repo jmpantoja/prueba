@@ -1,0 +1,5 @@
+services:
+    album.order_filter:
+        parent: 'order_filter'
+        arguments: { $properties: {"group":"asc","name":"asc","price":"asc","releaseAt":"asc"} }
+        tags: [ 'api_platform.filter' ]

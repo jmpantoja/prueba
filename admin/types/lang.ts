@@ -35,6 +35,9 @@ type Translation = {
     es: StringLike,
     en: StringLike,
   },
+  fields:{
+    placeholder: StringLike,
+  },
   filters: {
     equals: StringLike,
     contains: StringLike,

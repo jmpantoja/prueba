@@ -16,5 +16,9 @@ framework:
         log: true
 
     serializer:
+        enabled: true
         mapping:
             paths: ['%kernel.project_dir%/config/mapping/serialization']
+
+    annotations:
+        cache: none

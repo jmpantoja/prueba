@@ -1,0 +1,139 @@
+{% import 'partials/macros.php.twig' as _ %}
+{% include 'partials/header.php.twig' %}
+
+{{ _.uses(target) }}
+{{ _.use(entityId) }}
+{{ _.use(createEvent) }}
+{{ _.use(updateEvent) }}
+
+use Tangram\Domain\Event\DomainEventInterface;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Tangram\Infrastructure\Api\Dto\Input;
+
+
+trait {{ target | short_name }} {
+
+    {{ _.properties(target) }}
+    private {{ entityId | short_name }} $id;
+
+    public function __construct({{ _.constructor_argument_list(target, true) }})
+    {
+        $this->id = new {{ entityId | short_name }}();
+        {% for property in target.onlyReadAttributes %}
+            $this->{{ property | key_name }} = {{ property | var_name }};
+        {% endfor %}
+        {% for collection in target.collections %}
+            $this->{{ collection | key_name }} = new ArrayCollection();
+        {% endfor %}
+
+
+        $this->initialize({{ _.argument_list(target) }});
+        $this->notify(new {{ createEvent | short_name }}($this));
+    }
+
+    abstract public function notify(DomainEventInterface $domainEvent): void;
+
+    public function update({{ _.argument_list(target, true, true) }}): static
+    {
+        $this->initialize({{ _.argument_list(target) }});
+        $this->notify(new {{ updateEvent | short_name }}($this));
+
+        return $this;
+    }
+
+    private function initialize({{ _.argument_list(target, true, true) }}): static
+    {
+        {{ _.update_properties(target, true) }}
+        return $this;
+    }
+
+    {{ _self.setters(target) }}
+
+    public function id(): {{ entityId | short_name }}
+    {
+        return $this->id;
+    }
+
+    {{ _.getters(target) }}
+}
+
+{% macro setters(target) %}
+    {%- for collection in target.collections %}
+        {{ _self.setter(collection) }}
+        {{ _self.adder(collection) }}
+        {{ _self.remover(collection) }}
+    {% endfor %}
+{% endmacro %}
+
+{% macro setter(relation) %}
+    {% if relation.aggregate -%}
+        {% set var = relation | single_var_name %}
+        {% set adder = 'fn(Input %s)=> $this->%s(... %s)'|format(var, relation | adder, var) %}
+    {%- else -%}
+        {% set adder = "[$this, '%s']"|format(relation | adder) %}
+    {% endif %}
+
+    public function {{ relation | setter }}(?iterable {{ relation | var_name }}): static {
+
+    if(is_null({{ relation | var_name }})){
+        return $this;
+    }
+
+    $this->{{ relation | key_name }}()
+    ->compareWith({{ relation | var_name }})
+    ->inserts({{ adder | raw }})
+    ->removes([$this, '{{ relation | remover }}']);
+
+    return $this;
+    }
+
+{% endmacro %}
+
+{% macro adder(relation) %}
+    {% set var = relation | single_var_name %}
+    {% if not relation.aggregate %}
+        public function {{ relation | adder }}({{ relation | short_name }} {{ var }}): static {
+        if($this->{{ relation | key_name }}->contains({{ var }})){
+        return $this;
+        }
+    {% else %}
+        public function {{ relation | adder }}({{ _.argument_list(relation.type | ref, true) }}): static {
+        {{ var }} = new {{ relation | short_name }}({{ _self.aggregate_argument_list(relation.type | ref, relation | mapping_field ) }});
+
+    {% endif %}
+    $this->{{ relation | key_name }}->add({{ var }});
+
+    return $this;
+    }
+
+{% endmacro %}
+
+
+{% macro aggregate_argument_list(target, mapping) %}
+    {% set temp = [] %}
+    {%- for attribute in target.attributes -%}
+        {% if attribute.name == mapping %}
+            {% set arg = '$this' %}
+        {% else %}
+            {% set arg = _.argument(attribute, false) %}
+        {% endif %}
+        {% set temp = temp | merge([arg]) %}
+    {%- endfor -%}
+    {{- temp | join(', ') -}}
+{% endmacro %}
+
+{% macro remover(relation) %}
+    {% set var = relation | single_var_name %}
+
+    public function {{ relation | remover }}( {{ relation | short_name }} {{ var }} ): static {
+
+    if(!$this->{{ relation | key_name }}->contains({{ var }})){
+    return $this;
+    }
+    $this->{{ relation | key_name }}->removeElement({{ var }});
+
+    return $this;
+    }
+
+{% endmacro %}

@@ -1,0 +1,15 @@
+{% import 'partials/macros.php.twig' as _ %}
+{% include 'partials/header.php.twig' %}
+
+use Tangram\Domain\Model\Entity;
+use Tangram\Domain\Model\Traits\NotifyEvents;
+
+{{ _.use(entityTrait) }}
+
+class {{ target | short_name }} implements Entity
+{
+
+use NotifyEvents;
+use {{ entityTrait | short_name }};
+
+}

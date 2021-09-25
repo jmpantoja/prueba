@@ -1,0 +1,6 @@
+services:
+    music_group.text_filter:
+        parent: 'TextFilter'
+        arguments: { $properties: {"name":null,"country":null} }
+        tags: [ 'api_platform.filter' ]
+

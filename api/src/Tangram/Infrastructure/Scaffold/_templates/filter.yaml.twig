@@ -1,0 +1,8 @@
+services:
+{% for key, filter in (entity | filters ) %}
+    {{ entity | table_name }}.{{ key }}:
+        parent: {{ filter.parent | add_quotes }}
+        arguments: { $properties: {{ filter.args | json_encode | raw }} }
+        tags: [ 'api_platform.filter' ]
+
+{% endfor %}

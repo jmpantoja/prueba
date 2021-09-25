@@ -13,27 +13,12 @@ declare(strict_types=1);
 
 namespace Tangram\Domain\Lists;
 
-
-use Tangram\Domain\Lists\Exception\InvalidCollectionElement;
-use Tangram\Domain\Model\Entity;
-
 abstract class EntityList extends TypedList
 {
+	public function add(int | string $key, $item): static
+	{
+		$key = (string) $item->id();
 
-    protected function add(string|int $key, mixed $item): static
-    {
-        $item instanceof Entity || throw new InvalidCollectionElement($item, Entity::class);
-
-        $key = (string)$item->id();
-        return parent::add($key, $item);
-    }
-
-    public function diff(?EntityList $other = null): DiffList
-    {
-        $other = $other ?? static::collect();
-
-        return DiffList::compare($this, $other);
-    }
-
-
+		return parent::add($key, $item);
+	}
 }

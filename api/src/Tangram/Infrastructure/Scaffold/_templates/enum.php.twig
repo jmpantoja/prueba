@@ -1,0 +1,10 @@
+{% import 'partials/macros.php.twig' as _ %}
+{% include 'partials/header.php.twig' %}
+
+use MyCLabs\Enum\Enum;
+
+{{ _.phpdoc_enum(target) -}}
+final class {{ target | short_name }} extends Enum
+{
+    {{ _.constants(target, true) -}}
+}

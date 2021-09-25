@@ -1,0 +1,9 @@
+{% import 'partials/macros.php.twig' as _ %}
+{% include 'partials/header.php.twig' %}
+
+use Tangram\Domain\Model\EntityId;
+
+class {{ target | short_name }} extends EntityId
+{
+
+}

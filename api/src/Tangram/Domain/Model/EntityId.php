@@ -13,52 +13,43 @@ declare(strict_types=1);
 
 namespace Tangram\Domain\Model;
 
-
 use Symfony\Component\Uid\Ulid;
 
 class EntityId
 {
-    protected Ulid $ulid;
+	protected Ulid $ulid;
 
-    /**
-     * EntityId constructor.
-     * @param Ulid|null $ulid
-     */
-    final public function __construct(string $ulid = null)
-    {
-        if (is_null($ulid)) {
-            $this->ulid = new Ulid();
-            return;
-            }
+	/**
+	 * EntityId constructor.
+	 *
+	 * @param Ulid|null $ulid
+	 */
+	final public function __construct(string $ulid = null)
+	{
+		if (is_null($ulid)) {
+			$this->ulid = new Ulid();
 
-        $this->ulid = Ulid::fromString($ulid);
-    }
+			return;
+		}
 
+		$this->ulid = Ulid::fromString($ulid);
+	}
 
-    /**
-     * @return string
-     */
-    public function ulid(): Ulid
-    {
-        return $this->ulid;
-    }
+	public function equals(EntityId $otherId): bool
+	{
+		return $this->ulid()->equals($otherId->ulid());
+	}
 
-    /**
-     * @param EntityId $otherId
-     *
-     * @return bool
-     */
-    public function equals(EntityId $otherId): bool
-    {
-        return $this->ulid()->equals($otherId->ulid());
-    }
+	/**
+	 * @return string
+	 */
+	public function ulid(): Ulid
+	{
+		return $this->ulid;
+	}
 
-
-    /**
-     * @return string
-     */
-    public function __toString(): string
-    {
-        return $this->ulid()->toRfc4122();
-    }
+	public function __toString(): string
+	{
+		return $this->ulid()->toRfc4122();
+	}
 }

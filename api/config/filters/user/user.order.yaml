@@ -1,0 +1,5 @@
+services:
+    user.order_filter:
+        parent: 'order_filter'
+        arguments: { $properties: { email: "asc" } }
+        tags: [ 'api_platform.filter' ]

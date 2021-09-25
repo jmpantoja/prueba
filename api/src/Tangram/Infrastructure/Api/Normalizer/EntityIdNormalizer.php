@@ -12,26 +12,25 @@ declare(strict_types=1);
 
 namespace Tangram\Infrastructure\Api\Normalizer;
 
+use ArrayObject;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Tangram\Domain\Model\EntityId;
 
 final class EntityIdNormalizer implements NormalizerInterface
 {
+	/**
+	 * @param EntityId $object
+	 *
+	 * @return array|ArrayObject|bool|float|int|string|void|null
+	 */
+	public function normalize($object, string $format = null, array $context = [])
+	{
+		//usleep((int)3 * 1000000);
+		return (string) $object;
+	}
 
-    /**
-     * @param EntityId $object
-     * @param string|null $format
-     * @param array $context
-     * @return array|\ArrayObject|bool|float|int|string|void|null
-     */
-    public function normalize($object, string $format = null, array $context = [])
-    {
-        //usleep((int)3 * 1000000);
-        return (string)$object;
-    }
-
-    public function supportsNormalization($data, string $format = null)
-    {
-        return $data instanceof EntityId;
-    }
+	public function supportsNormalization($data, string $format = null)
+	{
+		return $data instanceof EntityId;
+	}
 }

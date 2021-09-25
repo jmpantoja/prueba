@@ -1,11 +1,7 @@
 import {Translation} from "~/types/lang";
 
 // @ts-ignore
-import genres from "./es/genres.ts"
-// @ts-ignore
-import directors from "./es/directors.ts"
-// @ts-ignore
-import movies from "./es/movies.ts"
+import music_groups from "./es/music_groups.ts"
 
 
 const spanish: Translation = {
@@ -16,6 +12,9 @@ const spanish: Translation = {
   lang: {
     es: 'Español',
     en: 'Ingles',
+  },
+  fields:{
+    placeholder: 'Selecciona',
   },
   filters: {
     equals: 'igual a',
@@ -31,17 +30,12 @@ const spanish: Translation = {
     yes_delete: '<strong>Sí,</strong> Borrar'
   },
   menu: {
-    film_archive: 'Filmoteca',
     dashboard: 'Escritorio',
-    movies: 'Peliculas',
-    borrame: 'Borrame',
-    genres: 'Géneros',
-    directors: 'Directores',
+    music_groups: 'Grupos',
+    music: 'Música',
   },
   admin: {
-    genres,
-    directors,
-    movies
+    music_groups
   }
 }
 

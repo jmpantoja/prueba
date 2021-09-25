@@ -1,0 +1,24 @@
+App\Domain\Music\Album:
+    collectionOperations:
+        get:
+            filters:
+                - 'album.order_filter'
+                - 'album.text_filter'
+
+        post: ~
+
+    properties:
+        id:
+            identifier: true
+
+    attributes:       
+        input: App\Infrastructure\Api\Music\Dto\AlbumInput
+        output: App\Infrastructure\Api\Music\Dto\AlbumOutput
+
+        normalization_context:
+            groups: [ 'album:read' ]
+            
+        denormalization_context:
+            groups: [ 'album:write' ]
+
+    

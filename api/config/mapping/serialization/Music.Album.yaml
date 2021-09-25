@@ -1,0 +1,27 @@
+App\Infrastructure\Api\Music\Dto\AlbumOutput:
+    attributes:
+        id:
+            groups: ['album:read']
+    
+        group:
+            groups: ['album:read']
+    
+        name:
+            groups: ['album:read']
+        
+        price:
+            groups: ['album:read']
+        
+        releaseAt:
+            groups: ['album:read']
+    
+App\Infrastructure\Api\Music\Dto\AlbumInput:
+    attributes:
+        group:
+            groups: ['album:write']
+        name:
+            groups: ['album:write']
+        price:
+            groups: ['album:write']
+        releaseAt:
+            groups: ['album:write']

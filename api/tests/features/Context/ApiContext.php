@@ -6,7 +6,6 @@ namespace App\Behat\Context;
 
 use Assert\Assertion;
 use Behat\Behat\Context\Context;
-use Behat\Behat\Event\FeatureEvent;
 use Behat\Behat\Hook\Scope\AfterScenarioScope;
 use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 use Behat\Gherkin\Node\PyStringNode;
@@ -24,104 +23,98 @@ use Symfony\Component\HttpKernel\KernelInterface;
  */
 final class ApiContext implements Context
 {
-    /** @var KernelInterface */
-    private $kernel;
+	/** @var KernelInterface */
+	private $kernel;
 
-    /** @var Response|null */
-    private ?Response $response;
+	private ?Response $response;
 
-    /**
-     * @var Connection
-     */
-    private $connection;
+	/**
+	 * @var Connection
+	 */
+	private $connection;
 
-    /**
-     * @var array
-     */
-    private array $options;
+	private array $options;
 
-    protected string $missingResponseError = 'The request has not been made yet, so no response object exists.';
+	private string $missingResponseError = 'The request has not been made yet, so no response object exists.';
 
-    public function __construct(KernelInterface $kernel, ParameterBagInterface $parameters)
-    {
+	public function __construct(KernelInterface $kernel, ParameterBagInterface $parameters)
+	{
+		$this->baseUrl = $parameters->get('behat_base_url');
+		$this->kernel = $kernel;
+		$this->connection = $kernel->getContainer()->get('doctrine')->getManager()->getConnection();
 
-        $this->baseUrl = $parameters->get('behat_base_url');
-        $this->kernel = $kernel;
-        $this->connection = $kernel->getContainer()->get('doctrine')->getManager()->getConnection();
+		$this->options = [
+			'parameters' => [],
+			'cookies' => [],
+			'files' => [],
+			'server' => [
+				'CONTENT_TYPE' => 'application/ld+json',
+				'HTTP_ACCEPT' => 'application/ld+json',
+			],
+			'content' => null,
+		];
+	}
 
-        $this->options = [
-            'parameters' => [],
-            'cookies' => [],
-            'files' => [],
-            'server' => [
-                'CONTENT_TYPE' => 'application/ld+json',
-                'HTTP_ACCEPT' => 'application/ld+json'
-            ],
-            'content' => null
-        ];
-    }
+	/** @BeforeScenario */
+	public function before(BeforeScenarioScope $event)
+	{
+		$this->connection->beginTransaction();
+	}
 
-    /** @BeforeScenario */
-    public function before(BeforeScenarioScope $event)
-    {
-        $this->connection->beginTransaction();
-    }
+	/** @AfterScenario */
+	public function after(AfterScenarioScope $event)
+	{
+		$this->connection->rollBack();
+	}
 
-    /** @AfterScenario */
-    public function after(AfterScenarioScope $event)
-    {
-        $this->connection->rollBack();
-    }
+	/**
+	 * @Given The request body
+	 */
+	public function theRequestBody(PyStringNode $content)
+	{
+		$this->options['content'] = (string) $content;
+	}
 
+	/**
+	 * @When I request :method to :path
+	 */
+	public function iRequestTo(string $method, string $uri)
+	{
+		$this->options['uri'] = sprintf('%s/%s', ...[
+			rtrim($this->baseUrl, '/'),
+			ltrim($uri, '/'),
+		]);
 
-    /**
-     * @Given The request body
-     */
-    public function theRequestBody(PyStringNode $content)
-    {
-        $this->options['content'] = (string)$content;
-    }
+		$this->options['method'] = $method;
 
-    /**
-     * @When I request :method to :path
-     */
-    public function iRequestTo(string $method, string $uri)
-    {
-        $this->options['uri'] = sprintf('%s/%s', ...[
-            rtrim($this->baseUrl, '/'),
-            ltrim($uri, '/'),
-        ]);
+		$this->response = $this->kernel->handle(Request::create(...$this->options));
+	}
 
-        $this->options['method'] = $method;
+	/**
+	 * @Then The response code is :code
+	 */
+	public function theResponseCodeIs(int $code)
+	{
+		Assertion::same(...[
+			$code,
+			$this->response->getStatusCode(),
+			sprintf('Se ha devuelto el código "%s" (se esperaba: %s)', $this->response->getStatusCode(), $code),
+		]);
+	}
 
-        $this->response = $this->kernel->handle(Request::create(...$this->options));
-    }
+	/**
+	 * @Then The response body contains
+	 */
+	public function theResponseBodyContains(PyStringNode $expected)
+	{
+		$differ = new ArrayDiff();
 
-    /**
-     * @Then The response code is :code
-     */
-    public function theResponseCodeIs(int $code)
-    {
-        Assertion::same(...[
-            $code,
-            $this->response->getStatusCode(),
-            sprintf('Se ha devuelto el código "%s" (se esperaba: %s)', $this->response->getStatusCode(), $code)
-        ]);
-    }
+		$differ->addFunction('regExp', fn () => true);
 
-    /**
-     * @Then The response body contains
-     */
-    public function theResponseBodyContains(PyStringNode $expected)
-    {
-        $differ = new ArrayDiff();
+		$content = json_decode($this->response->getContent(), true);
+		$expected = json_decode((string) $expected, true);
+		$differ->compare($expected, $content);
 
-        $differ->addFunction('regExp', fn() => true);
-
-        $content = json_decode($this->response->getContent(), true);
-        $expected = json_decode((string)$expected, true);
-        $differ->compare($expected, $content);
-
-        return true;
-    }
+		return true;
+	}
 }

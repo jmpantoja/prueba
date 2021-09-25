@@ -1,0 +1,5 @@
+services:
+    user.text_filter:
+        parent: 'TextFilter'
+        arguments: { $properties: { email: "asc" } }
+        tags: [ 'api_platform.filter' ]

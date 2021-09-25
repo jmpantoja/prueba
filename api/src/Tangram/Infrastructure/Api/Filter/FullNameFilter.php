@@ -13,11 +13,10 @@ declare(strict_types=1);
 
 namespace Tangram\Infrastructure\Api\Filter;
 
-
 class FullNameFilter extends AbstractTextFilter
 {
-    protected function formatWhereClause(string $alias, string $property, string $paramName): string
-    {
-        return sprintf('%1$s.%2$s.name like :%3$s OR %1$s.%2$s.lastName like :%3$s', $alias, $property, $paramName);
-    }
+	protected function formatWhereClause(string $alias, string $property, string $paramName): string
+	{
+		return sprintf('%1$s.%2$s.name like :%3$s OR %1$s.%2$s.lastName like :%3$s', $alias, $property, $paramName);
+	}
 }

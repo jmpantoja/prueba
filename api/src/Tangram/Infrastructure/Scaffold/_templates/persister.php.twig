@@ -1,0 +1,57 @@
+{% import 'partials/macros.php.twig' as _ %}
+{% include 'partials/header.php.twig' %}
+
+use ApiPlatform\Core\DataPersister\ContextAwareDataPersisterInterface;
+use League\Tactician\CommandBus;
+use Tangram\Domain\Model\Traits\NotifyEvents;
+{{ _.use(entity) }}
+{{ _.use(deleteEvent) }}
+{{ _.use(deleteCommand) }}
+{{ _.use(saveCommand) }}
+
+final class {{ target | short_name}}  implements ContextAwareDataPersisterInterface {
+
+use NotifyEvents;
+
+/**
+* @var CommandBus
+*/
+private CommandBus $commandBus;
+
+public function __construct( CommandBus $commandBus)
+{
+$this->commandBus = $commandBus;
+}
+
+public function supports($data, array $context = []): bool
+{
+return $data instanceof {{ entity | short_name }};
+}
+
+/**
+* @param {{ entity | short_name}} {{ entity | var_name }}
+* @param array $context
+* @return object|void
+*/
+public function persist({{ entity | var_name }}, array $context = [])
+{
+$command = new {{ saveCommand | short_name }}({{ entity | var_name }});
+$this->commandBus->handle($command);
+}
+
+/**
+* @param {{ entity | short_name}} {{ entity | var_name }}
+* @param array $context
+* @return object|void
+*/
+public function remove({{ entity | var_name }}, array $context = [])
+{
+{{ entityId | var_name}} = {{ entity | var_name }}->id();
+$command = new {{ deleteCommand | short_name }}({{ entityId | var_name }});
+
+$this->notify(new {{ deleteEvent | short_name }}({{ entityId | var_name }}));
+
+$this->commandBus->handle($command);
+}
+
+}

@@ -1,0 +1,29 @@
+{% import 'partials/macros.php.twig' as _ %}
+{% include 'partials/header.php.twig' %}
+
+{{ _.use(entityId) }}
+{{ _.use(entity) }}
+{{ _.uses(entity) }}
+
+final class {{ target | short_name}}  {
+    public {{ entityId | short_name }} $id;
+
+{% for attribute in target.attributes %}
+    {% if attribute.toMany %}
+        public {{ attribute | list_name }} {{ attribute | var_name -}};
+    {% else %}
+        public {{ attribute | type_name }} {{ attribute | var_name -}};
+    {% endif %}
+
+{% endfor %}
+
+public static function make({{ entity | short_name }} {{ entity | var_name }}): self
+{
+return new self({{ entity | var_name }});
+}
+
+private function __construct({{ entity | short_name }} {{ entity | var_name }}){
+ $this->id = {{ entity | var_name }}->id();
+ {{ _.init_properties_from_object(target, entity | var_name) }}
+}
+}

@@ -13,15 +13,13 @@ declare(strict_types=1);
 
 namespace Tangram\Infrastructure\Doctrine\DBAL\DataFixtures;
 
-
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
 final class EventStoreFixtures extends Fixture
 {
-
-    public function load(ObjectManager $manager)
-    {
-        // TODO: Implement load() method.
-    }
+	public function load(ObjectManager $manager)
+	{
+		// TODO: Implement load() method.
+	}
 }

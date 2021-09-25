@@ -13,48 +13,49 @@ declare(strict_types=1);
 
 namespace Tangram\Domain\Lists;
 
-
 final class DiffList
 {
-    private array $other;
-    private array $original;
+	private array $other;
+	private array $original;
 
-    public static function compare(EntityList $original, EntityList $other): self
-    {
-        return new self($original, $other);
-    }
+	public function __construct(ListInterface $original, ListInterface $other)
+	{
+		$this->original = $original->toArray();
+		$this->other = $other->toArray();
+	}
 
-    private function __construct(EntityList $original, EntityList $other)
-    {
-        $this->original = $original->toArray();
-        $this->other = $other->toArray();
-    }
+	public static function compare(ListInterface $original, ListInterface $other): self
+	{
+		return new self($original, $other);
+	}
 
-    public function inserts(callable $callback): self
-    {
-        $inserts = array_diff_key($this->other, $this->original);
-        foreach ($inserts as $item) {
-            $callback($item);
-        }
-        return $this;
-    }
+	public function inserts(callable $callback): self
+	{
+		$inserts = array_diff_key($this->other, $this->original);
+		foreach ($inserts as $item) {
+			$callback($item);
+		}
 
-    public function updates(callable $callback): self
-    {
-        $updates = array_intersect_key($this->other, $this->original);
-        foreach ($updates as $item) {
-            $callback($item);
-        }
-        return $this;
-    }
+		return $this;
+	}
 
-    public function deletes(callable $callback): self
-    {
-        $deletes = array_diff_key($this->original, $this->other);
-        foreach ($deletes as $item) {
-            $callback($item);
-        }
-        return $this;
-    }
+	public function updates(callable $callback): self
+	{
+		$updates = array_intersect_key($this->other, $this->original);
+		foreach ($updates as $key => $item) {
+			$callback($this->original[$key], $item);
+		}
 
+		return $this;
+	}
+
+	public function removes(callable $callback): self
+	{
+		$removes = array_diff_key($this->original, $this->other);
+		foreach ($removes as $item) {
+			$callback($item);
+		}
+
+		return $this;
+	}
 }

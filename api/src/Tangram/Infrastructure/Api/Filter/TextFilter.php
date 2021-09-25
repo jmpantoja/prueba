@@ -13,12 +13,10 @@ declare(strict_types=1);
 
 namespace Tangram\Infrastructure\Api\Filter;
 
-
 class TextFilter extends AbstractTextFilter
 {
-
-    protected  function formatWhereClause(string $alias, string $property, string $paramName): string
-    {
-        return sprintf('%s.%s like :%s', $alias, $property, $paramName);
-    }
+	protected function formatWhereClause(string $alias, string $property, string $paramName): string
+	{
+		return sprintf('%s.%s like :%s', $alias, $property, $paramName);
+	}
 }

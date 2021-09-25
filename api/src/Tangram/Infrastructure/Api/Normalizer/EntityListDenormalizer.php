@@ -15,57 +15,59 @@ namespace Tangram\Infrastructure\Api\Normalizer;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
-use Tangram\Domain\Lists\EntityList;
 use Tangram\Domain\Lists\MixedList;
 
 final class EntityListDenormalizer implements DenormalizerInterface, DenormalizerAwareInterface
 {
+	private DenormalizerInterface $denormalizer;
+	private EntityManagerInterface $entityManager;
 
-    private DenormalizerInterface $denormalizer;
-    private EntityManagerInterface $entityManager;
+	public function __construct(EntityManagerInterface $entityManager)
+	{
+		$this->entityManager = $entityManager;
+	}
 
-    public function __construct(EntityManagerInterface $entityManager)
-    {
-        $this->entityManager = $entityManager;
-    }
+	public function setDenormalizer(DenormalizerInterface $denormalizer)
+	{
+		$this->denormalizer = $denormalizer;
+	}
 
-    public function setDenormalizer(DenormalizerInterface $denormalizer)
-    {
-        $this->denormalizer = $denormalizer;
-    }
+	public function supportsDenormalization($data, string $type, string $format = null)
+	{
+        return false;
+		return is_array($data) and preg_match('/(.*)\[\]$/', $type);
+	}
 
-    public function supportsDenormalization($data, string $type, string $format = null)
-    {
-        return is_array($data) && is_a($type, EntityList::class, true);
-    }
+	public function denormalize($data, string $type, string $format = null, array $context = [])
+	{
+		$matches = [];
+		preg_match('/(.*)\[\]$/', $type, $matches);
 
-    public function denormalize($data, string $type, string $format = null, array $context = [])
-    {
-        $className = ($type::collect())->type();
+		$className = $matches[1];
 
-        $items = MixedList::collect($data)
-            ->map(function (array $item) use ($className) {
-                return $this->findOrCreate($item, $className);
-            })
-            ->values();
+		return MixedList::collect($data)
+			->map(function (array $item) use ($className) {
+				return $this->findOrCreate($item, $className);
+			})
+			->values();
 
-        return $type::collect($items);
+		return $type::collect($items);
+	}
 
-    }
+	private function findOrCreate(array $item, string $className)
+	{
+		$id = $item['id'] ?? null;
 
+		$classNameId = sprintf('%sId', $className);
 
-    private function findOrCreate(array $item, string $className)
-    {
-        $id = $item['id'] ?? null;
+		if (!is_null($id) and class_exists($classNameId)) {
+			$entityId = new $classNameId($id);
 
-        if (!is_null($id)) {
-            $classNameId = sprintf('%sId', $className);
-            $entityId = new $classNameId($id);
+			return $this->entityManager->getReference($className, $entityId);
+		}
 
-            return $this->entityManager->getReference($className, $entityId);
-        }
+		unset($item['id']);
 
-        unset($item['id']);
-        return $this->denormalizer->denormalize($item, $className);
-    }
+		return $this->denormalizer->denormalize($item, $className);
+	}
 }

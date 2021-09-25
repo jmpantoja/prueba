@@ -1,0 +1,60 @@
+{% import 'partials/macros.php.twig' as _ %}
+{% include 'partials/header.php.twig' %}
+
+{{ _.use(entity) }}
+{{ _.use(createEvent) }}
+{{ _.use(updateEvent) }}
+{{ _.use(entityId) }}
+
+use PhpSpec\Exception\Example\PendingException;
+use PhpSpec\ObjectBehavior;
+use Prophecy\Argument;
+use Tangram\Domain\Event\DomainEventDispatcher;
+use Tangram\Domain\Event\DomainEventsCollector;
+use Tangram\Domain\Model\Entity;
+
+final class {{ target | short_name }}  extends ObjectBehavior
+{
+
+private function eventsCollector(DomainEventsCollector $eventsCollector): void
+{
+$eventsCollector->handle(Argument::any())->willReturn($eventsCollector);
+DomainEventDispatcher::instance()
+->setDomainEventsCollector($eventsCollector->getWrappedObject());
+}
+
+private function input(): array
+{
+throw new PendingException('Este método debería devolver un array con los argumentos (con nombre y en orden) para crear la entidad');
+return [
+
+];
+}
+
+public function let(DomainEventsCollector $eventsCollector)
+{
+$this->eventsCollector($eventsCollector);
+
+$args = $this->input();
+$this->beConstructedWith(...array_values($args));
+}
+
+public function it_is_initializable(DomainEventsCollector $eventsCollector)
+{
+$this->shouldHaveType({{ entity | short_name }}::class);
+$eventsCollector->handle(Argument::type({{ createEvent | short_name }}::class))->shouldBeCalledOnce();
+}
+
+public function it_implements_entity_interface()
+{
+$this->shouldHaveType({{ entity | short_name }}::class);
+$this->id()->shouldHaveType({{ entityId | short_name }}::class);
+}
+
+public function it_is_updatable(DomainEventsCollector $eventsCollector)
+{
+$this->update(...$this->input());
+$eventsCollector->handle(Argument::type({{ updateEvent | short_name }}::class))->shouldBeCalledOnce();
+}
+
+}

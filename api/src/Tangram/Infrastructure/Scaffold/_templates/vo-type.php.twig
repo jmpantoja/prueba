@@ -1,0 +1,38 @@
+{% import 'partials/macros.php.twig' as _ %}
+{% include 'partials/header.php.twig' %}
+
+{{ _.use(normalizer) }}
+use Doctrine\DBAL\Platforms\AbstractPlatform;
+use Exception;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Tangram\Infrastructure\Doctrine\DBAL\Type\ValueObjectType;
+
+
+final class {{ target | short_name}} extends ValueObjectType {
+
+public function getSQLDeclaration(array $column, AbstractPlatform $platform)
+{
+{% set mode = target.toSingleScalar %}
+{%- if mode == 'string' -%}
+    return $platform->getVarcharTypeDeclarationSQL($column);
+{%- elseif mode == 'int' -%}
+    return $platform->getIntegerTypeDeclarationSQL($column);
+{%- else -%}
+    {% if not target.composed %}
+        throw new Exception(sprintf('Incomplete method "%s"', __METHOD__));
+    {% endif %}
+{%- endif -%}
+
+}
+
+public static function name(): string
+{
+return '{{ valueObject | short_name }}';
+}
+
+public function normalizer(): NormalizerInterface|DenormalizerInterface
+{
+return new {{ normalizer | short_name }}();
+}
+}

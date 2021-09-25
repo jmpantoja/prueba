@@ -1,0 +1,8 @@
+{% import 'partials/macros.php.twig' as _ %}
+{% include 'partials/header.php.twig' %}
+
+
+use Tangram\Domain\Event\DomainEvent;
+
+final class {{ target | short_name }}  extends DomainEvent{
+}

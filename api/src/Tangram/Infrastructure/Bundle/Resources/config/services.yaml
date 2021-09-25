@@ -20,12 +20,11 @@ services:
 
     api_platform.http_cache.purger:
         alias: Tangram\Infrastructure\ApiPlatform\Core\HttpCache\RedisPurger
-
-
+        
     Tangram\Infrastructure\ApiPlatform\Core\HttpCache\RedisPurger:
         autowire: false
         arguments:
-            - '@tangram.http_cache.client'        
+            - '@tangram.http_cache.client'
 
     Tangram\Infrastructure\Tactician\:
         resource: '../../../Tactician'
@@ -39,14 +38,22 @@ services:
         autoconfigure: true
         public: false
 
-#    Tangram\Infrastructure\ApiPlatform\Core\:
-#        resource: '../../../ApiPlatform/Core'
-#        autowire: true
-#        autoconfigure: true
-#        public: false
-
     Tangram\Infrastructure\Api\:
         resource: '../../../Api'
+        autowire: true
+        autoconfigure: true
+        public: false
+        
+    Tangram\Infrastructure\Api\Normalizer\EntityDenormalizer:
+        autowire: false
+        autoconfigure: true
+        arguments:
+            - '@api_platform.jsonld.normalizer.item'        
+            - '@ApiPlatform\Core\Api\IriConverterInterface'
+
+    Tangram\Infrastructure\Scaffold\:
+        resource: '../../../Scaffold'
+        exclude: ['../../../Scaffold/TwigExtension.php']
         autowire: true
         autoconfigure: true
         public: false
@@ -78,17 +85,17 @@ services:
         autoconfigure: true
         public: false
 
-    FullnameFilter:
-        class: Tangram\Infrastructure\Api\Filter\FullNameFilter
-        arguments: [ '@doctrine', ~, '@?logger' ]
-        autowire: true
-        autoconfigure: true
-        public: false
-
-    FullnameOrder:
-        class: Tangram\Infrastructure\Api\Filter\FullNameOrder
-        parent: order_filter_base
-        autowire: true
-        autoconfigure: true
-        public: false        
+#    FullnameFilter:
+#        class: Tangram\Infrastructure\Api\Filter\FullNameFilter
+#        arguments: [ '@doctrine', ~, '@?logger' ]
+#        autowire: true
+#        autoconfigure: true
+#        public: false
+#
+#    FullnameOrder:
+#        class: Tangram\Infrastructure\Api\Filter\FullNameOrder
+#        parent: order_filter_base
+#        autowire: true
+#        autoconfigure: true
+#        public: false        
 

@@ -1,12 +1,12 @@
 import {AdminConfig} from "~/types/admin";
 
-const genres: AdminConfig = {
-  path: '/data/genres',
-  endpoint: '/genres',
+const music_groups: AdminConfig = {
+  path: '/data/music/groups',
+  endpoint: '/music_groups',
   components: {
-    grid: 'AdminGenreGrid',
-    form: 'AdminGenreForm',
-    toolbar: 'AdminGenreToolbar',
+    grid: 'AdminGroupGrid',
+    form: 'AdminGroupForm',
+    toolbar: 'AdminGroupToolbar',
   },
   actions: {
     list: {
@@ -28,13 +28,13 @@ const genres: AdminConfig = {
   }
 }
 
-const directors: AdminConfig = {
-  path: '/data/directors',
-  endpoint: '/directors',
+const albums: AdminConfig = {
+  path: '/data/music/albums',
+  endpoint: '/albums',
   components: {
-    grid: 'AdminDirectorGrid',
-    form: 'AdminDirectorForm',
-    toolbar: 'AdminDirectorToolbar',
+    grid: 'AdminAlbumGrid',
+    form: 'AdminAlbumForm',
+    toolbar: 'AdminAlbumToolbar',
   },
   actions: {
     list: {
@@ -56,36 +56,8 @@ const directors: AdminConfig = {
   }
 }
 
-const movies: AdminConfig = {
-  path: '/data/movies',
-  endpoint: '/movies',
-  components: {
-    grid: 'AdminMovieGrid',
-    form: 'AdminMovieForm',
-    toolbar: 'AdminMovieToolbar',
-  },
-  actions: {
-    list: {
-      component: '~/components/Ad/Action/List.vue',
-      path: '/list',
-    },
-    edit: {
-      component: '~/components/Ad/Action/Form.vue',
-      path: '/edit/:id',
-    },
-    delete: {
-      component: '~/components/Ad/Action/Delete.vue',
-      path: '/delete/:id',
-    },
-    create: {
-      component: '~/components/Ad/Action/Form.vue',
-      path: '/create/',
-    }
-  }
-}
 
 export default {
-  genres,
-  directors,
-  movies
+  music_groups,
+  albums
 }

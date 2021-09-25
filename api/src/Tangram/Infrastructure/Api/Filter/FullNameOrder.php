@@ -13,16 +13,15 @@ declare(strict_types=1);
 
 namespace Tangram\Infrastructure\Api\Filter;
 
-
 class FullNameOrder extends AbstractOrderFilter
 {
-    protected function formatWhereClause(string $alias, string $property, string $paramName): string
-    {
-        return sprintf('%1$s.%2$s.name like :%3$s OR %1$s.%2$s.lastName like :%3$s', $alias, $property, $paramName);
-    }
+	protected function formatWhereClause(string $alias, string $property, string $paramName): string
+	{
+		return sprintf('%1$s.%2$s.name like :%3$s OR %1$s.%2$s.lastName like :%3$s', $alias, $property, $paramName);
+	}
 
-    protected function formatOrderClause(string $alias, string $field): string
-    {
-        return sprintf('%s.%s.lastName', $alias, $field);
-    }
+	protected function formatOrderClause(string $alias, string $field): string
+	{
+		return sprintf('%s.%s.lastName', $alias, $field);
+	}
 }

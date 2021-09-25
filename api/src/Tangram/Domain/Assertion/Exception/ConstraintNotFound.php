@@ -13,14 +13,13 @@ declare(strict_types=1);
 
 namespace Tangram\Domain\Assertion\Exception;
 
-
 use RuntimeException;
 
 final class ConstraintNotFound extends RuntimeException
 {
-    public function __construct(string $constraintName)
-    {
-        $message = sprintf('La clase "%s" no existe', $constraintName);
-        parent::__construct($message);
-    }
+	public function __construct(array $candidates)
+	{
+		$message = sprintf('No existe ninguna constraint válida (%s)', implode(' | ', $candidates));
+		parent::__construct($message);
+	}
 }

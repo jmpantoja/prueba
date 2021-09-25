@@ -1,0 +1,32 @@
+{% import 'partials/macros.php.twig' as _ %}
+{% include 'partials/header.php.twig' %}
+
+{{ _.use(entity) }}
+{{ _.use(entityId) }}
+{{ _.use(repository) }}
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
+
+final class {{ target | short_name}} extends ServiceEntityRepository implements {{ repository | short_name }}{
+
+public function __construct(ManagerRegistry $registry)
+{
+parent::__construct($registry, {{ entity | short_name }}::class);
+}
+
+public function save({{ entity | short_name}} {{ entity | var_name }})
+{
+$this->getEntityManager()->persist({{ entity | var_name }});
+}
+
+public function delete({{ entityId | short_name }} {{ entityId | var_name }})
+{
+{{ entity | var_name }} = $this->getEntityManager()->getReference({{ entity | short_name }}::class, {{ entityId | var_name }});
+$this->getEntityManager()->remove({{ entity | var_name  }});
+}
+
+public function findById({{ entityId | short_name }} {{ entityId | var_name }}): ?{{ entity | short_name }}
+{
+return $this->find({{ entityId | var_name }});
+}
+}

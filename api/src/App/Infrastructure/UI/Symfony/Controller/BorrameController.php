@@ -13,8 +13,6 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\UI\Symfony\Controller;
 
-
-use App\Domain\FilmArchive\Builder\GenreInput;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -22,23 +20,21 @@ use Symfony\Component\HttpFoundation\Request;
 
 final class BorrameController extends AbstractController
 {
-    public function __invoke(Request $request)
-    {
-        $response = new JsonResponse([
-            'date' => (new DateTime())->format('H.i.s'),
-            'method' => $request->getMethod()
-        ]);
+	public function __invoke(Request $request)
+	{
+		$response = new JsonResponse([
+			'date' => (new DateTime())->format('H.i.s'),
+			'method' => $request->getMethod(),
+		]);
 
-        $date = new DateTime();
+		$date = new DateTime();
 
-//        $response->setMaxAge(600);
-//        $response->setLastModified($date);
+		//        $response->setMaxAge(600);
+		//        $response->setLastModified($date);
 
-        $response->setSharedMaxAge(600);
-        //  $response->setVary('Authorization');
+		$response->setSharedMaxAge(600);
+		//  $response->setVary('Authorization');
 
-        return $response;
-    }
-
-
+		return $response;
+	}
 }

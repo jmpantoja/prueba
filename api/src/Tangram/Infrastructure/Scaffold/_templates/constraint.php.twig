@@ -1,0 +1,27 @@
+{% import 'partials/macros.php.twig' as _ %}
+{% include 'partials/header.php.twig' %}
+
+use Symfony\Component\Validator\Constraints\Collection;
+use Symfony\Component\Validator\Constraints\Compound;
+
+final class {{ target | short_name }}  extends Compound{
+
+protected function getConstraints(array $options): array
+{
+    //para VO simples
+    return [
+        //aqui las constraints
+    ];
+
+    /*
+    //para VO compuestos
+        return [
+            new Collection([
+                'fields' => [
+                    //aqui las constraints
+            ]
+        ])
+    ];
+    */
+}
+}

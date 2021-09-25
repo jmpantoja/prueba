@@ -1,0 +1,21 @@
+{% import 'partials/macros.php.twig' as _ %}
+{% include 'partials/header.php.twig' %}
+
+use Tangram\Infrastructure\Doctrine\DataFixtures\UseCaseFixture;
+{{ _.use(entity) }}
+{{ _.use(saveCommand) }}
+
+
+final class {{ target | short_name }} extends UseCaseFixture  {
+
+public function loadData(): void
+{
+$items = $this->createMany(100, function () {
+//return new {{ entity | short_name }}();
+});
+
+foreach ($items as {{ entity | var_name }}) {
+$this->handle(new {{ saveCommand | short_name }}({{ entity | var_name }}));
+}
+}
+}

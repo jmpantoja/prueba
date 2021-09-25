@@ -76,7 +76,8 @@ export default {
   axios: {
     headers: {
       common: {
-        'Accept': 'application/ld+json, text/plain, */*'
+        'Accept': 'application/ld+json',
+        'Content-Type': 'application/ld+json'
       }
     }
   },

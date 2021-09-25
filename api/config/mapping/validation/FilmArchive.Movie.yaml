@@ -1,6 +1,0 @@
-App\Infrastructure\Api\FilmArchive\Dto\MovieInput:
-    properties:
-        title:
-            -   NotNull: ~
-        year:
-            -   NotNull: ~

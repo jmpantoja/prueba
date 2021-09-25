@@ -19,25 +19,26 @@ use Doctrine\DBAL\Types\TimeType;
 
 class CarbonTimeType extends TimeType
 {
-    private const NAME = 'carbon_time';
+	private const NAME = 'carbon_time';
 
-    public function getName()
-    {
-        return static::NAME;
-    }
+	public function getName()
+	{
+		return static::NAME;
+	}
 
-    public function convertToPHPValue($value, AbstractPlatform $platform)
-    {
-        $result = parent::convertToPHPValue($value, $platform);
+	public function convertToPHPValue($value, AbstractPlatform $platform)
+	{
+		$result = parent::convertToPHPValue($value, $platform);
 
-        if ($result instanceof \DateTime) {
-            return Carbon::instance($result)->setDate(0, 0, 0);
-        }
-        return $result;
-    }
+		if ($result instanceof \DateTime) {
+			return Carbon::instance($result)->setDate(0, 0, 0);
+		}
 
-    public function requiresSQLCommentHint(AbstractPlatform $platform)
-    {
-        return true;
-    }
+		return $result;
+	}
+
+	public function requiresSQLCommentHint(AbstractPlatform $platform)
+	{
+		return true;
+	}
 }

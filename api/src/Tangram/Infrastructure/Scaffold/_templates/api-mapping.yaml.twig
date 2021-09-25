@@ -1,0 +1,24 @@
+{{ entity | full_name }}:
+    collectionOperations:
+        get:
+            filters:
+                - '{{ entity | table_name }}.order_filter'
+{% for filter in (entity | filters | keys) %}
+                - '{{ entity | table_name }}.{{filter}}'
+{% endfor %}
+
+        post: ~
+
+    properties:
+        id:
+            identifier: true
+
+    attributes:
+        input: {{ input | full_name }}
+        output: {{ output | full_name }}
+
+        normalization_context:
+            groups: [ 'output' ]
+        denormalization_context:
+            groups: [ 'input' ]
+

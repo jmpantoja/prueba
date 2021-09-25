@@ -1,0 +1,22 @@
+{% import 'partials/macros.php.twig' as _ %}
+{% include 'partials/header.php.twig' %}
+
+use Tangram\Infrastructure\Api\Dto\Input;
+{{ _.uses(target) }}
+
+final class {{ target | short_name }} extends Input
+{
+
+{% for attribute in target.attributes %}
+    {% if attribute.toMany %}
+        /**
+        * @var {{ attribute | input_name }}[]
+        */
+        public array {{ attribute | var_name -}};
+    {% else %}
+        public {{ attribute | type_name }} {{ attribute | var_name -}};
+    {% endif %}
+
+{% endfor %}
+
+}

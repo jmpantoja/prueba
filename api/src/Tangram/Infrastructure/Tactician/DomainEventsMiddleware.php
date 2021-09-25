@@ -13,37 +13,34 @@ declare(strict_types=1);
 
 namespace Tangram\Infrastructure\Tactician;
 
-
 use League\Tactician\Middleware;
 use Tangram\Domain\Event\DomainEventDispatcher;
 use Tangram\Domain\Event\EventStore;
 
 final class DomainEventsMiddleware implements Middleware
 {
+	private EventStore $repository;
 
-    private EventStore $repository;
+	public function __construct(EventStore $repository)
+	{
+		$this->repository = $repository;
+	}
 
-    public function __construct(EventStore $repository)
-    {
-        $this->repository = $repository;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public function execute($command, callable $next)
+	{
+		$eventDispatcher = DomainEventDispatcher::instance();
+		$eventsCollector = $eventDispatcher->eventsCollector();
 
-    /**
-     * @inheritDoc
-     */
-    public function execute($command, callable $next)
-    {
-        $eventDispatcher = DomainEventDispatcher::instance();
-        $eventsCollector = $eventDispatcher->eventsCollector();
+		$response = $next($command);
+		$events = $eventsCollector->events();
 
-        $response = $next($command);
-        $events = $eventsCollector->events();
+		foreach ($events as $event) {
+			$this->repository->persist($event);
+		}
 
-
-        foreach ($events as $event) {
-            $this->repository->persist($event);
-        }
-
-        return $response;
-    }
+		return $response;
+	}
 }

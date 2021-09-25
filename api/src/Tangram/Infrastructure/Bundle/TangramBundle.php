@@ -13,10 +13,7 @@ declare(strict_types=1);
 
 namespace Tangram\Infrastructure\Bundle;
 
-
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
-use Tangram\Infrastructure\Bundle\Compiler\DBALTypeCompiler;
 
 final class TangramBundle extends Bundle
 {

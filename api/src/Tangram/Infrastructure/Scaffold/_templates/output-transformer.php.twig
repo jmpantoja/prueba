@@ -1,0 +1,27 @@
+{% import 'partials/macros.php.twig' as _ %}
+{% include 'partials/header.php.twig' %}
+
+use ApiPlatform\Core\DataTransformer\DataTransformerInterface;
+
+{{ _.use(output) }}
+{{ _.use(entity) }}
+
+
+final class {{ target | short_name }} implements DataTransformerInterface {
+
+/**
+* @param {{ entity | short_name }} {{ entity | var_name }}
+* @param string $to
+* @param array $context
+* @return object|void
+*/
+public function transform({{ entity | var_name }}, string $to, array $context = [])
+{
+return {{ output | short_name }}::make({{ entity | var_name }});
+}
+
+public function supportsTransformation($data, string $to, array $context = []): bool
+{
+return $to === {{ output | short_name }}::class;
+}
+}

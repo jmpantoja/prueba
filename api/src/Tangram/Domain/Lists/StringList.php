@@ -13,11 +13,10 @@ declare(strict_types=1);
 
 namespace Tangram\Domain\Lists;
 
-
 final class StringList extends TypedList
 {
-    public function type(): string
-    {
-        return 'string';
-    }
+	public function type(): string
+	{
+		return 'string';
+	}
 }
