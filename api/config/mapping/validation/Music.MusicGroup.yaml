@@ -1,5 +1,0 @@
-App\Infrastructure\Api\Music\Dto\MusicGroupInput:
-    properties:
-        name: ~
-        country: ~
-        albums: ~

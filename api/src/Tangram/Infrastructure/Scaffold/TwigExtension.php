@@ -58,6 +58,9 @@ final class TwigExtension extends AbstractExtension
 			new TwigFilter('remover', [$this, 'remover'], ['is_safe' => ['html']]),
 			new TwigFilter('mapping_field', [$this, 'mappingField'], ['is_safe' => ['html']]),
 			new TwigFilter('filters', [$this, 'filters'], ['is_safe' => ['html']]),
+			new TwigFilter('write_group', [$this, 'writeGroup'], ['is_safe' => ['html']]),
+			new TwigFilter('read_group', [$this, 'readGroup'], ['is_safe' => ['html']]),
+			new TwigFilter('uses', [$this, 'uses'], ['is_safe' => ['html']]),
 		];
 	}
 
@@ -89,7 +92,7 @@ final class TwigExtension extends AbstractExtension
 		return $value;
 	}
 
-	public function typeName(Attribute | Target $target): string
+	public function typeName(Attribute|Target $target): string
 	{
 		if ($target instanceof Attribute) {
 			$target = $this->reference($target->type());
@@ -98,7 +101,7 @@ final class TwigExtension extends AbstractExtension
 		return $target->typeName();
 	}
 
-	public function tableName(Attribute | Target $target): string
+	public function tableName(Attribute|Target $target): string
 	{
 		if ($target instanceof Attribute) {
 			$target = $this->reference($target->type());
@@ -107,14 +110,15 @@ final class TwigExtension extends AbstractExtension
 		return u($target->shortName())->snake()->toString();
 	}
 
-	public function dbalType(Attribute | Target $target): string
+	public function dbalType(Attribute|Target $target): string
 	{
 		if ($target instanceof Attribute) {
 			$target = $this->reference($target->type());
 		}
 
 		$short = $target->shortName();
-		$short = preg_replace('/(Type)$/', '', $short);
+
+		$short = preg_replace('/(DBALType)$/', '', $short);
 
 		return match ($short) {
 			'int' => 'integer',
@@ -122,7 +126,7 @@ final class TwigExtension extends AbstractExtension
 		};
 	}
 
-	public function typeFullName(Attribute | Target $target): string
+	public function typeFullName(Attribute|Target $target): string
 	{
 		if ($target instanceof Attribute) {
 			$target = $this->reference($target->type());
@@ -131,7 +135,7 @@ final class TwigExtension extends AbstractExtension
 		return $target->typeFullName();
 	}
 
-	public function argType(Attribute | Target $target): string
+	public function argType(Attribute|Target $target): string
 	{
 		if ($target instanceof Attribute) {
 			$target = $this->reference($target->type());
@@ -140,12 +144,12 @@ final class TwigExtension extends AbstractExtension
 		return $target->argumentName();
 	}
 
-	public function varName(Attribute | Target $target): string
+	public function varName(Attribute|Target $target): string
 	{
 		return sprintf('$%s', $this->keyName($target));
 	}
 
-	public function keyName(Attribute | Target $target): string
+	public function keyName(Attribute|Target $target): string
 	{
 		return lcfirst($target->name());
 	}
@@ -160,7 +164,7 @@ final class TwigExtension extends AbstractExtension
 		return sprintf('$%s', $this->singleKeyName($relation));
 	}
 
-	public function shortName(Attribute | Target $target): string
+	public function shortName(Attribute|Target $target): string
 	{
 		if ($target instanceof Attribute) {
 			$target = $this->reference($target->type());
@@ -169,7 +173,7 @@ final class TwigExtension extends AbstractExtension
 		return $target->shortName();
 	}
 
-	public function fullName(Attribute | Target $target): ?string
+	public function fullName(Attribute|Target $target): ?string
 	{
 		if ($target instanceof Attribute) {
 			$target = $this->reference($target->type());
@@ -178,7 +182,7 @@ final class TwigExtension extends AbstractExtension
 		return $target->fullName();
 	}
 
-	public function listName(Attribute | Target $target): string
+	public function listName(Attribute|Target $target): string
 	{
 		if ($target instanceof Attribute) {
 			$target = $this->reference($target->type());
@@ -187,7 +191,7 @@ final class TwigExtension extends AbstractExtension
 		return sprintf('%sList', $target->shortName());
 	}
 
-	public function listFullName(Attribute | Target $target): string
+	public function listFullName(Attribute|Target $target): string
 	{
 		if ($target instanceof Attribute) {
 			$target = $this->reference($target->type());
@@ -196,7 +200,7 @@ final class TwigExtension extends AbstractExtension
 		return sprintf('%sList', $target->fullName());
 	}
 
-	public function inputName(Attribute | Target $target): string
+	public function inputName(Attribute|Target $target): string
 	{
 		if ($target instanceof Attribute) {
 			$target = $this->reference($target->type());
@@ -205,7 +209,7 @@ final class TwigExtension extends AbstractExtension
 		return sprintf('%sInput', $target->shortName());
 	}
 
-	public function inputFullName(Attribute | Target $target): string
+	public function inputFullName(Attribute|Target $target): string
 	{
 		if ($target instanceof Attribute) {
 			$target = $this->reference($target->type());
@@ -252,5 +256,32 @@ final class TwigExtension extends AbstractExtension
 		}
 
 		return array_filter(array_unique($filters));
+	}
+
+	public function writeGroup(Target $target): string
+	{
+		return sprintf("'%s:write'", $this->tableName($target));
+	}
+
+	public function readGroup(Target $target): string
+	{
+		return sprintf("'%s:read'", $this->tableName($target));
+	}
+
+	public function uses(Target $target): array
+	{
+		foreach ($target->attributes() as $attribute) {
+			$reference = $this->reference($attribute->type());
+			$key = $attribute->type()->key();
+			$uses[$key] = $reference;
+			if ($attribute instanceof Relation and $attribute->isAggregate()) {
+				$aggregate = $this->reference($attribute->type());
+				$uses = array_merge($uses, $this->uses($aggregate));
+			}
+		}
+
+		return array_filter($uses, function (Target $use) use ($target) {
+			return $target->fullName() !== $use->fullName();
+		});
 	}
 }

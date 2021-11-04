@@ -1,150 +1,88 @@
 <template>
-  <el-form-item :label="label" :prop="prop">
+  <div class="field-list">
+    <div class="field-list__row" v-for="(item, index) in value">
+      <div class="col col_index">
+        #{{ index + 1 }}
+      </div>
 
-    <ul style="width: 100%">
-      <li v-for="(item, key) in value" :key="key">
-        <slot :item="item" :index="key"/>
-      </li>
-      <li>
+      <div class="col col_form field-group">
+        <slot :index="index" :item="item"/>
+      </div>
 
-        <ad-form-dialog @change="onDialogChange" />
+      <div class="col col_actions">
+        <el-button type="text"
+                   class="btn_delete"
+                   icon="el-icon-delete"
+                   @click.native.prevent="removeRow(index)"/>
+      </div>
 
-      </li>
-    </ul>
+    </div>
 
+    <div class="field-list__footer">
+      <el-button type="primary" icon="el-icon-plus" @click="$emit('add', data.length)" size="mini">
+        Nuevo
+      </el-button>
+    </div>
 
-  </el-form-item>
+  </div>
 </template>
 
 <script lang="ts">
 
 import Field from "~/mixins/Field";
 import {Component, mixins} from 'nuxt-property-decorator'
-import AdminAware from "~/mixins/AdminAware";
-
-const Select = require('element-ui/lib/select').default
-const _ = require('lodash')
-
-
-type SelectProps = {
-  multiple: boolean,
-  remote: boolean
-}
 
 @Component({
-  name: 'Select',
-  props: {
-    ...Select.props,
-  },
-  inject: {
-    elFormItem: {
-      default: ''
-    }
-  },
+  name: 'List',
 })
-export default class extends mixins(Field, AdminAware) {
+export default class extends mixins(Field) {
 
-
-  public click() {
-    this.value.push({})
+  public removeRow(index: number) {
+    this.value.splice(index, 1)
   }
 
-  // @Prop({required: true, type: Function}) readonly normalize!: (item: object) => { id: string, label: string };
-  //
-  // @Prop({required: false, type: Function}) readonly remoteQuery!: (input: string) => object;
-  // @Prop({required: false, type: Boolean, default: () => true}) readonly filterable!: boolean;
-  // @Prop({required: false, type: String, default: () => 'id'}) readonly valueKey!: string;
-  //
-  // public options: Array<{}> = [];
-  //
-  // @Watch('value', {'deep': true, immediate: false})
-  // public refresh(value: object, old: object) {
-  //
-  //   if (_.isEqual(value, old) || !this.computedProps.remote) {
-  //     return
-  //   }
-  //
-  //   let options = [this.value as unknown as object]
-  //   if (this.computedProps.multiple) {
-  //     options = this.value || []
-  //   }
-  //
-  //   this.options = options
-  //   this.$nextTick(() => {
-  //     this.options = []
-  //   })
-  //
-  // }
-  //
-  // public created() {
-  //   this.refresh(this.data, []);
-  // }
-  //
-  // public async fetch() {
-  //   const remote = (this.remoteQuery as any) instanceof Function;
-  //
-  //   if (remote) {
-  //     return
-  //   }
-  //
-  //   await this.admin
-  //     .get()
-  //     .then((response) => {
-  //       this.options = response['items']
-  //     })
-  // }
-  //
-  //
-  // public get computedProps(): SelectProps {
-  //   const multiple = (this.value as any) instanceof Array;
-  //   const remote = (this.remoteQuery as any) instanceof Function;
-  //
-  //   const override = {
-  //     multiple,
-  //     remote,
-  //     remoteMethod: remote ? this.search : undefined
-  //   }
-  //
-  //   return this.override(Select.props, override)
-  // }
-  //
-  // private async search(input: string) {
-  //
-  //   if (input.length < 3) {
-  //     this.options = []
-  //     return
-  //   }
-  //
-  //   const query = normalizeQuery(this.remoteQuery(input))
-  //
-  //   await this.admin
-  //     .get(query)
-  //     .then((response) => {
-  //       this.options = response['items']
-  //     })
-  // }
-  //
-  // public onDialogChange(entity: Entity) {
-  //   if (this.computedProps.multiple) {
-  //     this.data.push(entity)
-  //     return
-  //   }
-  //
-  //   this.data = entity
-  // }
-  //
 }
 </script>
 
 
 <style scoped lang="scss">
-.ad-select-wrapper {
-  width: 100%;
 
+.btn_delete {
+  color: $--color-danger;
+}
 
-  .el-select {
-    width: 100%;
+.field-list__row {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 2rem;
+
+  .col {
+  //  border: solid 1px blue;
   }
+
+  .col_index {
+    flex-grow: 1;
+    text-align: left;
+    padding-top: 1.5rem;
+  }
+
+  .col_form {
+    flex-grow: 10;
+  }
+
+  .col_actions {
+    flex-grow: 2;
+    text-align: left;
+    padding-top: 1rem;
+  }
+}
+
+.field-list__footer {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 2rem;
+  padding-right: 1rem;
+  justify-content: flex-end;
 }
 
 

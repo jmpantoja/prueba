@@ -28,7 +28,12 @@
 
 {% macro argument(property, typed) %}
     {% if typed %}
-        {{- property | arg_type }} {{ property | var_name -}}
+        {%- if property.toMany -%}
+            ?{{- property | arg_type }} {{ property | var_name -}}
+        {%- else -%}
+            {{- property | arg_type }} {{ property | var_name -}}
+        {%- endif -%}
+
     {% else %}
         {{ property | var_name -}}
     {% endif %}
@@ -94,14 +99,9 @@
 {% endmacro %}
 
 {% macro uses(target) %}
-    {%- for attribute in target.attributes -%}
-        {{- _self.use(attribute.type | ref ) -}}
-        {% if attribute.aggregate %}
-            {%- for aggregate in (attribute.type | ref ).attributes -%}
-                {{- _self.use(aggregate.type | ref ) -}}
-            {%- endfor -%}
-        {%- endif -%}
-    {%- endfor -%}
+    {%- for use in target | uses %}
+        {{- _self.use(use ) }}
+    {%- endfor %}
 {% endmacro %}
 
 {% macro use(attribute) %}

@@ -16,6 +16,7 @@ declare(strict_types=1);
 namespace Tangram\Infrastructure\Symfony\Command;
 
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -42,18 +43,22 @@ class ScaffoldCommand extends Command
 	{
 		$this->addOption('config-file', 'c', InputOption::VALUE_OPTIONAL, 'the config file path', '.scaffold.yaml');
 		$this->addOption('namespace', null, InputOption::VALUE_OPTIONAL, 'the namespace', 'App');
+		$this->addOption('force', null, InputOption::VALUE_NONE, 'overwrite all');
+		//   $this->addOption('force', null, InputOption::VALUE_NONE, 'overwrite all', false);
+		$this->addArgument('force', InputArgument::OPTIONAL, 'sss', false);
 	}
 
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
 		$data = Yaml::parseFile(sprintf('%s/.scaffold.yaml', $this->projectDir));
 
+		$force = $input->getOption('force');
 		$namespace = $data['namespace'] ?? 'App';
 		$modules = $data['modules'] ?? [];
 
 		$config = Config::make($namespace, $modules);
 
-		$this->manager->generate($config);
+		$this->manager->generate($config, $force);
 
 		return Command::SUCCESS;
 	}

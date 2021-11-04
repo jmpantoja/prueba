@@ -1,6 +1,0 @@
-services:
-    album.text_filter:
-        parent: 'TextFilter'
-        arguments: { $properties: {"name":null} }
-        tags: [ 'api_platform.filter' ]
-

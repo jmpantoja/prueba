@@ -1,0 +1,26 @@
+App\Domain\Vocabulary\Meaning:
+    attributes:
+        id:
+            groups: [ 'meaning:read' ]
+
+        entry:
+            groups: [ 'meaning:read' ]
+
+        term:
+            groups: [ 'meaning:read','entry:read' ]
+
+        deep:
+            groups: [ 'meaning:read','entry:read' ]
+
+
+App\Domain\Vocabulary\Input\MeaningInput:
+    attributes:
+        entry:
+            groups: [ 'meaning:write' ]
+
+        term:
+            groups: [ 'meaning:write','entry:write' ]
+
+        deep:
+            groups: [ 'meaning:write','entry:write' ]
+

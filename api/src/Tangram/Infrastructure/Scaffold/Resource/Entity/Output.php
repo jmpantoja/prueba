@@ -26,7 +26,7 @@ final class Output extends ClassResource
 
 	public function configure(ClassOptions $options, string $name, string $module)
 	{
-		$options->setNamespace('Infrastructure\\Api', $module, 'Dto');
+		$options->setNamespace('Infrastructure\\Api', $module, 'Output');
 		$options->setClassName($name, 'Output');
 		$options->setTemplate('output');
 

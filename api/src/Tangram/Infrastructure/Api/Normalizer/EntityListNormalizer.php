@@ -43,7 +43,6 @@ final class EntityListNormalizer implements NormalizerInterface, NormalizerAware
 
 	public function supportsNormalization($data, string $format = null)
 	{
-        return false;
 		return $data instanceof EntityList;
 	}
 }

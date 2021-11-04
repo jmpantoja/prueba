@@ -1,13 +1,8 @@
 doctrine:
     dbal:
         types:
-            MusicGroupId: App\Infrastructure\Doctrine\DBAL\Type\Music\MusicGroupIdType
-            AlbumId: App\Infrastructure\Doctrine\DBAL\Type\Music\AlbumIdType
-            SongId: App\Infrastructure\Doctrine\DBAL\Type\Music\SongIdType
-            AlbumName: App\Infrastructure\Doctrine\DBAL\Type\Music\AlbumNameType
-            GroupName: App\Infrastructure\Doctrine\DBAL\Type\Music\GroupNameType
-            Year: App\Infrastructure\Doctrine\DBAL\Type\Music\YearType
-            Position: App\Infrastructure\Doctrine\DBAL\Type\Music\PositionType
-            SongName: App\Infrastructure\Doctrine\DBAL\Type\Music\SongNameType
-            Currency: App\Infrastructure\Doctrine\DBAL\Type\Music\CurrencyType
-            Country: App\Infrastructure\Doctrine\DBAL\Type\Music\CountryType
+            EntryId: App\Infrastructure\Doctrine\DBAL\Type\Vocabulary\EntryIdDBALType
+            MeaningId: App\Infrastructure\Doctrine\DBAL\Type\Vocabulary\MeaningIdDBALType
+            Deep: App\Infrastructure\Doctrine\DBAL\Type\Vocabulary\DeepDBALType
+            EntryType: App\Infrastructure\Doctrine\DBAL\Type\Vocabulary\EntryTypeDBALType
+            Lang: App\Infrastructure\Doctrine\DBAL\Type\Vocabulary\LangDBALType

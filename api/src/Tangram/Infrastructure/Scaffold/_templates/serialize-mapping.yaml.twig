@@ -5,22 +5,18 @@
 {% endif %}
     attributes:
         id:
-            groups: ['output']
+            groups: [{{ entity | read_group }}]
+
 {% for attribute in entity.attributes %}
-    {% if attribute.isToOne %}
-
         {{ attribute.name }}:
-            ignore: true
-    {% else %}
+            groups: [{{ entity | read_group }}]
 
-        {{ attribute.name }}:
-            groups: ['output']
-    {% endif -%}
 {% endfor %}
 
 {{ input | full_name }}:
     attributes:
 {% for attribute in entity.attributes %}
         {{ attribute.name }}:
-            groups: ['input']
+            groups: [{{ entity | write_group }}]
+
 {% endfor %}

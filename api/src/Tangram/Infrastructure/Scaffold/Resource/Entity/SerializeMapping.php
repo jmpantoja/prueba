@@ -29,6 +29,6 @@ final class SerializeMapping extends FileResource
 		$options->setTarget('config/mapping/serialization');
 		$options->setFileName($module, $name, 'yaml');
 		$options->setTemplate('serialize-mapping.yaml');
-		$options->updatable();
+//		$options->updatable();
 	}
 }

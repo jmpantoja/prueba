@@ -35,7 +35,6 @@ export default class extends Vue {
       this.valid = valid
       this.adForm.validateGroup(this._name, this.valid);
     }
-
   }
 
   private mounted() {
@@ -76,28 +75,27 @@ export default class extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 fieldset.field-group {
   position: relative;
-  margin-top: 2.6rem;
+  margin-top: 2.5rem;
+  margin-bottom: 6.5rem;
 
   border-radius: 4px;
-  margin-bottom: 4em;
-  padding-top: 3em;
-  padding: 3em 2rem 0 2rem;
+
+  padding: 3em 1rem 0 2rem;
   box-shadow: 10px 10px 5px $--border-base;
   border: $--border-base;
   background: white;
 
   legend {
     position: absolute;
-    top: -2.8rem;
+    top: -3rem;
     left: 2px;
 
     font-size: 2.2rem;
     font-weight: lighter;
-    color: #555 !important;
-
+    color: #666 !important;
     text-transform: capitalize;
   }
 
@@ -109,23 +107,27 @@ fieldset.field-group {
     }
   }
 
-  & > .el-form-item {
-    margin-bottom: 2.5rem;
+  > .el-form-item {
+    margin-bottom: 2rem;
+  }
+}
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+
+
+  > .el-form-item {
     display: flex;
-    flex-direction: row;
+    margin-bottom: 0;
 
-    ::v-deep > .el-form-item__label {
-      display: flex;
-      align-items: start;
+    > .el-form-item__label {
+      width: 20%;
 
+      padding: 0;
       font-size: 1.2rem;
       font-weight: 300;
       text-transform: capitalize;
-
-      width: 20%;
-      margin-right: -1.5rem;
-      padding: 0;
-
       color: #666 !important;
 
       &::after {
@@ -133,31 +135,29 @@ fieldset.field-group {
       }
     }
 
-    ::v-deep > .el-form-item__content {
-      //border: solid 1px blue;
+    > .el-form-item__content {
       flex: 1;
+      box-sizing: border-box;
 
-      display: flex;
-      flex-direction: row;
+      > .el-form-item {
+        padding-right: 1.3rem;
 
-      .el-form-item {
-        margin-left: 1.5rem;
-        //border: solid 1px red;
-        flex: 1;
-
-        display: flex;
-        flex-direction: column;
-
-
-        .el-form-item__label {
+        > .el-form-item__label {
           padding: 0;
-          margin: 0 0 3px 0;
+          margin: -1.2rem 0 3px 5px;
           font-size: 0.9rem;
           line-height: 0.9rem;
         }
+
+        > .el-form-item__label + .el-form-item__content {
+          margin-top: -1.2rem;
+        }
       }
     }
+  }
 
+  .el-form-item .el-select {
+    width: 100%;
   }
 }
 

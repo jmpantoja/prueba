@@ -29,5 +29,6 @@ final class ApiMapping extends FileResource
 		$options->setTarget('config/mapping/api_platform');
 		$options->setFileName($module, $name, 'yaml');
 		$options->setTemplate('api-mapping.yaml');
+		$options->updatable();
 	}
 }

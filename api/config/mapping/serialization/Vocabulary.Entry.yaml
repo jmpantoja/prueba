@@ -1,0 +1,32 @@
+App\Infrastructure\Api\Vocabulary\Output\EntryOutput:
+    attributes:
+        id:
+            groups: ['entry:read']
+
+        type:
+            groups: ['entry:read']
+
+        term:
+            groups: ['entry:read']
+
+        level:
+            groups: ['entry:read']
+
+        meanings:
+            groups: ['entry:read']
+
+
+App\Domain\Vocabulary\Input\EntryInput:
+    attributes:
+        type:
+            groups: ['entry:write']
+
+        term:
+            groups: ['entry:write']
+
+        level:
+            groups: ['entry:write']
+
+        meanings:
+            groups: ['entry:write']
+

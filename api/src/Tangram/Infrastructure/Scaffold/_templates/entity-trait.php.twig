@@ -34,7 +34,7 @@ trait {{ target | short_name }} {
 
     abstract public function notify(DomainEventInterface $domainEvent): void;
 
-    public function update({{ _.argument_list(target, true, true) }}): static
+    public function update({{ _.argument_list(target, true) }}): static
     {
         $this->initialize({{ _.argument_list(target) }});
         $this->notify(new {{ updateEvent | short_name }}($this));
@@ -42,7 +42,7 @@ trait {{ target | short_name }} {
         return $this;
     }
 
-    private function initialize({{ _.argument_list(target, true, true) }}): static
+    private function initialize({{ _.argument_list(target, true) }}): static
     {
         {{ _.update_properties(target, true) }}
         return $this;
@@ -66,7 +66,7 @@ trait {{ target | short_name }} {
     {% endfor %}
 {% endmacro %}
 
-{% macro setter(relation) %}
+{% macro setter(relation, entity) %}
     {% if relation.aggregate -%}
         {% set var = relation | single_var_name %}
         {% set adder = 'fn(Input %s)=> $this->%s(... %s)'|format(var, relation | adder, var) %}
@@ -74,7 +74,7 @@ trait {{ target | short_name }} {
         {% set adder = "[$this, '%s']"|format(relation | adder) %}
     {% endif %}
 
-    public function {{ relation | setter }}(?iterable {{ relation | var_name }}): static {
+    private function {{ relation | setter }}(?iterable {{ relation | var_name }}): static {
 
     if(is_null({{ relation | var_name }})){
         return $this;

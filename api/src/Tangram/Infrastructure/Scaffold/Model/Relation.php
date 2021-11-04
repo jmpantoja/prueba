@@ -40,7 +40,7 @@ final class Relation extends Attribute
 		return $this->singular;
 	}
 
-	public function aggregate(): bool
+	public function isAggregate(): bool
 	{
 		return $this->aggregate;
 	}

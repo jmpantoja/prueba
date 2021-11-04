@@ -19,6 +19,16 @@ use IteratorAggregate;
 
 abstract class Input implements IteratorAggregate, ArrayAccess
 {
+	public static function fromArray(array $data): static
+	{
+		$input = new static();
+		foreach ($data as $key => $value) {
+			$input->{$key} = $value;
+		}
+
+		return $input;
+	}
+
 	public function getIterator()
 	{
 		return new ArrayIterator(get_object_vars($this));

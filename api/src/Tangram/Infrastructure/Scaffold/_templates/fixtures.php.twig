@@ -11,7 +11,13 @@ final class {{ target | short_name }} extends UseCaseFixture  {
 public function loadData(): void
 {
 $items = $this->createMany(100, function () {
-//return new {{ entity | short_name }}();
+/*
+return new {{ entity | short_name }}(...[
+{% for attribute in target.attributes %}
+    {{ attribute | key_name | add_quotes }} => {{ attribute | var_name }},
+{% endfor %}
+]);
+*/
 });
 
 foreach ($items as {{ entity | var_name }}) {

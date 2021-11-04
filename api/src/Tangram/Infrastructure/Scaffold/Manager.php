@@ -26,14 +26,14 @@ final class Manager
 		$this->renderer = $renderer;
 	}
 
-	public function generate(Config $config): self
+	public function generate(Config $config, bool $force): self
 	{
 		$context = $this->getContext($config);
 		$files = $this->getActions($config);
 
 		$this->renderer->setContext($context);
 		foreach ($files as $file) {
-			$this->renderer->dump($file);
+			$this->renderer->dump($file, $force);
 		}
 
 		$this->fixCodeStyle();

@@ -27,7 +27,7 @@ final class EnumType extends ClassResource
 	public function configure(ClassOptions $options, string $name, string $module)
 	{
 		$options->setNamespace('Infrastructure\Doctrine\DBAL\Type', $module);
-		$options->setClassName($name, 'Type');
+		$options->setClassName($name, 'DBALType');
 		$options->setTemplate('enum-type');
 	}
 }

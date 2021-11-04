@@ -1,0 +1,24 @@
+<doctrine-mapping xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                          https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="App\Domain\Vocabulary\Meaning" table="meaning">
+        <id name="id" column="id" type="MeaningId"/>
+
+            <many-to-one field="entry" target-entity="App\Domain\Vocabulary\Entry"/>
+
+            <embedded name="term" class="App\Domain\Vocabulary\VO\Term"/>
+            
+            <field name="deep" type="Deep"/>
+            
+        
+    </entity>
+
+</doctrine-mapping>
+
+
+
+
+
+

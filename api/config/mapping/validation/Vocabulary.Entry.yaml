@@ -1,0 +1,6 @@
+App\Domain\Vocabulary\Input\EntryInput:
+    properties:
+        type: ~
+        term: ~
+        level: ~
+        meanings: ~

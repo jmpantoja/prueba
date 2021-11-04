@@ -27,7 +27,7 @@ final class EntityIdType extends ClassResource
 	public function configure(ClassOptions $options, string $name, string $module)
 	{
 		$options->setNamespace('Infrastructure\\Doctrine\\DBAL\\Type', $module);
-		$options->setClassName($name, 'IdType');
+		$options->setClassName($name, 'IdDBALType');
 
 		$options->setTemplate('entity-id-type');
 	}

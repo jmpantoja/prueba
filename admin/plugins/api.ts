@@ -7,5 +7,4 @@ export default (context: Context, inject: Function) => {
   const api = new Api(context);
   context.api = api
   inject('api', api)
-
 }

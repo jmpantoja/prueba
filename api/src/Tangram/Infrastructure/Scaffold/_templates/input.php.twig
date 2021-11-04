@@ -12,11 +12,11 @@ final class {{ target | short_name }} extends Input
         /**
         * @var {{ attribute | input_name }}[]
         */
-        public array {{ attribute | var_name -}};
+        public ?array {{ attribute | var_name -}} = null;
     {% else %}
         public {{ attribute | type_name }} {{ attribute | var_name -}};
     {% endif %}
-
 {% endfor %}
 
+{{ _.getters(target) }}
 }

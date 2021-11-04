@@ -26,8 +26,9 @@ final class Input extends ClassResource
 
 	public function configure(ClassOptions $options, string $name, string $module)
 	{
-		$options->setNamespace('Infrastructure\\Api', $module, 'Dto');
+		$options->setNamespace('Domain', $module, 'Input');
 		$options->setClassName($name, 'Input');
+
 		$options->setTemplate('input');
 		$options->updatable();
 	}

@@ -1,5 +1,0 @@
-App\Infrastructure\Api\Music\Dto\SongInput:
-    properties:
-        order: ~
-        name: ~
-        duration: ~

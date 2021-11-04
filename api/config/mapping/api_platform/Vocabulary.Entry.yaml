@@ -1,0 +1,22 @@
+App\Domain\Vocabulary\Entry:
+    collectionOperations:
+        get:
+            filters:
+                - 'entry.order_filter'
+                - 'entry.text_filter'
+
+        post: ~
+
+    properties:
+        id:
+            identifier: true
+
+    attributes:
+        input: App\Domain\Vocabulary\Input\EntryInput
+        output: App\Infrastructure\Api\Vocabulary\Output\EntryOutput
+
+        normalization_context:
+            groups: [ 'entry:read'  ]
+        denormalization_context:
+            groups: [ 'entry:write' ]
+

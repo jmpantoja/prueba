@@ -25,6 +25,9 @@ final class Target
 	private string $shortName;
 	private string $namespace;
 	private array $constants;
+	/**
+	 * @var Attribute[]
+	 */
 	private array $attributes;
 
 	public static function builtin(string $key): self
@@ -148,7 +151,7 @@ final class Target
 		return $this->shortName;
 	}
 
-	public function fullName(): string
+	public function fullName(): ?string
 	{
 		return $this->fullName;
 	}

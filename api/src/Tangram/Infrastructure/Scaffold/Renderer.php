@@ -34,10 +34,10 @@ final class Renderer
 		]);
 	}
 
-	public function dump(Action $task)
+	public function dump(Action $task, bool $force)
 	{
 		$path = $task->path();
-		if (file_exists($path) && !$task->isUpdatable()) {
+		if (file_exists($path) && !$task->isUpdatable() && false === $force) {
 			return;
 		}
 

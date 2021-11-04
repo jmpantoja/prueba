@@ -1,5 +1,0 @@
-App\Infrastructure\Api\Music\Dto\AlbumInput:
-    properties:
-        group: ~
-        name: ~
-        releaseAt: ~

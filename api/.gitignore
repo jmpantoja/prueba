@@ -1,6 +1,9 @@
 /docker/db/data
 /helm/api/charts
 /helm/api/Chart.lock
+/build/
+/.scaffold.yaml
+
 
 ###> symfony/framework-bundle ###
 /.env.local

@@ -1,7 +1,7 @@
 import {Translation} from "~/types/lang";
 
 // @ts-ignore
-import music_groups from "./es/music_groups.ts"
+import entries from "./es/entries.ts"
 
 
 const spanish: Translation = {
@@ -13,7 +13,7 @@ const spanish: Translation = {
     es: 'Español',
     en: 'Ingles',
   },
-  fields:{
+  fields: {
     placeholder: 'Selecciona',
   },
   filters: {
@@ -31,11 +31,12 @@ const spanish: Translation = {
   },
   menu: {
     dashboard: 'Escritorio',
-    music_groups: 'Grupos',
-    music: 'Música',
+    vocabulary: 'Vocabulario',
+    entries: 'Entradas',
+
   },
   admin: {
-    music_groups
+    entries
   }
 }
 

@@ -34,7 +34,8 @@ final class EntityListDenormalizer implements DenormalizerInterface, Denormalize
 
 	public function supportsDenormalization($data, string $type, string $format = null)
 	{
-        return false;
+		return false;
+
 		return is_array($data) and preg_match('/(.*)\[\]$/', $type);
 	}
 

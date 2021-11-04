@@ -1,0 +1,6 @@
+services:
+    entry.text_filter:
+        parent: 'TextFilter'
+        arguments: { $properties: {"type":null} }
+        tags: [ 'api_platform.filter' ]
+

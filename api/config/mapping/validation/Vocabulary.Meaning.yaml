@@ -1,0 +1,5 @@
+App\Domain\Vocabulary\Input\MeaningInput:
+    properties:
+        entry: ~
+        term: ~
+        deep: ~
