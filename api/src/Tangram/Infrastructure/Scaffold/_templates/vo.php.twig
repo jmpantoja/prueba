@@ -12,7 +12,16 @@ final class {{ target | short_name }} {
 
     public function __construct({{ _.argument_list(target, true) }})
     {
-        $this->assert(get_defined_vars());
+        {% if target.single %}
+            $this->assert({{ _.argument_list(target) }});
+        {% else %}
+            $this->assert([
+            {% for attribute in target.attributes %}
+                {{ attribute | key_name | add_quotes }} => {{ attribute | var_name }},
+            {% endfor %}
+            ]);
+
+        {% endif %}
 
         {{ _.init_properties(target) }}
     }

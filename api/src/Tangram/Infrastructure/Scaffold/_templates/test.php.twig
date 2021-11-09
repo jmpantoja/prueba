@@ -1,10 +1,10 @@
 {% import 'partials/macros.php.twig' as _ %}
 {% include 'partials/header.php.twig' %}
 
-{{ _.use(entity) }}
 {{ _.use(createEvent) }}
 {{ _.use(updateEvent) }}
 {{ _.use(entityId) }}
+{{ _.uses(target) }}
 
 use PhpSpec\Exception\Example\PendingException;
 use PhpSpec\ObjectBehavior;
@@ -16,45 +16,55 @@ use Tangram\Domain\Model\Entity;
 final class {{ target | short_name }}  extends ObjectBehavior
 {
 
-private function eventsCollector(DomainEventsCollector $eventsCollector): void
-{
-$eventsCollector->handle(Argument::any())->willReturn($eventsCollector);
-DomainEventDispatcher::instance()
-->setDomainEventsCollector($eventsCollector->getWrappedObject());
-}
+    private function eventsCollector(DomainEventsCollector $eventsCollector): void
+    {
+        $eventsCollector->handle(Argument::any())->willReturn($eventsCollector);
+        DomainEventDispatcher::instance()
+        ->setDomainEventsCollector($eventsCollector->getWrappedObject());
+    }
 
-private function input(): array
-{
-throw new PendingException('Este método debería devolver un array con los argumentos (con nombre y en orden) para crear la entidad');
-return [
+    private function input(): array
+    {
+        throw new PendingException('Este método debería devolver un array con los argumentos (con nombre y en orden) para crear la entidad');
+        /*
+        return [
+        {% for attribute in target.attributes %}
+            {{ attribute | key_name | add_quotes }} => {{ attribute | var_name }},
+        {% endfor %}
+        ];
+        */
+    }
 
-];
-}
+    public function let(DomainEventsCollector $eventsCollector)
+    {
+        $this->eventsCollector($eventsCollector);
 
-public function let(DomainEventsCollector $eventsCollector)
-{
-$this->eventsCollector($eventsCollector);
+        $args = $this->input();
+        $this->beConstructedWith(...array_values($args));
+    }
 
-$args = $this->input();
-$this->beConstructedWith(...array_values($args));
-}
+    public function it_is_initializable(DomainEventsCollector $eventsCollector)
+    {
+        $this->shouldHaveType({{ entity | short_name }}::class);
+        $eventsCollector->handle(Argument::type({{ createEvent | short_name }}::class))->shouldBeCalledOnce();
+    }
 
-public function it_is_initializable(DomainEventsCollector $eventsCollector)
-{
-$this->shouldHaveType({{ entity | short_name }}::class);
-$eventsCollector->handle(Argument::type({{ createEvent | short_name }}::class))->shouldBeCalledOnce();
-}
+    public function it_implements_entity_interface()
+    {
+        $this->shouldHaveType({{ entity | short_name }}::class);
+        $this->id()->shouldHaveType({{ entityId | short_name }}::class);
+    }
 
-public function it_implements_entity_interface()
-{
-$this->shouldHaveType({{ entity | short_name }}::class);
-$this->id()->shouldHaveType({{ entityId | short_name }}::class);
-}
+    public function it_is_updatable(DomainEventsCollector $eventsCollector)
+    {
+        $this->update(...$this->input());
+        $eventsCollector->handle(Argument::type({{ updateEvent | short_name }}::class))->shouldBeCalledOnce();
+    }
 
-public function it_is_updatable(DomainEventsCollector $eventsCollector)
-{
-$this->update(...$this->input());
-$eventsCollector->handle(Argument::type({{ updateEvent | short_name }}::class))->shouldBeCalledOnce();
-}
-
+{% for attribute in target.attributes %}
+    public function it_gets_{{ attribute.name }}_properly()
+    {
+        $this->{{ attribute.name }}()->shouldHaveType({{ attribute | short_name }}::class);
+    }
+{% endfor %}
 }

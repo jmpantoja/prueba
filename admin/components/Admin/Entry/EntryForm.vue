@@ -6,6 +6,9 @@
 
       <ad-field-group title="General">
         <field-term v-model="model.term" prop="term" :label="admin.message('form.term')"/>
+
+        <field-audio-path v-model="model.audio" prop="audio" :label="admin.message('form.audio')"/>
+
         <field-entry-type-select v-model="model.type" prop="type" :label="admin.message('form.type')"/>
 
         <field-level v-model="model.level" prop="level" :label="admin.message('form.level')"/>
@@ -13,15 +16,8 @@
       </ad-field-group>
 
       <ad-field-group title="Significados">
+
         <field-meaning-list v-model="model.meanings" prop="meanings"/>
-
-        <!--        <ad-field-list v-model="model.meanings" v-slot="{index, item }">-->
-        <!--          <field-term-->
-        <!--            term_label="form.meaning"-->
-        <!--            v-model="item.term"-->
-        <!--            :prop="'meanings['+index+'].term'"/>-->
-        <!--        </ad-field-list>-->
-
 
       </ad-field-group>
     </template>
@@ -47,6 +43,7 @@ export default class extends Vue {
       term: '',
       lang: 'en'
     },
+    audio: null,
     level: {
       level: null,
       page: null

@@ -12,6 +12,9 @@ App\Infrastructure\Api\Vocabulary\Output\EntryOutput:
         level:
             groups: ['entry:read']
 
+        audio:
+            groups: ['entry:read']
+
         meanings:
             groups: ['entry:read']
 
@@ -25,6 +28,9 @@ App\Domain\Vocabulary\Input\EntryInput:
             groups: ['entry:write']
 
         level:
+            groups: ['entry:write']
+
+        audio:
             groups: ['entry:write']
 
         meanings:

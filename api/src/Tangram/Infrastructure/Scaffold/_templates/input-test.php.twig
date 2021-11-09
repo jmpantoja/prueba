@@ -1,0 +1,44 @@
+{% import 'partials/macros.php.twig' as _ %}
+{% include 'partials/header.php.twig' %}
+
+
+{{ _.use(input) }}
+use Tangram\Domain\Assertion\Exception\AssertException;
+use PhpSpec\Exception\Example\PendingException;
+use PhpSpec\ObjectBehavior;
+use Prophecy\Argument;
+
+
+final class {{ target | short_name}}  extends ObjectBehavior
+{
+    public function input(): array{
+    throw new PendingException('Este método debería devolver un array con los argumentos (con nombre y en orden)');
+        return [
+            {% for attribute in target.attributes %}
+                {{ attribute | key_name | add_quotes }} => {{ attribute | var_name }},
+            {% endfor %}
+        ];
+    }
+
+    public function let()
+    {
+        $this->beConstructedThrough('fromArray', [$this->input()]);
+    }
+
+    public function it_is_initializable()
+    {
+        $this->shouldHaveType({{ input | short_name}}::class);
+    }
+
+{% for attribute in target.attributes %}
+    public function it_gets_{{ attribute.name }}_properly()
+    {
+        $input = $this->input();
+
+        $this->{{ attribute.name }}()->shouldBeLike($input[{{ attribute.name | add_quotes }}]);
+    }
+
+{% endfor %}
+
+
+}

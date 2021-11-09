@@ -12,6 +12,8 @@
             
             <embedded name="level" class="App\Domain\Vocabulary\VO\Level"/>
             
+            <field name="audio" type="AudioPath"/>
+            
             <one-to-many field="meanings"
                  target-entity="App\Domain\Vocabulary\Meaning"
                  mapped-by="entry"

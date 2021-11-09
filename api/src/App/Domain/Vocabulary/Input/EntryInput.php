@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace App\Domain\Vocabulary\Input;
 
 use App\Domain\Vocabulary\MeaningList;
+use App\Domain\Vocabulary\VO\AudioPath;
 use App\Domain\Vocabulary\VO\EntryType;
 use App\Domain\Vocabulary\VO\Level;
 use App\Domain\Vocabulary\VO\Term;
@@ -23,6 +24,7 @@ final class EntryInput extends Input
 	public EntryType $type;
 	public Term $term;
 	public Level $level;
+	public AudioPath $audio;
 	/**
 	 * @var MeaningInput[]
 	 */
@@ -41,6 +43,11 @@ final class EntryInput extends Input
 	public function level(): Level
 	{
 		return $this->level;
+	}
+
+	public function audio(): AudioPath
+	{
+		return $this->audio;
 	}
 
 	public function meanings(): MeaningList

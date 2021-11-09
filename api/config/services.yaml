@@ -28,3 +28,6 @@ services:
     App\Infrastructure\UI\Symfony\Controller\:
         resource: '../src/App/Infrastructure/UI/Symfony/Controller'
         tags: [ 'controller.service_arguments' ]
+
+    App\Infrastructure\Importer\StorageInterface:
+        alias: 'App\Infrastructure\Importer\CacheStorage'

@@ -15,6 +15,7 @@ namespace App\Infrastructure\Api\Vocabulary\Output;
 use App\Domain\Vocabulary\Entry;
 use App\Domain\Vocabulary\EntryId;
 use App\Domain\Vocabulary\MeaningList;
+use App\Domain\Vocabulary\VO\AudioPath;
 use App\Domain\Vocabulary\VO\EntryType;
 use App\Domain\Vocabulary\VO\Level;
 use App\Domain\Vocabulary\VO\Term;
@@ -29,6 +30,8 @@ final class EntryOutput
 
 	public Level $level;
 
+	public AudioPath $audio;
+
 	public MeaningList $meanings;
 
 	public static function make(Entry $entry): self
@@ -42,6 +45,7 @@ final class EntryOutput
 		$this->type = $entry->type();
 		$this->term = $entry->term();
 		$this->level = $entry->level();
+		$this->audio = $entry->audio();
 		$this->meanings = $entry->meanings();
 	}
 }

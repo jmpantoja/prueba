@@ -24,7 +24,10 @@ final class Term
 
 	public function __construct(string $term, Lang $lang)
 	{
-		$this->assert(get_defined_vars());
+		$this->assert([
+							'term' => $term,
+							'lang' => $lang,
+						]);
 
 		$this->term = $term;
 		$this->lang = $lang;

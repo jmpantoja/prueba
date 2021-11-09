@@ -43,7 +43,7 @@ abstract class AbstractList implements ListInterface
 		return is_typeof($value, $type);
 	}
 
-	protected function add(string | int $key, $item): static
+	protected function add(string|int $key, $item): static
 	{
 		$this->data[$key] = $item;
 
@@ -57,6 +57,13 @@ abstract class AbstractList implements ListInterface
 		}
 
 		return $this;
+	}
+
+	public function unique(int $flags = SORT_STRING): static
+	{
+		$data = array_unique($this->data, $flags);
+
+		return static::collect($data);
 	}
 
 	public function map(callable $callback): ListInterface
@@ -121,7 +128,7 @@ abstract class AbstractList implements ListInterface
 		}
 	}
 
-	protected function get(string | int $key): mixed
+	protected function get(string|int $key): mixed
 	{
 		if (!$this->has($key)) {
 			throw new NonExistentElement($key);
@@ -130,7 +137,7 @@ abstract class AbstractList implements ListInterface
 		return $this->data[$key];
 	}
 
-	protected function has(string | int $key): bool
+	protected function has(string|int $key): bool
 	{
 		return isset($this->data[$key]);
 	}

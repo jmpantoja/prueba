@@ -12,7 +12,6 @@
         "doctrine/doctrine-migrations-bundle": "^3.0",
         "doctrine/orm": "^2.7",
         "gesdinet/jwt-refresh-token-bundle": "^0.9.1",
-        "guzzlehttp/guzzle": "^7.0",
         "laminas/laminas-filter": "^2.11",
         "league/csv": "^9.0",
         "league/tactician-bundle": "^1.3",
@@ -78,7 +77,8 @@
             "Tangram\\": "src/Tangram/"
         },
         "files": [
-            "src/Tangram/Infrastructure/Bundle/Resources/functions/datatype.php"
+            "src/Tangram/Infrastructure/Bundle/Resources/functions/datatype.php",
+            "src/Tangram/Infrastructure/Prophecy/Doubler/Generator/Node/TypeNodeAbstract.php"
         ]
     },
     "autoload-dev": {

@@ -19,34 +19,34 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 final class TermNormalizer implements NormalizerInterface, DenormalizerInterface
 {
-    /**
-     * @param Term $term
-     *
-     * @return mixed
-     */
-    public function normalize($term, string $format = null, array $context = [])
-    {
-        return [
-            'term' => $term->term(),
-            'lang' => $term->lang(),
-        ];
-    }
+	/**
+	 * @param Term $term
+	 *
+	 * @return mixed
+	 */
+	public function normalize($term, string $format = null, array $context = [])
+	{
+		return [
+			'term' => $term->term(),
+			'lang' => $term->lang(),
+		];
+	}
 
-    public function supportsNormalization($data, string $format = null)
-    {
-        return $data instanceof Term;
-    }
+	public function supportsNormalization($data, string $format = null)
+	{
+		return $data instanceof Term;
+	}
 
-    public function denormalize($data, string $type, string $format = null, array $context = [])
-    {
-        return new Term(...[
-            'term' => $data['term'],
-            'lang' => Lang::from($data['lang']),
-        ]);
-    }
+	public function denormalize($data, string $type, string $format = null, array $context = [])
+	{
+		return new Term(...[
+			'term' => $data['term'],
+			'lang' => Lang::from($data['lang']),
+		]);
+	}
 
-    public function supportsDenormalization($data, string $type, string $format = null)
-    {
-        return Term::class === $type;
-    }
+	public function supportsDenormalization($data, string $type, string $format = null)
+	{
+		return Term::class === $type;
+	}
 }

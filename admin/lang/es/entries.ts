@@ -34,6 +34,7 @@ const directors: AdminTranslation = {
     lang: 'Idioma',
     type: 'Tipo',
     level: 'Nivel',
+    audio: 'Audio',
     page: 'Pagina',
     option_spanish: 'Español',
     option_english: 'Ingles',

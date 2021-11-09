@@ -1,6 +1,6 @@
 services:
     entry.text_filter:
         parent: 'TextFilter'
-        arguments: { $properties: {"type":null} }
+        arguments: { $properties: {"type":null,"audio":null} }
         tags: [ 'api_platform.filter' ]
 

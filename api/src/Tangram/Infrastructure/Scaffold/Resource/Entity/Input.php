@@ -30,6 +30,5 @@ final class Input extends ClassResource
 		$options->setClassName($name, 'Input');
 
 		$options->setTemplate('input');
-		$options->updatable();
 	}
 }

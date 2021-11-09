@@ -3,4 +3,5 @@ App\Domain\Vocabulary\Input\EntryInput:
         type: ~
         term: ~
         level: ~
+        audio: ~
         meanings: ~

@@ -3,6 +3,7 @@ doctrine:
         types:
             EntryId: App\Infrastructure\Doctrine\DBAL\Type\Vocabulary\EntryIdDBALType
             MeaningId: App\Infrastructure\Doctrine\DBAL\Type\Vocabulary\MeaningIdDBALType
+            AudioPath: App\Infrastructure\Doctrine\DBAL\Type\Vocabulary\AudioPathDBALType
             Deep: App\Infrastructure\Doctrine\DBAL\Type\Vocabulary\DeepDBALType
             EntryType: App\Infrastructure\Doctrine\DBAL\Type\Vocabulary\EntryTypeDBALType
             Lang: App\Infrastructure\Doctrine\DBAL\Type\Vocabulary\LangDBALType

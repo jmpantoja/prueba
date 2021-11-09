@@ -15,18 +15,7 @@ final class {{ target | short_name }}  extends EntityList {
         return {{ entity | short_name }}::class;
     }
 
-    public function compareWith(iterable $values): DiffList
-    {
-        $input = MixedList::collect($values);
-
-        $from = $this->mapKeys([$this, 'hash']);
-        $input = $input->mapKeys([$this, 'hash']);
-
-        return DiffList::compare($from, $input);
-    }
-
-
-    public static function hash({{ entity | short_name }}|{{ input | short_name }} {{ entity | var_name }}): string
+    public static function hash(Input|{{ entity | short_name }}|{{ input | short_name }} {{ entity | var_name }}): string
     {
         throw new \Exception(sprintf('Incomplete method "%s"', ...[
         __METHOD__

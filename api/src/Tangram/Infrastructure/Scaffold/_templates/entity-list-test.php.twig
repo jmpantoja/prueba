@@ -1,0 +1,29 @@
+{% import 'partials/macros.php.twig' as _ %}
+{% include 'partials/header.php.twig' %}
+
+{{ _.use(entityList) }}
+{{ _.uses(target) }}
+use PhpSpec\ObjectBehavior;
+
+
+final class {{ target | short_name }}  extends ObjectBehavior {
+
+    public function let()
+    {
+        $this->beConstructedThrough('collect', []);
+    }
+
+    public function it_is_initializable()
+    {
+        $this->shouldHaveType({{ entityList | short_name }}::class);
+        $this->type()->shouldReturn({{ entity | short_name }}::class);
+    }
+
+    public function it_creates_a_hash({{ entity | short_name }} {{ entity | var_name }})
+    {
+        throw new PendingException('Este método debería comprobar la creación del hash');
+        $this->hash({{ entity | var_name }})->shouldReturn('hash');
+    }
+
+
+}

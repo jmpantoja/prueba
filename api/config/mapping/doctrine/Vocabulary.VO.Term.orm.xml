@@ -5,7 +5,7 @@
 
     <embeddable name="App\Domain\Vocabulary\VO\Term">
 
-                        <field name="term" type="string"/>
-                            <field name="lang" type="Lang"/>
-                </embeddable>
+        <field name="term" type="string" length="512"/>
+        <field name="lang" type="Lang"/>
+    </embeddable>
 </doctrine-mapping>

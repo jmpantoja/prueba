@@ -26,9 +26,11 @@ use Tangram\Infrastructure\Scaffold\Resource\Entity\EntityClass;
 use Tangram\Infrastructure\Scaffold\Resource\Entity\EntityId;
 use Tangram\Infrastructure\Scaffold\Resource\Entity\EntityIdType;
 use Tangram\Infrastructure\Scaffold\Resource\Entity\EntityList;
+use Tangram\Infrastructure\Scaffold\Resource\Entity\EntityListTest;
 use Tangram\Infrastructure\Scaffold\Resource\Entity\EntityTrait;
 use Tangram\Infrastructure\Scaffold\Resource\Entity\Fixtures;
 use Tangram\Infrastructure\Scaffold\Resource\Entity\Input;
+use Tangram\Infrastructure\Scaffold\Resource\Entity\InputTest;
 use Tangram\Infrastructure\Scaffold\Resource\Entity\InputTransformer;
 use Tangram\Infrastructure\Scaffold\Resource\Entity\OrderFilterConfig;
 use Tangram\Infrastructure\Scaffold\Resource\Entity\Output;
@@ -67,6 +69,7 @@ final class ResourceList extends TypedList
 			'entity' => new EntityClass(),
 			'entityTrait' => new EntityTrait(),
 			'entityList' => new EntityList(),
+			'entityListTest' => new EntityListTest(),
 			'entityId' => new EntityId(),
 			'entityIdType' => new EntityIdType(),
 			'repository' => new Repository(),
@@ -88,6 +91,7 @@ final class ResourceList extends TypedList
 			'persister' => new Persister(),
 			'fixtures' => new Fixtures(),
 			'test' => new Test(),
+			'inputTest' => new InputTest(),
 
 			'apiMapping' => new ApiMapping(),
 			'doctrineMapping' => new DoctrineMapping(),

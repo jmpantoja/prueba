@@ -2,6 +2,7 @@
 
 namespace spec\App\Infrastructure\Importer;
 
+use App\Domain\Vocabulary\VO\Level;
 use App\Infrastructure\Importer\PageDownLoader;
 use App\Infrastructure\Importer\VocabularyOneWordProvider;
 use App\Infrastructure\Importer\WordProviderInterface;
@@ -26,7 +27,9 @@ class VocabularyOneWordProviderSpec extends ObjectBehavior
 			->shouldBeCalledOnce()
 			->willReturn($this->getHtml('k01_1.html'));
 
-		$this->wordsByPageAndLevel(1, 1)
+		$level = new Level(1, 1);
+
+		$this->wordsByLevel($level)
 			->shouldReturn([
 				['word' => 'engine', 'lang' => 'en', 'level' => 1, 'page' => 1],
 				['word' => 'club', 'lang' => 'en', 'level' => 1, 'page' => 1],
@@ -43,11 +46,12 @@ class VocabularyOneWordProviderSpec extends ObjectBehavior
 
 	public function it_imports_the_words_by_level_and_page_distint_from_1(PageDownLoader $downLoader)
 	{
+		$level = new Level(1, 2);
 		$downLoader->getHtml('https://vocabulary.one/en/frequency/k01/2')
 			->shouldBeCalledOnce()
 			->willReturn($this->getHtml('k01_2.html'));
 
-		$this->wordsByPageAndLevel(1, 2)
+		$this->wordsByLevel($level)
 			->shouldReturn([
 				['word' => 'where', 'lang' => 'en', 'level' => 1, 'page' => 2],
 				['word' => 'part', 'lang' => 'en', 'level' => 1, 'page' => 2],

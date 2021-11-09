@@ -17,6 +17,7 @@ use App\Domain\Vocabulary\Event\EntryHasBeenCreated;
 use App\Domain\Vocabulary\Event\EntryHasBeenUpdated;
 use App\Domain\Vocabulary\Meaning;
 use App\Domain\Vocabulary\MeaningList;
+use App\Domain\Vocabulary\VO\AudioPath;
 use App\Domain\Vocabulary\VO\Deep;
 use App\Domain\Vocabulary\VO\EntryType;
 use App\Domain\Vocabulary\VO\Level;
@@ -34,34 +35,37 @@ trait EntryBase
 
 	private Level $level;
 
+	private AudioPath $audio;
+
 	private Collection $meanings;
 
 	private EntryId $id;
 
-	public function __construct(EntryType $type, Term $term, Level $level, ?array $meanings)
+	public function __construct(EntryType $type, Term $term, Level $level, AudioPath $audio, ?array $meanings)
 	{
 		$this->id = new EntryId();
 		$this->meanings = new ArrayCollection();
 
-		$this->initialize($type, $term, $level, $meanings);
+		$this->initialize($type, $term, $level, $audio, $meanings);
 		$this->notify(new EntryHasBeenCreated($this));
 	}
 
 	abstract public function notify(DomainEventInterface $domainEvent): void;
 
-	public function update(EntryType $type, Term $term, Level $level, ?array $meanings): static
+	public function update(EntryType $type, Term $term, Level $level, AudioPath $audio, ?array $meanings): static
 	{
-		$this->initialize($type, $term, $level, $meanings);
+		$this->initialize($type, $term, $level, $audio, $meanings);
 		$this->notify(new EntryHasBeenUpdated($this));
 
 		return $this;
 	}
 
-	private function initialize(EntryType $type, Term $term, Level $level, ?array $meanings): static
+	private function initialize(EntryType $type, Term $term, Level $level, AudioPath $audio, ?array $meanings): static
 	{
 		$this->type = $type;
 		$this->term = $term;
 		$this->level = $level;
+		$this->audio = $audio;
 		$this->putMeanings($meanings);
 
 		return $this;
@@ -118,6 +122,11 @@ trait EntryBase
 	public function level(): Level
 	{
 		return $this->level;
+	}
+
+	public function audio(): AudioPath
+	{
+		return $this->audio;
 	}
 
 	public function meanings(): MeaningList

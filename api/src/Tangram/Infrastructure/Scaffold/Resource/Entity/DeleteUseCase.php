@@ -21,7 +21,7 @@ final class DeleteUseCase extends ClassResource
 {
 	public function supports(Model $model): bool
 	{
-		return $model->isEntity();
+		return $model->isEndpoint();
 	}
 
 	public function configure(ClassOptions $options, string $name, string $module)

@@ -22,7 +22,7 @@ final class Deep
 
 	public function __construct(int $deep)
 	{
-		$this->assert(get_defined_vars());
+		$this->assert($deep);
 
 		$this->deep = $deep;
 	}
