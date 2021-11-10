@@ -4,57 +4,9 @@
     <hr/>
     <hr/>
 
-
-    <el-row :gutter="10">
-      <el-col :span="6">
-        <div class="column">*</div>
-      </el-col>
-      <el-col :span="6">
-        <div class="column">*</div>
-      </el-col>
-    </el-row>
-
-
-    <el-form v-model="model">
-
-
-      <el-form-item label="full name" prop="fullName" label-width="15em">
-        <el-row>
-          <el-form-item
-            class="el-col-10"
-            label="Name"
-            prop="fullName.name">
-            <el-input v-model="model.fullName.name" autocomplete="off"/>
-          </el-form-item>
-
-          <el-form-item
-            class="el-col-10"
-            label="Last Name"
-            prop="fullName.lastName">
-            <field-lang-select v-model="model.fullName.lastName" />
-<!--            <el-input v-model="model.fullName.lastName" autocomplete="off"/>-->
-          </el-form-item>
-        </el-row>
-
-        <el-row>
-          <el-form-item
-            class="el-col-6"
-            label="Name"
-            prop="fullName.name">
-            <el-input v-model="model.fullName.name" autocomplete="off"/>
-          </el-form-item>
-
-          <el-form-item
-            class="el-col-6"
-            label="Last Name"
-            prop="fullName.lastName">
-            <el-input v-model="model.fullName.lastName" autocomplete="off"/>
-          </el-form-item>
-        </el-row>
-
-      </el-form-item>
-
-    </el-form>
+    <div v-roles="['entry_edit']">
+      <h1>hola</h1>
+    </div>
 
   </div>
 </template>
@@ -73,7 +25,7 @@ import {mapGetters} from "vuex";
 export default class extends Vue {
   @Provide('admin')
   public get admin() {
-    return this.$adminManager.byName('entries')
+    return this.$adminManager.byName('entry')
   }
 
   public model: object = {

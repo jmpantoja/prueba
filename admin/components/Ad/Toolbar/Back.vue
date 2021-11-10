@@ -15,7 +15,7 @@ var parse = require('url-parse');
   name: 'Create'
 })
 export default class extends mixins(AdminAware) {
-  public roles: string[] = ['list']
+  public roles: string[] = ['read']
 
   click() {
     const previous = this.$nuxt.context.from

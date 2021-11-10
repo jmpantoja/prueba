@@ -61,6 +61,10 @@ final class TwigExtension extends AbstractExtension
 			new TwigFilter('write_group', [$this, 'writeGroup'], ['is_safe' => ['html']]),
 			new TwigFilter('read_group', [$this, 'readGroup'], ['is_safe' => ['html']]),
 			new TwigFilter('uses', [$this, 'uses'], ['is_safe' => ['html']]),
+			new TwigFilter('role_create', [$this, 'roleCreate'], ['is_safe' => ['html']]),
+			new TwigFilter('role_read', [$this, 'roleRead'], ['is_safe' => ['html']]),
+			new TwigFilter('role_update', [$this, 'roleUpdate'], ['is_safe' => ['html']]),
+			new TwigFilter('role_delete', [$this, 'roleDelete'], ['is_safe' => ['html']]),
 		];
 	}
 
@@ -283,5 +287,25 @@ final class TwigExtension extends AbstractExtension
 		return array_filter($uses, function (Target $use) use ($target) {
 			return $target->fullName() !== $use->fullName();
 		});
+	}
+
+	public function roleCreate(Target $target): string
+	{
+		return sprintf('ROLE_%s_CREATE', strtoupper($this->tableName($target)));
+	}
+
+	public function roleRead(Target $target): string
+	{
+		return sprintf('ROLE_%s_READ', strtoupper($this->tableName($target)));
+	}
+
+	public function roleUpdate(Target $target): string
+	{
+		return sprintf('ROLE_%s_UPDATE', strtoupper($this->tableName($target)));
+	}
+
+	public function roleDelete(Target $target): string
+	{
+		return sprintf('ROLE_%s_DELETE', strtoupper($this->tableName($target)));
 	}
 }

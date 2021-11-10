@@ -1,7 +1,7 @@
 import {Translation} from "~/types/lang";
 
 // @ts-ignore
-import entries from "./es/entries.ts"
+import entry from "./es/entry.ts"
 
 
 const spanish: Translation = {
@@ -36,7 +36,7 @@ const spanish: Translation = {
 
   },
   admin: {
-    entries
+    entry
   }
 }
 

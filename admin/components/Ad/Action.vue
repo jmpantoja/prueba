@@ -47,7 +47,7 @@ export default class extends Vue {
 
     const meta = this.routeMeta;
     const admin = this.$adminManager.byName(meta.admin)
-    const roles = admin.rolesByName(meta.action)
+    const roles = admin.rolesByName((meta.roles as string | string[]))
 
     this.$security.assert(roles)
     return Vue.observable(admin)

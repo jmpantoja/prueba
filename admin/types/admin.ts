@@ -13,6 +13,7 @@ type AdminContext = {
 }
 
 type ActionConfig = {
+  roles: string[];
   component: string,
   path: string,
 };

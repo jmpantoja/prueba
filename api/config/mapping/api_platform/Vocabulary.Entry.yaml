@@ -5,8 +5,20 @@ App\Domain\Vocabulary\Entry:
                 - 'entry.order_filter'
                 - 'entry.text_filter'
 
-        post: ~
+            security: 'is_granted("ROLE_ENTRY_READ")'
 
+        post:
+            security: 'is_granted("ROLE_ENTRY_CREATE")'
+
+    itemOperations:
+        get:
+            security: 'is_granted("ROLE_ENTRY_READ")'
+
+        put:
+            security: 'is_granted("ROLE_ENTRY_UPDATE")'
+
+        delete:
+            security: 'is_granted("ROLE_ENTRY_DELETE")'
     properties:
         id:
             identifier: true

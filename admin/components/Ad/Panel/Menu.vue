@@ -7,6 +7,7 @@
         <template v-for="(rule, index) in menu">
           <el-submenu
             v-if="rule.children && rule.children.length > 0"
+            v-roles="rule.roles"
             :key="index"
             :index="localePath(rule.path)">
             <template slot="title">
@@ -16,6 +17,7 @@
 
             <el-menu-item
               v-for="(child, index) in rule.children"
+              v-roles="child.roles"
               :index="localePath(child.path)"
               :key="index"
             >
@@ -25,6 +27,7 @@
 
           <el-menu-item
             v-else
+            v-roles="rule.roles"
             :index="localePath(rule.path)"
             :key="index"
           >

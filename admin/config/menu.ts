@@ -22,6 +22,7 @@ const menu: Menu = [
       {
         path: '/data/vocabulary/entries/list',
         title: 'menu.entries',
+        roles: ['entry_read'],
       }
     ]
   },

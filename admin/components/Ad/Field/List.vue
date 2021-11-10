@@ -38,7 +38,7 @@ import {Component, mixins} from 'nuxt-property-decorator'
 export default class extends mixins(Field) {
 
   public removeRow(index: number) {
-    this.value.splice(index, 1)
+    (this.value || []).splice(index, 1)
   }
 
 }

@@ -21,12 +21,14 @@
 
                 <slot name="action_edit" :on="goToEdit">
                   <el-button type="text"
+                             v-granted="'read'"
                              icon="el-icon-edit"
                              @click.native.prevent="goToEdit(scope.row)"/>
                 </slot>
 
                 <slot name="action_delete" :on="goToDelete">
                   <el-button type="text"
+                             v-granted="'delete'"
                              class="btn_delete"
                              icon="el-icon-delete"
                              @click.native.prevent="goToDelete(scope.row)"/>

@@ -7,8 +7,21 @@
                 - '{{ entity | table_name }}.{{filter}}'
 {% endfor %}
 
-        post: ~
+            security: 'is_granted("{{ entity | role_read}}")'
 
+        post:
+            security: 'is_granted("{{ entity | role_create}}")'
+
+    itemOperations:
+        get:
+            security: 'is_granted("{{ entity | role_read}}")'
+
+        put:
+            security: 'is_granted("{{ entity | role_update}}")'
+
+        delete:
+            security: 'is_granted("{{ entity | role_delete}}")'
+            
     properties:
         id:
             identifier: true

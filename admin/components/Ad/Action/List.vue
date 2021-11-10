@@ -1,6 +1,5 @@
 <template>
   <ad-action v-slot="{components}">
-
     <component :is="components.grid" />
   </ad-action>
 </template>

@@ -19,7 +19,7 @@ const _ = require("lodash")
   name: 'MeaningList'
 })
 export default class extends mixins(Field) {
-  public add(index) {
+  public add(index: number) {
     this.data.push({
       term: {
         term: null,

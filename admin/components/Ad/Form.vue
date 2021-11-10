@@ -27,7 +27,10 @@
       </div>
 
       <div class="footer">
-        <el-button type="primary" :disabled="!valid" @click="submit">{{ $t('buttons.save') }}</el-button>
+
+        <el-button v-granted="submitRoles" type="primary" :disabled="!valid" @click="submit">
+          {{ $t('buttons.save') }}
+        </el-button>
       </div>
     </div>
   </div>
@@ -83,6 +86,16 @@ export default class extends Vue {
       ...this.empty,
       ...this.entity
     }
+  }
+
+  public get submitRoles(): string[] {
+    if (this.$route.meta?.action === 'edit') {
+      return ['update']
+    }
+    if (this.$route.meta?.action === 'create') {
+      return ['create']
+    }
+    return []
   }
 
   public created() {

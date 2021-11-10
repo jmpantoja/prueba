@@ -1,5 +1,6 @@
 import admin from "./admin";
 import {NuxtRouteConfig} from "@nuxt/types/config/router";
+import {ActionConfig} from "~/types/admin";
 
 const routes: NuxtRouteConfig[] = []
 Object.entries(admin)
@@ -17,6 +18,7 @@ Object.entries(admin)
           meta: {
             admin: key,
             action: name,
+            roles: action.roles,
             components: admin.components,
           }
         })
