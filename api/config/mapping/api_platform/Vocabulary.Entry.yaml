@@ -28,7 +28,7 @@ App\Domain\Vocabulary\Entry:
         output: App\Infrastructure\Api\Vocabulary\Output\EntryOutput
 
         normalization_context:
-            groups: [ 'entry:read'  ]
+            groups: [ 'entry:read' ]
         denormalization_context:
             groups: [ 'entry:write' ]
 

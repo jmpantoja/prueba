@@ -1,0 +1,25 @@
+@import "~element-ui/packages/theme-chalk/src/common/var.scss";
+
+
+$--color-danger-light-1: mix($--color-white, $--color-danger, 10%) !default; /* 53a8ff */
+$--color-danger-light-2: mix($--color-white, $--color-danger, 20%) !default; /* 66b1ff */
+$--color-danger-light-3: mix($--color-white, $--color-danger, 30%) !default; /* 79bbff */
+$--color-danger-light-4: mix($--color-white, $--color-danger, 40%) !default; /* 8cc5ff */
+$--color-danger-light-5: mix($--color-white, $--color-danger, 50%) !default; /* a0cfff */
+$--color-danger-light-6: mix($--color-white, $--color-danger, 60%) !default; /* b3d8ff */
+$--color-danger-light-7: mix($--color-white, $--color-danger, 70%) !default; /* c6e2ff */
+$--color-danger-light-8: mix($--color-white, $--color-danger, 80%) !default; /* d9ecff */
+$--color-danger-light-9: mix($--color-white, $--color-danger, 90%) !default; /* ecf5ff */
+
+
+$--aside-background-color: #41403d;
+
+$--border: 2px solid #e7e7e7;
+$--shadow: 0 2px 12px 0 rgba(0, 0, 0, .1);
+
+//
+//$main-padding: 1.5rem;
+//$toolbar-height: 4rem;
+//$panel-height: calc(100vh - #{$header-height} - #{$toolbar-height} - #{$main-padding} * 3 - 2px);
+//$pagination-height: 4rem;
+//$table-height: calc(#{$panel-height} - #{$pagination-height});

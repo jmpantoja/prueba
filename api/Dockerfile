@@ -118,34 +118,34 @@ ENTRYPOINT ["docker-entrypoint"]
 CMD ["php-fpm"]
 
 
-FROM api_platform_php as api_platform_php_prod
-# build for production
-ARG APP_ENV=prod
-
-# prevent the reinstallation of vendors at every changes in the source code
-COPY composer.json composer.lock symfony.lock ./
-RUN set -eux; \
-	composer install --prefer-dist --no-dev --no-scripts --no-progress --no-suggest; \
-	composer clear-cache
-
-# do not use .env files in production
-COPY .env ./
-#RUN composer dump-env prod; \
-#	rm .env
-
-# copy only specifically what we need
-COPY bin bin/
-COPY config config/
-COPY migrations migrations/
-COPY public public/
-COPY src src/
-
-RUN set -eux; \
-	mkdir -p var/cache var/log; \
-	composer dump-autoload --classmap-authoritative --no-dev; \
-	composer run-script --no-dev post-install-cmd; \
-	chmod +x bin/console; sync
-VOLUME /srv/api/var
+#FROM api_platform_php as api_platform_php_prod
+## build for production
+#ARG APP_ENV=prod
+#
+## prevent the reinstallation of vendors at every changes in the source code
+#COPY composer.json composer.lock symfony.lock ./
+#RUN set -eux; \
+#	composer install --prefer-dist --no-dev --no-scripts --no-progress --no-suggest; \
+#	composer clear-cache
+#
+## do not use .env files in production
+#COPY .env ./
+##RUN composer dump-env prod; \
+##	rm .env
+#
+## copy only specifically what we need
+#COPY bin bin/
+#COPY config config/
+#COPY migrations migrations/
+#COPY public public/
+#COPY src src/
+#
+#RUN set -eux; \
+#	mkdir -p var/cache var/log; \
+#	composer dump-autoload --classmap-authoritative --no-dev; \
+#	composer run-script --no-dev post-install-cmd; \
+#	chmod +x bin/console; sync
+#VOLUME /srv/api/var
 
 
 

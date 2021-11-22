@@ -111,8 +111,11 @@ services:
     restart: always
     volumes:
       - ./client:/usr/app:rw
-  #    environment:
-  #      - VIRTUAL_HOST=${CLIENT_HOST:?CLIENT_HOST is not set or empty}
+    environment:
+      - API_ENDPOINT=https://${API_HOST}
+      - TOKEN_URL=https://${API_HOST}/token
+      - REFRESH_TOKEN_URL=https://${API_HOST}/token/refresh
+      - PROFILE_URL=https://${API_HOST}/profile
 
   admin:
     # in production, we may want to use a static website hosting service

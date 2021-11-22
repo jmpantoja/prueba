@@ -26,6 +26,9 @@ nginx-reload:
 admin-restart:
 	docker-compose restart admin
 
+client-restart:
+	docker-compose restart client
+
 xdebug-disabled:
 	docker-compose exec php mv /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini /usr/local/etc/php/conf.d/disabled/docker-php-ext-xdebug.ini
 	docker-compose exec php pkill -o -USR2 php-fpm

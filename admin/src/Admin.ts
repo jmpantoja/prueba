@@ -51,6 +51,7 @@ class Admin {
   private initEndpoint(endpoint: string): string {
     const url = parse(this._context.api_endpoint);
     url.set('pathname', endpoint)
+
     return url.toString()
   }
 

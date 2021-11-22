@@ -1,62 +1,94 @@
 <template>
-  <div>
-    <Nuxt />
+  <div class="app" :class="{collapsed: closed}">
+    <aside class="app__sidebar">
+      <app-menu/>
+    </aside>
+    <section class="app__container">
+      <header class="app__header">
+        <app-header/>
+      </header>
+      <main class="app__page">
+        <nuxt/>
+      </main>
+    </section>
   </div>
+  <!--  <nuxt/>-->
 </template>
 
-<style>
-html {
-  font-family:
-    'Source Sans Pro',
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    'Helvetica Neue',
-    Arial,
-    sans-serif;
-  font-size: 16px;
-  word-spacing: 1px;
-  -ms-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  box-sizing: border-box;
+<script lang="ts">
+import {Component, Vue} from 'nuxt-property-decorator'
+import {mapGetters} from "vuex";
+
+@Component({
+  inheritAttrs: false,
+  name: 'Menu',
+  computed: mapGetters({
+    'closed': 'aside/closed',
+  })
+
+})
+export default class extends Vue {
+  onOpen() {
+  }
+
+  onClose() {
+  }
+
 }
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
+</script>
+
+<style scoped lang="scss">
+
+.app {
+  min-height: 100vh;
+  background-color: palegoldenrod;
 }
 
-.button--green {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #3b8070;
-  color: #3b8070;
-  text-decoration: none;
-  padding: 10px 30px;
+.app__container {
+  background-color: paleturquoise;
 }
 
-.button--green:hover {
-  color: #fff;
-  background-color: #3b8070;
+.app__sidebar {
+  background-color: #41403d;
+
+  .el-menu {
+    border-right: 1px solid transparent;
+  }
 }
 
-.button--grey {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #35495e;
-  color: #35495e;
-  text-decoration: none;
-  padding: 10px 30px;
-  margin-left: 15px;
+.app__header {
+  background-color: pink;
+  border-bottom: $--border;
 }
 
-.button--grey:hover {
-  color: #fff;
-  background-color: #35495e;
+.app__container {
+  background-color: palegreen;
 }
+
+//mobile
+.app {
+  display: flex;
+}
+
+.app__container {
+  flex-grow: 1;
+}
+
+.app.collapsed {
+  .app__sidebar {
+    display: none;
+  }
+}
+
+
+@media screen and (min-width: 60em) {
+
+  .app__sidebar {
+    display: block;
+  }
+}
+
+
 </style>
+

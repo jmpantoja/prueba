@@ -32,6 +32,7 @@ abstract class UseCaseFixture extends Fixture
 
 	public function load(ObjectManager $manager)
 	{
+
 		$this->loadData();
 	}
 

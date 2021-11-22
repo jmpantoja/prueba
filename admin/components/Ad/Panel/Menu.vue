@@ -1,7 +1,7 @@
 <template>
   <el-aside class="aside-collapsable" :class="{'aside-collapsable__collapsed':closed}">
     <el-scrollbar>
-      <el-menu :router="true" :default-active="$route.path" :collapse="closed" :collapse-transition="false"
+      <el-menu :router="true" :default-active="$route.path" :collapse="closed" :collapse-transition="true"
                @select="select">
 
         <template v-for="(rule, index) in menu">
@@ -64,6 +64,11 @@ export default class extends Vue {
 <style scoped lang="scss">
 .el-aside {
   border: $--border-base;
+}
+
+.el-menu:not(.el-menu--collapse) {
+  border-right: solid 1px transparent;
+  width: 12.5rem;
 }
 
 .el-scrollbar {
