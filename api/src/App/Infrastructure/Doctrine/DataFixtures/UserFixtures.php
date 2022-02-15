@@ -41,7 +41,7 @@ class UserFixtures extends Fixture
             $player->setRoles([
                 'ROLE_PLAYER',
             ]);
-            
+
             $manager->persist($player);
 
         }

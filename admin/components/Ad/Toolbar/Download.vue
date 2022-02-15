@@ -1,42 +1,63 @@
 <template>
+  <div v-if="length > 0" v-granted="roles" class="admin-toolbar__action">
 
-  <el-dropdown v-granted="roles" v-if="multiple" type="primary" size="large" @command="download">
-
-    <el-button type="text" size="large">
+    <el-button v-if="length ==1"
+               type="text"
+               size="large"
+               @click="download(formats[0])">
       <i class="el-icon-bottom"></i>
     </el-button>
 
-    <el-dropdown-menu slot="dropdown">
-      <el-dropdown-item
-        v-for="format in formats"
-        :key="format"
-        :command="format">
-        .{{ format }}
-      </el-dropdown-item>
+    <el-dropdown v-else type="primary" size="large" @command="download">
 
-    </el-dropdown-menu>
+      <el-button type="text" size="large">
+        <i class="el-icon-bottom"></i>
+      </el-button>
 
-  </el-dropdown>
-  <el-button v-else-if="single"
-             type="text"
-             size="large"
-             @click="download(formats[0])"
-  >
-    <i class="el-icon-bottom"></i>
-  </el-button>
+      <el-dropdown-menu slot="dropdown">
+        <el-dropdown-item
+          v-for="(mime, format) in formats"
+          :key="mime"
+          :command="format">
+          .{{ format }}
+        </el-dropdown-item>
 
+      </el-dropdown-menu>
 
+    </el-dropdown>
+
+    <el-dialog
+      :title="$t('dialog.download.title', {format})"
+      :visible.sync="openedDialog"
+      width="30%">
+
+      <div v-loading="percentage == 0" element-loading-text="Loading...">
+        <el-progress :class="{waiting: percentage==0}" type="circle" :percentage="percentage"/>
+      </div>
+
+      <a ref="link" target="_blank"/>
+
+      <span slot="footer" class="dialog-footer">
+        <el-button type="primary" :disabled="downloading" @click="onClick">
+          {{ $t('dialog.download.button') }}
+        </el-button>
+      </span>
+
+    </el-dialog>
+  </div>
 </template>
 
 <script lang="ts">
 
 import {Component, Inject, mixins, Prop, Vue} from 'nuxt-property-decorator'
 import {mapGetters} from "vuex";
-import {Admin} from "~/types/admin";
-import {QueryGetter} from "~/types/grid";
+import {QueryGetter, TableQuery} from "~/types/grid";
 import AdminAware from "~/mixins/AdminAware";
 
 const parse = require('url-parse');
+const _ = require('lodash');
+
+type HTMLLink = { click: any, href: string, download: string };
 
 @Component({
   name: 'Download',
@@ -45,48 +66,106 @@ const parse = require('url-parse');
   })
 })
 export default class extends mixins(AdminAware) {
-  @Prop({required: true, type: Array}) formats!: []
-
+  @Prop({required: true, type: Array}) files!: Array<string>
   public roles: string[] = ['export']
 
   private query!: QueryGetter
+  private openedDialog: Boolean = false
+  private downloading: boolean = false
+  private percentage: number = 0
+  private format: string = ''
 
-  private get single(): boolean {
-    return (this.formats.length as number) === 1
+  private get formats(): object {
+    const formats = {
+      jsonld: "application/ld+json",
+      jsonhal: "application/hal+json",
+      jsonapi: "application/vnd.api+json",
+      json: "application/json",
+      xml: "text/xml",
+      yaml: "application/x-yaml",
+      csv: "text/csv",
+      xlsx: "application/vnd.ms-excel",
+    }
+
+    return _.pickBy(formats, (value: string, key: string) => {
+      return this.files.includes(key)
+    })
   }
 
-  private get multiple(): boolean {
-    return this.formats.length > 1
+  private get length(): number {
+    return Object.keys(this.formats).length
   }
 
-  public download(format: string) {
-    const url = this.urlByFormat(format);
-
-    window.open(url, '_blank');
+  private get link(): HTMLLink {
+    const link = (this.$refs['link'] as unknown as HTMLLink)
+    return link
   }
 
-
-  private urlByFormat(format: string): string {
-
-    const url = parse(this.admin.endpoint + `.${format}`);
-    url.set('query', this.downloadQuery())
-
+  private get downloadUrl(): string {
+    const query = this.query(this.admin.endpoint)
+    const url = parse(this.admin.endpoint);
+    url.set('query', {
+      ...query,
+      page_size: 1000,
+      page: 1
+    })
     return url.toString();
   }
 
-  private downloadQuery() {
-    const query = this.query(this.admin.endpoint)
+  private get fileName(): string {
+    const fileName = _.trim(parse(this.downloadUrl).pathname, '/')
+    return `${fileName}.${this.format}`
+  }
 
+  private get downloadConfig(): object {
     return {
-      ...query,
-      page_size: 5000,
-      page: 1
+      onDownloadProgress: (event: any) => {
+        this.percentage = (100 * event.loaded / event.total)
+        if (!event.lengthComputable) {
+          this.percentage = 100
+        }
+      },
+      headers: {
+        'Accept': _.get(this.formats, this.format, '*/*')
+      }
     }
   }
+
+  private async download(format: string) {
+    this.openedDialog = true
+    this.downloading = true
+    this.format = format
+    this.percentage = 0
+
+    this.admin.download(this.downloadUrl, this.downloadConfig)
+      .then(this.onReady)
+  }
+
+  private onReady(response: any) {
+    this.downloading = false
+    const fileBlobUrl = window.URL.createObjectURL(new Blob([response.data]));
+    const fileName = _.trim(parse(this.downloadUrl).pathname, '/')
+
+    this.link.href = fileBlobUrl
+    this.link.download = this.fileName
+  }
+
+  private onClick() {
+    this.link.click()
+  }
+
 }
 </script>
 
 
 <style scoped lang="scss">
+.el-progress.waiting {
+  visibility: hidden;
+}
 
+::v-deep .el-dialog__body {
+  padding: 0;
+  display: flex;
+  justify-content: center;
+}
 </style>

@@ -51,6 +51,12 @@ type Translation = {
     back: StringLike,
     yes_delete: StringLike
   },
+  dialog: {
+    download: {
+      title: StringLike,
+      button: StringLike
+    }
+  },
   menu: { [key: string]: StringLike },
   admin: { [key: string]: AdminTranslation }
 }

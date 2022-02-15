@@ -1,39 +1,42 @@
 <template>
-  <div class="app" :class="{collapsed: closed}">
-    <aside class="app__sidebar">
-      <app-menu/>
-    </aside>
-    <section class="app__container">
-      <header class="app__header">
-        <app-header/>
-      </header>
-      <main class="app__page">
-        <nuxt/>
-      </main>
-    </section>
+  <div class="app">
+    <div class="the__header">
+      <the-header/>
+    </div>
+
+    <main class="the__main">
+      <nuxt/>
+    </main>
+
+    <the-drawer :drawer="drawer"/>
+
   </div>
-  <!--  <nuxt/>-->
 </template>
 
 <script lang="ts">
 import {Component, Vue} from 'nuxt-property-decorator'
-import {mapGetters} from "vuex";
+import {mapGetters, mapMutations} from "vuex";
 
 @Component({
   inheritAttrs: false,
-  name: 'Menu',
+  methods: mapMutations({
+    change: 'aside/change',
+  }),
   computed: mapGetters({
-    'closed': 'aside/closed',
-  })
-
+    'opened': 'aside/opened',
+  }),
 })
 export default class extends Vue {
-  onOpen() {
+  private opened!: boolean;
+  private change!: (value: boolean) => void;
+
+  public get drawer() {
+    return this.opened;
   }
 
-  onClose() {
+  public set drawer(value) {
+    this.change(value)
   }
-
 }
 
 </script>
@@ -42,53 +45,39 @@ export default class extends Vue {
 
 .app {
   min-height: 100vh;
-  background-color: palegoldenrod;
+  display: grid;
+  grid-template-rows: 4.5rem 1fr;
+  grid-template-columns: 1fr;
 }
 
-.app__container {
-  background-color: paleturquoise;
+
+.the__header {
+  grid-row: 1/span 1;
+  grid-column: 1/span 1;
 }
 
-.app__sidebar {
-  background-color: #41403d;
+.the__main {
+  grid-row: 2/span 1;
+  grid-column: 1/span 1;
+}
 
+.the__main {
+  width: 100%;
+  max-width: 40rem;
+  min-width: 22.5rem;
+
+  margin: 2rem auto 0 auto;
+}
+
+.el-menu {
+  display: none;
+}
+
+@media screen and (min-width: 45em) {
   .el-menu {
-    border-right: 1px solid transparent;
-  }
-}
-
-.app__header {
-  background-color: pink;
-  border-bottom: $--border;
-}
-
-.app__container {
-  background-color: palegreen;
-}
-
-//mobile
-.app {
-  display: flex;
-}
-
-.app__container {
-  flex-grow: 1;
-}
-
-.app.collapsed {
-  .app__sidebar {
-    display: none;
-  }
-}
-
-
-@media screen and (min-width: 60em) {
-
-  .app__sidebar {
     display: block;
   }
 }
-
 
 </style>
 

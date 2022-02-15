@@ -15,9 +15,10 @@ class Api {
     return this._context.$axios
   }
 
-  public GET(endpoint: string, query: object = {}): AxiosPromise {
+  public GET(endpoint: string, query: object = {}, config = {}): AxiosPromise {
     return this.axios.get(endpoint, {
-      params: query
+      ...config,
+      params: query,
     })
   }
 

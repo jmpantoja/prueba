@@ -4,11 +4,6 @@ import {Admin} from "~/types/admin";
 
 @Component({
   name: 'AdminAware',
-  // provide() {
-  //   return {
-  //     admin: this.admin
-  //   }
-  // }
 })
 export default class extends Vue {
 

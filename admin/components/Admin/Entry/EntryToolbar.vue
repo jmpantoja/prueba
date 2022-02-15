@@ -2,7 +2,8 @@
   <ad-toolbar :action="action" :entity="entity">
 
     <template slot="list">
-      <ad-toolbar-download :formats="['xlsx', 'csv', 'yaml']"/>
+      <!--      <ad-toolbar-download />-->
+      <ad-toolbar-download :files="['xlsx', 'csv', 'yaml']"/>
       <ad-toolbar-create/>
     </template>
 
@@ -44,11 +45,3 @@ export default class extends mixins(AdminAware) {
 
 }
 </script>
-
-<style scoped lang="scss">
-
-::v-deep .el-button {
-  font-size: 2.5rem;
-  margin-left: 1rem;
-}
-</style>

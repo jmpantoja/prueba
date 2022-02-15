@@ -207,6 +207,7 @@ export default class extends Vue {
 <style scoped lang="scss">
 
 $toc-width: 13rem;
+$toc-min-width: 10rem;
 $form-width: 50rem;
 
 .admin-form {
@@ -219,6 +220,7 @@ $form-width: 50rem;
   .toc {
     overflow-y: auto;
     width: $toc-width;
+    min-width: $toc-min-width;
     border-right: $--border-base;
 
     ul {
@@ -247,6 +249,9 @@ $form-width: 50rem;
   }
 
   .main {
+
+    overflow: scroll;
+
     flex-grow: 1;
     display: flex;
     flex-direction: column;
@@ -257,8 +262,11 @@ $form-width: 50rem;
       overflow-y: auto;
       padding: 3em 0;
 
+      min-width: $form-width;
+
       form {
         width: $form-width;
+
         margin: auto;
       }
     }

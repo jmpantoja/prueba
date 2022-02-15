@@ -1,7 +1,9 @@
 <template>
-  <el-button v-granted="roles" type="text" size="large" @click="click">
-    <i class="el-icon-plus"></i>
-  </el-button>
+  <div v-granted="roles" class="admin-toolbar__action">
+    <el-button type="text" size="large" @click="click">
+      <i class="el-icon-plus"></i>
+    </el-button>
+  </div>
 </template>
 
 <script lang="ts">

@@ -9,8 +9,26 @@
   </div>
 </template>
 
-<script>
-export default {
-  props: ['error'],
+<script lang="ts">
+import {Component, Prop, Vue} from 'nuxt-property-decorator'
+import {mapGetters} from "vuex";
+import {Entity} from "../../admin/types/api";
+
+@Component({
+  inheritAttrs: false,
+  computed: mapGetters({
+    'closed': 'aside/closed',
+  })
+})
+export default class extends Vue {
+  @Prop() error!: Object
+
 }
+
 </script>
+
+<!--<script>-->
+<!--export default {-->
+<!--  props: ['error'],-->
+<!--}-->
+<!--</script>-->

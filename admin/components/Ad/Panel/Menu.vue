@@ -68,14 +68,13 @@ export default class extends Vue {
 
 .el-menu:not(.el-menu--collapse) {
   border-right: solid 1px transparent;
-  width: 12.5rem;
 }
 
 .el-scrollbar {
   box-sizing: border-box;
   height: calc(100vh - #{$header-height} - 2px);
 
-  el-scrollbar__wrap {
+  .el-scrollbar__wrap {
     overflow-x: auto;
   }
 }

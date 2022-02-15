@@ -29,6 +29,15 @@ const spanish: Translation = {
     back: 'Volver',
     yes_delete: '<strong>Sí,</strong> Borrar'
   },
+  dialog: {
+    download: {
+      title: (params) => {
+        const format = params.named('format') ?? '';
+        return `Descargando fichero ${format}`
+      },
+      button: 'Listo!'
+    }
+  },
   menu: {
     dashboard: 'Escritorio',
     vocabulary: 'Vocabulario',

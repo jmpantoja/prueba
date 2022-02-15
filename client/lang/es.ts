@@ -2,7 +2,7 @@ export default {
   menu: {
     home: 'Inicio',
     play: 'Play',
-    rating: 'Logros',
+    achievements: 'Logros',
     stats: 'Estadísticas',
   }
 };

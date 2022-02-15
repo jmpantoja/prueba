@@ -11,7 +11,6 @@
 declare(strict_types=1);
 
 namespace App\Domain\Vocabulary;
-
 use App\Domain\Vocabulary\Traits\EntryBase;
 use Tangram\Domain\Model\Entity;
 use Tangram\Domain\Model\Traits\NotifyEvents;

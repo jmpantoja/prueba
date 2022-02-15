@@ -8,7 +8,6 @@ class Api {
 
   public constructor(context: Context) {
     this._context = context;
-
   }
 
   public get axios(): NuxtAxiosInstance {

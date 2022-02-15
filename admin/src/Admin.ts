@@ -2,6 +2,7 @@ import {Message} from 'element-ui';
 import {ActionList, AdminConfig, AdminConfigList, AdminContext, PathList} from "~/types/admin";
 import {Api, Dataset, Entity} from "~/types/api";
 import {AxiosPromise, AxiosResponse} from "axios";
+import {TableQuery} from "~/types/grid";
 
 const parse = require('url-parse')
 
@@ -183,6 +184,14 @@ class Admin {
       const totalItems = response.data['hydra:totalItems']
 
       return {items, totalItems}
+    })
+  }
+
+  public async download(url: string, config: {}): Promise<any> {
+
+    return this.api.GET(url, {}, {
+      ...config,
+      responseType: 'blob'
     })
   }
 

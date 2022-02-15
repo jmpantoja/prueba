@@ -6,7 +6,6 @@ import clickoutside from "element-ui/src/utils/clickoutside";
 import _ from 'lodash';
 Object.defineProperty(Vue.prototype, '$_', { value: _ });
 
-
 Vue.use(Element, {locale})
 
 Vue.mixin({

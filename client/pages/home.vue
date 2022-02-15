@@ -1,34 +1,9 @@
 <template>
   <section class="home">
+    <div>
+      /home
 
-    /home
-    <!--    <header>-->
-    <!--      <app-shortcut>-->
-    <!--        Verbos Irregulares-->
-    <!--      </app-shortcut>-->
-
-    <!--      <app-shortcut>-->
-    <!--        Vocabulario-->
-    <!--      </app-shortcut>-->
-
-    <!--      <app-shortcut>-->
-    <!--        Collocations-->
-    <!--      </app-shortcut>-->
-
-    <!--      <app-shortcut>-->
-    <!--        Phrasal Verbs-->
-    <!--      </app-shortcut>-->
-
-    <!--    </header>-->
-
-    <!--    <aside>-->
-
-    <!--    </aside>-->
-
-    <!--    <main>-->
-    <!--      main-->
-    <!--    </main>-->
-
+    </div>
   </section>
 </template>
 
@@ -50,6 +25,15 @@ export default class extends Vue {
 </script>
 
 <style scoped lang="scss">
+
+.home .card {
+  box-sizing: border-box;
+  float: left;
+
+  background-color: green;
+  width: 1%;
+
+}
 
 </style>
 

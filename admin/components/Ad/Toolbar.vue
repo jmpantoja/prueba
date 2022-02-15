@@ -46,7 +46,9 @@ export default class extends mixins(AdminAware) {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
+
+
 .admin-toolbar {
 
   height: $toolbar-height;
@@ -61,12 +63,26 @@ export default class extends mixins(AdminAware) {
   {
     line-height: 3.5rem;
     align-self: center;
+
   }
 
   .admin-toolbar__title {
     font-size: 3.5rem;
     font-weight: lighter;
   }
+
+  .admin-toolbar__action {
+    display: inline-block;
+    margin-left: 1rem;
+  }
+
+  .admin-toolbar__action > .el-button,
+  .admin-toolbar__action > .el-dropdown > .el-button {
+    font-size: 2.5rem;
+  }
+
 }
 
+
 </style>
+

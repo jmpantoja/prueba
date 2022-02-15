@@ -24,6 +24,7 @@ export default {
   css: [
     'element-ui/lib/theme-chalk/index.css',
     '~assets/reset.css',
+    '~assets/icomoon.css',
     '~assets/scss'
   ],
 
@@ -70,6 +71,7 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
+    baseURL: process.env.API_ENDPOINT,
     headers: {
       common: {
         'Accept': 'application/ld+json',
